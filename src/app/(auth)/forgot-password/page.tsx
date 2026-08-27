@@ -77,20 +77,20 @@ export default function ForgotPasswordPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@example.com"
-                  className="w-full px-4 py-3 rounded-xl bg-surface-raised border border-border text-white text-sm focus:outline-none focus:border-primary-500"
+                  className="w-full px-4 py-3 rounded-xl bg-surface-raised border border-border text-white text-sm focus:outline-none focus:border-amber-400"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3.5 rounded-xl bg-primary-600 hover:bg-primary-500 text-white font-bold text-sm shadow-md transition-all disabled:opacity-50"
+                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-zinc-950 font-black text-sm shadow-xl shadow-amber-950/40 transition-all disabled:opacity-50"
               >
                 {loading ? 'جاري الإرسال...' : 'إرسال رابط الاستعادة'}
               </button>
 
               <div className="text-center pt-2">
-                <Link href="/login" className="text-xs text-zinc-400 hover:text-white">
+                <Link href="/login" className="text-xs text-zinc-400 hover:text-amber-400">
                   تذكرت كلمة المرور؟ تسجيل الدخول
                 </Link>
               </div>

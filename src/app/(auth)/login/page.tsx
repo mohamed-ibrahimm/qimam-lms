@@ -52,14 +52,16 @@ function LoginForm() {
 
   return (
     <div className="max-w-md mx-auto px-4 py-12">
-      <div className="rounded-3xl bg-surface border border-border p-8 shadow-2xl space-y-6">
+      <div className="rounded-3xl bg-surface border border-amber-500/20 p-8 shadow-2xl shadow-black/80 space-y-6">
         <div className="text-center space-y-2">
-          <div className="w-12 h-12 rounded-2xl bg-primary-950 border border-primary-800 flex items-center justify-center mx-auto text-primary-400">
-            <LogIn className="w-6 h-6" />
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500 via-yellow-400 to-amber-600 p-[2px] shadow-lg shadow-amber-950/60 mx-auto flex items-center justify-center">
+            <div className="w-full h-full bg-[#0c0918] rounded-[14px] flex items-center justify-center">
+              <LogIn className="w-6 h-6 text-amber-400" />
+            </div>
           </div>
-          <h1 className="text-2xl font-black text-white">تسجيل الدخول إلى قِمَم</h1>
-          <p className="text-xs text-zinc-400">
-            أدخل اسم المستخدم أو البريد الإلكتروني وكلمة المرور
+          <h1 className="text-2xl font-black text-white">تسجيل الدخول</h1>
+          <p className="text-xs font-bold text-amber-300">
+            أكاديمية المهندس محمد إبراهيم
           </p>
         </div>
 
@@ -87,8 +89,8 @@ function LoginForm() {
                 required
                 value={formData.identifier}
                 onChange={(e) => setFormData({ ...formData, identifier: e.target.value })}
-                placeholder="admin أو student أو instructor"
-                className="w-full pl-4 pr-10 py-3 rounded-2xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500 transition-colors"
+                placeholder="admin أو student أو البريد الإلكتروني"
+                className="w-full pl-4 pr-10 py-3 rounded-2xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-amber-400 transition-colors"
               />
               <Mail className="w-4 h-4 text-zinc-500 absolute right-3.5 top-3.5" />
             </div>
@@ -99,7 +101,7 @@ function LoginForm() {
               <label className="text-xs font-bold text-zinc-300">كلمة المرور</label>
               <Link
                 href="/forgot-password"
-                className="text-[11px] font-semibold text-primary-400 hover:text-primary-300 transition-colors"
+                className="text-[11px] font-semibold text-amber-400 hover:text-amber-300 transition-colors"
               >
                 نسيت كلمة المرور؟
               </Link>
@@ -111,7 +113,7 @@ function LoginForm() {
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 placeholder="••••••••"
-                className="w-full pl-4 pr-10 py-3 rounded-2xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500 transition-colors"
+                className="w-full pl-4 pr-10 py-3 rounded-2xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-amber-400 transition-colors"
               />
               <Lock className="w-4 h-4 text-zinc-500 absolute right-3.5 top-3.5" />
             </div>
@@ -120,7 +122,7 @@ function LoginForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-500 hover:to-purple-500 text-white font-bold text-xs shadow-lg shadow-primary-900/30 transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50"
+            className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-zinc-950 font-black text-sm shadow-xl shadow-amber-950/40 transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50"
           >
             {loading ? 'جاري التحقق...' : 'دخول المنصة'}
           </button>
@@ -128,7 +130,7 @@ function LoginForm() {
 
         <div className="text-center text-xs text-zinc-400 pt-2 border-t border-border/60">
           ليس لديك حساب بعد؟{' '}
-          <Link href="/register" className="font-bold text-primary-400 hover:text-primary-300">
+          <Link href="/register" className="font-bold text-amber-400 hover:text-amber-300">
             إنشاء حساب جديد
           </Link>
         </div>

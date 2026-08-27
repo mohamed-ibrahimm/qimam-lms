@@ -74,11 +74,18 @@ export default function RegisterPage() {
     <div className="min-h-[90vh] flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-xl space-y-6">
         <div className="text-center space-y-2">
-          <h1 className="text-3xl font-black text-white">انضم إلى قِمَم</h1>
-          <p className="text-sm text-zinc-400">سجل حسابك وابدأ رحلتك نحو الاحتراف البرمجي والتقني</p>
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500 via-yellow-400 to-amber-600 p-[2px] shadow-lg shadow-amber-950/60 mx-auto flex items-center justify-center">
+            <div className="w-full h-full bg-[#0c0918] rounded-[14px] flex items-center justify-center">
+              <UserPlus className="w-6 h-6 text-amber-400" />
+            </div>
+          </div>
+          <h1 className="text-3xl font-black text-white">إنشاء حساب جديد</h1>
+          <p className="text-xs font-bold text-amber-300">
+            أكاديمية المهندس محمد إبراهيم
+          </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-8 rounded-3xl bg-surface border border-border shadow-2xl space-y-5">
+        <form onSubmit={handleSubmit} className="p-8 rounded-3xl bg-surface border border-amber-500/20 shadow-2xl space-y-5">
           {errorMessage && (
             <div className="p-3.5 rounded-xl bg-rose-950/60 border border-rose-800 text-rose-300 text-xs flex items-center gap-2">
               <ShieldAlert className="w-4 h-4 shrink-0" />
@@ -96,7 +103,7 @@ export default function RegisterPage() {
                 value={formData.firstName}
                 onChange={handleChange}
                 placeholder="أحمد"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-sm focus:outline-none focus:border-primary-500"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-sm focus:outline-none focus:border-amber-400"
               />
             </div>
             <div>
@@ -107,7 +114,7 @@ export default function RegisterPage() {
                 value={formData.fatherName}
                 onChange={handleChange}
                 placeholder="مصطفى"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-sm focus:outline-none focus:border-primary-500"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-sm focus:outline-none focus:border-amber-400"
               />
             </div>
             <div>
@@ -119,7 +126,7 @@ export default function RegisterPage() {
                 value={formData.lastName}
                 onChange={handleChange}
                 placeholder="إبراهيم"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-sm focus:outline-none focus:border-primary-500"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-sm focus:outline-none focus:border-amber-400"
               />
             </div>
           </div>
@@ -151,7 +158,7 @@ export default function RegisterPage() {
                 value={formData.username}
                 onChange={handleChange}
                 placeholder="ahmed_dev"
-                className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-sm focus:outline-none focus:border-primary-500"
+                className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-sm focus:outline-none focus:border-amber-400"
               />
             </div>
             <div>
@@ -162,7 +169,7 @@ export default function RegisterPage() {
                 value={formData.phone}
                 onChange={handleChange}
                 placeholder="01012345678"
-                className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-sm focus:outline-none focus:border-primary-500"
+                className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-sm focus:outline-none focus:border-amber-400"
               />
             </div>
           </div>
@@ -176,7 +183,7 @@ export default function RegisterPage() {
               value={formData.email}
               onChange={handleChange}
               placeholder="example@gmail.com"
-              className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-sm focus:outline-none focus:border-primary-500"
+              className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-sm focus:outline-none focus:border-amber-400"
             />
           </div>
 
@@ -190,7 +197,7 @@ export default function RegisterPage() {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="••••••••"
-                className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-sm focus:outline-none focus:border-primary-500"
+                className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-sm focus:outline-none focus:border-amber-400"
               />
             </div>
             <div>
@@ -202,7 +209,7 @@ export default function RegisterPage() {
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 placeholder="••••••••"
-                className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-sm focus:outline-none focus:border-primary-500"
+                className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-sm focus:outline-none focus:border-amber-400"
               />
             </div>
           </div>
@@ -210,7 +217,7 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3.5 rounded-xl bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-500 hover:to-purple-500 text-white font-bold text-sm shadow-lg shadow-primary-900/40 transition-all hover:scale-[1.01] flex items-center justify-center gap-2 disabled:opacity-50"
+            className="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-zinc-950 font-black text-sm shadow-xl shadow-amber-950/40 transition-all hover:scale-[1.01] flex items-center justify-center gap-2 disabled:opacity-50"
           >
             {loading ? 'جاري إنشاء الحساب...' : (
               <>
@@ -223,7 +230,7 @@ export default function RegisterPage() {
 
         <p className="text-center text-xs text-zinc-400">
           لديك حساب بالفعل؟{' '}
-          <Link href="/login" className="font-bold text-primary-400 hover:underline">
+          <Link href="/login" className="font-bold text-amber-400 hover:text-amber-300">
             تسجيل الدخول
           </Link>
         </p>

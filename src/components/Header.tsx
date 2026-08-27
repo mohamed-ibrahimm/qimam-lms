@@ -99,39 +99,27 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 p-2.5 sm:p-4 md:p-5 transition-all">
       <nav className="max-w-7xl mx-auto flex items-center justify-between min-h-[3.75rem] sm:min-h-[4.25rem] px-3.5 sm:px-8 rounded-full bg-zinc-900/90 border border-zinc-800/90 backdrop-blur-2xl shadow-2xl shadow-black/70 relative gap-2 sm:gap-4">
-        {/* Logo & Platform Name (Royal Purple & Gold Emblem Style - Fully Responsive) */}
-        <Link href="/" className="flex items-center gap-2 sm:gap-3 shrink min-w-0 group py-1">
-          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-purple-600 via-fuchsia-600 to-amber-400 p-[2px] shadow-lg shadow-purple-950/60 group-hover:scale-105 transition-transform shrink-0">
-            <div className="w-full h-full bg-[#0c0918] rounded-[10px] sm:rounded-[14px] flex items-center justify-center">
-              <GraduationCap className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
+        {/* Logo & Platform Name */}
+        <Link href="/" className="flex items-center gap-2 sm:gap-2.5 shrink-0 group py-1">
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-tr from-amber-500 via-yellow-400 to-amber-600 p-[2px] shadow-md shadow-amber-950/40 group-hover:scale-105 transition-transform shrink-0">
+            <div className="w-full h-full bg-[#0c0918] rounded-[10px] flex items-center justify-center">
+              <GraduationCap className="w-4 h-4 text-amber-400" />
             </div>
           </div>
-          <div className="flex flex-col text-right justify-center min-w-0">
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              <span className="text-[11px] xs:text-xs sm:text-sm md:text-base font-bold text-white group-hover:text-amber-200 transition-colors tracking-tight whitespace-nowrap">
-                {platformName}
-              </span>
-              <span className="hidden md:inline-flex text-[10px] px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-400/40 font-bold whitespace-nowrap shadow-sm shadow-amber-950/30 shrink-0">
-                ★ تعليم احترافي
-              </span>
-            </div>
-            {platformTagline && (
-              <span className="text-[9px] sm:text-[11px] text-amber-200/75 font-medium truncate mt-0.5 hidden sm:block">
-                {platformTagline}
-              </span>
-            )}
-          </div>
+          <span className="text-xs sm:text-sm md:text-[15px] font-black text-white group-hover:text-amber-300 transition-colors tracking-tight whitespace-nowrap">
+            {platformName}
+          </span>
         </Link>
 
         {/* Desktop Nav (Center) */}
-        <div className="hidden lg:flex items-center gap-2 bg-zinc-950/50 px-3 py-1.5 rounded-full border border-zinc-800/60 shadow-inner">
+        <div className="hidden lg:flex items-center gap-1 bg-zinc-950/60 px-2 py-1 rounded-full border border-zinc-800/80 shadow-inner">
           {navLinks.map((link) => {
             const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-full transition-all flex items-center gap-2 ${
+                className={`px-3 py-1.5 text-xs font-bold rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
                   isActive
                     ? 'bg-zinc-800 text-white border border-zinc-700 shadow-sm'
                     : link.highlight
@@ -139,7 +127,7 @@ export default function Header() {
                     : 'text-zinc-300 hover:text-white hover:bg-zinc-800/70'
                 }`}
               >
-                {link.icon && <link.icon className={`w-4 h-4 ${link.highlight ? 'text-amber-400' : ''}`} />}
+                {link.icon && <link.icon className={`w-3.5 h-3.5 ${link.highlight ? 'text-amber-400' : ''}`} />}
                 <span>{link.name}</span>
               </Link>
             );

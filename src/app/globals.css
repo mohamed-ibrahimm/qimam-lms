@@ -28,27 +28,36 @@ body {
 }
 
 /* Light Mode System (High-End White & Slate with Gold Accents) */
-html.light-theme body {
-  background-color: #f8fafc;
-  color: #0f172a;
+html.light-theme,
+html.light-theme body,
+body.light-theme {
+  background-color: #f8fafc !important;
+  background-image: radial-gradient(ellipse at 50% -10%, rgba(245, 158, 11, 0.08) 0%, transparent 60%) !important;
+  color: #0f172a !important;
 }
 
+html.light-theme div[class*="bg-[#09080e]"],
 html.light-theme .bg-zinc-950,
 html.light-theme .bg-background {
   background-color: #f8fafc !important;
+  color: #0f172a !important;
 }
 
 html.light-theme .bg-zinc-900,
 html.light-theme .bg-surface {
   background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
 }
 
 html.light-theme .bg-zinc-800,
 html.light-theme .bg-surface-raised {
   background-color: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
 }
 
 html.light-theme .border-zinc-800,
+html.light-theme .border-zinc-700,
 html.light-theme .border-border {
   border-color: #e2e8f0 !important;
 }
@@ -57,11 +66,38 @@ html.light-theme .text-zinc-400 {
   color: #64748b !important;
 }
 
-html.light-theme .text-zinc-300 {
+html.light-theme .text-zinc-300,
+html.light-theme .text-zinc-200 {
   color: #334155 !important;
 }
 
-html.light-theme .text-white {
+html.light-theme .text-white,
+html.light-theme .text-zinc-100 {
+  color: #0f172a !important;
+}
+
+html.light-theme nav {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08) !important;
+}
+
+html.light-theme nav .text-white {
+  color: #0f172a !important;
+}
+
+html.light-theme nav .bg-zinc-950\/60 {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+}
+
+html.light-theme nav .bg-zinc-800 {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+}
+
+html.light-theme .shimmer-button-content {
+  background-color: #ffffff !important;
   color: #0f172a !important;
 }
 
