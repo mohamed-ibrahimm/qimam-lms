@@ -88,49 +88,39 @@ export default function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/[0.06] bg-[#090812]/90 backdrop-blur-xl transition-all">
-      {/* Subtle top/bottom ambient edge with gold and purple */}
-      <div className="absolute bottom-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-amber-400/35 to-transparent pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 py-3 flex items-center justify-between gap-4 relative">
+    <header className="fixed top-0 left-0 right-0 z-50 p-3 sm:p-4 transition-all">
+      <nav className="max-w-5xl mx-auto flex items-center justify-between h-14 px-4 sm:px-6 rounded-full bg-zinc-900/80 border border-zinc-800/80 backdrop-blur-xl shadow-2xl shadow-black/60 relative">
         {/* Logo & Platform Name */}
-        <Link href="/" className="flex items-center gap-3 shrink-0 group">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 via-fuchsia-600 to-amber-400 p-[2px] shadow-lg shadow-purple-950/50 group-hover:scale-105 transition-transform shrink-0">
-            <div className="w-full h-full bg-[#0c0918] rounded-[10px] flex items-center justify-center">
-              <GraduationCap className="w-5 h-5 text-amber-400" />
+        <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-500 to-yellow-300 p-[1.5px] shadow-md shadow-amber-950/40 group-hover:scale-105 transition-transform shrink-0">
+            <div className="w-full h-full bg-zinc-950 rounded-full flex items-center justify-center">
+              <GraduationCap className="w-4 h-4 text-amber-400" />
             </div>
           </div>
-          <div className="flex flex-col text-right">
-            <div className="flex items-center gap-2 whitespace-nowrap">
-              <span className="text-sm sm:text-base font-bold text-white group-hover:text-amber-200 transition-colors">
-                {platformName}
-              </span>
-              <span className="text-[9px] px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-400/40 font-bold whitespace-nowrap shadow-sm shadow-amber-950/30">
-                ★ تعليم احترافي
-              </span>
-            </div>
-            {platformTagline && (
-              <span className="text-[10px] text-amber-200/80 font-medium whitespace-nowrap mt-0.5 hidden sm:block">
-                {platformTagline}
-              </span>
-            )}
+          <div className="flex items-baseline gap-1.5">
+            <span className="text-sm font-bold text-white group-hover:text-amber-300 transition-colors">
+              {platformName}
+            </span>
+            <span className="text-[10px] text-zinc-500 hidden sm:inline font-normal">
+              أكاديمية
+            </span>
           </div>
         </Link>
 
-        {/* Desktop Nav (Spacious & Cleanly Separated) */}
-        <nav className="hidden md:flex items-center gap-1.5 bg-white/[0.03] px-2.5 py-1.5 rounded-full border border-white/[0.06] shadow-inner shrink-0">
+        {/* Desktop Nav (Anmka Pill Navigation) */}
+        <div className="hidden md:flex items-center gap-1">
           {navLinks.map((link) => {
             const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-4 py-1.5 rounded-full text-xs font-bold tracking-normal whitespace-nowrap transition-all flex items-center gap-1.5 ${
+                className={`px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all flex items-center gap-1.5 ${
                   isActive
-                    ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-950/60 border border-purple-400/40'
+                    ? 'bg-zinc-800 text-white border border-zinc-700 shadow-sm'
                     : link.highlight
-                    ? 'text-amber-300 hover:text-amber-200 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-400/30 shadow-sm shadow-amber-950/30'
-                    : 'text-zinc-300 hover:text-white hover:bg-white/[0.05]'
+                    ? 'text-amber-300 hover:text-amber-200 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30'
+                    : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/60'
                 }`}
               >
                 {link.icon && <link.icon className={`w-3.5 h-3.5 ${link.highlight ? 'text-amber-400' : ''}`} />}
@@ -138,19 +128,19 @@ export default function Header() {
               </Link>
             );
           })}
-        </nav>
+        </div>
 
         {/* Auth / User Actions */}
-        <div className="hidden md:flex items-center gap-2.5 shrink-0">
+        <div className="hidden md:flex items-center gap-2 shrink-0">
           {loading ? (
-            <div className="w-24 h-9 bg-zinc-800/60 animate-pulse rounded-full" />
+            <div className="w-20 h-8 bg-zinc-800/60 animate-pulse rounded-full" />
           ) : currentUser ? (
             <div className="relative">
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.06] transition-colors text-right"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-800/60 hover:bg-zinc-800 border border-zinc-700/60 transition-colors text-right"
               >
-                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-600 to-amber-400 text-white flex items-center justify-center font-bold text-xs shadow-inner overflow-hidden relative ring-1 ring-amber-400/50 shrink-0">
+                <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-500 to-yellow-400 text-zinc-950 flex items-center justify-center font-bold text-xs shadow-inner overflow-hidden relative shrink-0">
                   {currentUser.avatarUrl ? (
                     <img
                       src={currentUser.avatarUrl}
@@ -164,20 +154,15 @@ export default function Header() {
                     <span>{currentUser.firstName?.[0] || 'ق'}</span>
                   )}
                 </div>
-                <div className="flex flex-col text-right">
-                  <span className="text-xs font-bold text-white max-w-[100px] lg:max-w-[130px] truncate tracking-normal">
-                    {currentUser.firstName} {currentUser.lastName}
-                  </span>
-                  <span className="text-[10px] text-amber-300 font-semibold tracking-normal">
-                    {currentUser.role === 'ADMIN' ? 'مدير المنصة' : currentUser.role === 'INSTRUCTOR' ? 'معلم معتمد' : 'طالب'}
-                  </span>
-                </div>
+                <span className="text-xs font-bold text-white max-w-[100px] truncate">
+                  {currentUser.firstName}
+                </span>
                 <ChevronDown className="w-3.5 h-3.5 text-zinc-400 mr-0.5" />
               </button>
 
               {dropdownOpen && (
-                <div className="absolute left-0 mt-2 w-60 rounded-2xl bg-surface-card border border-border shadow-2xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                  <div className="px-4 py-3 border-b border-border/60">
+                <div className="absolute left-0 mt-2 w-60 rounded-2xl bg-zinc-900 border border-zinc-800 shadow-2xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                  <div className="px-4 py-3 border-b border-zinc-800">
                     <p className="text-xs text-zinc-400">مرحباً بك،</p>
                     <p className="text-sm font-bold text-white truncate">{currentUser.officialFullName || currentUser.email}</p>
                     <p className="text-[11px] text-zinc-500 truncate">{currentUser.email}</p>
@@ -187,7 +172,7 @@ export default function Header() {
                     <Link
                       href="/admin"
                       onClick={() => setDropdownOpen(false)}
-                      className="flex items-center gap-2 px-4 py-2.5 text-sm text-primary-300 hover:bg-primary-950/50 hover:text-white transition-colors"
+                      className="flex items-center gap-2 px-4 py-2.5 text-xs text-amber-300 hover:bg-amber-950/40 hover:text-white transition-colors"
                     >
                       <LayoutDashboard className="w-4 h-4" />
                       لوحة تحكم الإدارة (Admin)
@@ -198,7 +183,7 @@ export default function Header() {
                     <Link
                       href="/instructor"
                       onClick={() => setDropdownOpen(false)}
-                      className="flex items-center gap-2 px-4 py-2.5 text-sm text-purple-300 hover:bg-purple-950/40 hover:text-white transition-colors"
+                      className="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-200 hover:bg-zinc-800 hover:text-white transition-colors"
                     >
                       <GraduationCap className="w-4 h-4" />
                       استوديو المعلم (Instructor)
@@ -208,7 +193,7 @@ export default function Header() {
                   <Link
                     href="/dashboard"
                     onClick={() => setDropdownOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2.5 text-sm text-zinc-200 hover:bg-surface-raised hover:text-white transition-colors"
+                    className="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-200 hover:bg-zinc-800 hover:text-white transition-colors"
                   >
                     <BookOpen className="w-4 h-4" />
                     لوحة دراستي وكورساتي
@@ -217,7 +202,7 @@ export default function Header() {
                   <Link
                     href="/chat"
                     onClick={() => setDropdownOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2.5 text-sm text-zinc-200 hover:bg-surface-raised hover:text-white transition-colors"
+                    className="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-200 hover:bg-zinc-800 hover:text-white transition-colors"
                   >
                     <MessageSquare className="w-4 h-4" />
                     المحادثات المباشرة
@@ -226,16 +211,16 @@ export default function Header() {
                   <Link
                     href="/profile"
                     onClick={() => setDropdownOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2.5 text-sm text-zinc-200 hover:bg-surface-raised hover:text-white transition-colors"
+                    className="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-200 hover:bg-zinc-800 hover:text-white transition-colors"
                   >
                     <User className="w-4 h-4" />
                     الملف الشخصي والشهادات
                   </Link>
 
-                  <div className="border-t border-border/60 mt-1 pt-1">
+                  <div className="border-t border-zinc-800 mt-1 pt-1">
                     <button
                       onClick={handleLogout}
-                      className="w-full flex items-center gap-2 px-4 py-2 text-sm text-rose-400 hover:bg-rose-950/30 transition-colors"
+                      className="w-full flex items-center gap-2 px-4 py-2 text-xs text-rose-400 hover:bg-rose-950/30 transition-colors"
                     >
                       <LogOut className="w-4 h-4" />
                       تسجيل الخروج
@@ -245,18 +230,18 @@ export default function Header() {
               )}
             </div>
           ) : (
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2">
               <Link
                 href="/login"
-                className="px-4 py-2 rounded-xl text-sm font-semibold text-zinc-200 hover:text-white hover:bg-surface-raised transition-colors"
+                className="px-3.5 py-1.5 text-xs font-semibold text-zinc-300 hover:text-white transition-colors"
               >
-                تسجيل الدخول
+                دخول
               </Link>
               <Link
                 href="/register"
-                className="px-5 py-2 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 shadow-md shadow-indigo-900/30 transition-all hover:scale-[1.02]"
+                className="px-4 py-1.5 rounded-full text-xs font-bold bg-zinc-100 text-zinc-950 hover:bg-zinc-200 transition-colors shadow-sm"
               >
-                حساب جديد
+                انضم الآن
               </Link>
             </div>
           )}
@@ -265,32 +250,33 @@ export default function Header() {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 rounded-lg bg-surface-raised text-zinc-300 hover:text-white"
+          className="md:hidden p-2 rounded-full bg-zinc-800 text-zinc-300 hover:text-white"
+          aria-label="القائمة"
         >
-          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
-      </div>
+      </nav>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Drawer Floating Card */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-border bg-surface px-4 pt-3 pb-6 space-y-3 animate-in slide-in-from-top-4">
+        <div className="max-w-5xl mx-auto mt-2 rounded-3xl border border-zinc-800 bg-zinc-900/95 backdrop-blur-2xl p-5 shadow-2xl space-y-4 animate-in slide-in-from-top-3">
           <div className="space-y-1">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="block px-4 py-2.5 rounded-lg text-sm font-semibold text-zinc-300 hover:bg-surface-raised hover:text-white"
+                className="block px-4 py-2.5 rounded-xl text-sm font-semibold text-zinc-300 hover:bg-zinc-800 hover:text-white transition-colors"
               >
                 {link.name}
               </Link>
             ))}
           </div>
 
-          <div className="border-t border-border pt-3">
+          <div className="border-t border-zinc-800 pt-3">
             {currentUser ? (
               <div className="space-y-2">
-                <div className="px-3 py-2 bg-surface-raised rounded-lg">
+                <div className="px-3 py-2 bg-zinc-800/60 rounded-xl">
                   <p className="text-xs text-zinc-400">مسجل كـ</p>
                   <p className="text-sm font-bold text-white">{currentUser.officialFullName}</p>
                 </div>
@@ -298,7 +284,7 @@ export default function Header() {
                   <Link
                     href="/admin"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block px-3 py-2 text-sm text-primary-400 font-bold"
+                    className="block px-3 py-2 text-sm text-amber-400 font-bold"
                   >
                     لوحة تحكم الإدارة (Admin)
                   </Link>
@@ -329,14 +315,14 @@ export default function Header() {
                 <Link
                   href="/login"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full text-center py-2.5 rounded-lg bg-surface-raised text-white text-sm font-bold"
+                  className="w-full text-center py-2.5 rounded-full bg-zinc-800 text-white text-sm font-semibold hover:bg-zinc-700"
                 >
                   تسجيل الدخول
                 </Link>
                 <Link
                   href="/register"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full text-center py-2.5 rounded-lg bg-primary-600 text-white text-sm font-bold"
+                  className="w-full text-center py-2.5 rounded-full bg-zinc-100 text-zinc-950 text-sm font-bold hover:bg-zinc-200"
                 >
                   إنشاء حساب جديد
                 </Link>

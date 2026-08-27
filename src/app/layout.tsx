@@ -38,9 +38,9 @@ export default function RootLayout({
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="alternate icon" href="/favicon.ico" />
       </head>
-      <body className="min-h-screen bg-obsidian text-zinc-100 flex flex-col antialiased selection:bg-purple-600 selection:text-white relative">
+      <body className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col antialiased selection:bg-amber-500 selection:text-black relative">
         <Header />
-        <main className="flex-1 w-full">{children}</main>
+        <main className="flex-1 w-full pt-20 md:pt-24">{children}</main>
         <Footer />
       </body>
     </html>
