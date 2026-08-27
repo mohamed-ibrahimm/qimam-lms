@@ -137,9 +137,9 @@ export default async function HomePage() {
   const hasAnySocial = Boolean(whatsappUrl || contactEmail || facebookUrl || telegramUrl || youtubeUrl || linkedinUrl);
 
   return (
-    <div className="relative overflow-hidden pb-24 bg-[#09080e] text-zinc-100">
+    <div className="page-canvas relative overflow-hidden pb-24 text-zinc-100">
       {/* Ambient Soft Gold & Radiant Luxury Lighting */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+      <div className="ambient-glow absolute inset-0 pointer-events-none overflow-hidden z-0">
         {/* Top central golden dome */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1100px] h-[650px] bg-[radial-gradient(ellipse_at_top,_rgba(245,158,11,0.18),_rgba(217,119,6,0.08)_40%,_transparent_72%)] blur-[70px]" />
         {/* Right warm amber flare */}

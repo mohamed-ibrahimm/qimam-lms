@@ -100,15 +100,27 @@ export default function Header() {
     <header className="fixed top-0 left-0 right-0 z-50 p-2.5 sm:p-4 md:p-5 transition-all">
       <nav className="max-w-7xl mx-auto flex items-center justify-between min-h-[3.75rem] sm:min-h-[4.25rem] px-3.5 sm:px-8 rounded-full bg-zinc-900/90 border border-zinc-800/90 backdrop-blur-2xl shadow-2xl shadow-black/70 relative gap-2 sm:gap-4">
         {/* Logo & Platform Name */}
-        <Link href="/" className="flex items-center gap-2 sm:gap-2.5 shrink-0 group py-1">
-          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-tr from-amber-500 via-yellow-400 to-amber-600 p-[2px] shadow-md shadow-amber-950/40 group-hover:scale-105 transition-transform shrink-0">
-            <div className="w-full h-full bg-[#0c0918] rounded-[10px] flex items-center justify-center">
-              <GraduationCap className="w-4 h-4 text-amber-400" />
+        <Link href="/" className="flex items-center gap-2 sm:gap-3 shrink min-w-0 group py-1">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-amber-500 via-yellow-400 to-amber-600 p-[2px] shadow-lg shadow-amber-950/50 group-hover:scale-105 transition-transform shrink-0">
+            <div className="w-full h-full bg-[#0c0918] rounded-[10px] sm:rounded-[14px] flex items-center justify-center">
+              <GraduationCap className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
             </div>
           </div>
-          <span className="text-xs sm:text-sm md:text-[15px] font-black text-white group-hover:text-amber-300 transition-colors tracking-tight whitespace-nowrap">
-            {platformName}
-          </span>
+          <div className="flex flex-col text-right justify-center min-w-0">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <span className="text-xs sm:text-sm md:text-base font-black text-white group-hover:text-amber-300 transition-colors tracking-tight whitespace-nowrap">
+                {platformName}
+              </span>
+              <span className="inline-flex text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-400/40 font-bold whitespace-nowrap shadow-sm shrink-0">
+                ★ تعليم احترافي
+              </span>
+            </div>
+            {platformTagline && (
+              <span className="text-[9px] sm:text-[11px] text-amber-200/80 font-medium truncate mt-0.5 hidden sm:block">
+                {platformTagline}
+              </span>
+            )}
+          </div>
         </Link>
 
         {/* Desktop Nav (Center) */}
@@ -242,8 +254,8 @@ export default function Header() {
               )}
             </div>
           ) : (
-            /* Auth Buttons (Always visible) */
-            <div className="flex items-center gap-1.5 sm:gap-2">
+            /* Auth Buttons (Desktop/Tablet only - on mobile they live inside the drawer) */
+            <div className="hidden sm:flex items-center gap-1.5 sm:gap-2">
               <Link
                 href="/login"
                 className="px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-bold text-zinc-200 hover:text-white hover:bg-zinc-800/80 border border-zinc-700/80 transition-all shadow-sm flex items-center gap-1"

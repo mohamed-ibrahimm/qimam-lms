@@ -27,30 +27,56 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+.page-canvas {
+  background-color: #09080e;
+  color: #f4f4f5;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
 /* Light Mode System (High-End White & Slate with Gold Accents) */
 html.light-theme,
 html.light-theme body,
-body.light-theme {
+body.light-theme,
+[data-theme="light"],
+[data-theme="light"] body {
   background-color: #f8fafc !important;
-  background-image: radial-gradient(ellipse at 50% -10%, rgba(245, 158, 11, 0.08) 0%, transparent 60%) !important;
+  background-image: none !important;
   color: #0f172a !important;
 }
 
-html.light-theme div[class*="bg-[#09080e]"],
+html.light-theme .page-canvas,
+[data-theme="light"] .page-canvas {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+html.light-theme .ambient-glow,
+[data-theme="light"] .ambient-glow {
+  opacity: 0.1 !important;
+}
+
 html.light-theme .bg-zinc-950,
-html.light-theme .bg-background {
+html.light-theme .bg-background,
+[data-theme="light"] .bg-zinc-950,
+[data-theme="light"] .bg-background {
   background-color: #f8fafc !important;
   color: #0f172a !important;
 }
 
 html.light-theme .bg-zinc-900,
-html.light-theme .bg-surface {
+html.light-theme .bg-surface,
+[data-theme="light"] .bg-zinc-900,
+[data-theme="light"] .bg-surface {
   background-color: #ffffff !important;
+  color: #0f172a !important;
   border-color: #e2e8f0 !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06) !important;
 }
 
 html.light-theme .bg-zinc-800,
-html.light-theme .bg-surface-raised {
+html.light-theme .bg-surface-raised,
+[data-theme="light"] .bg-zinc-800,
+[data-theme="light"] .bg-surface-raised {
   background-color: #f1f5f9 !important;
   border-color: #cbd5e1 !important;
   color: #0f172a !important;
@@ -58,45 +84,57 @@ html.light-theme .bg-surface-raised {
 
 html.light-theme .border-zinc-800,
 html.light-theme .border-zinc-700,
-html.light-theme .border-border {
+html.light-theme .border-border,
+[data-theme="light"] .border-zinc-800 {
   border-color: #e2e8f0 !important;
 }
 
-html.light-theme .text-zinc-400 {
+html.light-theme .text-zinc-400,
+[data-theme="light"] .text-zinc-400 {
   color: #64748b !important;
 }
 
 html.light-theme .text-zinc-300,
-html.light-theme .text-zinc-200 {
+html.light-theme .text-zinc-200,
+[data-theme="light"] .text-zinc-300,
+[data-theme="light"] .text-zinc-200 {
   color: #334155 !important;
 }
 
 html.light-theme .text-white,
-html.light-theme .text-zinc-100 {
+html.light-theme .text-zinc-100,
+[data-theme="light"] .text-white,
+[data-theme="light"] .text-zinc-100 {
   color: #0f172a !important;
 }
 
-html.light-theme nav {
-  background-color: rgba(255, 255, 255, 0.92) !important;
+html.light-theme header nav,
+[data-theme="light"] header nav {
+  background-color: rgba(255, 255, 255, 0.95) !important;
   border-color: #e2e8f0 !important;
   box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08) !important;
 }
 
-html.light-theme nav .text-white {
+html.light-theme header nav .text-white,
+[data-theme="light"] header nav .text-white {
   color: #0f172a !important;
 }
 
-html.light-theme nav .bg-zinc-950\/60 {
+html.light-theme header nav .bg-zinc-950\/60,
+html.light-theme header nav .bg-zinc-950\/50,
+[data-theme="light"] header nav .bg-zinc-950\/60 {
   background-color: #f1f5f9 !important;
   border-color: #e2e8f0 !important;
 }
 
-html.light-theme nav .bg-zinc-800 {
+html.light-theme header nav .bg-zinc-800,
+[data-theme="light"] header nav .bg-zinc-800 {
   background-color: #0f172a !important;
   color: #ffffff !important;
 }
 
-html.light-theme .shimmer-button-content {
+html.light-theme .shimmer-button-content,
+[data-theme="light"] .shimmer-button-content {
   background-color: #ffffff !important;
   color: #0f172a !important;
 }

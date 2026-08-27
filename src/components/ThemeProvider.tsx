@@ -42,6 +42,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       if (body) {
         body.classList.add('light-theme');
         body.classList.remove('dark');
+        body.setAttribute('data-theme', 'light');
+        body.style.backgroundColor = '#f8fafc';
+        body.style.color = '#0f172a';
       }
     } else {
       root.classList.remove('light-theme');
@@ -50,6 +53,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       if (body) {
         body.classList.remove('light-theme');
         body.classList.add('dark');
+        body.setAttribute('data-theme', 'dark');
+        body.style.backgroundColor = '#09080e';
+        body.style.color = '#f4f4f5';
       }
     }
   };
