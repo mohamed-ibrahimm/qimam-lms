@@ -24,6 +24,7 @@ function LoginForm() {
     return '';
   };
   const [error, setError] = useState(getInitialError);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e?: React.FormEvent) => {
     if (e) {
