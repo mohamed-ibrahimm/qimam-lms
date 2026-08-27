@@ -333,11 +333,15 @@ export default function InstructorClient({
         )}
       </div>
 
-      {/* Delete Confirmation Modal (via Portal) */}
-      {mounted && deletingCourse && typeof document !== 'undefined' && createPortal(
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
-          <div className="relative w-full max-w-md bg-surface border border-rose-900/60 rounded-3xl p-6 sm:p-8 space-y-5 shadow-2xl animate-in fade-in zoom-in-95">
-            <div className="flex items-start justify-between gap-3 pb-3 border-b border-border">
+      {/* Delete Confirmation Modal */}
+      {deletingCourse && (
+        <div 
+          className="fixed inset-0 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md"
+          style={{ zIndex: 999999 }}
+          onClick={(e) => { if (e.target === e.currentTarget && !isDeleting) setDeletingCourse(null); }}
+        >
+          <div className="relative w-full max-w-md bg-zinc-900 border border-rose-900/60 rounded-3xl p-6 sm:p-8 space-y-5 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-start justify-between gap-3 pb-3 border-b border-zinc-700">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-2xl bg-rose-950 border border-rose-800 text-rose-400 flex items-center justify-center shrink-0">
                   <AlertTriangle className="w-5 h-5" />
@@ -348,14 +352,15 @@ export default function InstructorClient({
                 </div>
               </div>
               <button
+                type="button"
                 onClick={() => !isDeleting && setDeletingCourse(null)}
-                className="p-1 rounded-lg bg-surface-raised text-zinc-400 hover:text-white"
+                className="p-1.5 rounded-lg bg-zinc-800 text-zinc-400 hover:text-white hover:bg-zinc-700 transition-colors"
               >
-                <X className="w-4 h-4" />
+                <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="space-y-2 text-xs text-zinc-300 leading-relaxed bg-surface-raised/60 p-4 rounded-2xl border border-border/80">
+            <div className="space-y-2 text-xs text-zinc-300 leading-relaxed bg-zinc-800/60 p-4 rounded-2xl border border-zinc-700/80">
               <p>
                 هل أنت متأكد من رغبتك في حذف كورس: <br />
                 <strong className="text-white text-sm block mt-1">"{deletingCourse.title}"</strong>
@@ -370,7 +375,7 @@ export default function InstructorClient({
                 type="button"
                 disabled={isDeleting}
                 onClick={() => setDeletingCourse(null)}
-                className="px-5 py-2.5 rounded-xl bg-surface-raised hover:bg-surface-card border border-border text-xs font-bold text-zinc-300 hover:text-white transition-colors"
+                className="px-5 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-xs font-bold text-zinc-300 hover:text-white transition-colors"
               >
                 إلغاء وتراجع
               </button>
@@ -385,24 +390,28 @@ export default function InstructorClient({
               </button>
             </div>
           </div>
-        </div>,
-        document.body
+        </div>
       )}
 
-      {/* Add New Course Modal (via Portal) */}
-      {mounted && showAddModal && typeof document !== 'undefined' && createPortal(
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
-          <div className="relative w-full max-w-lg bg-surface border border-border rounded-3xl p-6 sm:p-8 space-y-5 shadow-2xl my-8">
-            <div className="flex items-center justify-between pb-3 border-b border-border">
+      {/* Add New Course Modal - inline with high z-index */}
+      {showAddModal && (
+        <div 
+          className="fixed inset-0 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto"
+          style={{ zIndex: 999999 }}
+          onClick={(e) => { if (e.target === e.currentTarget) setShowAddModal(false); }}
+        >
+          <div className="relative w-full max-w-lg bg-zinc-900 border border-zinc-700 rounded-3xl p-6 sm:p-8 space-y-5 shadow-2xl my-8" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between pb-3 border-b border-zinc-700">
               <h3 className="text-base font-black text-white flex items-center gap-2">
-                <Plus className="w-5 h-5 text-primary-400" />
+                <Plus className="w-5 h-5 text-amber-400" />
                 <span>إضافة كورس تدريبي جديد</span>
               </h3>
               <button
+                type="button"
                 onClick={() => setShowAddModal(false)}
-                className="p-1 rounded-lg bg-surface-raised text-zinc-400 hover:text-white"
+                className="p-1.5 rounded-lg bg-zinc-800 text-zinc-400 hover:text-white hover:bg-zinc-700 transition-colors"
               >
-                <X className="w-4 h-4" />
+                <X className="w-5 h-5" />
               </button>
             </div>
 
@@ -421,7 +430,7 @@ export default function InstructorClient({
                   value={newCourse.title}
                   onChange={(e) => setNewCourse({ ...newCourse, title: e.target.value })}
                   placeholder="مثال: دورة احتراف React 19 و Next.js 15"
-                  className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500"
+                  className="w-full px-4 py-2.5 rounded-xl bg-zinc-800 border border-zinc-700 text-white text-xs focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30"
                 />
               </div>
 
@@ -432,7 +441,7 @@ export default function InstructorClient({
                   value={newCourse.shortDescription}
                   onChange={(e) => setNewCourse({ ...newCourse, shortDescription: e.target.value })}
                   placeholder="وصف مختصر يظهر في بطاقات الكورس"
-                  className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500"
+                  className="w-full px-4 py-2.5 rounded-xl bg-zinc-800 border border-zinc-700 text-white text-xs focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30"
                 />
               </div>
 
@@ -453,7 +462,7 @@ export default function InstructorClient({
                   value={newCourse.description}
                   onChange={(e) => setNewCourse({ ...newCourse, description: e.target.value })}
                   placeholder="اشرح محاور الدورة والمشاريع العملية المستهدفة..."
-                  className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500"
+                  className="w-full px-4 py-2.5 rounded-xl bg-zinc-800 border border-zinc-700 text-white text-xs focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30"
                 />
               </div>
 
@@ -464,7 +473,7 @@ export default function InstructorClient({
                     type="number"
                     value={newCourse.price}
                     onChange={(e) => setNewCourse({ ...newCourse, price: parseFloat(e.target.value) || 0 })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-800 border border-zinc-700 text-white text-xs focus:outline-none focus:border-amber-500"
                   />
                 </div>
 
@@ -474,7 +483,7 @@ export default function InstructorClient({
                     type="number"
                     value={newCourse.durationHours}
                     onChange={(e) => setNewCourse({ ...newCourse, durationHours: parseInt(e.target.value) || 1 })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-800 border border-zinc-700 text-white text-xs focus:outline-none focus:border-amber-500"
                   />
                 </div>
 
@@ -483,7 +492,7 @@ export default function InstructorClient({
                   <select
                     value={newCourse.level}
                     onChange={(e) => setNewCourse({ ...newCourse, level: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-800 border border-zinc-700 text-white text-xs focus:outline-none focus:border-amber-500"
                   >
                     <option value="BEGINNER">مبتدئ</option>
                     <option value="INTERMEDIATE">متوسط</option>
@@ -493,18 +502,18 @@ export default function InstructorClient({
                 </div>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-3 border-t border-border">
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-zinc-700">
                 <button
                   type="button"
                   onClick={() => setShowAddModal(false)}
-                  className="px-5 py-2.5 rounded-xl bg-surface-raised text-xs font-bold text-zinc-300"
+                  className="px-5 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-xs font-bold text-zinc-300 transition-colors"
                 >
                   إلغاء
                 </button>
                 <button
                   type="submit"
                   disabled={isCreating || !newCourse.title.trim()}
-                  className="px-6 py-2.5 rounded-xl bg-primary-600 hover:bg-primary-500 text-white text-xs font-bold shadow-md disabled:opacity-50 flex items-center gap-1.5"
+                  className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-zinc-950 text-xs font-black shadow-lg shadow-amber-900/30 disabled:opacity-50 flex items-center gap-1.5 transition-all hover:scale-105"
                 >
                   <Plus className="w-4 h-4" />
                   <span>{isCreating ? 'جاري الإنشاء...' : 'نشر الكورس الآن'}</span>
@@ -512,8 +521,7 @@ export default function InstructorClient({
               </div>
             </form>
           </div>
-        </div>,
-        document.body
+        </div>
       )}
     </div>
   );
