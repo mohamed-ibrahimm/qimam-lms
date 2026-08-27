@@ -268,18 +268,7 @@ export default async function HomePage() {
               </div>
             )}
 
-            <div className="mt-14 flex flex-col items-center gap-6">
-              <div className="flex flex-wrap items-center justify-center gap-2.5">
-                {['React', 'Next.js 14', 'Node.js', 'Laravel', 'Flutter', 'Python & AI', 'TypeScript', 'PostgreSQL', 'Docker'].map((tech) => (
-                  <span
-                    key={tech}
-                    className="px-4 py-2 text-xs text-zinc-400 bg-zinc-900/50 border border-zinc-800 rounded-full hover:border-zinc-700 hover:text-zinc-200 transition-all cursor-default"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-
+            <div className="mt-10 flex flex-col items-center">
               <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs text-zinc-500 pt-2">
                 <div className="flex items-center gap-2">
                   <MapPin className="w-4 h-4 text-zinc-400" />
