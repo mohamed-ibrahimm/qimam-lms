@@ -291,6 +291,210 @@ export default function AdminSettingsPage() {
           </div>
         </div>
 
+        {/* Electronic Payment Gateways Architecture (Visa, Fawry, Apple Pay) */}
+        <div className="p-6 rounded-3xl bg-surface border border-indigo-900/40 space-y-5">
+          <div className="flex items-center gap-2 text-sm font-bold text-indigo-400">
+            <CreditCard className="w-4 h-4" />
+            <span>بوابات الدفع الإلكتروني المباشر (Visa / Fawry / Apple Pay)</span>
+          </div>
+          <p className="text-xs text-zinc-400">
+            تهيئة مفاتيح الربط البرمجية للمدفوعات الآلية الفورية.
+          </p>
+
+          <div className="space-y-4 pt-2 border-t border-border">
+            {/* Visa */}
+            <div className="p-4 rounded-2xl bg-surface-raised border border-border space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-white flex items-center gap-1.5">
+                  💳 فيزا وماستركارد (Visa / Mastercard)
+                </span>
+                <select
+                  value={settings.VISA_ENABLED || 'false'}
+                  onChange={(e) => handleChange('VISA_ENABLED', e.target.value)}
+                  className="px-3 py-1 rounded-lg bg-zinc-900 border border-border text-xs text-white"
+                >
+                  <option value="false">معطلة</option>
+                  <option value="true">مفعلة</option>
+                </select>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <input
+                  type="text"
+                  placeholder="المفتاح العام (Public Key)"
+                  value={settings.VISA_PUBLIC_KEY || ''}
+                  onChange={(e) => handleChange('VISA_PUBLIC_KEY', e.target.value)}
+                  className="w-full px-3.5 py-2 rounded-xl bg-zinc-950 border border-border text-white text-xs font-mono"
+                />
+                <input
+                  type="password"
+                  placeholder="المفتاح السري (Secret Key)"
+                  value={settings.VISA_SECRET_KEY || ''}
+                  onChange={(e) => handleChange('VISA_SECRET_KEY', e.target.value)}
+                  className="w-full px-3.5 py-2 rounded-xl bg-zinc-950 border border-border text-white text-xs font-mono"
+                />
+              </div>
+            </div>
+
+            {/* Fawry */}
+            <div className="p-4 rounded-2xl bg-surface-raised border border-border space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-white flex items-center gap-1.5">
+                  ⚡ شبكة فوري باي (Fawry Pay)
+                </span>
+                <select
+                  value={settings.FAWRY_ENABLED || 'false'}
+                  onChange={(e) => handleChange('FAWRY_ENABLED', e.target.value)}
+                  className="px-3 py-1 rounded-lg bg-zinc-900 border border-border text-xs text-white"
+                >
+                  <option value="false">معطلة</option>
+                  <option value="true">مفعلة</option>
+                </select>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <input
+                  type="text"
+                  placeholder="كود التاجر (Fawry Merchant Code)"
+                  value={settings.FAWRY_MERCHANT_CODE || ''}
+                  onChange={(e) => handleChange('FAWRY_MERCHANT_CODE', e.target.value)}
+                  className="w-full px-3.5 py-2 rounded-xl bg-zinc-950 border border-border text-white text-xs font-mono"
+                />
+                <input
+                  type="password"
+                  placeholder="مفتاح الأمان (Security Key)"
+                  value={settings.FAWRY_SECURITY_KEY || ''}
+                  onChange={(e) => handleChange('FAWRY_SECURITY_KEY', e.target.value)}
+                  className="w-full px-3.5 py-2 rounded-xl bg-zinc-950 border border-border text-white text-xs font-mono"
+                />
+              </div>
+            </div>
+
+            {/* Apple Pay */}
+            <div className="p-4 rounded-2xl bg-surface-raised border border-border space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-white flex items-center gap-1.5">
+                   آبل باي (Apple Pay)
+                </span>
+                <select
+                  value={settings.APPLE_PAY_ENABLED || 'false'}
+                  onChange={(e) => handleChange('APPLE_PAY_ENABLED', e.target.value)}
+                  className="px-3 py-1 rounded-lg bg-zinc-900 border border-border text-xs text-white"
+                >
+                  <option value="false">معطلة</option>
+                  <option value="true">مفعلة</option>
+                </select>
+              </div>
+              <input
+                type="text"
+                placeholder="معرف التاجر (Apple Merchant Identifier)"
+                value={settings.APPLE_PAY_MERCHANT_ID || ''}
+                onChange={(e) => handleChange('APPLE_PAY_MERCHANT_ID', e.target.value)}
+                className="w-full px-3.5 py-2 rounded-xl bg-zinc-950 border border-border text-white text-xs font-mono"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Learning Workflow & Forced Review Settings */}
+        <div className="p-6 rounded-3xl bg-surface border border-amber-900/40 space-y-4">
+          <h3 className="text-sm font-bold text-amber-400 flex items-center gap-2">
+            <span>⚙️ مسار التعلم والتقييم الإجباري</span>
+          </h3>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-semibold text-zinc-300 mb-1">
+                التقييم الإجباري بعد الفيديو الثاني
+              </label>
+              <select
+                value={settings.FORCE_REVIEW_SECOND_LESSON || 'true'}
+                onChange={(e) => handleChange('FORCE_REVIEW_SECOND_LESSON', e.target.value)}
+                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500"
+              >
+                <option value="true">مفعل (إلزام الطالب بتقييم الكورس بعد إنهاء الدرس الثاني)</option>
+                <option value="false">معطل (اختياري للطالب)</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-zinc-300 mb-1">
+                إلزامية اجتياز الواجب/الكويز قبل الدرس التالي
+              </label>
+              <select
+                value={settings.TASK_PASS_REQUIRED || 'true'}
+                onChange={(e) => handleChange('TASK_PASS_REQUIRED', e.target.value)}
+                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500"
+              >
+                <option value="true">مفعل (يجب تحقيق نسبة النجاح للانتقال للدرس التالي)</option>
+                <option value="false">معطل (السماح بالمتابعة)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {/* Theme System & AI Settings */}
+        <div className="p-6 rounded-3xl bg-surface border border-border space-y-4">
+          <h3 className="text-sm font-bold text-white">المظهر العام والذكاء الاصطناعي</h3>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-semibold text-zinc-300 mb-1">
+                الوضع الافتراضي للمنصة (Default Theme)
+              </label>
+              <select
+                value={settings.DEFAULT_THEME || 'DARK'}
+                onChange={(e) => handleChange('DEFAULT_THEME', e.target.value)}
+                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500"
+              >
+                <option value="DARK">الوضع الليلي الفاخر (Obsidian & Gold)</option>
+                <option value="LIGHT">الوضع النهاري النقي (Light Clean)</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-zinc-300 mb-1">
+                سماح للطلاب بتبديل المظهر
+              </label>
+              <select
+                value={settings.ALLOW_STUDENT_THEME_SWITCH || 'true'}
+                onChange={(e) => handleChange('ALLOW_STUDENT_THEME_SWITCH', e.target.value)}
+                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500"
+              >
+                <option value="true">مسموح (يظهر زر التبديل في القائمة)</option>
+                <option value="false">غير مسموح (تثبيت المظهر الافتراضي)</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-zinc-300 mb-1">
+                تفعيل المساعد الذكي للدروس (AI Assistant)
+              </label>
+              <select
+                value={settings.AI_TUTOR_ENABLED || 'true'}
+                onChange={(e) => handleChange('AI_TUTOR_ENABLED', e.target.value)}
+                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500"
+              >
+                <option value="true">مفعل في غرف الدروس</option>
+                <option value="false">معطل</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-zinc-300 mb-1">
+                نموذج الذكاء الاصطناعي المستخدم
+              </label>
+              <select
+                value={settings.AI_MODEL || 'gemini-1.5-pro'}
+                onChange={(e) => handleChange('AI_MODEL', e.target.value)}
+                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500"
+              >
+                <option value="gemini-1.5-pro">Google Gemini 1.5 Pro (عالي الدقة)</option>
+                <option value="gemini-1.5-flash">Google Gemini 1.5 Flash (سريع جداً)</option>
+                <option value="gpt-4o">OpenAI GPT-4o</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
         {/* Security & Completion Settings */}
         <div className="p-6 rounded-3xl bg-surface border border-border space-y-4">
           <h3 className="text-sm font-bold text-white">إعدادات الأمان ونسبة إنجاز الدروس</h3>

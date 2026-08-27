@@ -16,7 +16,8 @@ import {
   Sparkles,
   Layers,
   ArrowRight,
-  ShieldCheck
+  ShieldCheck,
+  Star
 } from 'lucide-react';
 
 interface Props {
@@ -82,7 +83,12 @@ export default async function CourseDetailPage({ params }: Props) {
 
   const requirements: string[] = course.requirements ? JSON.parse(course.requirements) : [];
   const learningObjectives: string[] = course.learningObjectives ? JSON.parse(course.learningObjectives) : [];
-  const totalLessons = course.sections.reduce((acc, s) => acc + s.lessons.length, 0);
+  const totalLessons = course.sections.reduce((acc: number, s: any) => acc + s.lessons.length, 0);
+
+  const reviewsCount = course.reviews.length;
+  const avgRating = reviewsCount > 0
+    ? (course.reviews.reduce((acc: number, r: any) => acc + r.rating, 0) / reviewsCount).toFixed(1)
+    : '5.0';
 
   return (
     <div className="pb-20 space-y-12">
@@ -104,6 +110,11 @@ export default async function CourseDetailPage({ params }: Props) {
               <span className="px-2.5 py-0.5 rounded-full bg-surface-card border border-border text-zinc-300">
                 {course.level === 'BEGINNER' ? 'مبتدئ' : course.level === 'INTERMEDIATE' ? 'متوسط' : 'متقدم'}
               </span>
+              <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 font-bold">
+                <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                <span>{avgRating}</span>
+                <span className="text-zinc-400 font-normal">({reviewsCount > 0 ? `${reviewsCount} تقييم` : 'جديد'})</span>
+              </div>
             </div>
 
             <h1 className="text-2xl sm:text-4xl font-black text-white leading-tight">
@@ -336,8 +347,67 @@ export default async function CourseDetailPage({ params }: Props) {
               </div>
             </div>
           </div>
+
+          {/* Student Reviews & Ratings */}
+          <div className="p-6 sm:p-8 rounded-3xl bg-surface border border-border space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-bold text-white flex items-center gap-2">
+                <Star className="w-5 h-5 text-amber-400 fill-amber-400" />
+                تقييمات ومراجعات الطلاب ({reviewsCount})
+              </h2>
+              <div className="flex items-center gap-2">
+                <div className="flex items-center">
+                  {[1, 2, 3, 4, 5].map((s) => (
+                    <Star key={s} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                  ))}
+                </div>
+                <span className="text-sm font-bold text-white">{avgRating} من 5</span>
+              </div>
+            </div>
+
+            {course.reviews.length === 0 ? (
+              <p className="text-xs text-zinc-400 text-center py-6">
+                كن أول من يقيم هذا الكورس بعد إتمام الدرس الثاني! 🌟
+              </p>
+            ) : (
+              <div className="divide-y divide-border/60">
+                {course.reviews.map((rev: any) => (
+                  <div key={rev.id} className="py-4 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold text-white">
+                        {rev.user?.officialFullName || 'طالب مجهول'}
+                      </span>
+                      <div className="flex items-center gap-1">
+                        {[...Array(rev.rating)].map((_, i) => (
+                          <Star key={i} className="w-3 h-3 fill-amber-400 text-amber-400" />
+                        ))}
+                      </div>
+                    </div>
+                    <p className="text-xs text-zinc-300 leading-relaxed">{rev.comment}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
+
+      {/* Mobile Sticky Bottom CTA Bar */}
+      {!isEnrolled && (
+        <div className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-zinc-950/95 backdrop-blur-xl border-t border-zinc-800 p-3.5 flex items-center justify-between shadow-2xl">
+          <div>
+            <span className="text-[10px] text-zinc-400 block">سعر الكورس</span>
+            <span className="text-lg font-black text-amber-400">{formatPrice(course.price)}</span>
+          </div>
+          <Link
+            href={`/checkout?courseId=${course.id}`}
+            className="px-6 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-zinc-950 font-black text-xs shadow-xl shadow-amber-950/30 flex items-center gap-1.5 transition-transform active:scale-95"
+          >
+            <Sparkles className="w-4 h-4" />
+            <span>اشترك الآن والدفع الفوري</span>
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import AppShell from '@/components/layout/AppShell';
+import { ThemeProvider } from '@/components/ThemeProvider';
 
 import { prisma } from '@/lib/prisma';
 
@@ -52,10 +52,10 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col antialiased selection:bg-amber-500 selection:text-black relative">
-        <Header />
-        <main className="flex-1 w-full pt-24 md:pt-28">{children}</main>
-        <Footer />
+      <body className="min-h-screen bg-zinc-950 text-zinc-100 antialiased selection:bg-amber-500 selection:text-black relative">
+        <ThemeProvider>
+          <AppShell>{children}</AppShell>
+        </ThemeProvider>
       </body>
     </html>
   );

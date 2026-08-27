@@ -1,0 +1,65 @@
+'use client';
+
+import React, { createContext, useContext, useState, useEffect } from 'react';
+
+type Theme = 'DARK' | 'LIGHT';
+
+interface ThemeContextType {
+  theme: Theme;
+  toggleTheme: () => void;
+  setTheme: (t: Theme) => void;
+}
+
+const ThemeContext = createContext<ThemeContextType>({
+  theme: 'DARK',
+  toggleTheme: () => {},
+  setTheme: () => {},
+});
+
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const [theme, setThemeState] = useState<Theme>('DARK');
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const saved = localStorage.getItem('qimam_theme') as Theme | null;
+    if (saved && (saved === 'DARK' || saved === 'LIGHT')) {
+      setThemeState(saved);
+      applyTheme(saved);
+    } else {
+      applyTheme('DARK');
+    }
+  }, []);
+
+  const applyTheme = (t: Theme) => {
+    const root = document.documentElement;
+    if (t === 'LIGHT') {
+      root.classList.add('light-theme');
+      root.classList.remove('dark');
+    } else {
+      root.classList.remove('light-theme');
+      root.classList.add('dark');
+    }
+  };
+
+  const setTheme = (t: Theme) => {
+    setThemeState(t);
+    localStorage.setItem('qimam_theme', t);
+    applyTheme(t);
+  };
+
+  const toggleTheme = () => {
+    const nextTheme = theme === 'DARK' ? 'LIGHT' : 'DARK';
+    setTheme(nextTheme);
+  };
+
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+}
+
+export function useTheme() {
+  return useContext(ThemeContext);
+}

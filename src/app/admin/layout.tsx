@@ -17,7 +17,9 @@ import {
   Users,
   LogOut,
   GraduationCap,
-  MessageSquare
+  MessageSquare,
+  Sparkles,
+  Star
 } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
@@ -44,9 +46,12 @@ export default async function AdminLayout({
 
   const navItems = [
     { name: 'نظرة عامة والتحليلات', href: '/admin', icon: LayoutDashboard },
+    { name: 'المستخدمين والصلاحيات', href: '/admin/users', icon: Users },
     { name: 'المدفوعات والتحويلات', href: '/admin/payments', icon: CreditCard, highlight: true },
+    { name: 'محرر الموقع السحري', href: '/admin/content-editor', icon: Sparkles, highlight: true },
     { name: 'إدارة الكورسات والمحتوى', href: '/admin/courses', icon: BookOpen },
-    { name: 'كوبونات الخصم', href: '/admin/coupons', icon: Tag },
+    { name: 'التقييمات والمراجعات', href: '/admin/reviews', icon: Star },
+    { name: 'كوبونات الخصم الذكية', href: '/admin/coupons', icon: Tag },
     { name: 'منح الوصول اليدوي', href: '/admin/manual-access', icon: KeyRound },
     { name: 'مصمم الشهادات الرقمية', href: '/admin/certificates/designer', icon: Award },
     { name: 'المحادثات المباشرة', href: '/chat', icon: MessageSquare },

@@ -34,7 +34,7 @@ export function formatSeconds(seconds: number): string {
   return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
 }
 
-export function generateRandomCouponCode(prefix: string = 'SAVE'): string {
+export function generateRandomCouponCode(prefix: string = 'QIMAM'): string {
   const chars = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
   let randomPart = '';
   for (let i = 0; i < 6; i++) {

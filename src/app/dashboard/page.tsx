@@ -200,8 +200,16 @@ export default async function StudentDashboardPage() {
 
       {/* Enrolled Courses Grid */}
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-black text-white">كورساتي المشترك بها ({courseEnrollments.length})</h2>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <h2 className="text-xl font-black text-white">الكورسات المشترك فيها ({courseEnrollments.length})</h2>
+            <Link
+              href="/dashboard/my-courses"
+              className="text-xs font-bold text-amber-400 hover:text-amber-300 px-3 py-1 rounded-full bg-amber-950/60 border border-amber-800/60 transition-colors"
+            >
+              عرض الصفحة المستقلة ➔
+            </Link>
+          </div>
           <Link href="/courses" className="text-xs font-bold text-primary-400 hover:underline">
             استكشف المزيد من الكورسات
           </Link>

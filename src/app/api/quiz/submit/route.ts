@@ -63,6 +63,13 @@ export async function POST(req: Request) {
           isQuestionCorrect = true;
           earnedPoints += q.points;
         }
+      } else if (q.questionType === 'SHORT_ANSWER') {
+        const userStr = String(userSelected || '').trim().toLowerCase();
+        const matches = correctAnswers.some((ans) => ans.trim().toLowerCase() === userStr);
+        if (matches) {
+          isQuestionCorrect = true;
+          earnedPoints += q.points;
+        }
       }
 
       questionResults.push({
@@ -144,6 +151,17 @@ export async function POST(req: Request) {
       }
     }
 
+    const motivationalMessages = [
+      'ممتاز! كمل بنفس القوة 🔥',
+      'أحسنت! خطوة كمان وتوصل للهدف 💪',
+      'إنجاز رائع! استمر يا بطل 🚀',
+      'فخورين بيك! يلا على الدرس اللي بعده ⭐',
+      'عاش! قربت تخلص الكورس 🎯',
+    ];
+    const motivationalMessage = isPassed
+      ? motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)]
+      : 'حاول مرة أخرى وركز في مفاهيم الدرس لتجتاز بنجاح!';
+
     return NextResponse.json({
       success: true,
       score: earnedPoints,
@@ -153,6 +171,7 @@ export async function POST(req: Request) {
       passingScorePercent: quiz.passingScorePercent,
       attemptId: attempt.id,
       questionResults,
+      motivationalMessage,
     });
   } catch (error: any) {
     console.error('Quiz submission error:', error);

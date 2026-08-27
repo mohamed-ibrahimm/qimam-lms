@@ -19,6 +19,45 @@ body {
   direction: rtl;
   text-align: right;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Light Mode System (High-End White & Slate with Gold Accents) */
+html.light-theme body {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+html.light-theme .bg-zinc-950,
+html.light-theme .bg-background {
+  background-color: #f8fafc !important;
+}
+
+html.light-theme .bg-zinc-900,
+html.light-theme .bg-surface {
+  background-color: #ffffff !important;
+}
+
+html.light-theme .bg-zinc-800,
+html.light-theme .bg-surface-raised {
+  background-color: #f1f5f9 !important;
+}
+
+html.light-theme .border-zinc-800,
+html.light-theme .border-border {
+  border-color: #e2e8f0 !important;
+}
+
+html.light-theme .text-zinc-400 {
+  color: #64748b !important;
+}
+
+html.light-theme .text-zinc-300 {
+  color: #334155 !important;
+}
+
+html.light-theme .text-white {
+  color: #0f172a !important;
 }
 
 /* Custom Scrollbars */

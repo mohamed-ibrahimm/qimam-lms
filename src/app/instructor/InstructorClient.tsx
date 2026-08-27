@@ -1,8 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import FileUploadInput from '@/components/FileUploadInput';
 import { formatPrice, formatDuration } from '@/lib/utils';
 import {
   GraduationCap,
@@ -38,6 +40,12 @@ export default function InstructorClient({
   const [isDeleting, setIsDeleting] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   // New Course Modal State
   const [showAddModal, setShowAddModal] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
@@ -45,6 +53,7 @@ export default function InstructorClient({
     title: '',
     shortDescription: '',
     description: '',
+    thumbnail: '',
     price: 900,
     durationHours: 20,
     level: 'BEGINNER',
@@ -279,9 +288,9 @@ export default function InstructorClient({
         )}
       </div>
 
-      {/* Delete Confirmation Modal */}
-      {deletingCourse && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm">
+      {/* Delete Confirmation Modal (via Portal) */}
+      {mounted && deletingCourse && typeof document !== 'undefined' && createPortal(
+        <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
           <div className="relative w-full max-w-md bg-surface border border-rose-900/60 rounded-3xl p-6 sm:p-8 space-y-5 shadow-2xl animate-in fade-in zoom-in-95">
             <div className="flex items-start justify-between gap-3 pb-3 border-b border-border">
               <div className="flex items-center gap-3">
@@ -331,12 +340,13 @@ export default function InstructorClient({
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
-      {/* Add New Course Modal */}
-      {showAddModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm overflow-y-auto">
+      {/* Add New Course Modal (via Portal) */}
+      {mounted && showAddModal && typeof document !== 'undefined' && createPortal(
+        <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
           <div className="relative w-full max-w-lg bg-surface border border-border rounded-3xl p-6 sm:p-8 space-y-5 shadow-2xl my-8">
             <div className="flex items-center justify-between pb-3 border-b border-border">
               <h3 className="text-base font-black text-white flex items-center gap-2">
@@ -374,6 +384,15 @@ export default function InstructorClient({
                   className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500"
                 />
               </div>
+
+              <FileUploadInput
+                label="صورة غلاف الكورس (Thumbnail)"
+                folder="thumbnails"
+                accept="image/*"
+                currentValue={newCourse.thumbnail}
+                onUploadComplete={(url) => setNewCourse({ ...newCourse, thumbnail: url })}
+                helperText="ارفع صورة عالية الجودة للكورس من جهازك أو هاتفك"
+              />
 
               <div>
                 <label className="block text-xs font-bold text-zinc-300 mb-1">الوصف التفصيلي للكورس *</label>
@@ -442,7 +461,8 @@ export default function InstructorClient({
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

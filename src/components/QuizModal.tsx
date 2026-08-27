@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import {
   HelpCircle,
   Clock,
@@ -40,6 +41,11 @@ export default function QuizModal({ quiz, isOpen, onClose, onPassed }: QuizModal
   const [submitting, setSubmitting] = useState(false);
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState('');
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Countdown timer
   useEffect(() => {
@@ -57,7 +63,7 @@ export default function QuizModal({ quiz, isOpen, onClose, onPassed }: QuizModal
     return () => clearInterval(timer);
   }, [isOpen, result]);
 
-  if (!isOpen) return null;
+  if (!isOpen || !mounted) return null;
 
   const handleOptionSelect = (questionId: string, optionId: string, questionType: string) => {
     if (result) return; // Prevent change after grading
@@ -117,9 +123,11 @@ export default function QuizModal({ quiz, isOpen, onClose, onPassed }: QuizModal
     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
   };
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
-      <div className="relative w-full max-w-2xl rounded-3xl bg-surface border border-border shadow-2xl p-6 sm:p-8 space-y-6 my-8 max-h-[90vh] overflow-y-auto">
+  if (typeof document === 'undefined') return null;
+
+  return createPortal(
+    <div className="fixed inset-0 z-[99999] w-screen h-[100dvh] flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md overflow-y-auto">
+      <div className="relative w-full max-w-2xl rounded-3xl bg-zinc-900 border border-zinc-800 shadow-2xl p-5 sm:p-8 space-y-6 my-auto max-h-[90vh] overflow-y-auto">
         {/* Modal Header */}
         <div className="flex items-start justify-between gap-4 pb-4 border-b border-border">
           <div className="space-y-1">
@@ -164,8 +172,13 @@ export default function QuizModal({ quiz, isOpen, onClose, onPassed }: QuizModal
               {result.isPassed ? '🎉' : '⚠️'}
             </div>
             <h3 className="text-lg font-black text-white">
-              {result.isPassed ? 'أحسنت! تم اجتياز الاختبار بنجاح' : 'للأسف لم تحقق درجة النجاح المطلوبة'}
+              {result.isPassed ? 'تم اجتياز التقييم بنجاح 🎉' : 'للأسف لم تحقق درجة النجاح المطلوبة'}
             </h3>
+            {result.isPassed && result.motivationalMessage && (
+              <div className="inline-block px-4 py-2 rounded-2xl bg-amber-500/20 border border-amber-400/40 text-amber-300 text-sm font-black shadow-lg">
+                {result.motivationalMessage}
+              </div>
+            )}
             <p className="text-sm font-bold">
               الدرجة المحققة: {result.score} من {result.totalPoints} ({result.percentage}%) • درجة النجاح: {quiz.passingScorePercent}%
             </p>
@@ -294,6 +307,7 @@ export default function QuizModal({ quiz, isOpen, onClose, onPassed }: QuizModal
           )}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

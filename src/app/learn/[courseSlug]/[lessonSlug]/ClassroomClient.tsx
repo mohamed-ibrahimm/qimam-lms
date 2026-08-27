@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import VideoPlayer from '@/components/VideoPlayer';
 import QuizModal from '@/components/QuizModal';
+import ForcedReviewModal from '@/components/ForcedReviewModal';
 import { formatSeconds, formatDate } from '@/lib/utils';
 import {
   BookOpen,
@@ -33,6 +34,8 @@ interface ClassroomClientProps {
   user: any;
   isEnrolled: boolean;
   initialNotes: any[];
+  initialHasReviewed?: boolean;
+  forceReviewEnabled?: boolean;
 }
 
 export default function ClassroomClient({
@@ -41,8 +44,13 @@ export default function ClassroomClient({
   user,
   isEnrolled,
   initialNotes,
+  initialHasReviewed = false,
+  forceReviewEnabled = true,
 }: ClassroomClientProps) {
   const router = useRouter();
+
+  const [hasReviewed, setHasReviewed] = useState(initialHasReviewed);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
   const [activeTab, setActiveTab] = useState<'summary' | 'flashcards' | 'notes' | 'ai' | 'resources'>('summary');
   const [notes, setNotes] = useState<any[]>(initialNotes);
@@ -73,6 +81,13 @@ export default function ClassroomClient({
       .filter((l: any) => l.progresses?.[0]?.isCompleted)
       .map((l: any) => l.id);
   });
+
+  // Check forced review trigger: after finishing 2nd lesson
+  useEffect(() => {
+    if (forceReviewEnabled && !hasReviewed && completedLessonIds.length >= 2) {
+      setIsReviewModalOpen(true);
+    }
+  }, [completedLessonIds, hasReviewed, forceReviewEnabled]);
 
   const summary = activeLesson.summary;
   const keyPoints: string[] = summary?.keyPointsJson ? JSON.parse(summary.keyPointsJson) : [];
@@ -149,30 +164,35 @@ export default function ClassroomClient({
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Top Navbar */}
-      <div className="border-b border-border bg-surface px-4 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-3">
+      {/* Top Focused Learning Header */}
+      <header className="sticky top-0 z-40 border-b border-zinc-800/80 bg-zinc-950/90 backdrop-blur-xl px-3.5 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-2 shadow-lg">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
           <Link
             href={`/courses/${course.slug}`}
-            className="text-xs font-bold text-zinc-400 hover:text-white flex items-center gap-1"
+            className="text-xs font-bold text-zinc-400 hover:text-amber-300 flex items-center gap-1 shrink-0 transition-colors p-1"
+            title="العودة لصفحة الكورس"
           >
-            ← العودة لصفحة الكورس
+            <span>←</span>
+            <span className="hidden xs:inline">العودة لصفحة الكورس</span>
+            <span className="xs:hidden">رجوع</span>
           </Link>
-          <span className="text-zinc-600">|</span>
-          <span className="text-xs font-bold text-white truncate max-w-md">{course.title}</span>
+          <span className="text-zinc-700 shrink-0">|</span>
+          <span className="text-xs font-bold text-white truncate max-w-[130px] xs:max-w-[220px] sm:max-w-md">
+            {course.title}
+          </span>
         </div>
 
-        <div className="flex items-center gap-3">
-          <span className="text-xs text-zinc-400">إنجازك في الكورس:</span>
-          <div className="w-28 h-2 rounded-full bg-surface-raised overflow-hidden border border-border">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          <span className="text-[11px] text-zinc-400 hidden sm:inline">إنجازك في الكورس:</span>
+          <div className="w-16 xs:w-24 sm:w-28 h-2 rounded-full bg-zinc-800 overflow-hidden border border-zinc-700/60">
             <div
-              className="h-full bg-gradient-to-r from-primary-600 to-purple-500 rounded-full"
+              className="h-full bg-gradient-to-r from-amber-500 to-yellow-400 rounded-full"
               style={{ width: `${progressPercent}%` }}
             />
           </div>
-          <span className="text-xs font-bold text-primary-400">{progressPercent}%</span>
+          <span className="text-xs font-bold text-amber-400">{progressPercent}%</span>
         </div>
-      </div>
+      </header>
 
       <div className="max-w-7xl mx-auto px-4 py-6 grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
         {/* Main Content Area (Video & Tabs) */}
@@ -612,6 +632,17 @@ export default function ClassroomClient({
           onPassed={handleLessonPassed}
         />
       )}
+
+      {/* Forced Review Modal */}
+      <ForcedReviewModal
+        courseId={course.id}
+        courseTitle={course.title}
+        isOpen={isReviewModalOpen}
+        onSubmitted={() => {
+          setHasReviewed(true);
+          setIsReviewModalOpen(false);
+        }}
+      />
     </div>
   );
 }

@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import FileUploadInput from '@/components/FileUploadInput';
 import { formatPrice } from '@/lib/utils';
 import {
   CreditCard,
@@ -44,7 +45,7 @@ export default function CheckoutClient({
   // Form Fields
   const [transactionId, setTransactionId] = useState('');
   const [senderPhone, setSenderPhone] = useState('');
-  const [screenshotUrl, setScreenshotUrl] = useState('https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=600');
+  const [screenshotUrl, setScreenshotUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [formError, setFormError] = useState('');
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
@@ -348,21 +349,14 @@ export default function CheckoutClient({
                     </div>
                   </div>
 
-                  <div>
-                    <label className="block text-xs font-bold text-zinc-300 mb-1">
-                      رابط لقطة شاشة إيصال التحويل (Proof Screenshot)
-                    </label>
-                    <input
-                      type="url"
-                      value={screenshotUrl}
-                      onChange={(e) => setScreenshotUrl(e.target.value)}
-                      placeholder="https://..."
-                      className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500"
-                    />
-                    <p className="text-[10px] text-zinc-500 mt-1">
-                      يمكنك استخدام رابط مباشر لإيصال التحويل للمساعدة في تسريع التدقيق والتأكيد من الإدارة.
-                    </p>
-                  </div>
+                  <FileUploadInput
+                    label="صورة أو لقطة شاشة إيصال التحويل (Proof Screenshot) *"
+                    folder="payments"
+                    accept="image/*"
+                    currentValue={screenshotUrl}
+                    onUploadComplete={(url) => setScreenshotUrl(url)}
+                    helperText="اختر صورة إيصال التحويل من جهازك أو التقط لقطة شاشة من تطبيق إنستاباي أو المحفظة"
+                  />
 
                   <button
                     type="submit"

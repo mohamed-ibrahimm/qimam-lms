@@ -149,27 +149,30 @@ export default async function HomePage() {
         <section className="pt-6 pb-8 md:pt-14 md:pb-16">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             
-            <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-gradient-to-r from-amber-950/40 via-zinc-900/80 to-amber-950/40 border border-amber-500/40 mb-8 shadow-sm">
-              <div className="flex items-center gap-2">
-                <Rocket className="w-4 h-4 text-amber-400 animate-pulse" />
-                <span className="text-xs text-amber-300 font-bold">جديد!</span>
+            {/* Promotional Badge / Banner */}
+            {(settings.BANNER_ENABLED !== 'false') && (
+              <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-gradient-to-r from-amber-950/40 via-zinc-900/80 to-amber-950/40 border border-amber-500/40 mb-8 shadow-sm">
+                <div className="flex items-center gap-2">
+                  <Rocket className="w-4 h-4 text-amber-400 animate-pulse" />
+                  <span className="text-xs text-amber-300 font-bold">{settings.HERO_BADGE || 'جديد!'}</span>
+                </div>
+                <div className="h-4 w-px bg-amber-500/40" />
+                <a href="#trending-diploma" className="flex items-center gap-2 group text-xs text-zinc-300 hover:text-amber-300 transition-colors">
+                  <span>{settings.BANNER_TEXT || 'خصم استثنائي 50% لفترة محدودة على جميع المسارات الهندسية 🚀'}</span>
+                  <ArrowLeft className="w-3.5 h-3.5 text-amber-400 group-hover:-translate-x-1 transition-transform" />
+                </a>
               </div>
-              <div className="h-4 w-px bg-amber-500/40" />
-              <a href="#trending-diploma" className="flex items-center gap-2 group text-xs text-zinc-300 hover:text-amber-300 transition-colors">
-                <span>خصم استثنائي 51% على الدبلومة الأكثر طلباً</span>
-                <ArrowLeft className="w-3.5 h-3.5 text-amber-400 group-hover:-translate-x-1 transition-transform" />
-              </a>
-            </div>
+            )}
 
             <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-tight">
-              <span className="text-zinc-100 block mb-2">نحول شغفك البرمجي</span>
+              <span className="text-zinc-100 block mb-2">{settings.HERO_TITLE || 'نحول شغفك البرمجي'}</span>
               <span className="bg-gradient-to-r from-zinc-400 via-zinc-100 to-amber-300 bg-clip-text text-transparent">
-                إلى مسيرة مهنية هندسية متكاملة
+                {settings.PLATFORM_TAGLINE || 'إلى مسيرة مهنية هندسية متكاملة'}
               </span>
             </h1>
 
             <p className="text-sm sm:text-base md:text-xl text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed text-balance">
-              أكاديمية المهندس محمد إبراهيم — نقدم مسارات تدريبية هندسية متكاملة، دبلومات برمجية شاملة، مشاريع إنتاج واقعية مطابقة لسوق العمل، ومساعد ذكاء اصطناعي تفاعلي يرافقك خطوة بخطوة.
+              {settings.HERO_SUBTITLE || 'أكاديمية المهندس محمد إبراهيم — نقدم مسارات تدريبية هندسية متكاملة، دبلومات برمجية شاملة، مشاريع إنتاج واقعية مطابقة لسوق العمل، ومساعد ذكاء اصطناعي تفاعلي يرافقك خطوة بخطوة.'}
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -177,7 +180,7 @@ export default async function HomePage() {
                 <div className="shimmer-beam-gold" />
                 <div className="shimmer-button-content px-8 py-3.5 text-sm font-bold text-amber-300 group-hover:text-amber-200">
                   <Flame className="w-4 h-4 text-amber-400 animate-bounce" />
-                  <span>الدبلومة الأكثر طلباً (خصم 51%)</span>
+                  <span>{settings.FEATURED_DIPLOMA_BADGE || 'الدبلومة الأكثر طلباً (خصم 51%)'}</span>
                   <ArrowLeft className="w-4 h-4 text-amber-400 group-hover:-translate-x-1.5 transition-transform duration-300" />
                 </div>
               </a>
@@ -187,7 +190,7 @@ export default async function HomePage() {
                 className="group flex items-center gap-2 px-7 py-3.5 text-sm font-medium text-zinc-400 hover:text-zinc-100 transition-colors rounded-full border border-zinc-800/80 bg-zinc-900/60 hover:border-zinc-700 hover:bg-zinc-900"
               >
                 <Sparkles className="w-4 h-4 text-zinc-400 group-hover:text-amber-300 transition-colors" />
-                <span>تصفح دليل الكورسات</span>
+                <span>{settings.HERO_CTA_PRIMARY || 'تصفح دليل الكورسات'}</span>
                 <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300" />
               </Link>
             </div>

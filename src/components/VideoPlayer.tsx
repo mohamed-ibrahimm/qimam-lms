@@ -170,7 +170,7 @@ export default function VideoPlayer({
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={() => isPlaying && setShowControls(false)}
-      className="relative w-full aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl border border-border group select-none"
+      className="relative w-full aspect-video bg-black rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-zinc-800 group select-none max-h-[75vh]"
     >
       {/* Video Element */}
       <video
@@ -182,8 +182,9 @@ export default function VideoPlayer({
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
         onEnded={() => setIsPlaying(false)}
-        className="w-full h-full object-contain cursor-pointer"
+        className="w-full h-full object-contain cursor-pointer bg-black"
         playsInline
+        webkit-playsinline="true"
       />
 
       {/* Floating Dynamic Watermark (Security Layer) */}

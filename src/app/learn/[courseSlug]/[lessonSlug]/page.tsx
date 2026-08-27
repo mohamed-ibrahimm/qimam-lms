@@ -88,6 +88,19 @@ export default async function ClassroomPage({ params }: Props) {
       })
     : [];
 
+  // Check if student has already reviewed this course
+  const existingReview = user
+    ? await prisma.review.findFirst({
+        where: { userId: user.id, courseId: course.id },
+      })
+    : null;
+
+  // Check global or course forced review setting
+  const forcedReviewSetting = await prisma.platformSetting.findUnique({
+    where: { key: 'FORCE_REVIEW_SECOND_LESSON' },
+  });
+  const forceReviewEnabled = forcedReviewSetting ? forcedReviewSetting.value === 'true' : true;
+
   return (
     <ClassroomClient
       course={course as any}
@@ -95,6 +108,8 @@ export default async function ClassroomPage({ params }: Props) {
       user={user}
       isEnrolled={isEnrolled}
       initialNotes={notes}
+      initialHasReviewed={Boolean(existingReview)}
+      forceReviewEnabled={forceReviewEnabled}
     />
   );
 }

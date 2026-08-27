@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
@@ -19,8 +20,11 @@ import {
   Sparkles,
   ChevronDown,
   LogIn,
-  UserPlus
+  UserPlus,
+  Sun,
+  Moon
 } from 'lucide-react';
+import { useTheme } from '@/components/ThemeProvider';
 
 export default function Header() {
   const pathname = usePathname();
@@ -29,6 +33,8 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   const [platformName, setPlatformName] = useState('أكاديمية قِمَم');
   const [platformTagline, setPlatformTagline] = useState('المنصة الرائدة لعلوم البرمجة والتقنية');
@@ -61,6 +67,7 @@ export default function Header() {
   };
 
   useEffect(() => {
+    setMounted(true);
     fetchUser();
     fetchSettings();
 
@@ -201,12 +208,21 @@ export default function Header() {
                   )}
 
                   <Link
+                    href="/dashboard/my-courses"
+                    onClick={() => setDropdownOpen(false)}
+                    className="flex items-center gap-2 px-4 py-2.5 text-xs text-amber-300 hover:bg-zinc-800 hover:text-white transition-colors font-bold"
+                  >
+                    <BookOpen className="w-4 h-4 text-amber-400" />
+                    الكورسات المشترك فيها
+                  </Link>
+
+                  <Link
                     href="/dashboard"
                     onClick={() => setDropdownOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-200 hover:bg-zinc-800 hover:text-white transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 text-xs text-zinc-200 hover:bg-zinc-800 hover:text-white transition-colors"
                   >
-                    <BookOpen className="w-4 h-4 text-blue-400" />
-                    لوحة دراستي وكورساتي
+                    <LayoutDashboard className="w-4 h-4 text-zinc-400" />
+                    لوحة المتابعة الأكاديمية
                   </Link>
 
                   <Link
@@ -257,6 +273,17 @@ export default function Header() {
             </div>
           )}
 
+          {/* Theme Toggle Button (Light/Dark Mode) */}
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="p-2 sm:p-2.5 rounded-full border border-zinc-800 bg-zinc-900/90 text-amber-400 hover:text-amber-300 hover:bg-zinc-800 transition-all flex items-center justify-center shrink-0 shadow-sm"
+            title={theme === 'DARK' ? 'التحويل إلى الوضع النهاري' : 'التحويل إلى الوضع الليلي'}
+            aria-label="تبديل المظهر"
+          >
+            {theme === 'DARK' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4 text-purple-400" />}
+          </button>
+
           {/* Mobile Menu Hamburger Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -275,8 +302,8 @@ export default function Header() {
       {/* =========================================================================
           Ultra-Luxurious Full Mobile Drawer Sheet
          ========================================================================= */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 z-50 flex flex-col bg-zinc-950/95 backdrop-blur-2xl p-4 sm:p-6 overflow-y-auto animate-in fade-in duration-200">
+      {mounted && mobileMenuOpen && typeof document !== 'undefined' && createPortal(
+        <div className="lg:hidden fixed inset-0 z-[99999] w-screen h-[100dvh] flex flex-col bg-zinc-950/98 backdrop-blur-2xl p-4 sm:p-6 overflow-y-auto animate-in fade-in duration-200">
           <div className="max-w-md w-full mx-auto space-y-4 pt-2 pb-10">
             
             {/* Drawer Top Header */}
@@ -292,13 +319,23 @@ export default function Header() {
                   <span className="text-[10px] text-amber-300 font-medium">★ منصة هندسية معتمدة</span>
                 </div>
               </div>
-              <button
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-9 h-9 rounded-full bg-zinc-800/90 hover:bg-zinc-700 text-zinc-300 hover:text-white flex items-center justify-center transition-colors border border-zinc-700"
-                aria-label="إغلاق"
-              >
-                <X className="w-4 h-4" />
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={toggleTheme}
+                  className="w-9 h-9 rounded-full bg-zinc-800/90 text-amber-400 flex items-center justify-center border border-zinc-700"
+                  title="تبديل المظهر"
+                >
+                  {theme === 'DARK' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4 text-purple-400" />}
+                </button>
+                <button
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-9 h-9 rounded-full bg-zinc-800/90 hover:bg-zinc-700 text-zinc-300 hover:text-white flex items-center justify-center transition-colors border border-zinc-700"
+                  aria-label="إغلاق"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
             </div>
 
             {/* Auth Section at the TOP of the Drawer */}
@@ -347,12 +384,20 @@ export default function Header() {
                     </Link>
                   )}
                   <Link
+                    href="/dashboard/my-courses"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="col-span-2 py-3 px-4 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 font-bold text-xs flex items-center justify-center gap-2 border border-amber-500/30 transition-colors"
+                  >
+                    <BookOpen className="w-4 h-4 text-amber-400" />
+                    <span>الكورسات المشترك فيها 🎓</span>
+                  </Link>
+                  <Link
                     href="/dashboard"
                     onClick={() => setMobileMenuOpen(false)}
                     className="py-2.5 px-3 rounded-xl bg-zinc-800/90 hover:bg-zinc-700 text-zinc-200 font-semibold text-xs flex items-center justify-center gap-1.5 border border-zinc-700/80"
                   >
-                    <BookOpen className="w-3.5 h-3.5 text-purple-400" />
-                    <span>لوحة دراستي</span>
+                    <LayoutDashboard className="w-3.5 h-3.5 text-zinc-400" />
+                    <span>لوحة المتابعة</span>
                   </Link>
                   <Link
                     href="/profile"
@@ -441,7 +486,8 @@ export default function Header() {
             )}
 
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </header>
   );
