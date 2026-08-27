@@ -49,7 +49,7 @@ function LoginForm() {
         } else if (callbackUrl && callbackUrl !== '/login' && !callbackUrl.startsWith('/login')) {
           target = callbackUrl;
         }
-        window.location.href = target;
+        window.location.replace(target);
       }
     } catch (err: any) {
       setError('حدث خطأ في الاتصال بالخادم');
