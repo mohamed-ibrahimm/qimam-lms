@@ -276,8 +276,12 @@ export default function Header() {
           {/* Theme Toggle Button (Light/Dark Mode) */}
           <button
             type="button"
-            onClick={toggleTheme}
-            className="p-2 sm:p-2.5 rounded-full border border-zinc-800 bg-zinc-900/90 text-amber-400 hover:text-amber-300 hover:bg-zinc-800 transition-all flex items-center justify-center shrink-0 shadow-sm"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggleTheme();
+            }}
+            className="p-2 sm:p-2.5 rounded-full border border-zinc-800 bg-zinc-900/90 text-amber-400 hover:text-amber-300 hover:bg-zinc-800 transition-all flex items-center justify-center shrink-0 shadow-sm cursor-pointer"
             title={theme === 'DARK' ? 'التحويل إلى الوضع النهاري' : 'التحويل إلى الوضع الليلي'}
             aria-label="تبديل المظهر"
           >
@@ -322,8 +326,12 @@ export default function Header() {
               <div className="flex items-center gap-2">
                 <button
                   type="button"
-                  onClick={toggleTheme}
-                  className="w-9 h-9 rounded-full bg-zinc-800/90 text-amber-400 flex items-center justify-center border border-zinc-700"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleTheme();
+                  }}
+                  className="w-9 h-9 rounded-full bg-zinc-800/90 text-amber-400 flex items-center justify-center border border-zinc-700 cursor-pointer"
                   title="تبديل المظهر"
                 >
                   {theme === 'DARK' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4 text-purple-400" />}

@@ -39,6 +39,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       root.classList.add('light-theme');
       root.classList.remove('dark');
       root.setAttribute('data-theme', 'light');
+      root.style.setProperty('--bg-app', '#fbfbfa');
+      root.style.setProperty('--bg-surface', '#ffffff');
+      root.style.setProperty('--text-main', '#1e293b');
+      root.style.colorScheme = 'light';
       if (body) {
         body.classList.add('light-theme');
         body.classList.remove('dark');
@@ -50,6 +54,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       root.classList.remove('light-theme');
       root.classList.add('dark');
       root.setAttribute('data-theme', 'dark');
+      root.style.setProperty('--bg-app', '#0f0f15');
+      root.style.setProperty('--bg-surface', '#15151e');
+      root.style.setProperty('--text-main', '#f4f4f5');
+      root.style.colorScheme = 'dark';
       if (body) {
         body.classList.remove('light-theme');
         body.classList.add('dark');
