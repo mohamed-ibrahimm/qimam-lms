@@ -180,12 +180,12 @@ export default async function HomePage() {
             <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight mb-6 leading-tight">
               <span className="text-white block mb-2 drop-shadow-sm">{settings.HERO_TITLE || 'نحول شغفك البرمجي'}</span>
               <span className="bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-500 bg-clip-text text-transparent drop-shadow-[0_2px_25px_rgba(245,158,11,0.35)]">
-                {settings.PLATFORM_TAGLINE || 'إلى مسيرة مهنية هندسية متكاملة'}
+                {(settings.PLATFORM_TAGLINE && !settings.PLATFORM_TAGLINE.includes('?')) ? settings.PLATFORM_TAGLINE : 'بوابتك الاحترافية لاحتراف البرمجة والذكاء الاصطناعي والتصميم'}
               </span>
             </h1>
 
             <p className="text-sm sm:text-base md:text-xl text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed text-balance">
-              {settings.HERO_SUBTITLE || `${settings.PLATFORM_NAME || 'أكاديمية المهندس محمد إبراهيم'} — نقدم مسارات تدريبية هندسية متكاملة، دبلومات برمجية شاملة، مشاريع إنتاج واقعية مطابقة لسوق العمل، ومساعد ذكاء اصطناعي تفاعلي يرافقك خطوة بخطوة.`}
+              {settings.HERO_SUBTITLE || `${(settings.PLATFORM_NAME && !settings.PLATFORM_NAME.includes('?')) ? settings.PLATFORM_NAME : 'أكاديمية م / محمد إبراهيم'} — نقدم مسارات تدريبية هندسية متكاملة، دبلومات برمجية شاملة، مشاريع إنتاج واقعية مطابقة لسوق العمل، ومساعد ذكاء اصطناعي تفاعلي يرافقك خطوة بخطوة.`}
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

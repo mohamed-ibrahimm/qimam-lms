@@ -44,8 +44,8 @@ export default function Header() {
       const res = await fetch('/api/settings', { cache: 'no-store' });
       if (res.ok) {
         const data = await res.json();
-        if (data.platformName) setPlatformName(data.platformName);
-        if (data.platformTagline) setPlatformTagline(data.platformTagline);
+        if (data.platformName && !data.platformName.includes('?')) setPlatformName(data.platformName);
+        if (data.platformTagline && !data.platformTagline.includes('?')) setPlatformTagline(data.platformTagline);
       }
     } catch (e) {}
   };
