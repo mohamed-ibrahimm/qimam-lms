@@ -43,7 +43,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         body.classList.add('light-theme');
         body.classList.remove('dark');
         body.setAttribute('data-theme', 'light');
-        body.style.backgroundColor = '#f8fafc';
+        body.style.backgroundColor = '#ffffff';
         body.style.color = '#0f172a';
       }
     } else {

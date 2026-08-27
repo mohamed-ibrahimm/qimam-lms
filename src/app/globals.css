@@ -39,20 +39,20 @@ html.light-theme body,
 body.light-theme,
 [data-theme="light"],
 [data-theme="light"] body {
-  background-color: #f8fafc !important;
+  background-color: #ffffff !important;
   background-image: none !important;
   color: #0f172a !important;
 }
 
 html.light-theme .page-canvas,
 [data-theme="light"] .page-canvas {
-  background-color: #f8fafc !important;
+  background-color: #ffffff !important;
   color: #0f172a !important;
 }
 
 html.light-theme .ambient-glow,
 [data-theme="light"] .ambient-glow {
-  opacity: 0.1 !important;
+  display: none !important;
 }
 
 html.light-theme .bg-zinc-950,

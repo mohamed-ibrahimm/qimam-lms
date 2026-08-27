@@ -52,7 +52,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-screen bg-zinc-950 text-zinc-100 antialiased selection:bg-amber-500 selection:text-black relative">
+      <body className="min-h-screen antialiased selection:bg-amber-500 selection:text-black relative">
         <ThemeProvider>
           <AppShell>{children}</AppShell>
         </ThemeProvider>
