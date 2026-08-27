@@ -281,21 +281,11 @@ export default function Header() {
               e.stopPropagation();
               toggleTheme();
             }}
-            className="px-2.5 sm:px-3 py-1.5 rounded-full border border-zinc-300 dark:border-zinc-800 bg-white dark:bg-zinc-900/90 text-zinc-800 dark:text-amber-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all flex items-center gap-1.5 shrink-0 shadow-sm cursor-pointer"
-            title={theme === 'DARK' ? 'الوضع الحالي: ليلي — اضغط للتحويل للنهاري' : 'الوضع الحالي: نهاري — اضغط للتحويل لليلي'}
+            className="p-2 sm:p-2.5 rounded-full border border-zinc-800 bg-zinc-900/90 text-amber-400 hover:text-amber-300 hover:bg-zinc-800 transition-all flex items-center justify-center shrink-0 shadow-sm cursor-pointer"
+            title={theme === 'DARK' ? 'التحويل إلى الوضع النهاري' : 'التحويل إلى الوضع الليلي'}
             aria-label="تبديل المظهر"
           >
-            {theme === 'DARK' ? (
-              <>
-                <Moon className="w-3.5 h-3.5 text-purple-400" />
-                <span className="text-[11px] font-bold text-zinc-200 hidden xs:inline">ليلي</span>
-              </>
-            ) : (
-              <>
-                <Sun className="w-3.5 h-3.5 text-amber-500" />
-                <span className="text-[11px] font-bold text-zinc-800 hidden xs:inline">نهاري</span>
-              </>
-            )}
+            {theme === 'DARK' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4 text-purple-400" />}
           </button>
 
           {/* Mobile Menu Hamburger Button */}
