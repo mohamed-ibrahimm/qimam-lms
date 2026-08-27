@@ -93,23 +93,23 @@ export default function Header() {
     <header className="fixed top-0 left-0 right-0 z-50 p-2.5 sm:p-4 md:p-5 transition-all">
       <nav className="max-w-7xl mx-auto flex items-center justify-between min-h-[3.75rem] sm:min-h-[4.25rem] px-3.5 sm:px-8 rounded-full bg-zinc-900/90 border border-zinc-800/90 backdrop-blur-2xl shadow-2xl shadow-black/70 relative gap-2 sm:gap-4">
         {/* Logo & Platform Name (Royal Purple & Gold Emblem Style - Fully Responsive) */}
-        <Link href="/" className="flex items-center gap-2.5 sm:gap-3.5 shrink min-w-0 group py-1">
-          <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-purple-600 via-fuchsia-600 to-amber-400 p-[2px] shadow-lg shadow-purple-950/60 group-hover:scale-105 transition-transform shrink-0">
+        <Link href="/" className="flex items-center gap-2 sm:gap-3 shrink min-w-0 group py-1">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-purple-600 via-fuchsia-600 to-amber-400 p-[2px] shadow-lg shadow-purple-950/60 group-hover:scale-105 transition-transform shrink-0">
             <div className="w-full h-full bg-[#0c0918] rounded-[10px] sm:rounded-[14px] flex items-center justify-center">
-              <GraduationCap className="w-5 h-5 sm:w-6 sm:h-6 text-amber-400" />
+              <GraduationCap className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
             </div>
           </div>
           <div className="flex flex-col text-right justify-center min-w-0">
-            <div className="flex items-center gap-2">
-              <span className="text-xs xs:text-sm sm:text-base md:text-lg font-bold text-white group-hover:text-amber-200 transition-colors tracking-tight truncate max-w-[130px] xs:max-w-[190px] sm:max-w-none">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <span className="text-[11px] xs:text-xs sm:text-sm md:text-base font-bold text-white group-hover:text-amber-200 transition-colors tracking-tight whitespace-nowrap">
                 {platformName}
               </span>
-              <span className="hidden md:inline-flex text-[10px] px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-400/40 font-bold whitespace-nowrap shadow-sm shadow-amber-950/30 shrink-0">
+              <span className="hidden md:inline-flex text-[10px] px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-400/40 font-bold whitespace-nowrap shadow-sm shadow-amber-950/30 shrink-0">
                 ★ تعليم احترافي
               </span>
             </div>
             {platformTagline && (
-              <span className="text-[10px] sm:text-[11px] text-amber-200/75 font-medium truncate mt-0.5 hidden sm:block">
+              <span className="text-[9px] sm:text-[11px] text-amber-200/75 font-medium truncate mt-0.5 hidden sm:block">
                 {platformTagline}
               </span>
             )}

@@ -168,7 +168,7 @@ export default async function HomePage() {
               </span>
             </h1>
 
-            <p className="text-base sm:text-xl text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed text-balance">
+            <p className="text-sm sm:text-base md:text-xl text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed text-balance">
               أكاديمية المهندس محمد إبراهيم — نقدم مسارات تدريبية هندسية متكاملة، دبلومات برمجية شاملة، مشاريع إنتاج واقعية مطابقة لسوق العمل، ومساعد ذكاء اصطناعي تفاعلي يرافقك خطوة بخطوة.
             </p>
 
