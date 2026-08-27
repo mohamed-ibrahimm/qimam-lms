@@ -18,8 +18,15 @@ function LoginForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e?: React.FormEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    if (!formData.identifier.trim() || !formData.password.trim()) {
+      setError('يرجى إدخال اسم المستخدم وكلمة المرور');
+      return;
+    }
     setLoading(true);
     setError('');
 
@@ -32,16 +39,17 @@ function LoginForm() {
 
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error || 'فشل تسجيل الدخول');
+        setError(data.error || 'فشل تسجيل الدخول: يرجى التحقق من اسم المستخدم وكلمة المرور');
       } else {
+        let target = '/dashboard';
         if (data.user?.role === 'ADMIN') {
-          router.push('/admin');
+          target = '/admin';
         } else if (data.user?.role === 'INSTRUCTOR') {
-          router.push('/instructor');
-        } else {
-          router.push(callbackUrl);
+          target = '/instructor';
+        } else if (callbackUrl && callbackUrl !== '/login' && !callbackUrl.startsWith('/login')) {
+          target = callbackUrl;
         }
-        router.refresh();
+        window.location.href = target;
       }
     } catch (err: any) {
       setError('حدث خطأ في الاتصال بالخادم');
@@ -78,7 +86,7 @@ function LoginForm() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} method="POST" action="#" className="space-y-4">
           <div>
             <label className="block text-xs font-bold text-zinc-300 mb-1.5">
               اسم المستخدم أو البريد الإلكتروني
