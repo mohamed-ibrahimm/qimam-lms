@@ -3,11 +3,18 @@ import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
 import { Mail, CheckCircle2, XCircle, Clock } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 export default async function EmailLogsPage() {
-  const emails = await prisma.emailLog.findMany({
-    orderBy: { sentAt: 'desc' },
-    take: 50,
-  });
+  let emails: any[] = [];
+  try {
+    emails = await prisma.emailLog.findMany({
+      orderBy: { sentAt: 'desc' },
+      take: 50,
+    });
+  } catch (e) {
+    console.error('Failed to fetch email logs:', e);
+  }
 
   return (
     <div className="space-y-6">

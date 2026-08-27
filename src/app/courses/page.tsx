@@ -13,6 +13,8 @@ interface Props {
   };
 }
 
+export const dynamic = 'force-dynamic';
+
 export default async function CoursesPage({ searchParams }: Props) {
   const q = searchParams.q || '';
   const categorySlug = searchParams.category || '';
@@ -44,18 +46,26 @@ export default async function CoursesPage({ searchParams }: Props) {
   if (sort === 'price-high') orderBy = { price: 'desc' };
   if (sort === 'duration') orderBy = { durationHours: 'desc' };
 
-  const [courses, categories] = await Promise.all([
-    prisma.course.findMany({
-      where,
-      orderBy,
-      include: {
-        instructor: { select: { officialFullName: true, avatarUrl: true } },
-        category: true,
-        _count: { select: { sections: true, enrollments: true } },
-      },
-    }),
-    prisma.category.findMany({ orderBy: { orderIndex: 'asc' } }),
-  ]);
+  let courses: any[] = [];
+  let categories: any[] = [];
+  try {
+    const res = await Promise.all([
+      prisma.course.findMany({
+        where,
+        orderBy,
+        include: {
+          instructor: { select: { officialFullName: true, avatarUrl: true } },
+          category: true,
+          _count: { select: { sections: true, enrollments: true } },
+        },
+      }),
+      prisma.category.findMany({ orderBy: { orderIndex: 'asc' } }),
+    ]);
+    courses = res[0];
+    categories = res[1];
+  } catch (e) {
+    console.error('Failed to fetch courses:', e);
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">

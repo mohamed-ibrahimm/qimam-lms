@@ -23,34 +23,41 @@ interface Props {
   params: { slug: string };
 }
 
+export const dynamic = 'force-dynamic';
+
 export default async function CourseDetailPage({ params }: Props) {
   const user = await getCurrentUser();
-  const course = await prisma.course.findUnique({
-    where: { slug: params.slug },
-    include: {
-      instructor: {
-        select: { id: true, officialFullName: true, bio: true, avatarUrl: true }
-      },
-      category: true,
-      sections: {
-        orderBy: { orderIndex: 'asc' },
-        include: {
-          lessons: {
-            orderBy: { orderIndex: 'asc' },
-            include: {
-              summary: true,
-              quiz: { select: { id: true, title: true } }
+  let course: any = null;
+  try {
+    course = await prisma.course.findUnique({
+      where: { slug: params.slug },
+      include: {
+        instructor: {
+          select: { id: true, officialFullName: true, bio: true, avatarUrl: true }
+        },
+        category: true,
+        sections: {
+          orderBy: { orderIndex: 'asc' },
+          include: {
+            lessons: {
+              orderBy: { orderIndex: 'asc' },
+              include: {
+                summary: true,
+                quiz: { select: { id: true, title: true } }
+              }
             }
           }
+        },
+        finalExam: true,
+        reviews: {
+          where: { isApproved: true },
+          include: { user: { select: { officialFullName: true } } }
         }
-      },
-      finalExam: true,
-      reviews: {
-        where: { isApproved: true },
-        include: { user: { select: { officialFullName: true } } }
       }
-    }
-  });
+    });
+  } catch (e) {
+    console.error('Failed to fetch course detail:', e);
+  }
 
   if (!course) {
     notFound();
@@ -61,14 +68,16 @@ export default async function CourseDetailPage({ params }: Props) {
   let firstLessonSlug = course.sections[0]?.lessons[0]?.slug;
 
   if (user) {
-    const enrollment = await prisma.enrollment.findFirst({
-      where: {
-        userId: user.id,
-        courseId: course.id,
-        status: 'ACTIVE',
-      }
-    });
-    if (enrollment) isEnrolled = true;
+    try {
+      const enrollment = await prisma.enrollment.findFirst({
+        where: {
+          userId: user.id,
+          courseId: course.id,
+          status: 'ACTIVE'
+        }
+      });
+      if (enrollment) isEnrolled = true;
+    } catch (e) {}
   }
 
   const requirements: string[] = course.requirements ? JSON.parse(course.requirements) : [];

@@ -21,22 +21,29 @@ interface Props {
   params: { certificateId: string };
 }
 
+export const dynamic = 'force-dynamic';
+
 export default async function CertificateVerificationPage({ params }: Props) {
   const certId = params.certificateId.trim().toUpperCase();
 
-  const certificate = await prisma.certificate.findFirst({
-    where: {
-      OR: [
-        { certificateNumber: certId },
-        { id: certId }
-      ]
-    },
-    include: {
-      course: { select: { title: true, slug: true, durationHours: true } },
-      diploma: { select: { title: true, slug: true, durationHours: true } },
-      template: true,
-    }
-  });
+  let certificate: any = null;
+  try {
+    certificate = await prisma.certificate.findFirst({
+      where: {
+        OR: [
+          { certificateNumber: certId },
+          { id: certId }
+        ]
+      },
+      include: {
+        course: { select: { title: true, slug: true, durationHours: true } },
+        diploma: { select: { title: true, slug: true, durationHours: true } },
+        template: true,
+      }
+    });
+  } catch (e) {
+    console.error('Failed to fetch certificate verification:', e);
+  }
 
   if (!certificate) {
     return (

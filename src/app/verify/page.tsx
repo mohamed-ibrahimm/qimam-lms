@@ -3,12 +3,19 @@ import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
 import { ShieldCheck, Search, Award, CheckCircle2, QrCode } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 export default async function VerifySearchPage() {
-  const latestCertificates = await prisma.certificate.findMany({
-    where: { isValid: true },
-    take: 4,
-    orderBy: { issuedAt: 'desc' },
-  });
+  let latestCertificates: any[] = [];
+  try {
+    latestCertificates = await prisma.certificate.findMany({
+      where: { isValid: true },
+      take: 4,
+      orderBy: { issuedAt: 'desc' },
+    });
+  } catch (e) {
+    console.error('Failed to fetch latest certificates:', e);
+  }
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-16 space-y-12 text-center">

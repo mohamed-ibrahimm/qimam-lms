@@ -11,37 +11,44 @@ interface Props {
   };
 }
 
+export const dynamic = 'force-dynamic';
+
 export default async function ClassroomPage({ params }: Props) {
   const user = await getCurrentUser();
 
-  const course = await prisma.course.findUnique({
-    where: { slug: params.courseSlug },
-    include: {
-      instructor: { select: { officialFullName: true } },
-      sections: {
-        orderBy: { orderIndex: 'asc' },
-        include: {
-          lessons: {
-            orderBy: { orderIndex: 'asc' },
-            include: {
-              summary: true,
-              quiz: {
-                include: {
-                  questions: { orderBy: { orderIndex: 'asc' } }
-                }
-              },
-              progresses: user ? { where: { userId: user.id } } : false,
+  let course: any = null;
+  try {
+    course = await prisma.course.findUnique({
+      where: { slug: params.courseSlug },
+      include: {
+        instructor: { select: { officialFullName: true } },
+        sections: {
+          orderBy: { orderIndex: 'asc' },
+          include: {
+            lessons: {
+              orderBy: { orderIndex: 'asc' },
+              include: {
+                summary: true,
+                quiz: {
+                  include: {
+                    questions: { orderBy: { orderIndex: 'asc' } }
+                  }
+                },
+                progresses: user ? { where: { userId: user.id } } : false,
+              }
             }
           }
-        }
-      },
-      finalExam: {
-        include: {
-          questions: { orderBy: { orderIndex: 'asc' } }
-        }
-      },
-    }
-  });
+        },
+        finalExam: {
+          include: {
+            questions: { orderBy: { orderIndex: 'asc' } }
+          }
+        },
+      }
+    });
+  } catch (e) {
+    console.error('Failed to fetch classroom course:', e);
+  }
 
   if (!course) notFound();
 

@@ -3,14 +3,21 @@ import { prisma } from '@/lib/prisma';
 import { formatDate } from '@/lib/utils';
 import { ShieldAlert, User, Activity, Clock } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 export default async function AuditLogsPage() {
-  const logs = await prisma.auditLog.findMany({
-    orderBy: { createdAt: 'desc' },
-    take: 50,
-    include: {
-      user: { select: { officialFullName: true, email: true, role: true } }
-    }
-  });
+  let logs: any[] = [];
+  try {
+    logs = await prisma.auditLog.findMany({
+      orderBy: { createdAt: 'desc' },
+      take: 50,
+      include: {
+        user: { select: { officialFullName: true, email: true, role: true } }
+      }
+    });
+  } catch (e) {
+    console.error('Failed to fetch audit logs:', e);
+  }
 
   return (
     <div className="space-y-6">

@@ -15,39 +15,52 @@ import {
   DollarSign
 } from 'lucide-react';
 
-export default async function AdminOverviewPage() {
-  const [
-    studentsCount,
-    coursesCount,
-    diplomasCount,
-    pendingPaymentsCount,
-    approvedPayments,
-    recentOrders,
-    recentAudits
-  ] = await Promise.all([
-    prisma.user.count({ where: { role: 'STUDENT' } }),
-    prisma.course.count(),
-    prisma.diploma.count(),
-    prisma.payment.count({ where: { status: 'PENDING' } }),
-    prisma.payment.findMany({ where: { status: 'APPROVED' }, select: { amount: true } }),
-    prisma.order.findMany({
-      take: 6,
-      orderBy: { createdAt: 'desc' },
-      include: {
-        user: { select: { officialFullName: true, email: true } },
-        course: { select: { title: true } },
-        diploma: { select: { title: true } },
-        payment: true,
-      }
-    }),
-    prisma.auditLog.findMany({
-      take: 5,
-      orderBy: { createdAt: 'desc' },
-      include: { user: { select: { officialFullName: true } } }
-    })
-  ]);
+export const dynamic = 'force-dynamic';
 
-  const totalRevenue = approvedPayments.reduce((acc, p) => acc + p.amount, 0);
+export default async function AdminOverviewPage() {
+  let studentsCount = 0;
+  let coursesCount = 0;
+  let diplomasCount = 0;
+  let pendingPaymentsCount = 0;
+  let approvedPayments: any[] = [];
+  let recentOrders: any[] = [];
+  let recentAudits: any[] = [];
+
+  try {
+    const res = await Promise.all([
+      prisma.user.count({ where: { role: 'STUDENT' } }),
+      prisma.course.count(),
+      prisma.diploma.count(),
+      prisma.payment.count({ where: { status: 'PENDING' } }),
+      prisma.payment.findMany({ where: { status: 'APPROVED' }, select: { amount: true } }),
+      prisma.order.findMany({
+        take: 6,
+        orderBy: { createdAt: 'desc' },
+        include: {
+          user: { select: { officialFullName: true, email: true } },
+          course: { select: { title: true } },
+          diploma: { select: { title: true } },
+          payment: true,
+        }
+      }),
+      prisma.auditLog.findMany({
+        take: 5,
+        orderBy: { createdAt: 'desc' },
+        include: { user: { select: { officialFullName: true } } }
+      })
+    ]);
+    studentsCount = res[0];
+    coursesCount = res[1];
+    diplomasCount = res[2];
+    pendingPaymentsCount = res[3];
+    approvedPayments = res[4];
+    recentOrders = res[5];
+    recentAudits = res[6];
+  } catch (e) {
+    console.error('Failed to fetch admin overview stats:', e);
+  }
+
+  const totalRevenue = approvedPayments.reduce((acc, p) => acc + (p.amount || 0), 0);
 
   return (
     <div className="space-y-8">

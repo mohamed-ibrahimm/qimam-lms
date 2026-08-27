@@ -4,23 +4,30 @@ import { prisma } from '@/lib/prisma';
 import { formatPrice, formatDuration } from '@/lib/utils';
 import { Award, Layers, Clock, CheckCircle2, ArrowLeft, ShieldCheck, Sparkles } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 export default async function DiplomasPage() {
-  const diplomas = await prisma.diploma.findMany({
-    where: { status: 'PUBLISHED' },
-    orderBy: { createdAt: 'desc' },
-    include: {
-      category: true,
-      diplomaCourses: {
-        orderBy: { orderIndex: 'asc' },
-        include: {
-          course: {
-            select: { id: true, title: true, durationHours: true, price: true }
+  let diplomas: any[] = [];
+  try {
+    diplomas = await prisma.diploma.findMany({
+      where: { status: 'PUBLISHED' },
+      orderBy: { createdAt: 'desc' },
+      include: {
+        category: true,
+        diplomaCourses: {
+          orderBy: { orderIndex: 'asc' },
+          include: {
+            course: {
+              select: { id: true, title: true, durationHours: true, price: true }
+            }
           }
-        }
-      },
-      _count: { select: { enrollments: true } }
-    }
-  });
+        },
+        _count: { select: { enrollments: true } }
+      }
+    });
+  } catch (e) {
+    console.error('Failed to fetch diplomas:', e);
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">

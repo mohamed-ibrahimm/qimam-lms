@@ -20,6 +20,8 @@ import {
   MessageSquare
 } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminLayout({
   children,
 }: {
@@ -30,10 +32,15 @@ export default async function AdminLayout({
     redirect('/login?error=unauthorized_admin');
   }
 
-  const platformNameSetting = await prisma.platformSetting.findUnique({
-    where: { key: 'PLATFORM_NAME' }
-  });
-  const platformName = platformNameSetting?.value || 'أكاديمية قِمَم';
+  let platformName = 'أكاديمية قِمَم';
+  try {
+    const platformNameSetting = await prisma.platformSetting.findUnique({
+      where: { key: 'PLATFORM_NAME' }
+    });
+    if (platformNameSetting?.value) platformName = platformNameSetting.value;
+  } catch (e) {
+    console.error('Failed to fetch platform name in admin layout:', e);
+  }
 
   const navItems = [
     { name: 'نظرة عامة والتحليلات', href: '/admin', icon: LayoutDashboard },

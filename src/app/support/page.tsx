@@ -13,19 +13,26 @@ import {
   ArrowLeft
 } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 export default async function SupportPage() {
   const user = await getCurrentUser();
 
-  const tickets = user
-    ? await prisma.supportTicket.findMany({
+  let tickets: any[] = [];
+  if (user) {
+    try {
+      tickets = await prisma.supportTicket.findMany({
         where: user.role === 'ADMIN' ? {} : { userId: user.id },
         orderBy: { updatedAt: 'desc' },
         include: {
           user: { select: { officialFullName: true, email: true } },
           _count: { select: { messages: true } }
         }
-      })
-    : [];
+      });
+    } catch (e) {
+      console.error('Failed to fetch support tickets:', e);
+    }
+  }
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">

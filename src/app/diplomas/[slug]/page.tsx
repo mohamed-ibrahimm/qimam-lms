@@ -20,30 +20,37 @@ interface Props {
   params: { slug: string };
 }
 
+export const dynamic = 'force-dynamic';
+
 export default async function DiplomaDetailPage({ params }: Props) {
   const user = await getCurrentUser();
-  const diploma = await prisma.diploma.findUnique({
-    where: { slug: params.slug },
-    include: {
-      category: true,
-      diplomaCourses: {
-        orderBy: { orderIndex: 'asc' },
-        include: {
-          course: {
-            include: {
-              instructor: { select: { officialFullName: true } },
-              sections: {
-                include: {
-                  lessons: { select: { id: true, title: true, durationMinutes: true, isFreePreview: true, slug: true } }
+  let diploma: any = null;
+  try {
+    diploma = await prisma.diploma.findUnique({
+      where: { slug: params.slug },
+      include: {
+        category: true,
+        diplomaCourses: {
+          orderBy: { orderIndex: 'asc' },
+          include: {
+            course: {
+              include: {
+                instructor: { select: { officialFullName: true } },
+                sections: {
+                  include: {
+                    lessons: { select: { id: true, title: true, durationMinutes: true, isFreePreview: true, slug: true } }
+                  }
                 }
               }
             }
           }
-        }
-      },
-      finalExam: true
-    }
-  });
+        },
+        finalExam: true
+      }
+    });
+  } catch (e) {
+    console.error('Failed to fetch diploma detail:', e);
+  }
 
   if (!diploma) {
     notFound();
@@ -51,14 +58,16 @@ export default async function DiplomaDetailPage({ params }: Props) {
 
   let isEnrolled = false;
   if (user) {
-    const enrollment = await prisma.enrollment.findFirst({
-      where: {
-        userId: user.id,
-        diplomaId: diploma.id,
-        status: 'ACTIVE',
-      }
-    });
-    if (enrollment) isEnrolled = true;
+    try {
+      const enrollment = await prisma.enrollment.findFirst({
+        where: {
+          userId: user.id,
+          diplomaId: diploma.id,
+          status: 'ACTIVE',
+        }
+      });
+      if (enrollment) isEnrolled = true;
+    } catch (e) {}
   }
 
   const learningObjectives: string[] = diploma.learningObjectives ? JSON.parse(diploma.learningObjectives) : [];
