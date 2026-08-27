@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server';
 import { requireAuth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { revalidatePath } from 'next/cache';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export async function GET() {
   try {
@@ -13,7 +17,10 @@ export async function GET() {
       }
     });
 
-    return NextResponse.json({ courses });
+    return NextResponse.json(
+      { courses },
+      { headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate' } }
+    );
   } catch (e) {
     return NextResponse.json({ error: 'فشل جلب الكورسات' }, { status: 500 });
   }
@@ -23,18 +30,29 @@ export async function POST(req: Request) {
   try {
     const user = await requireAuth(['ADMIN', 'INSTRUCTOR']);
     const body = await req.json();
-    const { title, slug, description, shortDescription, price, durationHours, level, categoryId } = body;
+    const { title, slug, description, shortDescription, price, durationHours, level, categoryId, thumbnail } = body;
 
-    if (!title || !description) {
-      return NextResponse.json({ error: 'العنوان والوصف مطلوبان' }, { status: 400 });
+    if (!title?.trim() || !description?.trim()) {
+      return NextResponse.json({ error: 'يرجى إدخال عنوان ووصف الكورس بشكل كامل' }, { status: 400 });
     }
 
-    const finalSlug = (slug?.trim() || title.trim().toLowerCase().replace(/\s+/g, '-')).substring(0, 80);
+    // Generate safe unique slug
+    let baseSlug = (slug?.trim() || title.trim().toLowerCase().replace(/[^\w\s\u0600-\u06FF-]/g, '').replace(/\s+/g, '-')).substring(0, 80);
+    if (!baseSlug) {
+      baseSlug = `course-${Date.now().toString().slice(-6)}`;
+    }
+
+    let finalSlug = baseSlug;
+    const existing = await prisma.course.findUnique({ where: { slug: finalSlug } });
+    if (existing) {
+      finalSlug = `${baseSlug}-${Date.now().toString().slice(-4)}`;
+    }
 
     const course = await prisma.course.create({
       data: {
         title: title.trim(),
         slug: finalSlug,
+        thumbnail: thumbnail || null,
         description: description.trim(),
         shortDescription: shortDescription?.trim() || null,
         price: parseFloat(price) || 0,
@@ -46,9 +64,20 @@ export async function POST(req: Request) {
       }
     });
 
-    return NextResponse.json({ success: true, course });
-  } catch (e) {
-    return NextResponse.json({ error: 'فشل حفظ الكورس' }, { status: 500 });
+    try {
+      revalidatePath('/instructor');
+      revalidatePath('/courses');
+      revalidatePath('/admin/courses');
+      revalidatePath('/');
+    } catch (e) {}
+
+    return NextResponse.json(
+      { success: true, course },
+      { headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate' } }
+    );
+  } catch (e: any) {
+    console.error('Course creation error:', e);
+    return NextResponse.json({ error: e?.message || 'فشل حفظ الكورس' }, { status: 500 });
   }
 }
 

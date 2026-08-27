@@ -2,10 +2,16 @@ import { NextResponse } from 'next/server';
 import { getCurrentUser } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function GET() {
   const currentUser = await getCurrentUser();
   if (!currentUser) {
-    return NextResponse.json({ user: null }, { status: 401 });
+    return NextResponse.json({ user: null }, { 
+      status: 401,
+      headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate' }
+    });
   }
 
   const userWithData = await prisma.user.findUnique({
@@ -36,5 +42,8 @@ export async function GET() {
     }
   });
 
-  return NextResponse.json({ user: userWithData });
+  return NextResponse.json(
+    { user: userWithData },
+    { headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate' } }
+  );
 }

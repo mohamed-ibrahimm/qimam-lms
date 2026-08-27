@@ -165,11 +165,15 @@ export default async function CourseDetailPage({ params }: Props) {
                 alt={course.title}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                <div className="w-12 h-12 rounded-full bg-primary-600/90 text-white flex items-center justify-center shadow-lg backdrop-blur-sm">
-                  <PlayCircle className="w-6 h-6" />
+              <Link
+                href={firstLessonSlug ? `/learn/${course.slug}/${firstLessonSlug}` : '#curriculum'}
+                className="absolute inset-0 bg-black/40 hover:bg-black/20 flex items-center justify-center transition-all group cursor-pointer"
+                title="بدء المعاينة وتشغيل الفيديو"
+              >
+                <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-amber-500 to-yellow-400 text-zinc-950 flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
+                  <PlayCircle className="w-8 h-8 fill-zinc-950 text-amber-400" />
                 </div>
-              </div>
+              </Link>
             </div>
 
             <div>

@@ -49,6 +49,7 @@ export default function InstructorClient({
   // New Course Modal State
   const [showAddModal, setShowAddModal] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
+  const [modalError, setModalError] = useState<string | null>(null);
   const [newCourse, setNewCourse] = useState({
     title: '',
     shortDescription: '',
@@ -91,6 +92,7 @@ export default function InstructorClient({
 
     setIsCreating(true);
     setMessage(null);
+    setModalError(null);
 
     try {
       const res = await fetch('/api/admin/courses', {
@@ -112,19 +114,25 @@ export default function InstructorClient({
         ]);
         setMessage({ type: 'success', text: 'تم إنشاء الكورس الجديد بنجاح!' });
         setShowAddModal(false);
+        setModalError(null);
         setNewCourse({
           title: '',
           shortDescription: '',
           description: '',
+          thumbnail: '',
           price: 900,
           durationHours: 20,
           level: 'BEGINNER',
         });
       } else {
-        setMessage({ type: 'error', text: data.error || 'فشل إنشاء الكورس' });
+        const err = data.error || 'فشل إنشاء الكورس';
+        setModalError(err);
+        setMessage({ type: 'error', text: err });
       }
     } catch (e) {
-      setMessage({ type: 'error', text: 'حدث خطأ في الاتصال' });
+      const err = 'حدث خطأ أثناء الاتصال بالخادم، يرجى المحاولة ثانية';
+      setModalError(err);
+      setMessage({ type: 'error', text: err });
     } finally {
       setIsCreating(false);
     }
@@ -284,10 +292,13 @@ export default function InstructorClient({
                   <div className="flex items-center gap-3">
                     <Link
                       href={`/courses/${course.slug}`}
-                      className="text-xs font-bold text-primary-400 hover:underline flex items-center gap-1"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 hover:text-amber-200 text-xs font-bold transition-all shadow-sm"
+                      title="معاينة صفحة الكورس العامة في تبويب جديد"
                     >
+                      <ExternalLink className="w-3.5 h-3.5 text-amber-400" />
                       <span>معاينة صفحة الكورس</span>
-                      <span>←</span>
                     </Link>
 
                     <Link
@@ -295,9 +306,13 @@ export default function InstructorClient({
                         ? `/learn/${course.slug}/${course.sections[0].lessons[0].slug}`
                         : `/courses/${course.slug}`
                       }
-                      className="px-3.5 py-1.5 rounded-xl bg-primary-600 hover:bg-primary-500 text-white font-bold text-xs transition-colors"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-500 hover:to-purple-500 text-white font-bold text-xs shadow-md transition-all hover:scale-105"
+                      title="دخول قاعة الدرس وتشغيل الفيديوهات مباشرة"
                     >
-                      دخول قاعة الدرس
+                      <PlayCircle className="w-3.5 h-3.5 text-white" />
+                      <span>دخول قاعة الدرس</span>
                     </Link>
                   </div>
 
@@ -392,6 +407,12 @@ export default function InstructorClient({
             </div>
 
             <form onSubmit={handleCreateCourse} className="space-y-4">
+              {modalError && (
+                <div className="p-3 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-300 text-xs font-bold flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4 shrink-0 text-rose-400" />
+                  <span>{modalError}</span>
+                </div>
+              )}
               <div>
                 <label className="block text-xs font-bold text-zinc-300 mb-1">عنوان الكورس *</label>
                 <input
