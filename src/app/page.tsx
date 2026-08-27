@@ -185,7 +185,7 @@ export default async function HomePage() {
             </h1>
 
             <p className="text-sm sm:text-base md:text-xl text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed text-balance">
-              {settings.HERO_SUBTITLE || 'أكاديمية المهندس محمد إبراهيم — نقدم مسارات تدريبية هندسية متكاملة، دبلومات برمجية شاملة، مشاريع إنتاج واقعية مطابقة لسوق العمل، ومساعد ذكاء اصطناعي تفاعلي يرافقك خطوة بخطوة.'}
+              {settings.HERO_SUBTITLE || `${settings.PLATFORM_NAME || 'أكاديمية المهندس محمد إبراهيم'} — نقدم مسارات تدريبية هندسية متكاملة، دبلومات برمجية شاملة، مشاريع إنتاج واقعية مطابقة لسوق العمل، ومساعد ذكاء اصطناعي تفاعلي يرافقك خطوة بخطوة.`}
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

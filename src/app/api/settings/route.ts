@@ -17,6 +17,10 @@ export async function GET() {
       telegramUrl: map['TELEGRAM_URL'] || '',
       youtubeUrl: map['YOUTUBE_URL'] || '',
       linkedinUrl: map['LINKEDIN_URL'] || '',
+    }, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+      }
     });
   } catch (e) {
     return NextResponse.json({

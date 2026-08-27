@@ -34,6 +34,13 @@ export async function POST(req: Request) {
       }
     });
 
+    try {
+      const { revalidatePath } = await import('next/cache');
+      revalidatePath('/', 'layout');
+      revalidatePath('/');
+      revalidatePath('/admin');
+    } catch (e) {}
+
     return NextResponse.json({ success: true });
   } catch (e) {
     return NextResponse.json({ error: 'فشل حفظ الإعدادات' }, { status: 500 });
