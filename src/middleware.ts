@@ -48,9 +48,31 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  // Protect /api/admin API routes
+  if (pathname.startsWith('/api/admin')) {
+    if (!token || userRole !== 'ADMIN') {
+      return NextResponse.json({ error: 'غير مصرح: هذا الإجراء يتطلب صلاحيات مدير المنصة' }, { status: 403 });
+    }
+  }
+
+  // Protect /api/instructor API routes
+  if (pathname.startsWith('/api/instructor')) {
+    if (!token || (userRole !== 'INSTRUCTOR' && userRole !== 'ADMIN')) {
+      return NextResponse.json({ error: 'غير مصرح: هذا الإجراء يتطلب صلاحيات المحاضر' }, { status: 403 });
+    }
+  }
+
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/instructor/:path*', '/dashboard/:path*', '/learn/:path*', '/checkout/:path*'],
+  matcher: [
+    '/admin/:path*',
+    '/instructor/:path*',
+    '/dashboard/:path*',
+    '/learn/:path*',
+    '/checkout/:path*',
+    '/api/admin/:path*',
+    '/api/instructor/:path*',
+  ],
 };

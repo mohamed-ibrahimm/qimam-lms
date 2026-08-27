@@ -141,15 +141,15 @@ export default async function HomePage() {
       {/* Ambient Soft Gold & Radiant Luxury Lighting */}
       <div className="ambient-glow absolute inset-0 pointer-events-none overflow-hidden z-0">
         {/* Top central golden dome */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1100px] h-[650px] bg-[radial-gradient(ellipse_at_top,_rgba(245,158,11,0.18),_rgba(217,119,6,0.08)_40%,_transparent_72%)] blur-[70px]" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1100px] h-[550px] bg-[radial-gradient(ellipse_at_top,_rgba(245,158,11,0.07),_rgba(217,119,6,0.03)_40%,_transparent_72%)] blur-[70px]" />
         {/* Right warm amber flare */}
-        <div className="absolute top-1/4 -right-24 w-[650px] h-[650px] bg-[radial-gradient(circle,_rgba(245,158,11,0.14),_transparent_65%)] blur-[100px] rounded-full animate-ambient-drift" />
-        {/* Left imperial purple-gold bloom */}
-        <div className="absolute top-1/2 -left-28 w-[650px] h-[650px] bg-[radial-gradient(circle,_rgba(168,85,247,0.12),_rgba(245,158,11,0.06)_50%,_transparent_70%)] blur-[110px] rounded-full" />
+        <div className="absolute top-1/4 -right-24 w-[600px] h-[600px] bg-[radial-gradient(circle,_rgba(245,158,11,0.05),_transparent_65%)] blur-[100px] rounded-full animate-ambient-drift" />
+        {/* Left subtle purple-gold bloom */}
+        <div className="absolute top-1/2 -left-28 w-[600px] h-[600px] bg-[radial-gradient(circle,_rgba(168,85,247,0.04),_rgba(245,158,11,0.02)_50%,_transparent_70%)] blur-[110px] rounded-full" />
         {/* Center soft gold spotlight */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-[radial-gradient(ellipse,_rgba(251,191,36,0.07),_transparent_65%)] blur-[90px]" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-[radial-gradient(ellipse,_rgba(251,191,36,0.03),_transparent_65%)] blur-[90px]" />
         {/* Bottom soft golden glow */}
-        <div className="absolute bottom-1/4 right-1/4 w-[550px] h-[550px] bg-[radial-gradient(circle,_rgba(217,119,6,0.09),_transparent_70%)] blur-[110px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-[radial-gradient(circle,_rgba(217,119,6,0.03),_transparent_70%)] blur-[110px]" />
       </div>
 
       <div className="relative z-10 space-y-20 md:space-y-28">

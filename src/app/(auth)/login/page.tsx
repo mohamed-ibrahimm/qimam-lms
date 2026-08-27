@@ -65,33 +65,18 @@ function LoginForm() {
           </p>
         </div>
 
-        {/* Fast 1-Click Demo Login Panel */}
-        <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 space-y-2.5 shadow-md">
-          <div className="flex items-center gap-1.5 text-amber-300 font-bold text-xs">
-            <ShieldCheck className="w-4 h-4 text-amber-400" />
-            <span>الدخول السريع بنقرة واحدة (لتجربة كافة اللوحات مباشرة):</span>
+        {registered && (
+          <div className="p-3.5 rounded-2xl bg-emerald-950/40 border border-emerald-800/60 text-emerald-300 text-xs font-semibold text-center">
+            تم إنشاء حسابك بنجاح! يمكنك الآن تسجيل الدخول.
           </div>
-          <div className="grid grid-cols-3 gap-2">
-            <a
-              href="/api/auth/demo?role=ADMIN"
-              className="px-2 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-zinc-950 font-black text-xs text-center shadow-sm flex flex-col items-center justify-center gap-1 transition-transform hover:scale-105"
-            >
-              <span>👑 مدير (Admin)</span>
-            </a>
-            <a
-              href="/api/auth/demo?role=INSTRUCTOR"
-              className="px-2 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-amber-300 font-bold text-xs text-center border border-amber-500/30 shadow-sm flex flex-col items-center justify-center gap-1 transition-transform hover:scale-105"
-            >
-              <span>👨‍🏫 معلّم (Studio)</span>
-            </a>
-            <a
-              href="/api/auth/demo?role=STUDENT"
-              className="px-2 py-2.5 rounded-xl bg-zinc-800 hover:from-zinc-700 text-zinc-200 font-bold text-xs text-center border border-zinc-700 shadow-sm flex flex-col items-center justify-center gap-1 transition-transform hover:scale-105"
-            >
-              <span>🎓 طالب (Student)</span>
-            </a>
+        )}
+
+        {error && (
+          <div className="p-3.5 rounded-2xl bg-rose-950/40 border border-rose-800/60 text-rose-300 text-xs font-semibold flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 shrink-0" />
+            <span>{error}</span>
           </div>
-        </div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
