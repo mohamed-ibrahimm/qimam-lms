@@ -36,8 +36,8 @@ export default function Header() {
   const [mounted, setMounted] = useState(false);
   const { theme, toggleTheme } = useTheme();
 
-  const [platformName, setPlatformName] = useState('أكاديمية قِمَم');
-  const [platformTagline, setPlatformTagline] = useState('المنصة الرائدة لعلوم البرمجة والتقنية');
+  const [platformName, setPlatformName] = useState('أكاديمية المهندس محمد إبراهيم');
+  const [platformTagline, setPlatformTagline] = useState('بوابتك الاحترافية لاحتراف البرمجة والذكاء الاصطناعي والتصميم');
 
   const fetchSettings = async () => {
     try {
@@ -148,9 +148,7 @@ export default function Header() {
 
         {/* Action Buttons: Desktop + Mobile */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-          {loading ? (
-            <div className="w-16 sm:w-24 h-8 sm:h-9 bg-zinc-800/60 animate-pulse rounded-full" />
-          ) : currentUser ? (
+          {currentUser ? (
             /* User Dropdown */
             <div className="relative">
               <button
@@ -256,19 +254,21 @@ export default function Header() {
               )}
             </div>
           ) : (
-            /* Auth Buttons (Visible on sm/md/lg) */
+            /* Auth Buttons (Always visible) */
             <div className="flex items-center gap-1.5 sm:gap-2">
               <Link
                 href="/login"
-                className="px-3 sm:px-3.5 py-1.5 text-xs font-semibold text-zinc-300 hover:text-white transition-colors"
+                className="px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-bold text-zinc-200 hover:text-white hover:bg-zinc-800/80 border border-zinc-700/80 transition-all shadow-sm flex items-center gap-1"
               >
-                دخول
+                <LogIn className="w-3.5 h-3.5 text-amber-400" />
+                <span>دخول</span>
               </Link>
               <Link
                 href="/register"
-                className="px-3 sm:px-4 py-1.5 rounded-full text-xs font-bold bg-zinc-100 text-zinc-950 hover:bg-zinc-200 transition-colors shadow-sm whitespace-nowrap"
+                className="px-3.5 sm:px-4 py-1.5 rounded-full text-xs font-black bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-zinc-950 transition-all shadow-md shadow-amber-950/40 whitespace-nowrap flex items-center gap-1"
               >
-                انضم الآن
+                <UserPlus className="w-3.5 h-3.5 text-zinc-950" />
+                <span>انضم الآن</span>
               </Link>
             </div>
           )}

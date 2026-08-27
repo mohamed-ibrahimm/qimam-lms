@@ -14,7 +14,12 @@
 }
 
 body {
-  background-color: #09090b;
+  background-color: #09080e;
+  background-image: 
+    radial-gradient(ellipse at 50% -10%, rgba(245, 158, 11, 0.14) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 50%, rgba(217, 119, 6, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 80%, rgba(168, 85, 247, 0.05) 0%, transparent 50%);
+  background-attachment: fixed;
   color: #f4f4f5;
   direction: rtl;
   text-align: right;

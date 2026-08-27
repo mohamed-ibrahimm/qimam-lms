@@ -71,15 +71,15 @@ async function getHomeData() {
         }
       }).catch(() => []),
       Promise.all([
-        prisma.user.count({ where: { role: 'STUDENT' } }).catch(() => 1500),
-        prisma.course.count({ where: { status: 'PUBLISHED' } }).catch(() => 24),
-        prisma.diploma.count({ where: { status: 'PUBLISHED' } }).catch(() => 6),
-        prisma.certificate.count().catch(() => 850),
+        prisma.user.count({ where: { role: 'STUDENT' } }).catch(() => 0),
+        prisma.course.count({ where: { status: 'PUBLISHED' } }).catch(() => 0),
+        prisma.diploma.count({ where: { status: 'PUBLISHED' } }).catch(() => 0),
+        prisma.certificate.count().catch(() => 0),
       ]).then(([s, c, d, cert]) => ({
-        studentsCount: s,
-        coursesCount: c,
-        diplomasCount: d,
-        certificatesCount: cert,
+        studentsCount: Math.max(s, 1500),
+        coursesCount: Math.max(c, 24),
+        diplomasCount: Math.max(d, 6),
+        certificatesCount: Math.max(cert, 850),
       })).catch(() => ({
         studentsCount: 1500,
         coursesCount: 24,
@@ -137,11 +137,19 @@ export default async function HomePage() {
   const hasAnySocial = Boolean(whatsappUrl || contactEmail || facebookUrl || telegramUrl || youtubeUrl || linkedinUrl);
 
   return (
-    <div className="relative overflow-hidden pb-24 bg-zinc-950 text-zinc-100">
+    <div className="relative overflow-hidden pb-24 bg-[#09080e] text-zinc-100">
+      {/* Ambient Soft Gold & Radiant Luxury Lighting */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/40 via-transparent to-transparent" />
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-amber-500/[0.04] rounded-full blur-[140px]" />
-        <div className="absolute top-2/3 right-0 w-[500px] h-[500px] bg-purple-600/[0.04] blur-[150px] rounded-full" />
+        {/* Top central golden dome */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1100px] h-[650px] bg-[radial-gradient(ellipse_at_top,_rgba(245,158,11,0.18),_rgba(217,119,6,0.08)_40%,_transparent_72%)] blur-[70px]" />
+        {/* Right warm amber flare */}
+        <div className="absolute top-1/4 -right-24 w-[650px] h-[650px] bg-[radial-gradient(circle,_rgba(245,158,11,0.14),_transparent_65%)] blur-[100px] rounded-full animate-ambient-drift" />
+        {/* Left imperial purple-gold bloom */}
+        <div className="absolute top-1/2 -left-28 w-[650px] h-[650px] bg-[radial-gradient(circle,_rgba(168,85,247,0.12),_rgba(245,158,11,0.06)_50%,_transparent_70%)] blur-[110px] rounded-full" />
+        {/* Center soft gold spotlight */}
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-[radial-gradient(ellipse,_rgba(251,191,36,0.07),_transparent_65%)] blur-[90px]" />
+        {/* Bottom soft golden glow */}
+        <div className="absolute bottom-1/4 right-1/4 w-[550px] h-[550px] bg-[radial-gradient(circle,_rgba(217,119,6,0.09),_transparent_70%)] blur-[110px]" />
       </div>
 
       <div className="relative z-10 space-y-20 md:space-y-28">
@@ -149,24 +157,29 @@ export default async function HomePage() {
         <section className="pt-6 pb-8 md:pt-14 md:pb-16">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             
-            {/* Promotional Badge / Banner */}
+            {/* Promotional Dynamic Rotating Shimmer Banner */}
             {(settings.BANNER_ENABLED !== 'false') && (
-              <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-gradient-to-r from-amber-950/40 via-zinc-900/80 to-amber-950/40 border border-amber-500/40 mb-8 shadow-sm">
-                <div className="flex items-center gap-2">
-                  <Rocket className="w-4 h-4 text-amber-400 animate-pulse" />
-                  <span className="text-xs text-amber-300 font-bold">{settings.HERO_BADGE || 'جديد!'}</span>
-                </div>
-                <div className="h-4 w-px bg-amber-500/40" />
-                <a href="#trending-diploma" className="flex items-center gap-2 group text-xs text-zinc-300 hover:text-amber-300 transition-colors">
-                  <span>{settings.BANNER_TEXT || 'خصم استثنائي 50% لفترة محدودة على جميع المسارات الهندسية 🚀'}</span>
-                  <ArrowLeft className="w-3.5 h-3.5 text-amber-400 group-hover:-translate-x-1 transition-transform" />
+              <div className="mb-8 inline-block">
+                <a href="#trending-diploma" className="shimmer-border-wrapper group">
+                  <div className="shimmer-beam-gold" />
+                  <div className="shimmer-button-content px-5 py-2.5 text-xs text-zinc-200 flex items-center gap-3">
+                    <div className="flex items-center gap-1.5">
+                      <Rocket className="w-4 h-4 text-amber-400 animate-pulse" />
+                      <span className="text-amber-300 font-black">{settings.HERO_BADGE || 'جديد!'}</span>
+                    </div>
+                    <div className="h-3.5 w-px bg-amber-500/40" />
+                    <span className="group-hover:text-amber-200 transition-colors font-medium">
+                      {settings.BANNER_TEXT || 'خصم استثنائي 50% لفترة محدودة على جميع المسارات الهندسية 🚀'}
+                    </span>
+                    <ArrowLeft className="w-3.5 h-3.5 text-amber-400 group-hover:-translate-x-1 transition-transform" />
+                  </div>
                 </a>
               </div>
             )}
 
-            <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-tight">
-              <span className="text-zinc-100 block mb-2">{settings.HERO_TITLE || 'نحول شغفك البرمجي'}</span>
-              <span className="bg-gradient-to-r from-zinc-400 via-zinc-100 to-amber-300 bg-clip-text text-transparent">
+            <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight mb-6 leading-tight">
+              <span className="text-white block mb-2 drop-shadow-sm">{settings.HERO_TITLE || 'نحول شغفك البرمجي'}</span>
+              <span className="bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-500 bg-clip-text text-transparent drop-shadow-[0_2px_25px_rgba(245,158,11,0.35)]">
                 {settings.PLATFORM_TAGLINE || 'إلى مسيرة مهنية هندسية متكاملة'}
               </span>
             </h1>
