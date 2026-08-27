@@ -45,7 +45,9 @@ body.light-theme,
 }
 
 html.light-theme .page-canvas,
-[data-theme="light"] .page-canvas {
+html.light-theme main,
+[data-theme="light"] .page-canvas,
+[data-theme="light"] main {
   background-color: #ffffff !important;
   color: #0f172a !important;
 }
@@ -55,76 +57,83 @@ html.light-theme .ambient-glow,
   display: none !important;
 }
 
-html.light-theme .bg-zinc-950,
+html.light-theme [class*="bg-zinc-950"],
+html.light-theme [class*="bg-[#09080e]"],
 html.light-theme .bg-background,
-[data-theme="light"] .bg-zinc-950,
+[data-theme="light"] [class*="bg-zinc-950"],
 [data-theme="light"] .bg-background {
-  background-color: #f8fafc !important;
-  color: #0f172a !important;
-}
-
-html.light-theme .bg-zinc-900,
-html.light-theme .bg-surface,
-[data-theme="light"] .bg-zinc-900,
-[data-theme="light"] .bg-surface {
   background-color: #ffffff !important;
   color: #0f172a !important;
-  border-color: #e2e8f0 !important;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06) !important;
 }
 
-html.light-theme .bg-zinc-800,
+html.light-theme [class*="bg-zinc-900"],
+html.light-theme [class*="bg-zinc-800"],
+html.light-theme .bg-surface,
 html.light-theme .bg-surface-raised,
-[data-theme="light"] .bg-zinc-800,
-[data-theme="light"] .bg-surface-raised {
-  background-color: #f1f5f9 !important;
-  border-color: #cbd5e1 !important;
+html.light-theme .glass-luxury-card,
+html.light-theme .glass-gold-card,
+[data-theme="light"] [class*="bg-zinc-900"],
+[data-theme="light"] [class*="bg-zinc-800"],
+[data-theme="light"] .bg-surface,
+[data-theme="light"] .bg-surface-raised,
+[data-theme="light"] .glass-luxury-card,
+[data-theme="light"] .glass-gold-card {
+  background-color: #f8fafc !important;
+  background: #f8fafc !important;
+  color: #0f172a !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 4px 15px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light-theme .glass-luxury-card:hover,
+html.light-theme .glass-gold-card:hover,
+[data-theme="light"] .glass-luxury-card:hover,
+[data-theme="light"] .glass-gold-card:hover {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  border-color: #f59e0b !important;
+  box-shadow: 0 10px 30px -5px rgba(245, 158, 11, 0.15) !important;
+}
+
+html.light-theme [class*="border-zinc-800"],
+html.light-theme [class*="border-zinc-700"],
+html.light-theme .border-border,
+[data-theme="light"] [class*="border-zinc-800"],
+[data-theme="light"] [class*="border-zinc-700"] {
+  border-color: #e2e8f0 !important;
+}
+
+html.light-theme [class*="text-zinc-100"],
+html.light-theme [class*="text-white"],
+[data-theme="light"] [class*="text-zinc-100"],
+[data-theme="light"] [class*="text-white"] {
   color: #0f172a !important;
 }
 
-html.light-theme .border-zinc-800,
-html.light-theme .border-zinc-700,
-html.light-theme .border-border,
-[data-theme="light"] .border-zinc-800 {
-  border-color: #e2e8f0 !important;
-}
-
-html.light-theme .text-zinc-400,
-[data-theme="light"] .text-zinc-400 {
-  color: #64748b !important;
-}
-
-html.light-theme .text-zinc-300,
-html.light-theme .text-zinc-200,
-[data-theme="light"] .text-zinc-300,
-[data-theme="light"] .text-zinc-200 {
+html.light-theme [class*="text-zinc-300"],
+html.light-theme [class*="text-zinc-400"],
+[data-theme="light"] [class*="text-zinc-300"],
+[data-theme="light"] [class*="text-zinc-400"] {
   color: #334155 !important;
 }
 
-html.light-theme .text-white,
-html.light-theme .text-zinc-100,
-[data-theme="light"] .text-white,
-[data-theme="light"] .text-zinc-100 {
-  color: #0f172a !important;
+html.light-theme [class*="text-zinc-500"],
+[data-theme="light"] [class*="text-zinc-500"] {
+  color: #64748b !important;
 }
 
 html.light-theme header nav,
 [data-theme="light"] header nav {
-  background-color: rgba(255, 255, 255, 0.95) !important;
-  border-color: #e2e8f0 !important;
-  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08) !important;
+  background-color: rgba(255, 255, 255, 0.96) !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1) !important;
 }
 
-html.light-theme header nav .text-white,
-[data-theme="light"] header nav .text-white {
+html.light-theme header nav [class*="text-white"],
+html.light-theme header nav span,
+[data-theme="light"] header nav [class*="text-white"],
+[data-theme="light"] header nav span {
   color: #0f172a !important;
-}
-
-html.light-theme header nav .bg-zinc-950\/60,
-html.light-theme header nav .bg-zinc-950\/50,
-[data-theme="light"] header nav .bg-zinc-950\/60 {
-  background-color: #f1f5f9 !important;
-  border-color: #e2e8f0 !important;
 }
 
 html.light-theme header nav .bg-zinc-800,

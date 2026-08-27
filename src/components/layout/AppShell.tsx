@@ -21,7 +21,7 @@ export default function AppShell({ children }: AppShellProps) {
   // Instructor studio: dedicated instructor shell
   const isInstructor = pathname.startsWith('/instructor');
 
-  if (isClassroom || isAdmin || isInstructor) {
+  if (isClassroom || isAdmin) {
     return (
       <div className="w-full min-h-screen flex flex-col antialiased">
         {children}

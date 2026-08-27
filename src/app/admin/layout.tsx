@@ -22,6 +22,8 @@ import {
   Star
 } from 'lucide-react';
 
+import ThemeToggle from '@/components/ThemeToggle';
+
 export const dynamic = 'force-dynamic';
 
 export default async function AdminLayout({
@@ -103,7 +105,41 @@ export default async function AdminLayout({
       </aside>
 
       {/* Admin Content Area */}
-      <main className="flex-1 p-6 md:p-10 overflow-y-auto max-w-7xl">
+      <main className="flex-1 p-4 md:p-8 overflow-y-auto max-w-7xl">
+        {/* Admin Top Utility Bar */}
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pb-4 border-b border-border">
+          <div className="flex items-center gap-2.5">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-300 hover:text-amber-200 text-xs font-bold transition-all shadow-sm"
+            >
+              <span>← العودة للموقع العام</span>
+            </Link>
+            <Link
+              href="/instructor"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-semibold border border-zinc-700"
+            >
+              <GraduationCap className="w-3.5 h-3.5 text-purple-400" />
+              <span>استوديو المعلم</span>
+            </Link>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            <div className="flex items-center gap-2 pr-2 border-r border-border">
+              <span className="text-xs font-bold text-white hidden sm:inline">{user.officialFullName || user.email}</span>
+              <a
+                href="/api/auth/logout"
+                className="px-2.5 py-1.5 rounded-lg bg-rose-950/30 hover:bg-rose-950/60 border border-rose-900/40 text-rose-300 text-xs font-bold flex items-center gap-1 transition-colors"
+                title="تسجيل الخروج"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                <span>خروج</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
         {children}
       </main>
     </div>

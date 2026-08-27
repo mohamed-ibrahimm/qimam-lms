@@ -131,7 +131,34 @@ export default function InstructorClient({
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-8">
+      {/* Top Breadcrumb & Exit Bar */}
+      <div className="flex items-center justify-between gap-4 pb-3 border-b border-border">
+        <div className="flex items-center gap-2 text-xs">
+          <Link href="/" className="text-zinc-400 hover:text-amber-300 transition-colors font-medium">
+            الرئيسية
+          </Link>
+          <span className="text-zinc-600">/</span>
+          <span className="text-amber-300 font-bold">استوديو المعلم</span>
+        </div>
+        <div className="flex items-center gap-2">
+          {user.role === 'ADMIN' && (
+            <Link
+              href="/admin"
+              className="px-3 py-1.5 rounded-full bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-300 hover:text-amber-200 text-xs font-bold transition-all shadow-sm"
+            >
+              <span>← لوحة تحكم الإدارة</span>
+            </Link>
+          )}
+          <Link
+            href="/"
+            className="px-3.5 py-1.5 rounded-full bg-zinc-800 hover:bg-zinc-700 text-zinc-200 hover:text-white text-xs font-bold border border-zinc-700 transition-colors"
+          >
+            ← العودة للرئيسية
+          </Link>
+        </div>
+      </div>
+
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-border">
         <div className="space-y-1">

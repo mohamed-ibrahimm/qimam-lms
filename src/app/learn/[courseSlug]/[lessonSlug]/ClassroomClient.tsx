@@ -168,12 +168,19 @@ export default function ClassroomClient({
       <header className="sticky top-0 z-40 border-b border-zinc-800/80 bg-zinc-950/90 backdrop-blur-xl px-3.5 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-2 shadow-lg">
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
           <Link
+            href="/"
+            className="text-xs font-bold text-zinc-400 hover:text-amber-300 flex items-center gap-1 shrink-0 transition-colors p-1"
+            title="العودة للرئيسية"
+          >
+            <span>الرئيسية</span>
+          </Link>
+          <span className="text-zinc-700 shrink-0">/</span>
+          <Link
             href={`/courses/${course.slug}`}
             className="text-xs font-bold text-zinc-400 hover:text-amber-300 flex items-center gap-1 shrink-0 transition-colors p-1"
             title="العودة لصفحة الكورس"
           >
-            <span>←</span>
-            <span className="hidden xs:inline">العودة لصفحة الكورس</span>
+            <span className="hidden xs:inline">صفحة الكورس</span>
             <span className="xs:hidden">رجوع</span>
           </Link>
           <span className="text-zinc-700 shrink-0">|</span>
