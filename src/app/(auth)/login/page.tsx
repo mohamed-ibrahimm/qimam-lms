@@ -15,8 +15,15 @@ function LoginForm() {
     identifier: '',
     password: '',
   });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const errorParam = searchParams.get('error');
+  const getInitialError = () => {
+    if (errorParam === 'invalid_credentials') return 'اسم المستخدم أو كلمة المرور غير صحيحة';
+    if (errorParam === 'missing_credentials') return 'يرجى إدخال اسم المستخدم وكلمة المرور';
+    if (errorParam === 'unauthorized_admin') return 'يجب تسجيل الدخول أولاً بحساب المدير للوصول إلى لوحة الإدارة';
+    if (errorParam === 'unauthorized_instructor') return 'يجب تسجيل الدخول بحساب المعلم للوصول إلى استوديو المعلم';
+    return '';
+  };
+  const [error, setError] = useState(getInitialError);
 
   const handleSubmit = async (e?: React.FormEvent) => {
     if (e) {
@@ -87,13 +94,24 @@ function LoginForm() {
         )}
 
         <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            handleSubmit();
+          action="/api/auth/form-login"
+          method="POST"
+          onSubmit={async (e) => {
+            const identEl = document.getElementById('login-identifier') as HTMLInputElement | null;
+            const passEl = document.getElementById('login-password') as HTMLInputElement | null;
+            const idVal = (identEl?.value || formData.identifier || '').trim();
+            const passVal = (passEl?.value || formData.password || '').trim();
+            
+            if (!idVal || !passVal) {
+              e.preventDefault();
+              setError('يرجى إدخال اسم المستخدم وكلمة المرور');
+              return;
+            }
           }}
           className="space-y-4"
         >
+          <input type="hidden" name="callbackUrl" value={callbackUrl} />
+
           <div>
             <label className="block text-xs font-bold text-zinc-300 mb-1.5">
               اسم المستخدم أو البريد الإلكتروني
@@ -101,15 +119,11 @@ function LoginForm() {
             <div className="relative">
               <input
                 type="text"
+                name="identifier"
+                id="login-identifier"
                 required
-                value={formData.identifier}
+                defaultValue={formData.identifier}
                 onChange={(e) => setFormData({ ...formData, identifier: e.target.value })}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault();
-                    handleSubmit();
-                  }
-                }}
                 placeholder="admin أو student أو البريد الإلكتروني"
                 className="w-full pl-4 pr-10 py-3 rounded-2xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-amber-400 transition-colors"
               />
@@ -130,15 +144,11 @@ function LoginForm() {
             <div className="relative">
               <input
                 type="password"
+                name="password"
+                id="login-password"
                 required
-                value={formData.password}
+                defaultValue={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault();
-                    handleSubmit();
-                  }
-                }}
                 placeholder="••••••••"
                 className="w-full pl-4 pr-10 py-3 rounded-2xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-amber-400 transition-colors"
               />
@@ -147,12 +157,7 @@ function LoginForm() {
           </div>
 
           <button
-            type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              handleSubmit();
-            }}
+            type="submit"
             disabled={loading}
             className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-zinc-950 font-black text-sm shadow-xl shadow-amber-950/40 transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 cursor-pointer"
           >
