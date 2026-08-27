@@ -1,7 +1,8 @@
 const { execSync } = require('child_process');
 
-console.log('🚀 [Build Step 1/3] Generating Prisma Client...');
+console.log('🚀 [Build Step 1/3] Preparing Database & Generating Prisma Client...');
 try {
+  execSync('node scripts/prepare-db.js', { stdio: 'inherit' });
   execSync('npx prisma generate', { stdio: 'inherit' });
 } catch (e) {
   console.warn('Prisma generate notice:', e.message);
