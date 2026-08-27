@@ -24,7 +24,13 @@ try {
 const schemaPath = path.join(__dirname, '..', 'prisma', 'schema.prisma');
 let schema = fs.readFileSync(schemaPath, 'utf8');
 
-const dbUrl = process.env.DATABASE_URL || '';
+const dbUrl = process.env.DATABASE_URL || process.env.POSTGRES_PRISMA_URL || process.env.POSTGRES_URL || '';
+if (!process.env.DATABASE_URL && dbUrl) {
+  process.env.DATABASE_URL = dbUrl;
+}
+if (!process.env.DIRECT_URL) {
+  process.env.DIRECT_URL = process.env.POSTGRES_URL_NON_POOLING || dbUrl;
+}
 const isPostgres = dbUrl.startsWith('postgresql://') || dbUrl.startsWith('postgres://') || Boolean(process.env.VERCEL);
 
 if (isPostgres) {
