@@ -89,21 +89,28 @@ export default function Header() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 p-3 sm:p-4 transition-all">
-      <nav className="max-w-5xl mx-auto flex items-center justify-between h-14 px-4 sm:px-6 rounded-full bg-zinc-900/80 border border-zinc-800/80 backdrop-blur-xl shadow-2xl shadow-black/60 relative">
-        {/* Logo & Platform Name */}
-        <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-500 to-yellow-300 p-[1.5px] shadow-md shadow-amber-950/40 group-hover:scale-105 transition-transform shrink-0">
-            <div className="w-full h-full bg-zinc-950 rounded-full flex items-center justify-center">
-              <GraduationCap className="w-4 h-4 text-amber-400" />
+      <nav className="max-w-5xl mx-auto flex items-center justify-between h-16 px-4 sm:px-6 rounded-full bg-zinc-900/85 border border-zinc-800/80 backdrop-blur-xl shadow-2xl shadow-black/60 relative">
+        {/* Logo & Platform Name (Royal Purple & Gold Emblem Style) */}
+        <Link href="/" className="flex items-center gap-3 shrink-0 group">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-purple-600 via-fuchsia-600 to-amber-400 p-[2px] shadow-lg shadow-purple-950/50 group-hover:scale-105 transition-transform shrink-0">
+            <div className="w-full h-full bg-[#0c0918] rounded-[10px] flex items-center justify-center">
+              <GraduationCap className="w-5 h-5 text-amber-400" />
             </div>
           </div>
-          <div className="flex items-baseline gap-1.5">
-            <span className="text-sm font-bold text-white group-hover:text-amber-300 transition-colors">
-              {platformName}
-            </span>
-            <span className="text-[10px] text-zinc-500 hidden sm:inline font-normal">
-              أكاديمية
-            </span>
+          <div className="flex flex-col text-right">
+            <div className="flex items-center gap-2 whitespace-nowrap">
+              <span className="text-sm sm:text-base font-bold text-white group-hover:text-amber-200 transition-colors">
+                {platformName}
+              </span>
+              <span className="text-[9px] px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-400/40 font-bold whitespace-nowrap shadow-sm shadow-amber-950/30">
+                ★ تعليم احترافي
+              </span>
+            </div>
+            {platformTagline && (
+              <span className="text-[10px] text-amber-200/80 font-medium whitespace-nowrap -mt-0.5 hidden sm:block">
+                {platformTagline}
+              </span>
+            )}
           </div>
         </Link>
 
