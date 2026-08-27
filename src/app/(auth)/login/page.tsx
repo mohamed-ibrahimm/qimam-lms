@@ -1,0 +1,146 @@
+'use client';
+
+import React, { useState, Suspense } from 'react';
+import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { LogIn, Mail, Lock, AlertCircle, ArrowLeft, ShieldCheck, UserCheck } from 'lucide-react';
+
+function LoginForm() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
+  const registered = searchParams.get('registered');
+
+  const [formData, setFormData] = useState({
+    identifier: '',
+    password: '',
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || 'فشل تسجيل الدخول');
+      } else {
+        if (data.user?.role === 'ADMIN') {
+          router.push('/admin');
+        } else if (data.user?.role === 'INSTRUCTOR') {
+          router.push('/instructor');
+        } else {
+          router.push(callbackUrl);
+        }
+        router.refresh();
+      }
+    } catch (err: any) {
+      setError('حدث خطأ في الاتصال بالخادم');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="max-w-md mx-auto px-4 py-12">
+      <div className="rounded-3xl bg-surface border border-border p-8 shadow-2xl space-y-6">
+        <div className="text-center space-y-2">
+          <div className="w-12 h-12 rounded-2xl bg-primary-950 border border-primary-800 flex items-center justify-center mx-auto text-primary-400">
+            <LogIn className="w-6 h-6" />
+          </div>
+          <h1 className="text-2xl font-black text-white">تسجيل الدخول إلى قِمَم</h1>
+          <p className="text-xs text-zinc-400">
+            أدخل اسم المستخدم أو البريد الإلكتروني وكلمة المرور
+          </p>
+        </div>
+
+        {registered && (
+          <div className="p-3.5 rounded-2xl bg-emerald-950/60 border border-emerald-800 text-emerald-300 text-xs font-semibold text-center">
+            تم إنشاء حسابك بنجاح! يمكنك الآن تسجيل الدخول.
+          </div>
+        )}
+
+        {error && (
+          <div className="p-3.5 rounded-2xl bg-rose-950/60 border border-rose-800 text-rose-300 text-xs font-semibold flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 shrink-0" />
+            <span>{error}</span>
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-xs font-bold text-zinc-300 mb-1.5">
+              اسم المستخدم أو البريد الإلكتروني
+            </label>
+            <div className="relative">
+              <input
+                type="text"
+                required
+                value={formData.identifier}
+                onChange={(e) => setFormData({ ...formData, identifier: e.target.value })}
+                placeholder="admin أو student أو instructor"
+                className="w-full pl-4 pr-10 py-3 rounded-2xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500 transition-colors"
+              />
+              <Mail className="w-4 h-4 text-zinc-500 absolute right-3.5 top-3.5" />
+            </div>
+          </div>
+
+          <div>
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="text-xs font-bold text-zinc-300">كلمة المرور</label>
+              <Link
+                href="/forgot-password"
+                className="text-[11px] font-semibold text-primary-400 hover:text-primary-300 transition-colors"
+              >
+                نسيت كلمة المرور؟
+              </Link>
+            </div>
+            <div className="relative">
+              <input
+                type="password"
+                required
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                placeholder="••••••••"
+                className="w-full pl-4 pr-10 py-3 rounded-2xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500 transition-colors"
+              />
+              <Lock className="w-4 h-4 text-zinc-500 absolute right-3.5 top-3.5" />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-500 hover:to-purple-500 text-white font-bold text-xs shadow-lg shadow-primary-900/30 transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50"
+          >
+            {loading ? 'جاري التحقق...' : 'دخول المنصة'}
+          </button>
+        </form>
+
+        <div className="text-center text-xs text-zinc-400 pt-2 border-t border-border/60">
+          ليس لديك حساب بعد؟{' '}
+          <Link href="/register" className="font-bold text-primary-400 hover:text-primary-300">
+            إنشاء حساب جديد
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="text-center py-20 text-xs text-zinc-400">جاري التحميل...</div>}>
+      <LoginForm />
+    </Suspense>
+  );
+}

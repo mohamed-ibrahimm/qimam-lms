@@ -1,0 +1,180 @@
+import { NextResponse } from 'next/server';
+import { requireAuth } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
+
+export async function GET() {
+  try {
+    const courses = await prisma.course.findMany({
+      orderBy: { createdAt: 'desc' },
+      include: {
+        instructor: { select: { officialFullName: true } },
+        category: true,
+        _count: { select: { sections: true, enrollments: true } }
+      }
+    });
+
+    return NextResponse.json({ courses });
+  } catch (e) {
+    return NextResponse.json({ error: 'فشل جلب الكورسات' }, { status: 500 });
+  }
+}
+
+export async function POST(req: Request) {
+  try {
+    const user = await requireAuth(['ADMIN', 'INSTRUCTOR']);
+    const body = await req.json();
+    const { title, slug, description, shortDescription, price, durationHours, level, categoryId } = body;
+
+    if (!title || !description) {
+      return NextResponse.json({ error: 'العنوان والوصف مطلوبان' }, { status: 400 });
+    }
+
+    const finalSlug = (slug?.trim() || title.trim().toLowerCase().replace(/\s+/g, '-')).substring(0, 80);
+
+    const course = await prisma.course.create({
+      data: {
+        title: title.trim(),
+        slug: finalSlug,
+        description: description.trim(),
+        shortDescription: shortDescription?.trim() || null,
+        price: parseFloat(price) || 0,
+        durationHours: parseInt(durationHours) || 10,
+        level: level || 'ALL',
+        categoryId: categoryId || null,
+        instructorId: user.id,
+        status: 'PUBLISHED',
+      }
+    });
+
+    return NextResponse.json({ success: true, course });
+  } catch (e) {
+    return NextResponse.json({ error: 'فشل حفظ الكورس' }, { status: 500 });
+  }
+}
+
+export async function DELETE(req: Request) {
+  try {
+    const user = await requireAuth(['ADMIN', 'INSTRUCTOR']);
+    const { searchParams } = new URL(req.url);
+    let courseId = searchParams.get('id') || searchParams.get('courseId');
+
+    if (!courseId) {
+      try {
+        const body = await req.json();
+        courseId = body.courseId || body.id;
+      } catch (e) {}
+    }
+
+    if (!courseId) {
+      return NextResponse.json({ error: 'معرف الكورس مطلوب' }, { status: 400 });
+    }
+
+    const course = await prisma.course.findUnique({
+      where: { id: courseId },
+      include: {
+        sections: {
+          include: {
+            lessons: {
+              include: {
+                quiz: true,
+                summary: true,
+              }
+            }
+          }
+        },
+        finalExam: true,
+      }
+    });
+
+    if (!course) {
+      return NextResponse.json({ error: 'الكورس غير موجود أو تم حذفه مسبقاً' }, { status: 404 });
+    }
+
+    // Permission check: Instructors can only delete their own courses
+    if (user.role === 'INSTRUCTOR' && course.instructorId !== user.id) {
+      return NextResponse.json({ error: 'غير مصرح لك بحذف كورس تابع لمعلم آخر' }, { status: 403 });
+    }
+
+    // Cascade delete in transaction to ensure total database integrity
+    await prisma.$transaction(async (tx) => {
+      // 1. Delete certificates associated with this course
+      await tx.certificate.deleteMany({ where: { courseId: course.id } });
+
+      // 2. Unlink or delete orders & payments
+      const orders = await tx.order.findMany({ where: { courseId: course.id } });
+      for (const order of orders) {
+        await tx.payment.deleteMany({ where: { orderId: order.id } });
+        await tx.couponUsage.deleteMany({ where: { orderId: order.id } });
+        await tx.order.delete({ where: { id: order.id } });
+      }
+
+      // 3. Delete manual access grants
+      await tx.manualAccessGrant.deleteMany({ where: { courseId: course.id } });
+
+      // 4. Delete enrollments
+      await tx.enrollment.deleteMany({ where: { courseId: course.id } });
+
+      // 5. Delete reviews & wishlist
+      await tx.review.deleteMany({ where: { courseId: course.id } });
+      await tx.wishlist.deleteMany({ where: { courseId: course.id } });
+
+      // 6. Delete diploma-course links
+      await tx.diplomaCourse.deleteMany({ where: { courseId: course.id } });
+
+      // 7. Delete lesson-level data (progresses, notes, bookmarks, quizzes, attempts)
+      for (const section of course.sections) {
+        for (const lesson of section.lessons) {
+          await tx.lessonProgress.deleteMany({ where: { lessonId: lesson.id } });
+          await tx.studentNote.deleteMany({ where: { lessonId: lesson.id } });
+          await tx.studentBookmark.deleteMany({ where: { lessonId: lesson.id } });
+
+          if (lesson.summary) {
+            await tx.lessonSummary.delete({ where: { id: lesson.summary.id } });
+          }
+
+          if (lesson.quiz) {
+            await tx.quizAttempt.deleteMany({ where: { quizId: lesson.quiz.id } });
+            await tx.question.deleteMany({ where: { quizId: lesson.quiz.id } });
+            await tx.quiz.delete({ where: { id: lesson.quiz.id } });
+          }
+
+          await tx.lesson.delete({ where: { id: lesson.id } });
+        }
+        await tx.section.delete({ where: { id: section.id } });
+      }
+
+      // 8. Delete course final exam if exists
+      if (course.finalExam) {
+        await tx.quizAttempt.deleteMany({ where: { quizId: course.finalExam.id } });
+        await tx.question.deleteMany({ where: { quizId: course.finalExam.id } });
+        await tx.quiz.delete({ where: { id: course.finalExam.id } });
+      }
+
+      // 9. Finally delete the course
+      await tx.course.delete({ where: { id: course.id } });
+
+      // 10. Record Audit Log
+      await tx.auditLog.create({
+        data: {
+          userId: user.id,
+          action: 'COURSE_DELETED',
+          entity: 'COURSE',
+          entityId: course.id,
+          detailsJson: JSON.stringify({
+            title: course.title,
+            deletedByRole: user.role,
+            instructorId: course.instructorId,
+          })
+        }
+      });
+    });
+
+    return NextResponse.json({
+      success: true,
+      message: `تم حذف كورس "${course.title}" بنجاح وكافة بياناته المرتبطة.`,
+    });
+  } catch (error: any) {
+    console.error('Course deletion error:', error);
+    return NextResponse.json({ error: 'فشل حذف الكورس' }, { status: 500 });
+  }
+}

@@ -1,0 +1,112 @@
+import { NextResponse } from 'next/server';
+import { getCurrentUser } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
+
+export async function GET(req: Request) {
+  try {
+    const user = await getCurrentUser();
+    if (!user) return NextResponse.json({ error: 'غير مصرح' }, { status: 401 });
+
+    const { searchParams } = new URL(req.url);
+    const ticketId = searchParams.get('id');
+
+    if (ticketId) {
+      const ticket = await prisma.supportTicket.findUnique({
+        where: { id: ticketId },
+        include: {
+          user: { select: { officialFullName: true, email: true } },
+          messages: {
+            orderBy: { createdAt: 'asc' },
+            include: { sender: { select: { officialFullName: true, role: true } } }
+          }
+        }
+      });
+      return NextResponse.json({ ticket });
+    }
+
+    const where = user.role === 'ADMIN' ? {} : { userId: user.id };
+    const tickets = await prisma.supportTicket.findMany({
+      where,
+      orderBy: { updatedAt: 'desc' },
+      include: {
+        user: { select: { officialFullName: true, email: true } },
+        _count: { select: { messages: true } }
+      }
+    });
+
+    return NextResponse.json({ tickets });
+  } catch (e) {
+    return NextResponse.json({ error: 'فشل جلب التذاكر' }, { status: 500 });
+  }
+}
+
+export async function POST(req: Request) {
+  try {
+    const user = await getCurrentUser();
+    if (!user) return NextResponse.json({ error: 'غير مصرح' }, { status: 401 });
+
+    const { subject, category, priority, message } = await req.json();
+    if (!subject || !message) {
+      return NextResponse.json({ error: 'يرجى كتابة عنوان وتفاصيل التذكرة' }, { status: 400 });
+    }
+
+    const ticketNumber = `TCK-2026-${Math.floor(100 + Math.random() * 900)}`;
+
+    const ticket = await prisma.supportTicket.create({
+      data: {
+        ticketNumber,
+        userId: user.id,
+        subject: subject.trim(),
+        category: category || 'GENERAL',
+        priority: priority || 'MEDIUM',
+        status: 'OPEN',
+      }
+    });
+
+    // Add first message
+    await prisma.ticketMessage.create({
+      data: {
+        ticketId: ticket.id,
+        senderId: user.id,
+        senderRole: user.role,
+        message: message.trim(),
+      }
+    });
+
+    return NextResponse.json({ success: true, ticket });
+  } catch (e) {
+    return NextResponse.json({ error: 'فشل إنشاء التذكرة' }, { status: 500 });
+  }
+}
+
+export async function PUT(req: Request) {
+  try {
+    const user = await getCurrentUser();
+    if (!user) return NextResponse.json({ error: 'غير مصرح' }, { status: 401 });
+
+    const { ticketId, message, status } = await req.json();
+    if (!ticketId) return NextResponse.json({ error: 'معرف التذكرة مطلوب' }, { status: 400 });
+
+    if (message) {
+      await prisma.ticketMessage.create({
+        data: {
+          ticketId,
+          senderId: user.id,
+          senderRole: user.role,
+          message: message.trim(),
+        }
+      });
+    }
+
+    if (status) {
+      await prisma.supportTicket.update({
+        where: { id: ticketId },
+        data: { status, updatedAt: new Date() }
+      });
+    }
+
+    return NextResponse.json({ success: true });
+  } catch (e) {
+    return NextResponse.json({ error: 'فشل تحديث التذكرة' }, { status: 500 });
+  }
+}
