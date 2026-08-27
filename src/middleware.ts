@@ -50,7 +50,11 @@ export async function middleware(request: NextRequest) {
 
   // Protect /api/admin API routes
   if (pathname.startsWith('/api/admin')) {
-    if (!token || userRole !== 'ADMIN') {
+    if (pathname.startsWith('/api/admin/courses')) {
+      if (!token || (userRole !== 'ADMIN' && userRole !== 'INSTRUCTOR')) {
+        return NextResponse.json({ error: 'غير مصرح: هذا الإجراء يتطلب صلاحيات المحاضر أو المدير' }, { status: 403 });
+      }
+    } else if (!token || userRole !== 'ADMIN') {
       return NextResponse.json({ error: 'غير مصرح: هذا الإجراء يتطلب صلاحيات مدير المنصة' }, { status: 403 });
     }
   }

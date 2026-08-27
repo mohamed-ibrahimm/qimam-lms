@@ -64,11 +64,12 @@ export default async function CourseDetailPage({ params }: Props) {
     notFound();
   }
 
-  // Check if current user is enrolled
+  // Check if current user is enrolled or course owner
   let isEnrolled = false;
-  let firstLessonSlug = course.sections[0]?.lessons[0]?.slug;
-
-  if (user) {
+  const isOwner = Boolean(user && (user.role === 'ADMIN' || user.id === course.instructorId));
+  if (isOwner) {
+    isEnrolled = true;
+  } else if (user) {
     try {
       const enrollment = await prisma.enrollment.findFirst({
         where: {
@@ -81,6 +82,7 @@ export default async function CourseDetailPage({ params }: Props) {
     } catch (e) {}
   }
 
+  const firstLessonSlug = course.sections[0]?.lessons[0]?.slug;
   const requirements: string[] = course.requirements ? JSON.parse(course.requirements) : [];
   const learningObjectives: string[] = course.learningObjectives ? JSON.parse(course.learningObjectives) : [];
   const totalLessons = course.sections.reduce((acc: number, s: any) => acc + s.lessons.length, 0);
@@ -184,11 +186,11 @@ export default async function CourseDetailPage({ params }: Props) {
 
             {isEnrolled ? (
               <Link
-                href={`/learn/${course.slug}/${firstLessonSlug || ''}`}
+                href={firstLessonSlug ? `/learn/${course.slug}/${firstLessonSlug}` : '#curriculum'}
                 className="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-sm shadow-lg shadow-emerald-900/30 flex items-center justify-center gap-2 transition-all hover:scale-[1.01]"
               >
                 <PlayCircle className="w-5 h-5" />
-                أنت مشترك بالفعل • استكمال التعلم
+                {isOwner ? 'أنت محاضر الدورة • دخول قاعة الدرس والمعاينة' : 'أنت مشترك بالفعل • استكمال التعلم'}
               </Link>
             ) : (
               <div className="space-y-2">

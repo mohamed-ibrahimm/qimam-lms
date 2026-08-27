@@ -64,7 +64,10 @@ export default async function ClassroomPage({ params }: Props) {
 
   // Check enrollment
   let isEnrolled = false;
-  if (user) {
+  const isOwner = Boolean(user && (user.role === 'ADMIN' || user.id === course.instructorId));
+  if (isOwner) {
+    isEnrolled = true;
+  } else if (user) {
     const enrollment = await prisma.enrollment.findFirst({
       where: {
         userId: user.id,

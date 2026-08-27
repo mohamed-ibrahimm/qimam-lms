@@ -291,7 +291,10 @@ export default function InstructorClient({
                     </Link>
 
                     <Link
-                      href={`/learn/${course.slug}/${course.sections?.[0]?.lessons?.[0]?.slug || ''}`}
+                      href={course.sections?.[0]?.lessons?.[0]?.slug
+                        ? `/learn/${course.slug}/${course.sections[0].lessons[0].slug}`
+                        : `/courses/${course.slug}`
+                      }
                       className="px-3.5 py-1.5 rounded-xl bg-primary-600 hover:bg-primary-500 text-white font-bold text-xs transition-colors"
                     >
                       دخول قاعة الدرس
