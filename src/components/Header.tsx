@@ -88,49 +88,49 @@ export default function Header() {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 p-3 sm:p-4 transition-all">
-      <nav className="max-w-5xl mx-auto flex items-center justify-between h-16 px-4 sm:px-6 rounded-full bg-zinc-900/85 border border-zinc-800/80 backdrop-blur-xl shadow-2xl shadow-black/60 relative">
+    <header className="fixed top-0 left-0 right-0 z-50 p-3 sm:p-5 transition-all">
+      <nav className="max-w-7xl mx-auto flex items-center justify-between min-h-[4.25rem] px-5 sm:px-8 rounded-full bg-zinc-900/90 border border-zinc-800/90 backdrop-blur-2xl shadow-2xl shadow-black/70 relative gap-4">
         {/* Logo & Platform Name (Royal Purple & Gold Emblem Style) */}
-        <Link href="/" className="flex items-center gap-3 shrink-0 group">
-          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-purple-600 via-fuchsia-600 to-amber-400 p-[2px] shadow-lg shadow-purple-950/50 group-hover:scale-105 transition-transform shrink-0">
-            <div className="w-full h-full bg-[#0c0918] rounded-[10px] flex items-center justify-center">
-              <GraduationCap className="w-5 h-5 text-amber-400" />
+        <Link href="/" className="flex items-center gap-3.5 shrink-0 group py-1.5">
+          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-purple-600 via-fuchsia-600 to-amber-400 p-[2px] shadow-lg shadow-purple-950/60 group-hover:scale-105 transition-transform shrink-0">
+            <div className="w-full h-full bg-[#0c0918] rounded-[14px] flex items-center justify-center">
+              <GraduationCap className="w-5 h-5 sm:w-6 sm:h-6 text-amber-400" />
             </div>
           </div>
-          <div className="flex flex-col text-right">
-            <div className="flex items-center gap-2 whitespace-nowrap">
-              <span className="text-sm sm:text-base font-bold text-white group-hover:text-amber-200 transition-colors">
+          <div className="flex flex-col text-right justify-center">
+            <div className="flex items-center gap-2.5 whitespace-nowrap">
+              <span className="text-base sm:text-lg font-bold text-white group-hover:text-amber-200 transition-colors tracking-tight">
                 {platformName}
               </span>
-              <span className="text-[9px] px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-400/40 font-bold whitespace-nowrap shadow-sm shadow-amber-950/30">
+              <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-400/40 font-bold whitespace-nowrap shadow-sm shadow-amber-950/30">
                 ★ تعليم احترافي
               </span>
             </div>
             {platformTagline && (
-              <span className="text-[10px] text-amber-200/80 font-medium whitespace-nowrap -mt-0.5 hidden sm:block">
+              <span className="text-[11px] text-amber-200/75 font-medium whitespace-nowrap mt-0.5 hidden sm:block">
                 {platformTagline}
               </span>
             )}
           </div>
         </Link>
 
-        {/* Desktop Nav (Anmka Pill Navigation) */}
-        <div className="hidden md:flex items-center gap-1">
+        {/* Desktop Nav (Spacious & Cleanly Separated) */}
+        <div className="hidden lg:flex items-center gap-2 bg-zinc-950/50 px-3 py-1.5 rounded-full border border-zinc-800/60 shadow-inner">
           {navLinks.map((link) => {
             const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all flex items-center gap-1.5 ${
+                className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-full transition-all flex items-center gap-2 ${
                   isActive
                     ? 'bg-zinc-800 text-white border border-zinc-700 shadow-sm'
                     : link.highlight
-                    ? 'text-amber-300 hover:text-amber-200 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30'
-                    : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/60'
+                    ? 'text-amber-300 hover:text-amber-200 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 shadow-sm shadow-amber-950/30'
+                    : 'text-zinc-300 hover:text-white hover:bg-zinc-800/70'
                 }`}
               >
-                {link.icon && <link.icon className={`w-3.5 h-3.5 ${link.highlight ? 'text-amber-400' : ''}`} />}
+                {link.icon && <link.icon className={`w-4 h-4 ${link.highlight ? 'text-amber-400' : ''}`} />}
                 <span>{link.name}</span>
               </Link>
             );
@@ -138,16 +138,16 @@ export default function Header() {
         </div>
 
         {/* Auth / User Actions */}
-        <div className="hidden md:flex items-center gap-2 shrink-0">
+        <div className="hidden sm:flex items-center gap-3 shrink-0">
           {loading ? (
-            <div className="w-20 h-8 bg-zinc-800/60 animate-pulse rounded-full" />
+            <div className="w-24 h-9 bg-zinc-800/60 animate-pulse rounded-full" />
           ) : currentUser ? (
             <div className="relative">
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-800/60 hover:bg-zinc-800 border border-zinc-700/60 transition-colors text-right"
+                className="flex items-center gap-3 px-4 py-2 rounded-full bg-zinc-800/80 hover:bg-zinc-800 border border-zinc-700/80 hover:border-zinc-600 transition-all text-right shadow-sm"
               >
-                <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-500 to-yellow-400 text-zinc-950 flex items-center justify-center font-bold text-xs shadow-inner overflow-hidden relative shrink-0">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-500 to-yellow-400 text-zinc-950 flex items-center justify-center font-bold text-xs shadow-inner overflow-hidden relative shrink-0">
                   {currentUser.avatarUrl ? (
                     <img
                       src={currentUser.avatarUrl}
@@ -257,7 +257,7 @@ export default function Header() {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 rounded-full bg-zinc-800 text-zinc-300 hover:text-white"
+          className="lg:hidden p-2.5 rounded-full bg-zinc-800/80 text-zinc-300 hover:text-white border border-zinc-700/60"
           aria-label="القائمة"
         >
           {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -266,7 +266,7 @@ export default function Header() {
 
       {/* Mobile Drawer Floating Card */}
       {mobileMenuOpen && (
-        <div className="max-w-5xl mx-auto mt-2 rounded-3xl border border-zinc-800 bg-zinc-900/95 backdrop-blur-2xl p-5 shadow-2xl space-y-4 animate-in slide-in-from-top-3">
+        <div className="max-w-7xl mx-auto mt-2 rounded-3xl border border-zinc-800/90 bg-zinc-900/95 backdrop-blur-2xl p-5 shadow-2xl space-y-4 animate-in slide-in-from-top-3">
           <div className="space-y-1">
             {navLinks.map((link) => (
               <Link
