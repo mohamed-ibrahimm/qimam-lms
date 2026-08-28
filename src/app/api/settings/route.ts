@@ -8,10 +8,10 @@ export async function GET() {
     const settings = await prisma.platformSetting.findMany();
     const map = Object.fromEntries(settings.map((s) => [s.key, s.value]));
     return NextResponse.json({
-      platformName: map['PLATFORM_NAME'] || 'أكاديمية قِمَم',
-      platformTagline: map['PLATFORM_TAGLINE'] || 'المنصة الرائدة لعلوم البرمجة والتقنية',
+      platformName: (map['PLATFORM_NAME'] || 'أكاديمية م / محمد إبراهيم').replace(/سنجر/g, '').trim() || 'أكاديمية م / محمد إبراهيم',
+      platformTagline: map['PLATFORM_TAGLINE'] || 'بوابتك الاحترافية لاحتراف البرمجة والذكاء الاصطناعي والتصميم',
       watermarkEnabled: map['WATERMARK_ENABLED'] !== 'false',
-      whatsappNumber: map['WHATSAPP_NUMBER'] || '',
+      whatsappNumber: map['CONTACT_WHATSAPP'] || map['WHATSAPP_NUMBER'] || map['CONTACT_PHONE'] || '+201001234567',
       contactEmail: map['CONTACT_EMAIL'] || '',
       facebookUrl: map['FACEBOOK_URL'] || '',
       telegramUrl: map['TELEGRAM_URL'] || '',
@@ -24,10 +24,10 @@ export async function GET() {
     });
   } catch (e) {
     return NextResponse.json({
-      platformName: 'أكاديمية قِمَم',
-      platformTagline: 'المنصة الرائدة لعلوم البرمجة والتقنية',
+      platformName: 'أكاديمية م / محمد إبراهيم',
+      platformTagline: 'بوابتك الاحترافية لاحتراف البرمجة والذكاء الاصطناعي والتصميم',
       watermarkEnabled: true,
-      whatsappNumber: '',
+      whatsappNumber: '+201001234567',
       contactEmail: '',
       facebookUrl: '',
       telegramUrl: '',

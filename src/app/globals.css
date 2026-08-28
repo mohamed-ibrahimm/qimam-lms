@@ -890,7 +890,7 @@ html.light-theme .mobile-drawer-sheet [class*="bg-zinc-950"],
   content: '';
   position: absolute;
   inset: -50%;
-  background: conic-gradient(from 0deg, #2563eb, #8b5cf6, #ec4899, #f59e0b, #10b981, #06b6d4, #2563eb);
+  background: conic-gradient(from 0deg, #f59e0b, #fbbf24, #d97706, #fef08a, #b45309, #f59e0b);
   animation: rotateEmblemAura 4s linear infinite;
   z-index: 0;
 }

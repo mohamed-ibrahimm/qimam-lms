@@ -513,7 +513,7 @@ async function main() {
   });
 
   const settings = [
-    { key: 'PLATFORM_NAME', value: 'أكاديمية م / محمد إبراهيم سنجر', description: 'اسم المنصة الرسمي' },
+    { key: 'PLATFORM_NAME', value: 'أكاديمية م / محمد إبراهيم', description: 'اسم المنصة الرسمي' },
     { key: 'PLATFORM_TAGLINE', value: 'بوابتك الاحترافية لاحتراف البرمجة والذكاء الاصطناعي والتصميم', description: 'الشعار التسويقي' },
     { key: 'INSTAPAY_ENABLED', value: 'true', description: 'تفعيل الدفع عبر InstaPay' },
     { key: 'INSTAPAY_ACCOUNT', value: 'qimam.edu@instapay', description: 'معرف حساب إنستاباي' },

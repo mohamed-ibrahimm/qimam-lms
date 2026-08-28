@@ -47,19 +47,23 @@ export default function Header({
   const [mounted, setMounted] = useState(false);
   const { theme, toggleTheme } = useTheme();
 
-  const [platformName, setPlatformName] = useState(initialPlatformName || 'أكاديمية م / محمد إبراهيم');
+  const cleanInitialName = (initialPlatformName || 'أكاديمية م / محمد إبراهيم').replace(/سنجر/g, '').trim();
+  const [platformName, setPlatformName] = useState(cleanInitialName || 'أكاديمية م / محمد إبراهيم');
   const [platformTagline, setPlatformTagline] = useState(initialPlatformTagline || 'بوابتك الاحترافية لاحتراف البرمجة والذكاء الاصطناعي والتصميم');
 
   // Sync if prop updates from server
   useEffect(() => {
     if (initialUser !== undefined) {
+      if (initialUser?.officialFullName) {
+        initialUser.officialFullName = initialUser.officialFullName.replace(/سنجر/g, '').trim();
+      }
       setCurrentUser(initialUser);
     }
   }, [initialUser]);
 
   useEffect(() => {
     if (initialPlatformName && !initialPlatformName.includes('?')) {
-      setPlatformName(initialPlatformName);
+      setPlatformName(initialPlatformName.replace(/سنجر/g, '').trim());
     }
     if (initialPlatformTagline && !initialPlatformTagline.includes('?')) {
       setPlatformTagline(initialPlatformTagline);
@@ -71,7 +75,9 @@ export default function Header({
       const res = await fetch('/api/settings', { cache: 'no-store' });
       if (res.ok) {
         const data = await res.json();
-        if (data.platformName && !data.platformName.includes('?')) setPlatformName(data.platformName);
+        if (data.platformName && !data.platformName.includes('?')) {
+          setPlatformName(data.platformName.replace(/سنجر/g, '').trim());
+        }
         if (data.platformTagline && !data.platformTagline.includes('?')) setPlatformTagline(data.platformTagline);
       }
     } catch (e) {}
@@ -85,7 +91,14 @@ export default function Header({
       });
       if (res.ok) {
         const data = await res.json();
-        setCurrentUser(data.user);
+        if (data.user) {
+          if (data.user.officialFullName) {
+            data.user.officialFullName = data.user.officialFullName.replace(/سنجر/g, '').trim();
+          }
+          setCurrentUser(data.user);
+        } else {
+          setCurrentUser(null);
+        }
       } else {
         setCurrentUser(null);
       }
@@ -104,13 +117,13 @@ export default function Header({
     const handleSettingsUpdated = (e: any) => {
       const name = e.detail?.PLATFORM_NAME || e.detail?.settings?.PLATFORM_NAME;
       const tagline = e.detail?.PLATFORM_TAGLINE || e.detail?.settings?.PLATFORM_TAGLINE;
-      if (name && !name.includes('?')) setPlatformName(name);
+      if (name && !name.includes('?')) setPlatformName(name.replace(/سنجر/g, '').trim());
       if (tagline && !tagline.includes('?')) setPlatformTagline(tagline);
     };
 
     const handleStorage = (e: StorageEvent) => {
       if (e.key === 'platform_name' && e.newValue && !e.newValue.includes('?')) {
-        setPlatformName(e.newValue);
+        setPlatformName(e.newValue.replace(/سنجر/g, '').trim());
       }
     };
 
@@ -142,13 +155,13 @@ export default function Header({
       <nav className="dynamic-navbar-aura max-w-[1440px] w-[97%] sm:w-[94%] mx-auto flex items-center justify-between min-h-[4rem] sm:min-h-[4.5rem] px-3.5 sm:px-8 rounded-full bg-white/90 dark:bg-zinc-900/90 border border-slate-200/90 dark:border-zinc-800/90 backdrop-blur-2xl shadow-2xl shadow-slate-900/5 dark:shadow-black/70 relative gap-2 sm:gap-6">
         {/* Logo & Platform Name */}
         <Link href="/" className="flex items-center gap-2.5 sm:gap-3.5 shrink min-w-0 group py-1">
-          <div className="dynamic-logo-emblem w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl p-[2.5px] shadow-md group-hover:scale-105 transition-transform shrink-0">
-            <div className="w-full h-full bg-blue-600 dark:bg-[#0c0918] rounded-[10px] sm:rounded-[14px] flex items-center justify-center">
-              <GraduationCap className="w-4 h-4 sm:w-5 sm:h-5 text-white dark:text-amber-400" />
+          <div className="dynamic-logo-emblem w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl p-[2px] shadow-md group-hover:scale-105 transition-transform shrink-0">
+            <div className="w-full h-full bg-[#0c0918] dark:bg-[#0c0918] rounded-[10px] sm:rounded-[14px] flex items-center justify-center border border-amber-500/30">
+              <GraduationCap className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
             </div>
           </div>
           <div className="flex flex-col text-right justify-center min-w-0">
-            <span className="text-[9px] sm:text-[10px] font-bold text-blue-600 dark:text-amber-400 flex items-center gap-1 leading-none mb-0.5 whitespace-nowrap">
+            <span className="text-[9px] sm:text-[10px] font-bold text-amber-500 dark:text-amber-400 flex items-center gap-1 leading-none mb-0.5 whitespace-nowrap">
               ★ منصة تعليمية معتمدة
             </span>
             <span className="text-xs sm:text-base md:text-lg font-black text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-amber-300 transition-colors tracking-tight whitespace-nowrap leading-snug">
@@ -181,7 +194,7 @@ export default function Header({
                   <link.icon
                     className={`w-3.5 h-3.5 ${
                       isDiploma
-                        ? 'text-purple-600 dark:text-purple-300'
+                        ? 'text-amber-400'
                         : isActive
                         ? 'text-blue-600 dark:text-amber-400'
                         : 'text-slate-500 dark:text-zinc-400'
@@ -189,11 +202,6 @@ export default function Header({
                   />
                 )}
                 <span>{link.name}</span>
-                {isDiploma && (
-                  <span className="text-[9px] bg-purple-600/15 dark:bg-purple-500/30 text-purple-700 dark:text-purple-200 px-1.5 py-0.5 rounded-full font-black border border-purple-300/60 dark:border-purple-500/40">
-                    VIP ✨
-                  </span>
-                )}
               </Link>
             );
           })}
@@ -528,11 +536,6 @@ export default function Header({
                       )}
                       <span>{link.name}</span>
                     </div>
-                    {isDiploma && (
-                      <span className="text-[10px] px-2.5 py-1 rounded-full bg-purple-100 dark:bg-purple-500/25 text-purple-800 dark:text-purple-300 font-bold border border-purple-200 dark:border-purple-500/40">
-                        شاملة معتمدة ✨
-                      </span>
-                    )}
                   </Link>
                 );
               })}

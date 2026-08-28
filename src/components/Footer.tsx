@@ -20,15 +20,12 @@ interface FooterProps {
 }
 
 export default function Footer({ initialSettings }: FooterProps) {
-  const platformName = initialSettings?.['PLATFORM_NAME'] || 'أكاديمية م / محمد إبراهيم';
+  const platformName = (initialSettings?.['PLATFORM_NAME'] || 'أكاديمية م / محمد إبراهيم').replace(/سنجر/g, '').trim() || 'أكاديمية م / محمد إبراهيم';
   const platformTagline = initialSettings?.['PLATFORM_TAGLINE'] || 'بوابتك الاحترافية لاحتراف البرمجة والذكاء الاصطناعي والتصميم ومشاريع الإنتاج الفعلية.';
 
-  let whatsappUrl = '';
-  if (initialSettings?.['WHATSAPP_NUMBER']) {
-    const clean = initialSettings['WHATSAPP_NUMBER'].replace(/[^0-9]/g, '');
-    const formatted = clean.startsWith('0') ? '2' + clean : clean;
-    whatsappUrl = `https://wa.me/${formatted}`;
-  }
+  const whatsappNum = (initialSettings?.['CONTACT_WHATSAPP'] || initialSettings?.['WHATSAPP_NUMBER'] || initialSettings?.['CONTACT_PHONE'] || '201001234567').replace(/[^0-9]/g, '');
+  const formattedWhatsapp = whatsappNum.startsWith('0') ? '2' + whatsappNum : (whatsappNum.length < 10 ? '201001234567' : whatsappNum);
+  const whatsappUrl = `https://wa.me/${formattedWhatsapp}`;
 
   const contactEmail = initialSettings?.['CONTACT_EMAIL'] ? `mailto:${initialSettings['CONTACT_EMAIL']}` : '';
   const facebookUrl = initialSettings?.['FACEBOOK_URL'] || '';

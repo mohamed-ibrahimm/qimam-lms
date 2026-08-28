@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
   try {
     const settings = await prisma.platformSetting.findMany();
     const map = Object.fromEntries(settings.map((s) => [s.key, s.value]));
-    if (map['PLATFORM_NAME']) title = map['PLATFORM_NAME'];
+    if (map['PLATFORM_NAME']) title = map['PLATFORM_NAME'].replace(/سنجر/g, '').trim() || title;
     if (map['PLATFORM_TAGLINE']) description = map['PLATFORM_TAGLINE'];
   } catch (e) {}
 
@@ -42,7 +42,7 @@ export default async function RootLayout({
   try {
     const settings = await prisma.platformSetting.findMany();
     settingsMap = Object.fromEntries(settings.map((s) => [s.key, s.value]));
-    if (settingsMap['PLATFORM_NAME']) platformName = settingsMap['PLATFORM_NAME'];
+    if (settingsMap['PLATFORM_NAME']) platformName = settingsMap['PLATFORM_NAME'].replace(/سنجر/g, '').trim() || platformName;
     if (settingsMap['PLATFORM_TAGLINE']) platformTagline = settingsMap['PLATFORM_TAGLINE'];
   } catch (e) {}
 

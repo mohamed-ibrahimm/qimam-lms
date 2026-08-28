@@ -125,10 +125,15 @@ export default async function HomePage() {
   const { courses, diplomas, categories, stats, settings } = await getHomeData();
   const trendingDiploma = diplomas[0] || null;
 
-  // Social & Quick Contact URL computations
-  const rawWhatsapp = settings.WHATSAPP_NUMBER ? settings.WHATSAPP_NUMBER.replace(/[^0-9]/g, '') : '';
-  const formattedWhatsapp = rawWhatsapp ? (rawWhatsapp.startsWith('0') ? '2' + rawWhatsapp : rawWhatsapp) : '';
-  const whatsappUrl = formattedWhatsapp ? `https://wa.me/${formattedWhatsapp}?text=${encodeURIComponent('السلام عليكم، أود الاستفسار عن تفاصيل الكورسات والدبلومات')}` : null;
+  // Clean Platform Name (ensuring سنجر is strictly NEVER present)
+  const cleanPlatformName = ((settings.PLATFORM_NAME && !settings.PLATFORM_NAME.includes('?'))
+    ? settings.PLATFORM_NAME
+    : 'أكاديمية م / محمد إبراهيم').replace(/سنجر/g, '').trim() || 'أكاديمية م / محمد إبراهيم';
+
+  // Social & Quick Contact URL computations (guaranteeing WhatsApp is ALWAYS active)
+  const whatsappNum = (settings.CONTACT_WHATSAPP || settings.WHATSAPP_NUMBER || settings.CONTACT_PHONE || '201001234567').replace(/[^0-9]/g, '');
+  const formattedWhatsapp = whatsappNum.startsWith('0') ? '2' + whatsappNum : (whatsappNum.length < 10 ? '201001234567' : whatsappNum);
+  const whatsappUrl = `https://wa.me/${formattedWhatsapp}?text=${encodeURIComponent('السلام عليكم، أود الاستفسار عن تفاصيل الكورسات والدبلومات')}`;
   const contactEmail = settings.CONTACT_EMAIL || null;
   const facebookUrl = settings.FACEBOOK_URL || null;
   const telegramUrl = settings.TELEGRAM_URL || null;
@@ -152,10 +157,10 @@ export default async function HomePage() {
         <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-[radial-gradient(circle,_rgba(20,184,166,0.08),_transparent_70%)] dark:bg-[radial-gradient(circle,_rgba(217,119,6,0.03),_transparent_70%)] blur-[110px]" />
       </div>
 
-      <div className="relative z-10 space-y-20 md:space-y-28">
+      <div className="relative z-10 space-y-16 sm:space-y-20 md:space-y-28">
 
         <section className="pt-6 pb-8 md:pt-14 md:pb-16">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             
             {/* Promotional Dynamic Rotating Shimmer Banner */}
             {(settings.BANNER_ENABLED !== 'false') && (
@@ -178,7 +183,7 @@ export default async function HomePage() {
             )}
 
             {/* Glowing Dynamic Moving Orbs & Hero Headline */}
-            <div className="relative">
+            <div className="relative px-2">
               {/* Dynamic Animated Floating Glowing Orbs behind the Headline */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-[360px] pointer-events-none -z-10 overflow-visible">
                 <div className="dynamic-drift-1 absolute -top-10 right-1/4 w-[280px] sm:w-[420px] h-[220px] sm:h-[300px] bg-amber-400/25 dark:bg-amber-500/15 rounded-full blur-[80px] sm:blur-[110px]" />
@@ -186,41 +191,38 @@ export default async function HomePage() {
                 <div className="dynamic-drift-3 absolute top-1/4 left-1/2 -translate-x-1/2 w-[260px] sm:w-[380px] h-[200px] sm:h-[280px] bg-indigo-400/20 dark:bg-yellow-500/10 rounded-full blur-[75px] sm:blur-[100px]" />
               </div>
 
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-black tracking-tight mb-5 sm:mb-6 leading-[1.3] sm:leading-[1.22] max-w-4xl mx-auto">
-                <span className="text-slate-900 dark:text-white block font-black mb-2.5 sm:mb-3.5">
+              <h1 className="text-xl sm:text-3xl md:text-4xl lg:text-[46px] font-black tracking-tight mb-4 sm:mb-6 leading-[1.3] sm:leading-[1.25] max-w-5xl mx-auto">
+                <span className="text-slate-900 dark:text-white block font-black mb-2 sm:mb-3">
                   {settings.HERO_TITLE || 'نحو مستقبل برمجي وهندسي احترافي'}
                 </span>
-                <span className="hero-focal-gradient block font-black text-2xl sm:text-3xl md:text-4xl lg:text-[44px] leading-[1.3]">
+                <span className="hero-focal-gradient block font-black text-lg sm:text-2xl md:text-3xl lg:text-[38px] leading-[1.3]">
                   {(settings.PLATFORM_TAGLINE && !settings.PLATFORM_TAGLINE.includes('?')) ? settings.PLATFORM_TAGLINE : 'بوابتك لاحتراف البرمجة والذكاء الاصطناعي والتصميم'}
                 </span>
               </h1>
             </div>
 
-            <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-zinc-300 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed font-medium text-balance">
-              {settings.HERO_SUBTITLE || `${(settings.PLATFORM_NAME && !settings.PLATFORM_NAME.includes('?')) ? settings.PLATFORM_NAME : 'أكاديمية م / محمد إبراهيم'} — نقدم مسارات تدريبية هندسية متكاملة، دبلومات برمجية شاملة، مشاريع إنتاج واقعية مطابقة لسوق العمل، ومساعد ذكاء اصطناعي تفاعلي يرافقك خطوة بخطوة.`}
+            <p className="text-xs sm:text-base md:text-lg text-slate-600 dark:text-zinc-300 max-w-2xl mx-auto mb-6 sm:mb-10 leading-relaxed font-normal px-4">
+              {settings.HERO_SUBTITLE || `${cleanPlatformName} — نقدم مسارات تدريبية هندسية متكاملة، دبلومات برمجية شاملة، مشاريع إنتاج واقعية مطابقة لسوق العمل، ومساعد ذكاء اصطناعي تفاعلي يرافقك خطوة بخطوة.`}
             </p>
 
-            {/* Action Buttons: The Most Requested Diploma grabs the eye FIRST! */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4 w-full max-w-md sm:max-w-none mx-auto">
-              <a href="#trending-diploma" className="dynamic-trending-cta group">
-                <div className="shimmer-beam-gold opacity-50" />
-                <Flame className="w-5 h-5 text-amber-200 animate-bounce shrink-0" />
-                <span className="text-sm sm:text-[15px] font-black tracking-wide">
-                  {settings.FEATURED_DIPLOMA_BADGE || 'الدبلومة الأكثر طلباً'}
-                </span>
-                <span className="px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-[11px] font-black text-amber-100 border border-white/40 shadow-xs">
-                  خصم 51% 🔥
-                </span>
-                <ArrowLeft className="w-4 h-4 text-white group-hover:-translate-x-1.5 transition-transform shrink-0" />
+            {/* Action Buttons: The Most Requested Diploma with Golden Shimmer Beam */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full max-w-md sm:max-w-none mx-auto px-4">
+              <a href="#trending-diploma" className="w-full sm:w-auto shimmer-border-wrapper group">
+                <div className="shimmer-beam-gold" />
+                <div className="shimmer-button-content px-6 sm:px-8 py-3.5 text-xs sm:text-sm font-bold text-white dark:text-amber-300 group-hover:opacity-95 flex items-center justify-center gap-2">
+                  <Flame className="w-4 h-4 text-amber-400 animate-bounce shrink-0" />
+                  <span className="whitespace-nowrap">{settings.FEATURED_DIPLOMA_BADGE || 'الدبلومة الأكثر طلباً (خصم 51%)'}</span>
+                  <ArrowLeft className="w-4 h-4 text-white dark:text-amber-400 group-hover:-translate-x-1.5 transition-transform duration-300 shrink-0" />
+                </div>
               </a>
 
               <Link
                 href="/courses"
-                className="w-full sm:w-auto group flex items-center justify-center gap-2 px-6 sm:px-7 py-3.5 text-sm font-bold text-slate-800 hover:text-blue-700 dark:text-zinc-200 dark:hover:text-white transition-all rounded-full border border-slate-300/90 hover:border-blue-500 bg-white/95 hover:bg-white dark:border-zinc-800/80 dark:bg-zinc-900/60 dark:hover:border-zinc-700 dark:hover:bg-zinc-900 shadow-sm hover:shadow-md backdrop-blur-md"
+                className="w-full sm:w-auto group flex items-center justify-center gap-2 px-6 sm:px-7 py-3.5 text-xs sm:text-sm font-bold text-slate-800 hover:text-blue-700 dark:text-zinc-200 dark:hover:text-white transition-all rounded-full border border-slate-300/90 hover:border-blue-500 bg-white/95 hover:bg-white dark:border-zinc-800/80 dark:bg-zinc-900/60 dark:hover:border-zinc-700 dark:hover:bg-zinc-900 shadow-sm hover:shadow-md backdrop-blur-md"
               >
-                <BookOpen className="w-4 h-4 text-blue-600 dark:text-amber-400 group-hover:scale-110 transition-transform" />
-                <span>{settings.HERO_CTA_PRIMARY || 'تصفح دليل الكورسات'}</span>
-                <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300" />
+                <BookOpen className="w-4 h-4 text-blue-600 dark:text-amber-400 group-hover:scale-110 transition-transform shrink-0" />
+                <span className="whitespace-nowrap">{settings.HERO_CTA_PRIMARY || 'تصفح دليل الكورسات'}</span>
+                <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300 shrink-0" />
               </Link>
             </div>
 
@@ -300,17 +302,17 @@ export default async function HomePage() {
               </div>
             )}
 
-            <div className="mt-8 sm:mt-10 flex flex-col items-center">
-              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-[11px] sm:text-xs text-slate-600 dark:text-zinc-400 pt-2 w-full max-w-2xl px-2">
-                <div className="flex items-center justify-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 dark:bg-zinc-900/60 border border-slate-200/90 dark:border-zinc-800/70 backdrop-blur-md shadow-xs flex-1 min-w-[240px] sm:min-w-0 sm:flex-initial">
+            <div className="mt-8 sm:mt-12 flex flex-col items-center">
+              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-[10.5px] sm:text-xs text-slate-600 dark:text-zinc-400 pt-2 w-full max-w-2xl px-2">
+                <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 dark:bg-zinc-900/60 border border-slate-200/90 dark:border-zinc-800/70 backdrop-blur-md shadow-xs">
                   <MapPin className="w-3.5 h-3.5 text-blue-600 dark:text-amber-400 shrink-0" />
                   <span className="whitespace-nowrap font-medium text-slate-700 dark:text-zinc-300">مصر — القاهرة & أونلاين بالعالم العربي</span>
                 </div>
-                <div className="flex items-center justify-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 dark:bg-zinc-900/60 border border-slate-200/90 dark:border-zinc-800/70 backdrop-blur-md shadow-xs flex-1 min-w-[200px] sm:min-w-0 sm:flex-initial">
+                <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 dark:bg-zinc-900/60 border border-slate-200/90 dark:border-zinc-800/70 backdrop-blur-md shadow-xs">
                   <ShieldCheck className="w-3.5 h-3.5 text-blue-600 dark:text-amber-400 shrink-0" />
-                  <span className="text-slate-800 dark:text-zinc-200 font-semibold whitespace-nowrap">إشراف {(settings.PLATFORM_NAME && !settings.PLATFORM_NAME.includes('?')) ? settings.PLATFORM_NAME : 'م. محمد إبراهيم'}</span>
+                  <span className="text-slate-800 dark:text-zinc-200 font-semibold whitespace-nowrap">إشراف {cleanPlatformName}</span>
                 </div>
-                <div className="flex items-center justify-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 dark:bg-zinc-900/60 border border-slate-200/90 dark:border-zinc-800/70 backdrop-blur-md shadow-xs flex-1 min-w-[220px] sm:min-w-0 sm:flex-initial">
+                <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 dark:bg-zinc-900/60 border border-slate-200/90 dark:border-zinc-800/70 backdrop-blur-md shadow-xs">
                   <Award className="w-3.5 h-3.5 text-blue-600 dark:text-amber-400 shrink-0" />
                   <span className="text-slate-800 dark:text-zinc-200 font-semibold whitespace-nowrap">شهادات تخرج رقمية معتمدة برمز QR</span>
                 </div>
