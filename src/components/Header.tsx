@@ -23,7 +23,8 @@ import {
   LogIn,
   UserPlus,
   Sun,
-  Moon
+  Moon,
+  Headphones,
 } from 'lucide-react';
 import { useTheme } from '@/components/ThemeProvider';
 
@@ -148,6 +149,7 @@ export default function Header({
     { name: 'المسارات التدريبية', href: '/courses', icon: BookOpen },
     { name: 'الدبلومات الشاملة', href: '/diplomas', icon: Award, isDiploma: true },
     { name: 'التحقق من الشهادات', href: '/verify', icon: ShieldCheck },
+    { name: 'الدعم الفني', href: '/support', icon: Headphones },
   ];
 
   return (
