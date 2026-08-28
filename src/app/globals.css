@@ -871,7 +871,11 @@ html.light-theme .mobile-drawer-sheet [class*="bg-zinc-950"],
 
 .shimmer-beam-gold {
   position: absolute;
-  inset: -150%;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
   background: conic-gradient(
     from 0deg,
     transparent 0deg,
@@ -881,13 +885,17 @@ html.light-theme .mobile-drawer-sheet [class*="bg-zinc-950"],
     #fef08a 352deg,
     #ffffff 360deg
   );
-  animation: spinBorder 3s linear infinite;
+  animation: spinBorderCentered 3s linear infinite;
   pointer-events: none;
 }
 
 .shimmer-beam-purple {
   position: absolute;
-  inset: -150%;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
   background: conic-gradient(
     from 0deg,
     transparent 0deg,
@@ -897,8 +905,17 @@ html.light-theme .mobile-drawer-sheet [class*="bg-zinc-950"],
     #e9d5ff 352deg,
     #ffffff 360deg
   );
-  animation: spinBorder 3s linear infinite;
+  animation: spinBorderCentered 3s linear infinite;
   pointer-events: none;
+}
+
+@keyframes spinBorderCentered {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
 .shimmer-button-content {
