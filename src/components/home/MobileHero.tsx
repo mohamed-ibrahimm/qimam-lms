@@ -46,48 +46,50 @@ export default function MobileHero({
       {/* 
         ========================================================================
         PAGE 1 (FIRST FOLD ON MOBILE):
-        Clean, spacious, authoritative.
-        Ends cleanly at the action buttons with generous breathing room.
-        Zero yellow artifact leakage, zero broken line-wraps.
+        - Discount banner lifted up closer to the navbar.
+        - Headline enlarged and widened ("كبر ووسع الكلام").
+        - Action buttons pushed down ("تنزل شوية") with generous breathing room.
+        - Liquid Gold Flow border on buttons and banner with zero artifacts.
         ======================================================================== 
       */}
-      <section className="min-h-[88vh] flex flex-col justify-center pt-4 pb-14 px-4 text-center relative overflow-hidden">
+      <section className="min-h-[calc(100svh-4.5rem)] flex flex-col justify-between pt-2 pb-12 px-4 text-center relative overflow-hidden">
         
         {/* Dynamic Animated Atmospheric Lighting */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-sm h-[360px] pointer-events-none -z-10 overflow-visible">
-          <div className="dynamic-drift-1 absolute -top-12 right-1/6 w-[280px] h-[200px] bg-amber-400/20 dark:bg-amber-500/15 rounded-full blur-[80px]" />
-          <div className="dynamic-drift-2 absolute -bottom-12 left-1/6 w-[300px] h-[220px] bg-blue-500/20 dark:bg-purple-600/15 rounded-full blur-[90px]" />
-          <div className="dynamic-drift-3 absolute top-1/4 left-1/2 -translate-x-1/2 w-[260px] h-[190px] bg-indigo-400/15 dark:bg-yellow-500/10 rounded-full blur-[75px]" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-sm h-[400px] pointer-events-none -z-10 overflow-visible">
+          <div className="dynamic-drift-1 absolute -top-12 right-1/6 w-[300px] h-[220px] bg-amber-400/20 dark:bg-amber-500/15 rounded-full blur-[85px]" />
+          <div className="dynamic-drift-2 absolute -bottom-10 left-1/6 w-[320px] h-[240px] bg-blue-500/20 dark:bg-purple-600/15 rounded-full blur-[95px]" />
+          <div className="dynamic-drift-3 absolute top-1/4 left-1/2 -translate-x-1/2 w-[280px] h-[200px] bg-indigo-400/15 dark:bg-yellow-500/10 rounded-full blur-[80px]" />
         </div>
 
-        <div className="w-full max-w-md mx-auto flex flex-col items-center">
-          
-          {/* 1. Promotional Flowing Gold Shimmer Banner (Zero artifact leakage) */}
+        {/* TOP SECTION: Discount Banner lifted up close to header */}
+        <div className="w-full flex justify-center pt-1 mb-2">
           {settings.BANNER_ENABLED !== 'false' && (
-            <div className="mb-6 inline-block max-w-full px-1">
+            <div className="inline-block max-w-full px-1">
               <a href="#trending-diploma" className="shimmer-border-flow group inline-block max-w-full">
-                <div className="px-4 py-2 rounded-full bg-[#111116] dark:bg-[#0c0c10] text-xs text-slate-200 flex items-center gap-2 flex-nowrap justify-center">
+                <div className="px-4 py-2 rounded-full bg-[#121118]/95 dark:bg-[#0a0a0f]/95 text-slate-100 flex items-center gap-2 flex-nowrap justify-center shadow-lg shadow-amber-500/10 border border-amber-400/20">
                   <div className="flex items-center gap-1.5 shrink-0">
                     <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
-                    <span className="text-amber-300 font-black">{settings.HERO_BADGE || 'جديد!'}</span>
+                    <span className="text-amber-300 font-black text-xs">{settings.HERO_BADGE || 'جديد!'}</span>
                   </div>
-                  <div className="h-3.5 w-px bg-amber-500/40 shrink-0" />
-                  <span className="font-semibold text-xs text-slate-200 group-hover:text-amber-200 transition-colors whitespace-nowrap">
-                    {settings.BANNER_TEXT || 'خصم استثنائي 50% لفترة محدودة على المسارات'}
+                  <div className="h-3.5 w-px bg-amber-400/40 shrink-0" />
+                  <span className="font-semibold text-xs text-zinc-200 group-hover:text-amber-200 transition-colors whitespace-nowrap">
+                    {settings.BANNER_TEXT || 'خصم استثنائي 50% لفترة محدودة على المسارات الهندسية'}
                   </span>
                   <ArrowLeft className="w-3.5 h-3.5 text-amber-400 group-hover:-translate-x-1 transition-transform shrink-0" />
                 </div>
               </a>
             </div>
           )}
+        </div>
 
-          {/* 2. Hero Headline (Wide, authoritative, un-broken) */}
-          <div className="w-full px-2 mb-4">
+        {/* MIDDLE SECTION: Big & Wide Authoritative Headline ("كبر ووسع الكلام") */}
+        <div className="w-full max-w-lg mx-auto flex flex-col items-center my-auto px-1">
+          <div className="w-full mb-3">
             <h1 className="font-black tracking-tight">
-              <span className="text-white block font-black text-[22px] xs:text-[24px] sm:text-2xl leading-[1.28] mb-2 tracking-tight">
+              <span className="text-white block font-black text-[24px] xs:text-[26px] sm:text-3xl leading-[1.24] mb-2 tracking-tight">
                 {settings.HERO_TITLE || 'نحو مستقبل برمجي وهندسي احترافي'}
               </span>
-              <span className="bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 bg-clip-text text-transparent block font-black text-[16px] xs:text-[18px] sm:text-xl leading-snug">
+              <span className="bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 bg-clip-text text-transparent block font-black text-[18px] xs:text-[20px] sm:text-2xl leading-snug">
                 {(settings.PLATFORM_TAGLINE && !settings.PLATFORM_TAGLINE.includes('?'))
                   ? settings.PLATFORM_TAGLINE
                   : 'دبلومات تطبيقية ومشاريع واقعية تؤهلك لسوق العمل'}
@@ -95,34 +97,32 @@ export default function MobileHero({
             </h1>
           </div>
 
-          {/* 3. Subtitle */}
-          <p className="text-xs xs:text-sm text-zinc-300 max-w-sm mx-auto mb-8 leading-relaxed font-normal px-2">
+          <p className="text-xs xs:text-sm sm:text-base text-zinc-300 max-w-md mx-auto leading-relaxed font-normal px-2">
             {settings.HERO_SUBTITLE ||
               `${cleanPlatformName} — مسارات تدريبية هندسية متكاملة، دبلومات برمجية معتمدة، ومشاريع إنتاج واقعية تؤهلك لسوق العمل بثقة واحتراف.`}
           </p>
+        </div>
 
-          {/* 4. Action Buttons (Liquid gold flow + glass guide button) */}
-          <div className="flex flex-col gap-3.5 w-full max-w-sm mx-auto px-2">
-            {/* Primary Diploma Button with Liquid Gold Border Flow */}
-            <a href="#trending-diploma" className="w-full shimmer-border-flow group">
-              <div className="w-full flex items-center justify-center gap-2.5 px-6 py-4 rounded-full bg-[#111116] dark:bg-[#0c0c10] text-amber-300 font-black text-sm transition-colors group-hover:bg-[#181822]">
-                <Flame className="w-4 h-4 text-amber-400 animate-bounce shrink-0" />
-                <span className="whitespace-nowrap">{settings.FEATURED_DIPLOMA_BADGE || 'الدبلومة الأكثر طلباً (خصم 51%)'}</span>
-                <ArrowLeft className="w-4 h-4 text-amber-400 group-hover:-translate-x-1.5 transition-transform duration-300 shrink-0" />
-              </div>
-            </a>
+        {/* BOTTOM SECTION OF FOLD 1: Action Buttons pushed down ("تنزل شوية") with generous breathing room */}
+        <div className="w-full max-w-md mx-auto mt-6 sm:mt-8 px-2 flex flex-col gap-3.5">
+          {/* Primary Diploma Button with Flowing Gold Shimmer */}
+          <a href="#trending-diploma" className="w-full shimmer-border-flow group">
+            <div className="w-full flex items-center justify-center gap-2.5 px-7 py-4 rounded-full bg-[#111116] dark:bg-[#0c0c10] text-amber-300 font-black text-sm xs:text-base transition-colors group-hover:bg-[#181822]">
+              <Flame className="w-4 h-4 xs:w-5 xs:h-5 text-amber-400 animate-bounce shrink-0" />
+              <span className="whitespace-nowrap">{settings.FEATURED_DIPLOMA_BADGE || 'الدبلومة الأكثر طلباً (خصم 51%)'}</span>
+              <ArrowLeft className="w-4 h-4 xs:w-5 xs:h-5 text-amber-400 group-hover:-translate-x-1.5 transition-transform duration-300 shrink-0" />
+            </div>
+          </a>
 
-            {/* Secondary Guide Button */}
-            <Link
-              href="/courses"
-              className="w-full group flex items-center justify-center gap-2.5 px-6 py-4 rounded-full bg-zinc-900/90 hover:bg-zinc-800 text-white font-bold text-sm border border-zinc-700 shadow-md backdrop-blur-md active:scale-[0.98] transition-all"
-            >
-              <BookOpen className="w-4 h-4 text-amber-400 group-hover:scale-110 transition-transform shrink-0" />
-              <span className="whitespace-nowrap">{settings.HERO_CTA_PRIMARY || 'تصفح دليل الكورسات'}</span>
-              <ArrowLeft className="w-4 h-4 text-zinc-400 group-hover:-translate-x-1 transition-transform duration-300 shrink-0" />
-            </Link>
-          </div>
-
+          {/* Secondary Guide Button */}
+          <Link
+            href="/courses"
+            className="w-full group flex items-center justify-center gap-2.5 px-7 py-4 rounded-full bg-zinc-900/90 hover:bg-zinc-800 text-white font-bold text-sm xs:text-base border border-zinc-700 shadow-md backdrop-blur-md active:scale-[0.98] transition-all"
+          >
+            <BookOpen className="w-4 h-4 xs:w-5 xs:h-5 text-amber-400 group-hover:scale-110 transition-transform shrink-0" />
+            <span className="whitespace-nowrap">{settings.HERO_CTA_PRIMARY || 'تصفح دليل الكورسات'}</span>
+            <ArrowLeft className="w-4 h-4 xs:w-5 xs:h-5 text-zinc-400 group-hover:-translate-x-1 transition-transform duration-300 shrink-0" />
+          </Link>
         </div>
 
       </section>
@@ -130,7 +130,7 @@ export default function MobileHero({
       {/* 
         ========================================================================
         PAGE 2 (BELOW THE FOLD ON MOBILE):
-        Spacious, dedicated section for Contacts and Official Badges.
+        Dedicated luxurious section for Quick Contacts and Official Accreditation Badges.
         Only visible when the user scrolls down!
         ======================================================================== 
       */}
