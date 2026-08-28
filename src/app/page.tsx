@@ -158,51 +158,52 @@ export default async function HomePage() {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             
             {/* Promotional Dynamic Rotating Shimmer Banner */}
+            {/* Promotional Dynamic Rotating Shimmer Banner */}
             {(settings.BANNER_ENABLED !== 'false') && (
-              <div className="mb-8 inline-block">
-                <a href="#trending-diploma" className="shimmer-border-wrapper group">
+              <div className="mb-6 sm:mb-8 inline-block max-w-full">
+                <a href="#trending-diploma" className="shimmer-border-wrapper group block max-w-full">
                   <div className="shimmer-beam-gold" />
-                  <div className="shimmer-button-content px-5 py-2.5 text-xs text-zinc-200 flex items-center gap-3">
-                    <div className="flex items-center gap-1.5">
-                      <Rocket className="w-4 h-4 text-amber-400 animate-pulse" />
-                      <span className="text-amber-300 font-black">{settings.HERO_BADGE || 'جديد!'}</span>
+                  <div className="shimmer-button-content px-3.5 sm:px-5 py-2 sm:py-2.5 text-[11px] sm:text-xs text-slate-800 dark:text-zinc-200 flex items-center gap-2 sm:gap-3 flex-wrap sm:flex-nowrap justify-center">
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <Rocket className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600 dark:text-amber-400 animate-pulse" />
+                      <span className="text-blue-700 dark:text-amber-300 font-black">{settings.HERO_BADGE || 'جديد!'}</span>
                     </div>
-                    <div className="h-3.5 w-px bg-amber-500/40" />
-                    <span className="group-hover:text-amber-200 transition-colors font-medium">
+                    <div className="h-3.5 w-px bg-slate-300 dark:bg-amber-500/40 hidden sm:block" />
+                    <span className="group-hover:text-blue-600 dark:group-hover:text-amber-200 transition-colors font-medium truncate max-w-[200px] xs:max-w-[280px] sm:max-w-none">
                       {settings.BANNER_TEXT || 'خصم استثنائي 50% لفترة محدودة على جميع المسارات الهندسية 🚀'}
                     </span>
-                    <ArrowLeft className="w-3.5 h-3.5 text-amber-400 group-hover:-translate-x-1 transition-transform" />
+                    <ArrowLeft className="w-3.5 h-3.5 text-blue-600 dark:text-amber-400 group-hover:-translate-x-1 transition-transform shrink-0" />
                   </div>
                 </a>
               </div>
             )}
 
-            <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight mb-6 leading-tight">
-              <span className="text-white block mb-2 drop-shadow-sm">{settings.HERO_TITLE || 'نحول شغفك البرمجي'}</span>
-              <span className="bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-500 bg-clip-text text-transparent drop-shadow-[0_2px_25px_rgba(245,158,11,0.35)]">
+            <h1 className="font-display text-3xl sm:text-5xl lg:text-7xl font-black tracking-tight mb-6 leading-tight">
+              <span className="text-slate-900 dark:text-white block mb-2 drop-shadow-sm">{settings.HERO_TITLE || 'نحول شغفك البرمجي'}</span>
+              <span className="bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-700 dark:from-amber-200 dark:via-yellow-400 dark:to-amber-500 bg-clip-text text-transparent dark:drop-shadow-[0_2px_25px_rgba(245,158,11,0.35)]">
                 {(settings.PLATFORM_TAGLINE && !settings.PLATFORM_TAGLINE.includes('?')) ? settings.PLATFORM_TAGLINE : 'بوابتك الاحترافية لاحتراف البرمجة والذكاء الاصطناعي والتصميم'}
               </span>
             </h1>
 
-            <p className="text-sm sm:text-base md:text-xl text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed text-balance">
+            <p className="text-xs sm:text-base md:text-xl text-slate-600 dark:text-zinc-400 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed text-balance">
               {settings.HERO_SUBTITLE || `${(settings.PLATFORM_NAME && !settings.PLATFORM_NAME.includes('?')) ? settings.PLATFORM_NAME : 'أكاديمية م / محمد إبراهيم'} — نقدم مسارات تدريبية هندسية متكاملة، دبلومات برمجية شاملة، مشاريع إنتاج واقعية مطابقة لسوق العمل، ومساعد ذكاء اصطناعي تفاعلي يرافقك خطوة بخطوة.`}
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a href="#trending-diploma" className="shimmer-border-wrapper group">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full max-w-md sm:max-w-none mx-auto">
+              <a href="#trending-diploma" className="w-full sm:w-auto shimmer-border-wrapper group">
                 <div className="shimmer-beam-gold" />
-                <div className="shimmer-button-content px-8 py-3.5 text-sm font-bold text-amber-300 group-hover:text-amber-200">
-                  <Flame className="w-4 h-4 text-amber-400 animate-bounce" />
+                <div className="shimmer-button-content px-6 sm:px-8 py-3.5 text-sm font-bold text-white dark:text-amber-300 group-hover:opacity-95 flex items-center justify-center gap-2">
+                  <Flame className="w-4 h-4 text-amber-300 dark:text-amber-400 animate-bounce" />
                   <span>{settings.FEATURED_DIPLOMA_BADGE || 'الدبلومة الأكثر طلباً (خصم 51%)'}</span>
-                  <ArrowLeft className="w-4 h-4 text-amber-400 group-hover:-translate-x-1.5 transition-transform duration-300" />
+                  <ArrowLeft className="w-4 h-4 text-white dark:text-amber-400 group-hover:-translate-x-1.5 transition-transform duration-300" />
                 </div>
               </a>
 
               <Link
                 href="/courses"
-                className="group flex items-center gap-2 px-7 py-3.5 text-sm font-medium text-zinc-400 hover:text-zinc-100 transition-colors rounded-full border border-zinc-800/80 bg-zinc-900/60 hover:border-zinc-700 hover:bg-zinc-900"
+                className="w-full sm:w-auto group flex items-center justify-center gap-2 px-6 sm:px-7 py-3.5 text-sm font-bold text-slate-700 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-colors rounded-full border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 dark:border-zinc-800/80 dark:bg-zinc-900/60 dark:hover:border-zinc-700 dark:hover:bg-zinc-900 shadow-sm"
               >
-                <Sparkles className="w-4 h-4 text-zinc-400 group-hover:text-amber-300 transition-colors" />
+                <Sparkles className="w-4 h-4 text-blue-600 dark:text-zinc-400 group-hover:text-blue-700 dark:group-hover:text-amber-300 transition-colors" />
                 <span>{settings.HERO_CTA_PRIMARY || 'تصفح دليل الكورسات'}</span>
                 <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300" />
               </Link>

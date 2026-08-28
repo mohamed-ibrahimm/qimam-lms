@@ -138,8 +138,8 @@ export default function Header({
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 p-2.5 sm:p-4 md:p-5 transition-all">
-      <nav className="max-w-7xl mx-auto flex items-center justify-between min-h-[3.75rem] sm:min-h-[4.25rem] px-3.5 sm:px-8 rounded-full bg-zinc-900/90 border border-zinc-800/90 backdrop-blur-2xl shadow-2xl shadow-black/70 relative gap-2 sm:gap-4">
+    <header className="fixed top-0 left-0 right-0 z-50 p-2 sm:p-4 md:p-5 transition-all">
+      <nav className="max-w-7xl mx-auto flex items-center justify-between min-h-[3.5rem] sm:min-h-[4.25rem] px-3 sm:px-6 md:px-8 rounded-full bg-zinc-900/90 border border-zinc-800/90 backdrop-blur-2xl shadow-2xl shadow-black/70 relative gap-1.5 sm:gap-4">
         {/* Logo & Platform Name */}
         <Link href="/" className="flex items-center gap-2 sm:gap-3 shrink min-w-0 group py-1">
           <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-amber-500 via-yellow-400 to-amber-600 p-[2px] shadow-lg shadow-amber-950/50 group-hover:scale-105 transition-transform shrink-0">
@@ -149,10 +149,10 @@ export default function Header({
           </div>
           <div className="flex flex-col text-right justify-center min-w-0">
             <div className="flex items-center gap-1.5 sm:gap-2">
-              <span className="text-xs sm:text-sm md:text-base font-black text-white group-hover:text-amber-300 transition-colors tracking-tight whitespace-nowrap">
+              <span className="text-xs sm:text-sm md:text-base font-black text-white group-hover:text-amber-300 transition-colors tracking-tight truncate max-w-[125px] xs:max-w-[180px] sm:max-w-none">
                 {platformName}
               </span>
-              <span className="inline-flex text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-400/40 font-bold whitespace-nowrap shadow-sm shrink-0">
+              <span className="hidden sm:inline-flex text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-400/40 font-bold whitespace-nowrap shadow-sm shrink-0">
                 ★ تعليم احترافي
               </span>
             </div>
@@ -348,20 +348,20 @@ export default function Header({
           Ultra-Luxurious Full Mobile Drawer Sheet
          ========================================================================= */}
       {mounted && mobileMenuOpen && typeof document !== 'undefined' && createPortal(
-        <div className="lg:hidden fixed inset-0 z-[99999] w-screen h-[100dvh] flex flex-col bg-zinc-950/98 backdrop-blur-2xl p-4 sm:p-6 overflow-y-auto animate-in fade-in duration-200">
+        <div className="mobile-drawer-sheet lg:hidden fixed inset-0 z-[99999] w-screen h-[100dvh] flex flex-col bg-zinc-950/98 backdrop-blur-2xl p-4 sm:p-6 overflow-y-auto animate-in fade-in duration-200">
           <div className="max-w-md w-full mx-auto space-y-4 pt-2 pb-10">
             
             {/* Drawer Top Header */}
-            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-zinc-900/90 border border-zinc-800 shadow-2xl">
+            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 shadow-md">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-purple-600 via-fuchsia-600 to-amber-400 p-[2px] shrink-0">
-                  <div className="w-full h-full bg-[#0c0918] rounded-[9px] flex items-center justify-center">
-                    <GraduationCap className="w-4 h-4 text-amber-400" />
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 dark:from-purple-600 dark:via-fuchsia-600 dark:to-amber-400 p-[2px] shrink-0">
+                  <div className="w-full h-full bg-white dark:bg-[#0c0918] rounded-[9px] flex items-center justify-center">
+                    <GraduationCap className="w-4 h-4 text-blue-600 dark:text-amber-400" />
                   </div>
                 </div>
                 <div className="text-right">
-                  <h4 className="text-sm font-bold text-white leading-tight">{platformName}</h4>
-                  <span className="text-[10px] text-amber-300 font-medium">★ منصة هندسية معتمدة</span>
+                  <h4 className="text-sm font-bold text-slate-900 dark:text-white leading-tight">{platformName}</h4>
+                  <span className="text-[10px] text-blue-600 dark:text-amber-300 font-medium">★ منصة هندسية معتمدة</span>
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -372,14 +372,14 @@ export default function Header({
                     e.stopPropagation();
                     toggleTheme();
                   }}
-                  className="w-9 h-9 rounded-full bg-zinc-800/90 text-amber-400 flex items-center justify-center border border-zinc-700 cursor-pointer"
+                  className="w-9 h-9 rounded-full bg-slate-100 dark:bg-zinc-800/90 text-slate-700 dark:text-amber-400 flex items-center justify-center border border-slate-200 dark:border-zinc-700 cursor-pointer"
                   title="تبديل المظهر"
                 >
-                  {theme === 'DARK' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4 text-purple-400" />}
+                  {theme === 'DARK' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4 text-blue-600" />}
                 </button>
                 <button
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-9 h-9 rounded-full bg-zinc-800/90 hover:bg-zinc-700 text-zinc-300 hover:text-white flex items-center justify-center transition-colors border border-zinc-700"
+                  className="w-9 h-9 rounded-full bg-slate-100 dark:bg-zinc-800/90 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white flex items-center justify-center transition-colors border border-slate-200 dark:border-zinc-700"
                   aria-label="إغلاق"
                 >
                   <X className="w-4 h-4" />
@@ -389,25 +389,25 @@ export default function Header({
 
             {/* Auth Section at the TOP of the Drawer */}
             {currentUser ? (
-              <div className="p-4 rounded-2xl bg-gradient-to-b from-zinc-900 to-zinc-950 border border-zinc-800 space-y-3.5 shadow-xl">
+              <div className="p-4 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 space-y-3.5 shadow-md">
                 <div className="flex items-center gap-3">
-                  <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-amber-500 to-yellow-400 p-[2px] shadow-lg shrink-0">
-                    <div className="w-full h-full rounded-full bg-zinc-900 overflow-hidden flex items-center justify-center">
+                  <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 dark:from-amber-500 dark:to-yellow-400 p-[2px] shadow-lg shrink-0">
+                    <div className="w-full h-full rounded-full bg-white dark:bg-zinc-900 overflow-hidden flex items-center justify-center">
                       {currentUser.avatarUrl ? (
                         <img src={currentUser.avatarUrl} alt="" className="w-full h-full object-cover" />
                       ) : (
-                        <span className="text-sm font-bold text-amber-400">{currentUser.firstName?.[0] || 'ق'}</span>
+                        <span className="text-sm font-bold text-blue-600 dark:text-amber-400">{currentUser.firstName?.[0] || 'ق'}</span>
                       )}
                     </div>
                   </div>
                   <div className="min-w-0 flex-1 text-right">
                     <div className="flex items-center gap-2">
-                      <p className="text-sm font-bold text-white truncate">{currentUser.officialFullName || currentUser.firstName}</p>
-                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 font-semibold shrink-0">
+                      <p className="text-sm font-bold text-slate-900 dark:text-white truncate">{currentUser.officialFullName || currentUser.firstName}</p>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 dark:bg-amber-500/20 dark:text-amber-300 dark:border-amber-500/30 font-semibold shrink-0">
                         {currentUser.role === 'ADMIN' ? 'المدير' : currentUser.role === 'INSTRUCTOR' ? 'محاضر' : 'طالب'}
                       </span>
                     </div>
-                    <p className="text-xs text-zinc-500 truncate">{currentUser.email}</p>
+                    <p className="text-xs text-slate-500 dark:text-zinc-500 truncate">{currentUser.email}</p>
                   </div>
                 </div>
 
@@ -416,7 +416,7 @@ export default function Header({
                     <Link
                       href="/admin"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="col-span-2 py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 text-zinc-950 font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-amber-950/40"
+                      className="col-span-2 py-3 px-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-amber-500 dark:to-yellow-500 text-white dark:text-zinc-950 font-bold text-xs flex items-center justify-center gap-2 shadow-md"
                     >
                       <LayoutDashboard className="w-4 h-4" />
                       <span>لوحة تحكم الإدارة (Admin Panel)</span>
@@ -426,7 +426,7 @@ export default function Header({
                     <Link
                       href="/instructor"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="col-span-2 py-3 px-4 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg"
+                      className="col-span-2 py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md"
                     >
                       <GraduationCap className="w-4 h-4" />
                       <span>استوديو المعلم (Instructor Studio)</span>
@@ -435,48 +435,48 @@ export default function Header({
                   <Link
                     href="/dashboard/my-courses"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="col-span-2 py-3 px-4 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 font-bold text-xs flex items-center justify-center gap-2 border border-amber-500/30 transition-colors"
+                    className="col-span-2 py-3 px-4 rounded-xl bg-blue-50 dark:bg-amber-500/15 text-blue-700 dark:text-amber-300 font-bold text-xs flex items-center justify-center gap-2 border border-blue-200 dark:border-amber-500/30 transition-colors"
                   >
-                    <BookOpen className="w-4 h-4 text-amber-400" />
+                    <BookOpen className="w-4 h-4 text-blue-600 dark:text-amber-400" />
                     <span>الكورسات المشترك فيها 🎓</span>
                   </Link>
                   <Link
                     href="/dashboard"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="py-2.5 px-3 rounded-xl bg-zinc-800/90 hover:bg-zinc-700 text-zinc-200 font-semibold text-xs flex items-center justify-center gap-1.5 border border-zinc-700/80"
+                    className="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800/90 dark:hover:bg-zinc-700 text-slate-800 dark:text-zinc-200 font-semibold text-xs flex items-center justify-center gap-1.5 border border-slate-200 dark:border-zinc-700/80"
                   >
-                    <LayoutDashboard className="w-3.5 h-3.5 text-zinc-400" />
+                    <LayoutDashboard className="w-3.5 h-3.5 text-slate-600 dark:text-zinc-400" />
                     <span>لوحة المتابعة</span>
                   </Link>
                   <Link
                     href="/profile"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="py-2.5 px-3 rounded-xl bg-zinc-800/90 hover:bg-zinc-700 text-zinc-200 font-semibold text-xs flex items-center justify-center gap-1.5 border border-zinc-700/80"
+                    className="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800/90 dark:hover:bg-zinc-700 text-slate-800 dark:text-zinc-200 font-semibold text-xs flex items-center justify-center gap-1.5 border border-slate-200 dark:border-zinc-700/80"
                   >
-                    <User className="w-3.5 h-3.5 text-amber-400" />
+                    <User className="w-3.5 h-3.5 text-blue-600 dark:text-amber-400" />
                     <span>الملف الشخصي</span>
                   </Link>
                 </div>
               </div>
             ) : (
-              <div className="p-4 rounded-2xl bg-gradient-to-b from-zinc-900/95 to-zinc-900/70 border border-zinc-800 space-y-3 shadow-xl">
+              <div className="p-4 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 space-y-3 shadow-md">
                 <div className="text-right">
-                  <p className="text-xs font-bold text-white">تسجيل الدخول والانضمام:</p>
-                  <p className="text-[11px] text-zinc-400">سجل الآن وتابع كورساتك واحصل على شهاداتك المعتمدة</p>
+                  <p className="text-xs font-bold text-slate-900 dark:text-white">تسجيل الدخول والانضمام:</p>
+                  <p className="text-[11px] text-slate-500 dark:text-zinc-400">سجل الآن وتابع كورساتك واحصل على شهاداتك المعتمدة</p>
                 </div>
                 <div className="grid grid-cols-2 gap-2.5">
                   <Link
                     href="/login"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-xs text-center border border-zinc-700 flex items-center justify-center gap-2 transition-colors shadow-sm"
+                    className="py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-800 dark:text-white font-bold text-xs text-center border border-slate-200 dark:border-zinc-700 flex items-center justify-center gap-2 transition-colors shadow-sm"
                   >
-                    <LogIn className="w-4 h-4 text-zinc-300" />
+                    <LogIn className="w-4 h-4 text-slate-600 dark:text-zinc-300" />
                     <span>تسجيل الدخول</span>
                   </Link>
                   <Link
                     href="/register"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="py-3 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-500 text-white font-bold text-xs text-center shadow-lg shadow-purple-950/60 flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform"
+                    className="py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-purple-600 dark:via-indigo-600 dark:to-purple-500 text-white font-bold text-xs text-center shadow-md flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform"
                   >
                     <UserPlus className="w-4 h-4" />
                     <span>إنشاء حساب جديد</span>
@@ -486,8 +486,8 @@ export default function Header({
             )}
 
             {/* Navigation Links with Icons & Highlighting */}
-            <div className="p-3 rounded-2xl bg-zinc-900/90 border border-zinc-800 space-y-1.5 shadow-xl">
-              <p className="text-[11px] font-semibold text-zinc-500 px-3 py-1 text-right">أقسام المنصة:</p>
+            <div className="p-3 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 space-y-1.5 shadow-md">
+              <p className="text-[11px] font-semibold text-slate-400 dark:text-zinc-500 px-3 py-1 text-right">أقسام المنصة:</p>
               {navLinks.map((link) => {
                 const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
                 return (
@@ -497,16 +497,18 @@ export default function Header({
                     onClick={() => setMobileMenuOpen(false)}
                     className={`flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-semibold transition-all ${
                       isActive
-                        ? 'bg-zinc-800 text-white border border-zinc-700'
+                        ? 'bg-blue-50 dark:bg-zinc-800 text-blue-700 dark:text-white border border-blue-200 dark:border-zinc-700'
                         : link.highlight
-                        ? 'bg-amber-500/10 text-amber-300 border border-amber-500/30'
-                        : 'text-zinc-300 hover:bg-zinc-800/60 hover:text-white'
+                        ? 'bg-blue-50/70 dark:bg-amber-500/10 text-blue-700 dark:text-amber-300 border border-blue-200 dark:border-amber-500/30'
+                        : 'text-slate-700 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800/60 hover:text-slate-900 dark:hover:text-white'
                     }`}
                   >
                     <div className="flex items-center gap-3">
                       {link.icon && (
                         <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-                          link.highlight ? 'bg-amber-500/20 text-amber-400' : 'bg-zinc-800 text-zinc-400'
+                          link.highlight
+                            ? 'bg-blue-100 text-blue-700 dark:bg-amber-500/20 dark:text-amber-400'
+                            : 'bg-slate-100 text-slate-600 dark:bg-zinc-800 dark:text-zinc-400'
                         }`}>
                           <link.icon className="w-4 h-4" />
                         </div>
@@ -514,7 +516,7 @@ export default function Header({
                       <span>{link.name}</span>
                     </div>
                     {link.highlight && (
-                      <span className="text-[10px] px-2.5 py-1 rounded-full bg-amber-500/25 text-amber-300 font-bold border border-amber-500/40 animate-pulse">
+                      <span className="text-[10px] px-2.5 py-1 rounded-full bg-blue-100 dark:bg-amber-500/25 text-blue-800 dark:text-amber-300 font-bold border border-blue-200 dark:border-amber-500/40">
                         خصم 51% 🔥
                       </span>
                     )}

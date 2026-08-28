@@ -188,24 +188,24 @@ export default function InstructorClient({
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
           <button
             type="button"
             onClick={() => {
               setModalError(null);
               setShowAddModal(true);
             }}
-            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 hover:to-yellow-300 text-zinc-950 font-black text-xs shadow-lg shadow-amber-950/40 flex items-center gap-2 transition-all hover:scale-105"
+            className="flex-1 sm:flex-initial px-4 sm:px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 hover:to-yellow-300 text-zinc-950 font-black text-xs shadow-lg shadow-amber-950/40 flex items-center justify-center gap-2 transition-all hover:scale-105"
           >
-            <Plus className="w-4 h-4 text-zinc-950" />
+            <Plus className="w-4 h-4 text-zinc-950 shrink-0" />
             <span>إضافة كورس جديد</span>
           </button>
 
           <Link
             href="/chat"
-            className="px-4 py-2.5 rounded-xl bg-surface-raised hover:bg-surface-card border border-border text-white font-bold text-xs flex items-center gap-2 transition-colors"
+            className="flex-1 sm:flex-initial px-4 py-2.5 rounded-xl bg-surface-raised hover:bg-surface-card border border-border text-white font-bold text-xs flex items-center justify-center gap-2 transition-colors"
           >
-            <MessageSquare className="w-4 h-4 text-primary-400" />
+            <MessageSquare className="w-4 h-4 text-primary-400 shrink-0" />
             <span>محادثات الطلاب</span>
           </Link>
         </div>
@@ -304,14 +304,14 @@ export default function InstructorClient({
                 </div>
 
                 {/* Card Actions Bottom Row */}
-                <div className="flex items-center justify-between pt-3 border-t border-border/80 gap-2">
-                  <div className="flex items-center gap-2.5 flex-wrap">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between pt-3 border-t border-border/80 gap-2.5">
+                  <div className="flex items-center gap-2 flex-wrap flex-1">
                     <Link
                       href={`/instructor/courses/${course.id}/curriculum`}
-                      className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 hover:to-yellow-300 text-zinc-950 font-black text-xs shadow-md shadow-amber-950/40 transition-all hover:scale-105"
+                      className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-3.5 py-2 sm:py-1.5 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 hover:to-yellow-300 text-zinc-950 font-black text-xs shadow-md shadow-amber-950/40 transition-all text-center"
                       title="إدارة الفيديوهات والمنهج ورفع المحاضرات تدريجياً"
                     >
-                      <Video className="w-3.5 h-3.5 text-zinc-950" />
+                      <Video className="w-3.5 h-3.5 text-zinc-950 shrink-0" />
                       <span>إدارة الفيديوهات والمنهج 🎬</span>
                     </Link>
 
@@ -319,10 +319,10 @@ export default function InstructorClient({
                       href={`/courses/${course.slug}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 hover:text-amber-200 text-xs font-bold transition-all shadow-sm"
+                      className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 hover:text-amber-200 text-xs font-bold transition-all shadow-sm text-center"
                       title="معاينة صفحة الكورس العامة في تبويب جديد"
                     >
-                      <ExternalLink className="w-3.5 h-3.5 text-amber-400" />
+                      <ExternalLink className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                       <span>معاينة صفحة الكورس</span>
                     </Link>
 

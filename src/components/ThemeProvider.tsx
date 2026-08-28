@@ -39,16 +39,18 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       root.classList.add('light-theme');
       root.classList.remove('dark');
       root.setAttribute('data-theme', 'light');
-      root.style.setProperty('--bg-app', '#fbfbfa');
+      root.style.setProperty('--bg-app', '#f8fafc');
       root.style.setProperty('--bg-surface', '#ffffff');
-      root.style.setProperty('--text-main', '#1e293b');
+      root.style.setProperty('--text-main', '#0f172a');
+      root.style.setProperty('--text-sub', '#334155');
+      root.style.setProperty('--text-muted', '#64748b');
       root.style.colorScheme = 'light';
       if (body) {
         body.classList.add('light-theme');
         body.classList.remove('dark');
         body.setAttribute('data-theme', 'light');
-        body.style.backgroundColor = '#fbfbfa';
-        body.style.color = '#1e293b';
+        body.style.backgroundColor = '#f8fafc';
+        body.style.color = '#0f172a';
       }
     } else {
       root.classList.remove('light-theme');
@@ -57,6 +59,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       root.style.setProperty('--bg-app', '#0f0f15');
       root.style.setProperty('--bg-surface', '#15151e');
       root.style.setProperty('--text-main', '#f4f4f5');
+      root.style.setProperty('--text-sub', '#cbd5e1');
+      root.style.setProperty('--text-muted', '#94a3b8');
       root.style.colorScheme = 'dark';
       if (body) {
         body.classList.remove('light-theme');

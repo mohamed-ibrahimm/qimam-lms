@@ -824,16 +824,16 @@ export default function CurriculumClient({
 
               {/* Video Source Selection */}
               <div className="space-y-3 p-4 rounded-2xl bg-zinc-850 border border-zinc-800">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                   <label className="text-xs font-bold text-amber-300 flex items-center gap-1.5">
                     <Video className="w-4 h-4" />
                     <span>مصدر ملف الفيديو</span>
                   </label>
-                  <div className="flex items-center gap-1 bg-zinc-800 p-1 rounded-xl border border-zinc-700 text-[11px]">
+                  <div className="flex items-center gap-1 bg-zinc-800 p-1 rounded-xl border border-zinc-700 text-[11px] w-full sm:w-auto">
                     <button
                       type="button"
                       onClick={() => setLessonForm({ ...lessonForm, sourceType: 'UPLOAD' })}
-                      className={`px-3 py-1 rounded-lg font-bold transition-colors ${
+                      className={`flex-1 sm:flex-initial px-3 py-1 rounded-lg font-bold transition-colors ${
                         lessonForm.sourceType === 'UPLOAD'
                           ? 'bg-amber-500 text-black'
                           : 'text-zinc-400 hover:text-white'
@@ -844,13 +844,13 @@ export default function CurriculumClient({
                     <button
                       type="button"
                       onClick={() => setLessonForm({ ...lessonForm, sourceType: 'URL' })}
-                      className={`px-3 py-1 rounded-lg font-bold transition-colors ${
+                      className={`flex-1 sm:flex-initial px-3 py-1 rounded-lg font-bold transition-colors ${
                         lessonForm.sourceType === 'URL'
                           ? 'bg-amber-500 text-black'
                           : 'text-zinc-400 hover:text-white'
                       }`}
                     >
-                      رابط فيديو مباشر أو Embed
+                      رابط فيديو خارجي
                     </button>
                   </div>
                 </div>
