@@ -39,18 +39,18 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       root.classList.add('light-theme');
       root.classList.remove('dark');
       root.setAttribute('data-theme', 'light');
-      root.style.setProperty('--bg-app', '#f8fafc');
+      root.style.setProperty('--bg-app', '#fbf9f5');
       root.style.setProperty('--bg-surface', '#ffffff');
-      root.style.setProperty('--text-main', '#0f172a');
-      root.style.setProperty('--text-sub', '#334155');
-      root.style.setProperty('--text-muted', '#64748b');
+      root.style.setProperty('--text-main', '#112038');
+      root.style.setProperty('--text-sub', '#4b5563');
+      root.style.setProperty('--text-muted', '#6b7280');
       root.style.colorScheme = 'light';
       if (body) {
         body.classList.add('light-theme');
         body.classList.remove('dark');
         body.setAttribute('data-theme', 'light');
-        body.style.backgroundColor = '#f8fafc';
-        body.style.color = '#0f172a';
+        body.style.backgroundColor = '#fbf9f5';
+        body.style.color = '#112038';
       }
     } else {
       root.classList.remove('light-theme');

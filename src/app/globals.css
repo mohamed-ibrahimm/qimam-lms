@@ -55,25 +55,29 @@ body {
 }
 
 /* =========================================================================
-   Light Mode System (Modern Royal Blue & Clean Slate - Inspired by Coursera & Stripe)
+   Light Mode System (Billey Inspired: Warm Porcelain, Terracotta, Sage & Midnight Ink)
    ========================================================================= */
 html.light-theme,
 html.light-theme body,
 body.light-theme,
 [data-theme="light"],
 [data-theme="light"] body {
-  background-color: #f8fafc !important;
-  background-image: radial-gradient(ellipse at 50% -5%, rgba(37, 99, 235, 0.04) 0%, transparent 60%),
-                    radial-gradient(ellipse at 80% 50%, rgba(14, 165, 233, 0.03) 0%, transparent 50%) !important;
-  color: #0f172a !important;
+  background-color: #fbf9f5 !important;
+  background-image: 
+    radial-gradient(ellipse at 15% 15%, rgba(243, 196, 182, 0.22) 0%, transparent 45%),
+    radial-gradient(ellipse at 85% 15%, rgba(151, 195, 178, 0.20) 0%, transparent 45%),
+    radial-gradient(ellipse at 10% 85%, rgba(203, 111, 67, 0.10) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 85%, rgba(24, 40, 72, 0.08) 0%, transparent 50%) !important;
+  background-attachment: fixed !important;
+  color: #112038 !important;
 }
 
 html.light-theme .page-canvas,
 html.light-theme main,
 [data-theme="light"] .page-canvas,
 [data-theme="light"] main {
-  background-color: #f8fafc !important;
-  color: #0f172a !important;
+  background-color: transparent !important;
+  color: #112038 !important;
 }
 
 html.light-theme .ambient-glow,
@@ -88,8 +92,8 @@ html.light-theme [class*="bg-[#0c0918]"],
 html.light-theme .bg-background,
 [data-theme="light"] [class*="bg-zinc-950"],
 [data-theme="light"] .bg-background {
-  background-color: #f8fafc !important;
-  color: #0f172a !important;
+  background-color: #fbf9f5 !important;
+  color: #112038 !important;
 }
 
 html.light-theme [class*="bg-zinc-900"],
@@ -108,9 +112,9 @@ html.light-theme .glass-gold-card,
 [data-theme="light"] .glass-gold-card {
   background-color: #ffffff !important;
   background: #ffffff !important;
-  color: #0f172a !important;
-  border-color: #e2e8f0 !important;
-  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 6px 16px -2px rgba(15, 23, 42, 0.03) !important;
+  color: #112038 !important;
+  border-color: #ede7df !important;
+  box-shadow: 0 4px 20px -2px rgba(17, 32, 56, 0.05) !important;
 }
 
 html.light-theme .glass-luxury-card:hover,
@@ -118,8 +122,8 @@ html.light-theme .glass-gold-card:hover,
 [data-theme="light"] .glass-luxury-card:hover,
 [data-theme="light"] .glass-gold-card:hover {
   background-color: #ffffff !important;
-  border-color: #93c5fd !important;
-  box-shadow: 0 10px 25px -4px rgba(37, 99, 235, 0.1) !important;
+  border-color: #cb6f43 !important;
+  box-shadow: 0 12px 30px -4px rgba(203, 111, 67, 0.12) !important;
   transform: translateY(-2px) !important;
 }
 
@@ -128,7 +132,7 @@ html.light-theme [class*="border-zinc-700"],
 html.light-theme .border-border,
 [data-theme="light"] [class*="border-zinc-800"],
 [data-theme="light"] [class*="border-zinc-700"] {
-  border-color: #e2e8f0 !important;
+  border-color: #ede7df !important;
 }
 
 /* Typography in Light Mode */
@@ -136,27 +140,27 @@ html.light-theme [class*="text-zinc-100"],
 html.light-theme [class*="text-white"],
 [data-theme="light"] [class*="text-zinc-100"],
 [data-theme="light"] [class*="text-white"] {
-  color: #0f172a !important;
+  color: #112038 !important;
 }
 
 html.light-theme [class*="text-zinc-200"],
 html.light-theme [class*="text-zinc-300"],
 [data-theme="light"] [class*="text-zinc-200"],
 [data-theme="light"] [class*="text-zinc-300"] {
-  color: #334155 !important;
+  color: #374151 !important;
 }
 
 html.light-theme [class*="text-zinc-400"],
 [data-theme="light"] [class*="text-zinc-400"] {
-  color: #475569 !important;
+  color: #6b7280 !important;
 }
 
 html.light-theme [class*="text-zinc-500"],
 [data-theme="light"] [class*="text-zinc-500"] {
-  color: #64748b !important;
+  color: #9ca3af !important;
 }
 
-/* Gradients in Light Mode - Royal Blue & Indigo */
+/* Gradients in Light Mode - Deep Midnight & Warm Terracotta */
 html.light-theme .text-gold-gradient,
 html.light-theme .text-gold-luxury,
 html.light-theme .text-gold-static,
@@ -165,7 +169,7 @@ html.light-theme .text-amethyst-gradient,
 [data-theme="light"] .text-gold-luxury,
 [data-theme="light"] .text-gold-static,
 [data-theme="light"] .text-amethyst-gradient {
-  background: linear-gradient(135deg, #1e40af 0%, #2563eb 50%, #0284c7 100%) !important;
+  background: linear-gradient(135deg, #112038 10%, #cb6f43 65%, #b45309 100%) !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
   animation: none !important;
@@ -182,62 +186,144 @@ html.light-theme [class*="drop-shadow-"],
 /* Navbar in Light Mode */
 html.light-theme header nav,
 [data-theme="light"] header nav {
-  background-color: rgba(255, 255, 255, 0.94) !important;
-  backdrop-filter: blur(20px) !important;
-  border-color: #e2e8f0 !important;
-  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06) !important;
+  background-color: rgba(254, 252, 249, 0.90) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border-color: #ede7df !important;
+  box-shadow: 0 4px 25px -4px rgba(17, 32, 56, 0.06) !important;
 }
 
 html.light-theme header nav [class*="text-white"],
 [data-theme="light"] header nav [class*="text-white"] {
-  color: #0f172a !important;
+  color: #112038 !important;
 }
 
 html.light-theme header nav .bg-zinc-950\/60,
 [data-theme="light"] header nav .bg-zinc-950\/60 {
-  background-color: #f1f5f9 !important;
-  border-color: #e2e8f0 !important;
+  background-color: #f4efe8 !important;
+  border-color: #ede7df !important;
 }
 
 html.light-theme header nav [class*="bg-zinc-800"],
 [data-theme="light"] header nav [class*="bg-zinc-800"] {
-  background-color: #f1f5f9 !important;
-  color: #0f172a !important;
+  background-color: #f4efe8 !important;
+  color: #112038 !important;
 }
 
-/* Hero & CTA buttons in Light Mode */
+/* Guest buttons on navbar in Light Mode */
+html.light-theme header nav a[href="/login"],
+[data-theme="light"] header nav a[href="/login"] {
+  background-color: #ffffff !important;
+  border-color: #ede7df !important;
+  color: #112038 !important;
+}
+
+html.light-theme header nav a[href="/register"],
+[data-theme="light"] header nav a[href="/register"] {
+  background: #112038 !important;
+  color: #ffffff !important;
+  border: 1px solid #112038 !important;
+  box-shadow: 0 2px 10px rgba(17, 32, 56, 0.15) !important;
+}
+html.light-theme header nav a[href="/register"] span,
+html.light-theme header nav a[href="/register"] svg,
+[data-theme="light"] header nav a[href="/register"] span,
+[data-theme="light"] header nav a[href="/register"] svg {
+  color: #ffffff !important;
+}
+
+/* DYNAMIC ROTATING BEAM BUTTON IN LIGHT MODE (الزر الديناميكي الفخم الدوّار) */
 html.light-theme .shimmer-border-wrapper,
 [data-theme="light"] .shimmer-border-wrapper {
-  background: linear-gradient(135deg, #1d4ed8, #2563eb) !important;
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 2px !important;
   border-radius: 9999px !important;
-  padding: 1px !important;
+  overflow: hidden !important;
+  background: transparent !important;
+  box-shadow: 0 4px 20px -2px rgba(203, 111, 67, 0.25) !important;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease !important;
+}
+
+html.light-theme .shimmer-border-wrapper:hover,
+[data-theme="light"] .shimmer-border-wrapper:hover {
+  transform: scale(1.04) !important;
+  box-shadow: 0 8px 30px 0 rgba(203, 111, 67, 0.4) !important;
 }
 
 html.light-theme .shimmer-beam-gold,
 [data-theme="light"] .shimmer-beam-gold {
-  display: none !important;
+  display: block !important;
+  position: absolute !important;
+  inset: -150% !important;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 260deg,
+    rgba(203, 111, 67, 0.3) 295deg,
+    #cb6f43 325deg,
+    #f59e0b 348deg,
+    #ffffff 360deg
+  ) !important;
+  animation: spinBorder 3s linear infinite !important;
+  pointer-events: none !important;
 }
 
 html.light-theme .shimmer-button-content,
 [data-theme="light"] .shimmer-button-content {
-  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%) !important;
+  position: relative !important;
+  z-index: 10 !important;
+  display: flex !important;
+  align-items: center !important;
+  border-radius: 9999px !important;
+  background: #112038 !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
   color: #ffffff !important;
-  box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.25) !important;
+  box-shadow: none !important;
+  transition: all 0.25s ease !important;
 }
 
 html.light-theme .shimmer-button-content span,
-html.light-theme .shimmer-button-content svg,
-[data-theme="light"] .shimmer-button-content span,
-[data-theme="light"] .shimmer-button-content svg {
+[data-theme="light"] .shimmer-button-content span {
   color: #ffffff !important;
-  fill: none !important;
+  font-weight: 700 !important;
+}
+
+html.light-theme .shimmer-button-content svg,
+[data-theme="light"] .shimmer-button-content svg {
+  color: #f3c4b6 !important;
+}
+
+html.light-theme .shimmer-border-wrapper:hover .shimmer-button-content,
+[data-theme="light"] .shimmer-border-wrapper:hover .shimmer-button-content {
+  background: #192d4f !important;
+}
+
+/* Secondary Button in Light Mode */
+html.light-theme a[href="/courses"].rounded-full,
+[data-theme="light"] a[href="/courses"].rounded-full {
+  background-color: #ffffff !important;
+  border: 1.5px solid #ede7df !important;
+  color: #112038 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 10px rgba(17, 32, 56, 0.04) !important;
+}
+
+html.light-theme a[href="/courses"].rounded-full:hover,
+[data-theme="light"] a[href="/courses"].rounded-full:hover {
+  border-color: #cb6f43 !important;
+  color: #cb6f43 !important;
+  background-color: #fcfbf9 !important;
+  transform: translateY(-2px) !important;
 }
 
 /* Mobile Drawer in Light Mode */
 html.light-theme .mobile-drawer-sheet,
 [data-theme="light"] .mobile-drawer-sheet {
-  background-color: rgba(248, 250, 252, 0.98) !important;
-  color: #0f172a !important;
+  background-color: rgba(251, 249, 245, 0.98) !important;
+  color: #112038 !important;
 }
 
 html.light-theme .mobile-drawer-sheet [class*="bg-zinc-900"],
@@ -245,8 +331,8 @@ html.light-theme .mobile-drawer-sheet [class*="bg-zinc-950"],
 [data-theme="light"] .mobile-drawer-sheet [class*="bg-zinc-900"],
 [data-theme="light"] .mobile-drawer-sheet [class*="bg-zinc-950"] {
   background-color: #ffffff !important;
-  border-color: #e2e8f0 !important;
-  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04) !important;
+  border-color: #ede7df !important;
+  box-shadow: 0 4px 15px rgba(17, 32, 56, 0.04) !important;
 }
 
 /* Custom Scrollbars */

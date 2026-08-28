@@ -142,22 +142,22 @@ export default function Header({
       <nav className="max-w-7xl mx-auto flex items-center justify-between min-h-[3.5rem] sm:min-h-[4.25rem] px-3 sm:px-6 md:px-8 rounded-full bg-zinc-900/90 border border-zinc-800/90 backdrop-blur-2xl shadow-2xl shadow-black/70 relative gap-1.5 sm:gap-4">
         {/* Logo & Platform Name */}
         <Link href="/" className="flex items-center gap-2 sm:gap-3 shrink min-w-0 group py-1">
-          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-amber-500 via-yellow-400 to-amber-600 p-[2px] shadow-lg shadow-amber-950/50 group-hover:scale-105 transition-transform shrink-0">
-            <div className="w-full h-full bg-[#0c0918] rounded-[10px] sm:rounded-[14px] flex items-center justify-center">
-              <GraduationCap className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
+          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-[#cb6f43] via-[#d97746] to-[#112038] dark:from-amber-500 dark:via-yellow-400 dark:to-amber-600 p-[2px] shadow-md group-hover:scale-105 transition-transform shrink-0">
+            <div className="w-full h-full bg-[#112038] dark:bg-[#0c0918] rounded-[10px] sm:rounded-[14px] flex items-center justify-center">
+              <GraduationCap className="w-4 h-4 sm:w-5 sm:h-5 text-[#f3c4b6] dark:text-amber-400" />
             </div>
           </div>
           <div className="flex flex-col text-right justify-center min-w-0">
             <div className="flex items-center gap-1.5 sm:gap-2">
-              <span className="text-xs sm:text-sm md:text-base font-black text-white group-hover:text-amber-300 transition-colors tracking-tight truncate max-w-[125px] xs:max-w-[180px] sm:max-w-none">
+              <span className="text-xs sm:text-sm md:text-base font-black text-[#112038] dark:text-white group-hover:text-[#cb6f43] dark:group-hover:text-amber-300 transition-colors tracking-tight truncate max-w-[125px] xs:max-w-[180px] sm:max-w-none">
                 {platformName}
               </span>
-              <span className="hidden sm:inline-flex text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-400/40 font-bold whitespace-nowrap shadow-sm shrink-0">
-                ★ تعليم احترافي
+              <span className="hidden sm:inline-flex text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full bg-[#fbf0eb] text-[#cb6f43] border border-[#f2d5c5] dark:bg-amber-500/15 dark:text-amber-300 dark:border-amber-400/40 font-bold whitespace-nowrap shadow-sm shrink-0">
+                ★ تعليم معتمد
               </span>
             </div>
             {platformTagline && (
-              <span className="text-[9px] sm:text-[11px] text-amber-200/80 font-medium truncate mt-0.5 hidden sm:block">
+              <span className="text-[9px] sm:text-[11px] text-[#6b7280] dark:text-amber-200/80 font-medium truncate mt-0.5 hidden sm:block">
                 {platformTagline}
               </span>
             )}
@@ -165,7 +165,7 @@ export default function Header({
         </Link>
 
         {/* Desktop Nav (Center) */}
-        <div className="hidden lg:flex items-center gap-1 bg-zinc-950/60 px-2 py-1 rounded-full border border-zinc-800/80 shadow-inner">
+        <div className="hidden lg:flex items-center gap-1 bg-[#f4efe8] dark:bg-zinc-950/60 px-2 py-1 rounded-full border border-[#ede7df] dark:border-zinc-800/80 shadow-inner">
           {navLinks.map((link) => {
             const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
             return (
@@ -174,13 +174,13 @@ export default function Header({
                 href={link.href}
                 className={`px-3 py-1.5 text-xs font-bold rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
                   isActive
-                    ? 'bg-zinc-800 text-white border border-zinc-700 shadow-sm'
+                    ? 'bg-[#ffffff] dark:bg-zinc-800 text-[#112038] dark:text-white border border-[#e3dcd2] dark:border-zinc-700 shadow-sm'
                     : link.highlight
-                    ? 'text-amber-300 hover:text-amber-200 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 shadow-sm shadow-amber-950/30'
-                    : 'text-zinc-300 hover:text-white hover:bg-zinc-800/70'
+                    ? 'text-[#cb6f43] dark:text-amber-300 hover:text-[#b45309] dark:hover:text-amber-200 bg-[#fbf0eb] dark:bg-amber-500/15 hover:bg-[#f5e3d8] dark:hover:bg-amber-500/25 border border-[#f2d5c5] dark:border-amber-500/40 shadow-sm'
+                    : 'text-[#4b5563] dark:text-zinc-300 hover:text-[#112038] dark:hover:text-white hover:bg-[#eae4db] dark:hover:bg-zinc-800/70'
                 }`}
               >
-                {link.icon && <link.icon className={`w-3.5 h-3.5 ${link.highlight ? 'text-amber-400' : ''}`} />}
+                {link.icon && <link.icon className={`w-3.5 h-3.5 ${link.highlight ? 'text-[#cb6f43] dark:text-amber-400' : ''}`} />}
                 <span>{link.name}</span>
               </Link>
             );
