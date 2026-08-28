@@ -76,11 +76,11 @@ export default function MobileHero({
         {/* 2. MIDDLE: Headline with Softened Yellow Background Halo and Dynamic Shimmering Words */}
         <div className="w-full max-w-lg mx-auto flex flex-col items-center my-auto px-1 py-4 relative">
           
-          {/* Softened Background Halo behind text (خففنا لون الأصفر المباشر ليكون ناعم وراقي) */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] xs:w-[340px] h-[240px] pointer-events-none -z-10 overflow-visible">
-            <div className="dynamic-drift-1 absolute -top-4 right-1/4 w-[240px] h-[180px] bg-amber-400/12 dark:bg-amber-500/9 rounded-full blur-[90px]" />
-            <div className="dynamic-drift-2 absolute -bottom-4 left-1/4 w-[260px] h-[190px] bg-yellow-400/10 dark:bg-yellow-500/7 rounded-full blur-[95px]" />
-            <div className="dynamic-drift-3 absolute top-1/4 left-1/2 -translate-x-1/2 w-[220px] h-[160px] bg-amber-500/8 dark:bg-amber-600/6 rounded-full blur-[80px]" />
+          {/* Refined Background Halo behind text ("علّي اللون الأصفر اللي تحت الكلام حاجة خفيفة") */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[310px] xs:w-[350px] h-[250px] pointer-events-none -z-10 overflow-visible">
+            <div className="dynamic-drift-1 absolute -top-4 right-1/4 w-[240px] h-[180px] bg-amber-400/18 dark:bg-amber-500/15 rounded-full blur-[80px]" />
+            <div className="dynamic-drift-2 absolute -bottom-4 left-1/4 w-[260px] h-[190px] bg-yellow-400/16 dark:bg-yellow-500/13 rounded-full blur-[85px]" />
+            <div className="dynamic-drift-3 absolute top-1/4 left-1/2 -translate-x-1/2 w-[220px] h-[160px] bg-amber-500/14 dark:bg-amber-600/11 rounded-full blur-[75px]" />
           </div>
 
           <h1 className="font-black tracking-tight w-full mb-3.5 [text-wrap:balance]">
