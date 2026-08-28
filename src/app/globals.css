@@ -930,6 +930,31 @@ html.light-theme .mobile-drawer-sheet [class*="bg-zinc-950"],
   }
 }
 
+@keyframes goldTextShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.animate-gold-text-shimmer {
+  background: linear-gradient(
+    90deg,
+    #f59e0b 0%,
+    #fef08a 35%,
+    #ffffff 50%,
+    #fef08a 65%,
+    #f59e0b 100%
+  );
+  background-size: 200% 100%;
+  animation: goldTextShimmer 4s ease-in-out infinite;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 .shimmer-button-content {
   position: relative;
   z-index: 10;
