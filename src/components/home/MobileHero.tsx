@@ -46,51 +46,56 @@ export default function MobileHero({
       {/* 
         ========================================================================
         PAGE 1 (FIRST FOLD ON MOBILE):
-        - Same luxury as laptop (DesktopHero):
-          * Real centered rotating gold laser beam (shimmer-beam-gold) on banner & button.
-          * Large, wide, bold Cairo typography filling the screen.
-          * Screen 1 ends cleanly right after the two action buttons.
-          * Zero contacts, zero badges on screen 1 (clean & uncluttered).
+        - Banner lifted up close to the navbar.
+        - Vibrant multi-color background lighting (Amber, Purple, Indigo, Cyan).
+        - Massive, wide, authoritative Cairo headline filling the screen.
+        - Action buttons pushed down comfortably to the bottom of the fold.
         ======================================================================== 
       */}
-      <section className="min-h-[85vh] flex flex-col justify-center py-6 px-4 text-center relative overflow-hidden">
+      <section className="min-h-[calc(100svh-4.5rem)] flex flex-col justify-between pt-1 pb-6 px-4 text-center relative overflow-hidden">
         
-        {/* Dynamic Animated Atmospheric Lighting (Rich Amber & Purple Orbs) */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-sm h-[380px] pointer-events-none -z-10 overflow-visible">
-          <div className="dynamic-drift-1 absolute -top-10 right-1/6 w-[300px] h-[220px] bg-amber-400/25 dark:bg-amber-500/18 rounded-full blur-[85px]" />
-          <div className="dynamic-drift-2 absolute -bottom-10 left-1/6 w-[320px] h-[240px] bg-blue-500/22 dark:bg-purple-600/18 rounded-full blur-[95px]" />
-          <div className="dynamic-drift-3 absolute top-1/4 left-1/2 -translate-x-1/2 w-[280px] h-[200px] bg-indigo-400/18 dark:bg-yellow-500/12 rounded-full blur-[80px]" />
+        {/* Vibrant Multi-Color Background Lighting (Rich Glows) */}
+        <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
+          {/* Top-Right Golden Amber Glow */}
+          <div className="absolute -top-16 -right-16 w-[360px] h-[360px] bg-amber-500/35 rounded-full blur-[95px]" />
+          {/* Center-Left Vibrant Purple/Indigo Glow */}
+          <div className="absolute top-1/4 -left-20 w-[340px] h-[340px] bg-purple-600/35 rounded-full blur-[100px]" />
+          {/* Bottom Center Blue/Cyan Glow */}
+          <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 w-[380px] h-[280px] bg-blue-600/25 rounded-full blur-[110px]" />
+          {/* Core Warm Glow right behind the headline */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[240px] bg-amber-400/20 rounded-full blur-[75px]" />
         </div>
 
-        <div className="w-full max-w-md mx-auto flex flex-col items-center">
-          
-          {/* 1. Laptop-Style Rotating Gold Shimmer Banner */}
+        {/* 1. TOP: Banner Lifted Up Close to Header */}
+        <div className="w-full flex justify-center pt-1 mb-2">
           {settings.BANNER_ENABLED !== 'false' && (
-            <div className="mb-6 inline-block max-w-full px-1">
-              <a href="#trending-diploma" className="shimmer-border-wrapper group inline-block max-w-full">
-                <div className="shimmer-beam-gold" />
-                <div className="shimmer-button-content px-4 py-2 text-xs text-slate-100 flex items-center gap-2 flex-nowrap justify-center shadow-lg shadow-amber-500/15">
-                  <div className="flex items-center gap-1.5 shrink-0">
-                    <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
-                    <span className="text-amber-300 font-black text-xs">{settings.HERO_BADGE || 'جديد!'}</span>
-                  </div>
-                  <div className="h-3.5 w-px bg-amber-400/40 shrink-0" />
-                  <span className="font-semibold text-xs text-zinc-100 group-hover:text-amber-200 transition-colors whitespace-nowrap">
-                    {settings.BANNER_TEXT || 'خصم استثنائي 50% لفترة محدودة على المسارات الهندسية'}
-                  </span>
-                  <ArrowLeft className="w-3.5 h-3.5 text-amber-400 group-hover:-translate-x-1 transition-transform shrink-0" />
+            <div className="inline-block max-w-full px-1">
+              <a
+                href="#trending-diploma"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#12111a]/95 border border-amber-400/60 shadow-[0_0_20px_rgba(245,158,11,0.3)] text-slate-100 active:scale-95 transition-transform"
+              >
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
+                  <span className="text-amber-300 font-black text-xs">{settings.HERO_BADGE || 'جديد!'}</span>
                 </div>
+                <div className="h-3.5 w-px bg-amber-400/40 shrink-0" />
+                <span className="font-bold text-xs text-zinc-100 whitespace-nowrap">
+                  {settings.BANNER_TEXT || 'خصم استثنائي 50% لفترة محدودة على المسارات الهندسية'}
+                </span>
+                <ArrowLeft className="w-3.5 h-3.5 text-amber-400 shrink-0" />
               </a>
             </div>
           )}
+        </div>
 
-          {/* 2. Big, Wide, Balanced Headline ("كبر الفونت ووسع الكلام خليه يملى الشاشة") */}
-          <div className="w-full px-2 mb-4">
-            <h1 className="font-black tracking-tight [text-wrap:balance]">
-              <span className="text-white block font-black text-[25px] xs:text-[28px] sm:text-3xl leading-[1.25] mb-2 tracking-tight">
+        {/* 2. MIDDLE: Big, Wide, Commanding Headline ("كبر الكلام خليه يملى الشاشة") */}
+        <div className="w-full max-w-lg mx-auto flex flex-col items-center my-auto px-1">
+          <div className="w-full mb-3">
+            <h1 className="font-black tracking-tight w-full">
+              <span className="text-white block font-black text-[30px] xs:text-[34px] sm:text-4xl leading-[1.2] mb-2 tracking-tight">
                 {settings.HERO_TITLE || 'نحو مستقبل برمجي وهندسي احترافي'}
               </span>
-              <span className="bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 bg-clip-text text-transparent block font-black text-[17px] xs:text-[20px] sm:text-2xl leading-snug">
+              <span className="bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 bg-clip-text text-transparent block font-black text-[20px] xs:text-[23px] sm:text-2xl leading-snug">
                 {(settings.PLATFORM_TAGLINE && !settings.PLATFORM_TAGLINE.includes('?'))
                   ? settings.PLATFORM_TAGLINE
                   : 'دبلومات تطبيقية ومشاريع واقعية تؤهلك لسوق العمل'}
@@ -98,35 +103,33 @@ export default function MobileHero({
             </h1>
           </div>
 
-          {/* 3. Subtitle */}
-          <p className="text-xs xs:text-sm text-zinc-300 max-w-sm mx-auto mb-8 leading-relaxed font-normal px-2 [text-wrap:balance]">
+          <p className="text-xs xs:text-sm text-zinc-300 max-w-sm mx-auto leading-relaxed font-normal px-2">
             {settings.HERO_SUBTITLE ||
               `${cleanPlatformName} — مسارات تدريبية هندسية متكاملة، دبلومات برمجية معتمدة، ومشاريع إنتاج واقعية تؤهلك لسوق العمل بثقة واحتراف.`}
           </p>
+        </div>
 
-          {/* 4. Action Buttons (Laptop-Style: Rotating Shimmer Primary + Glass Secondary) */}
-          <div className="flex flex-col gap-3.5 w-full max-w-sm mx-auto px-2">
-            {/* Primary Diploma Button with Laptop-Style Rotating Gold Beam */}
-            <a href="#trending-diploma" className="w-full shimmer-border-wrapper group">
-              <div className="shimmer-beam-gold" />
-              <div className="shimmer-button-content w-full px-7 py-4 text-sm xs:text-base font-black text-white dark:text-amber-300 group-hover:opacity-95 flex items-center justify-center gap-2.5 shadow-xl shadow-amber-500/15">
-                <Flame className="w-4 h-4 xs:w-5 xs:h-5 text-amber-400 animate-bounce shrink-0" />
-                <span className="whitespace-nowrap">{settings.FEATURED_DIPLOMA_BADGE || 'الدبلومة الأكثر طلباً (خصم 51%)'}</span>
-                <ArrowLeft className="w-4 h-4 xs:w-5 xs:h-5 text-white dark:text-amber-400 group-hover:-translate-x-1.5 transition-transform duration-300 shrink-0" />
-              </div>
-            </a>
+        {/* 3. BOTTOM: Action Buttons Pushed Down to Bottom of Fold */}
+        <div className="w-full max-w-sm mx-auto flex flex-col gap-3.5 pb-2 px-1">
+          {/* Primary Diploma Button with Golden Neon Glow */}
+          <a
+            href="#trending-diploma"
+            className="w-full flex items-center justify-center gap-2.5 py-4 px-6 rounded-full bg-gradient-to-b from-[#1c1a24] to-[#0e0d13] text-amber-300 font-black text-base border-2 border-amber-400/90 shadow-[0_0_30px_rgba(245,158,11,0.45)] active:scale-[0.98] transition-all group"
+          >
+            <Flame className="w-5 h-5 text-amber-400 animate-bounce shrink-0" />
+            <span className="whitespace-nowrap">{settings.FEATURED_DIPLOMA_BADGE || 'الدبلومة الأكثر طلباً (خصم 51%)'}</span>
+            <ArrowLeft className="w-5 h-5 text-amber-400 group-hover:-translate-x-1.5 transition-transform duration-300 shrink-0" />
+          </a>
 
-            {/* Secondary Guide Button */}
-            <Link
-              href="/courses"
-              className="w-full group flex items-center justify-center gap-2.5 px-7 py-4 rounded-full bg-zinc-900/90 hover:bg-zinc-800 text-white font-bold text-sm xs:text-base border border-zinc-700 shadow-md backdrop-blur-md active:scale-[0.98] transition-all"
-            >
-              <BookOpen className="w-4 h-4 xs:w-5 xs:h-5 text-amber-400 group-hover:scale-110 transition-transform shrink-0" />
-              <span className="whitespace-nowrap">{settings.HERO_CTA_PRIMARY || 'تصفح دليل الكورسات'}</span>
-              <ArrowLeft className="w-4 h-4 xs:w-5 xs:h-5 text-zinc-400 group-hover:-translate-x-1 transition-transform duration-300 shrink-0" />
-            </Link>
-          </div>
-
+          {/* Secondary Guide Button */}
+          <Link
+            href="/courses"
+            className="w-full flex items-center justify-center gap-2.5 py-4 px-6 rounded-full bg-zinc-900/90 hover:bg-zinc-800 text-white font-bold text-base border border-zinc-700 shadow-md backdrop-blur-md active:scale-[0.98] transition-all group"
+          >
+            <BookOpen className="w-5 h-5 text-amber-400 group-hover:scale-110 transition-transform shrink-0" />
+            <span className="whitespace-nowrap">{settings.HERO_CTA_PRIMARY || 'تصفح دليل الكورسات'}</span>
+            <ArrowLeft className="w-5 h-5 text-zinc-400 group-hover:-translate-x-1 transition-transform duration-300 shrink-0" />
+          </Link>
         </div>
 
       </section>
@@ -138,7 +141,7 @@ export default function MobileHero({
         Only visible when the user scrolls down!
         ======================================================================== 
       */}
-      <section className="py-12 px-4 border-t border-zinc-800/80 bg-zinc-950/80 space-y-8 text-center">
+      <section className="py-14 px-4 border-t border-zinc-800/80 bg-zinc-950/80 space-y-8 text-center">
         
         {/* Quick Contacts Bar */}
         {hasAnySocial && (
