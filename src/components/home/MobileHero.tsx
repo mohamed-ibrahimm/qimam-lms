@@ -44,16 +44,11 @@ export default function MobileHero({
   return (
     <section className="block md:hidden pt-3 pb-14 px-4 text-center relative overflow-hidden">
       
-      {/* Dynamic Multi-Color Background Lighting (Rich Atmospheric Glows) */}
-      <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
-        {/* Top-Right Golden Amber Glow */}
-        <div className="absolute -top-12 -right-12 w-[340px] h-[340px] bg-amber-500/30 rounded-full blur-[90px]" />
-        {/* Center-Left Vibrant Purple/Indigo Glow */}
-        <div className="absolute top-1/4 -left-16 w-[320px] h-[320px] bg-purple-600/30 rounded-full blur-[95px]" />
-        {/* Bottom-Center Deep Blue/Cyan Glow */}
-        <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-[360px] h-[260px] bg-blue-600/22 rounded-full blur-[100px]" />
-        {/* Core Warm Glow behind the headline */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[220px] bg-amber-400/20 rounded-full blur-[70px]" />
+      {/* Pure Dynamic Moving Golden Atmospheric Aura (Matching Desktop) */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md h-[420px] pointer-events-none -z-10 overflow-visible">
+        <div className="dynamic-drift-1 absolute -top-8 right-1/6 w-[340px] h-[250px] bg-amber-500/25 dark:bg-amber-400/20 rounded-full blur-[85px]" />
+        <div className="dynamic-drift-2 absolute -bottom-8 left-1/6 w-[360px] h-[270px] bg-yellow-500/22 dark:bg-yellow-400/18 rounded-full blur-[90px]" />
+        <div className="dynamic-drift-3 absolute top-1/4 left-1/2 -translate-x-1/2 w-[300px] h-[220px] bg-amber-600/18 dark:bg-amber-500/14 rounded-full blur-[75px]" />
       </div>
 
       <div className="w-full max-w-lg mx-auto flex flex-col items-center">
