@@ -982,12 +982,17 @@ html.light-theme .mobile-drawer-sheet [class*="bg-zinc-950"],
   100% { transform: rotate(360deg); }
 }
 
+.dynamic-logo-emblem {
+  position: relative;
+  overflow: hidden;
+}
+
 .dynamic-logo-emblem::before {
   content: '';
   position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(135deg, #f59e0b, #fbbf24, #d97706, #fef08a);
+  inset: -50%;
+  background: conic-gradient(from 0deg, #f59e0b, #fbbf24, #d97706, #fef08a, #b45309, #f59e0b);
+  animation: rotateEmblemAura 4s linear infinite;
   z-index: 0;
 }
 
@@ -1097,10 +1102,10 @@ html.dark .diploma-luxury-pill,
   66% { transform: translate(55px, 35px) scale(0.9); }
 }
 
-.dynamic-drift-1 { animation: auroraDrift1 6s ease-in-out infinite; }
-.dynamic-drift-2 { animation: auroraDrift2 8s ease-in-out infinite; }
-.dynamic-drift-3 { animation: auroraDrift3 7s ease-in-out infinite; }
-.dynamic-drift-4 { animation: auroraDrift4 9s ease-in-out infinite; }
+.dynamic-drift-1 { animation: auroraDrift1 14s ease-in-out infinite; }
+.dynamic-drift-2 { animation: auroraDrift2 18s ease-in-out infinite; }
+.dynamic-drift-3 { animation: auroraDrift3 16s ease-in-out infinite; }
+.dynamic-drift-4 { animation: auroraDrift4 20s ease-in-out infinite; }
 
 /* 7. Dynamic Multi-Color Trending Diploma Hero CTA (تكسر الألوان لتخطف العين فوراً) */
 @keyframes trendingAuroraFlow {

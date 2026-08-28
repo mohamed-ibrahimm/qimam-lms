@@ -76,12 +76,11 @@ export default function MobileHero({
         {/* 2. MIDDLE: Large, Majestic Headline with Dynamic Moving Halo ("وحط التوهج ورا الكلام وخليه دينامك وكبر الخط شويه ونسق الكلام") */}
         <div className="w-full max-w-lg mx-auto flex flex-col items-center my-auto px-1 py-4 relative">
           
-          {/* Dynamic Drifting Golden Halo directly behind the text ("خفف اللوان الدهبي شويه وزود دنيامك") */}
+          {/* Dynamic Drifting Golden Halo directly behind the text */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] xs:w-[380px] h-[300px] pointer-events-none -z-10 overflow-visible">
-            <div className="dynamic-drift-1 absolute -top-6 right-1/4 w-[280px] h-[220px] bg-amber-400/16 dark:bg-amber-500/12 rounded-full blur-[90px]" />
-            <div className="dynamic-drift-2 absolute -bottom-6 left-1/4 w-[300px] h-[230px] bg-yellow-400/12 dark:bg-yellow-500/9 rounded-full blur-[95px]" />
-            <div className="dynamic-drift-3 absolute top-1/4 left-1/2 -translate-x-1/2 w-[260px] h-[200px] bg-amber-500/10 dark:bg-amber-600/8 rounded-full blur-[85px]" />
-            <div className="dynamic-drift-4 absolute -top-8 left-1/3 w-[250px] h-[190px] bg-yellow-300/10 dark:bg-yellow-400/7 rounded-full blur-[80px]" />
+            <div className="dynamic-drift-1 absolute -top-6 right-1/4 w-[280px] h-[220px] bg-amber-400/30 dark:bg-amber-500/22 rounded-full blur-[75px]" />
+            <div className="dynamic-drift-2 absolute -bottom-6 left-1/4 w-[300px] h-[230px] bg-yellow-400/25 dark:bg-yellow-500/18 rounded-full blur-[80px]" />
+            <div className="dynamic-drift-3 absolute top-1/4 left-1/2 -translate-x-1/2 w-[260px] h-[200px] bg-amber-500/20 dark:bg-amber-600/16 rounded-full blur-[70px]" />
           </div>
 
           <h1 className="font-black tracking-tight w-full mb-3.5 [text-wrap:balance]">
