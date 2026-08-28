@@ -29,18 +29,20 @@ import { useTheme } from '@/components/ThemeProvider';
 interface HeaderProps {
   initialPlatformName?: string;
   initialPlatformTagline?: string;
+  initialUser?: any;
 }
 
 export default function Header({
   initialPlatformName = 'أكاديمية م / محمد إبراهيم',
   initialPlatformTagline = 'بوابتك الاحترافية لاحتراف البرمجة والذكاء الاصطناعي والتصميم',
+  initialUser = null,
 }: HeaderProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [currentUser, setCurrentUser] = useState<any>(initialUser);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
   const { theme, toggleTheme } = useTheme();
 
@@ -48,6 +50,12 @@ export default function Header({
   const [platformTagline, setPlatformTagline] = useState(initialPlatformTagline);
 
   // Sync if prop updates from server
+  useEffect(() => {
+    if (initialUser !== undefined) {
+      setCurrentUser(initialUser);
+    }
+  }, [initialUser]);
+
   useEffect(() => {
     if (initialPlatformName && !initialPlatformName.includes('?')) {
       setPlatformName(initialPlatformName);

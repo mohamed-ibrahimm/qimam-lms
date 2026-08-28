@@ -2,8 +2,10 @@ import type { Metadata } from 'next';
 import './globals.css';
 import AppShell from '@/components/layout/AppShell';
 import { ThemeProvider } from '@/components/ThemeProvider';
-
 import { prisma } from '@/lib/prisma';
+import { getCurrentUser } from '@/lib/auth';
+
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata(): Promise<Metadata> {
   let title = 'أكاديمية المهندس محمد إبراهيم';
@@ -34,39 +36,33 @@ export default async function RootLayout({
 }) {
   let platformName = 'أكاديمية م / محمد إبراهيم';
   let platformTagline = 'بوابتك الاحترافية لاحتراف البرمجة والذكاء الاصطناعي والتصميم';
+  let settingsMap: Record<string, string> = {};
+  let user: any = null;
 
   try {
     const settings = await prisma.platformSetting.findMany();
-    const map = Object.fromEntries(settings.map((s) => [s.key, s.value]));
-    if (map['PLATFORM_NAME']) platformName = map['PLATFORM_NAME'];
-    if (map['PLATFORM_TAGLINE']) platformTagline = map['PLATFORM_TAGLINE'];
+    settingsMap = Object.fromEntries(settings.map((s) => [s.key, s.value]));
+    if (settingsMap['PLATFORM_NAME']) platformName = settingsMap['PLATFORM_NAME'];
+    if (settingsMap['PLATFORM_TAGLINE']) platformTagline = settingsMap['PLATFORM_TAGLINE'];
+  } catch (e) {}
+
+  try {
+    user = await getCurrentUser();
   } catch (e) {}
 
   return (
-    <html lang="ar" dir="rtl">
+    <html lang="ar" dir="rtl" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="alternate icon" href="/favicon.ico" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              if (typeof window !== 'undefined') {
-                window.addEventListener('error', function(e) {
-                  if (e.filename && (e.filename.includes('chrome-extension:') || e.filename.includes('moz-extension:'))) {
-                    e.stopImmediatePropagation();
-                    e.preventDefault();
-                  }
-                }, true);
-              }
-            `,
-          }}
-        />
       </head>
-      <body className="min-h-screen antialiased selection:bg-amber-500 selection:text-black relative">
+      <body className="min-h-screen antialiased selection:bg-amber-500 selection:text-black relative" suppressHydrationWarning>
         <ThemeProvider>
           <AppShell
+            initialUser={user}
             initialPlatformName={platformName}
             initialPlatformTagline={platformTagline}
+            initialSettings={settingsMap}
           >
             {children}
           </AppShell>

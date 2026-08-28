@@ -14,35 +14,27 @@ import {
   Award,
   BookOpen
 } from 'lucide-react';
-import { prisma } from '@/lib/prisma';
 
-export default async function Footer() {
-  let platformName = 'أكاديمية قِمَم';
-  let platformTagline = 'المنصة العربية الأولى المتخصصة في بناء وتأهيل الكوادر البرمجية والهندسية لسوق العمل بأعلى المعايير الاحترافية ومشاريع الإنتاج الفعلية.';
+interface FooterProps {
+  initialSettings?: Record<string, string>;
+}
+
+export default function Footer({ initialSettings }: FooterProps) {
+  const platformName = initialSettings?.['PLATFORM_NAME'] || 'أكاديمية م / محمد إبراهيم';
+  const platformTagline = initialSettings?.['PLATFORM_TAGLINE'] || 'بوابتك الاحترافية لاحتراف البرمجة والذكاء الاصطناعي والتصميم ومشاريع الإنتاج الفعلية.';
+
   let whatsappUrl = '';
-  let contactEmail = '';
-  let facebookUrl = '';
-  let telegramUrl = '';
-  let youtubeUrl = '';
-  let linkedinUrl = '';
+  if (initialSettings?.['WHATSAPP_NUMBER']) {
+    const clean = initialSettings['WHATSAPP_NUMBER'].replace(/[^0-9]/g, '');
+    const formatted = clean.startsWith('0') ? '2' + clean : clean;
+    whatsappUrl = `https://wa.me/${formatted}`;
+  }
 
-  try {
-    const settings = await prisma.platformSetting.findMany();
-    const map = Object.fromEntries(settings.map((s) => [s.key, s.value]));
-    if (map['PLATFORM_NAME']) platformName = map['PLATFORM_NAME'];
-    if (map['PLATFORM_TAGLINE']) platformTagline = map['PLATFORM_TAGLINE'];
-    
-    if (map['WHATSAPP_NUMBER']) {
-      const clean = map['WHATSAPP_NUMBER'].replace(/[^0-9]/g, '');
-      const formatted = clean.startsWith('0') ? '2' + clean : clean;
-      whatsappUrl = `https://wa.me/${formatted}`;
-    }
-    if (map['CONTACT_EMAIL']) contactEmail = `mailto:${map['CONTACT_EMAIL']}`;
-    if (map['FACEBOOK_URL']) facebookUrl = map['FACEBOOK_URL'];
-    if (map['TELEGRAM_URL']) telegramUrl = map['TELEGRAM_URL'];
-    if (map['YOUTUBE_URL']) youtubeUrl = map['YOUTUBE_URL'];
-    if (map['LINKEDIN_URL']) linkedinUrl = map['LINKEDIN_URL'];
-  } catch (e) {}
+  const contactEmail = initialSettings?.['CONTACT_EMAIL'] ? `mailto:${initialSettings['CONTACT_EMAIL']}` : '';
+  const facebookUrl = initialSettings?.['FACEBOOK_URL'] || '';
+  const telegramUrl = initialSettings?.['TELEGRAM_URL'] || '';
+  const youtubeUrl = initialSettings?.['YOUTUBE_URL'] || '';
+  const linkedinUrl = initialSettings?.['LINKEDIN_URL'] || '';
 
   return (
     <footer className="w-full bg-[#080710] border-t border-white/[0.06] mt-20 pt-16 pb-12 text-slate-400 relative">
@@ -58,149 +50,158 @@ export default async function Footer() {
                 <GraduationCap className="w-5 h-5 text-amber-400" />
               </div>
             </div>
-            <span className="text-lg sm:text-xl font-black text-white">
-              {platformName}
-            </span>
+            <div>
+              <h3 className="text-lg font-black text-white">{platformName}</h3>
+              <p className="text-[11px] text-amber-300 font-medium">التميز الأكاديمي والمهني المعتمد</p>
+            </div>
           </div>
-          <p className="text-xs text-zinc-400 leading-relaxed">
+          <p className="text-xs leading-relaxed text-slate-400">
             {platformTagline}
           </p>
-          <div className="flex items-center gap-2.5 pt-2 flex-wrap">
-            {whatsappUrl && (
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center justify-center hover:bg-emerald-500/20 hover:text-emerald-300 hover:border-emerald-500/40 transition-all text-emerald-400"
-                title="واتساب"
-              >
-                <MessageCircle className="w-4 h-4" />
-              </a>
-            )}
-            {contactEmail && (
-              <a
-                href={contactEmail}
-                className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center justify-center hover:bg-rose-500/20 hover:text-rose-300 hover:border-rose-500/40 transition-all text-rose-400"
-                title="البريد الإلكتروني / جيميل"
-              >
-                <Mail className="w-4 h-4" />
-              </a>
-            )}
-            {facebookUrl && (
-              <a
-                href={facebookUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center justify-center hover:bg-blue-500/20 hover:text-blue-300 hover:border-blue-500/40 transition-all text-blue-400"
-                title="فيسبوك"
-              >
-                <Facebook className="w-4 h-4" />
-              </a>
-            )}
-            {telegramUrl && (
-              <a
-                href={telegramUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center justify-center hover:bg-cyan-500/20 hover:text-cyan-300 hover:border-cyan-500/40 transition-all text-sky-400"
-                title="تليجرام"
-              >
-                <Send className="w-4 h-4" />
-              </a>
-            )}
-            {youtubeUrl && (
-              <a
-                href={youtubeUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center justify-center hover:bg-red-500/20 hover:text-red-300 hover:border-red-500/40 transition-all text-red-400"
-                title="يوتيوب"
-              >
-                <Youtube className="w-4 h-4" />
-              </a>
-            )}
-            {linkedinUrl && (
-              <a
-                href={linkedinUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center justify-center hover:bg-indigo-500/20 hover:text-indigo-300 hover:border-indigo-500/40 transition-all text-indigo-400"
-                title="لينكد إن"
-              >
-                <Linkedin className="w-4 h-4" />
-              </a>
-            )}
+          <div className="pt-2">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-300 text-[11px] font-bold">
+              <Award className="w-3.5 h-3.5" />
+              شهادات معتمدة بكود تحقق رقمي
+            </span>
           </div>
         </div>
 
         {/* Quick Links */}
-        <div className="space-y-3">
-          <h4 className="text-sm font-bold text-white">روابط سريعة</h4>
-          <ul className="space-y-2 text-xs">
+        <div>
+          <h4 className="text-sm font-bold text-white mb-4 border-b border-white/[0.08] pb-2 inline-block">
+            روابط سريعة
+          </h4>
+          <ul className="space-y-2.5 text-xs">
             <li>
-              <Link href="/courses" className="hover:text-primary-400 transition-colors">
-                تصفح الكورسات المتاحة
+              <Link href="/courses" className="hover:text-amber-300 transition-colors flex items-center gap-1.5">
+                <BookOpen className="w-3.5 h-3.5 text-amber-400/70" />
+                <span>الدورات التدريبية</span>
               </Link>
             </li>
             <li>
-              <Link href="/diplomas" className="hover:text-primary-400 transition-colors">
-                الدبلومات الشاملة المعتمدة
+              <Link href="/diplomas" className="hover:text-amber-300 transition-colors flex items-center gap-1.5">
+                <Award className="w-3.5 h-3.5 text-amber-400/70" />
+                <span>الدبلومات الشاملة</span>
               </Link>
             </li>
             <li>
-              <Link href="/verify" className="hover:text-primary-400 transition-colors">
-                التحقق من صحة الشهادات بالـ QR
+              <Link href="/verify" className="hover:text-amber-300 transition-colors flex items-center gap-1.5">
+                <ShieldCheck className="w-3.5 h-3.5 text-amber-400/70" />
+                <span>التحقق من صحة الشهادات</span>
               </Link>
             </li>
             <li>
-              <Link href="/support" className="hover:text-primary-400 transition-colors">
-                مركز المساعدة وتذاكر الدعم
+              <Link href="/support" className="hover:text-amber-300 transition-colors">
+                مركز المساعدة والدعم
+              </Link>
+            </li>
+            <li>
+              <Link href="/terms" className="hover:text-amber-300 transition-colors">
+                الشروط وسياسة الاستخدام
               </Link>
             </li>
           </ul>
         </div>
 
-        {/* Payment Gateways Info */}
-        <div className="space-y-3">
-          <h4 className="text-sm font-bold text-white">طرق الدفع والتحويل</h4>
-          <p className="text-xs leading-relaxed">
-            ندعم التحويل المالي المباشر عبر المحافظ الإلكترونية وشبكة المدفوعات اللحظية المصرية:
-          </p>
-          <div className="space-y-2 pt-1">
-            <div className="p-2.5 rounded-lg bg-surface-raised border border-border flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-              <span className="text-xs font-semibold text-zinc-200">إنستاباي (InstaPay IPN)</span>
-            </div>
-            <div className="p-2.5 rounded-lg bg-surface-raised border border-border flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-rose-500"></span>
-              <span className="text-xs font-semibold text-zinc-200">فودافون كاش (Vodafone Cash)</span>
-            </div>
-          </div>
+        {/* Featured Paths */}
+        <div>
+          <h4 className="text-sm font-bold text-white mb-4 border-b border-white/[0.08] pb-2 inline-block">
+            المسارات التخصصية
+          </h4>
+          <ul className="space-y-2.5 text-xs text-slate-400">
+            <li>مسار Full-Stack Next.js 15 & Node.js</li>
+            <li>مسار الذكاء الاصطناعي وهندسة الأوامر</li>
+            <li>مسار تصميم واجهات المستخدم UI/UX وتطبيقات الموبايل</li>
+            <li>مسار DevOps وهندسة البنية التحتية السحابية</li>
+            <li>مسار الأمن السيبراني واختبار الاختراق</li>
+          </ul>
         </div>
 
-        {/* Contact Info */}
-        <div className="space-y-3">
-          <h4 className="text-sm font-bold text-white">تواصل معنا</h4>
-          <div className="space-y-2.5 text-xs">
-            <div className="flex items-center gap-2">
-              <Mail className="w-4 h-4 text-primary-400" />
-              <span>support@qimam.edu</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Phone className="w-4 h-4 text-primary-400" />
-              <span dir="ltr">+20 100 123 4567</span>
-            </div>
-            <div className="pt-2 text-[11px] text-zinc-500">
-              ساعات العمل: يومياً من 9:00 ص حتى 10:00 م بتوقيت القاهرة
+        {/* Direct Channels */}
+        <div>
+          <h4 className="text-sm font-bold text-white mb-4 border-b border-white/[0.08] pb-2 inline-block">
+            قنوات التواصل المباشرة
+          </h4>
+          <div className="space-y-3 text-xs">
+            {whatsappUrl && (
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2.5 text-emerald-400 hover:text-emerald-300 transition-colors font-medium bg-emerald-950/40 p-2.5 rounded-xl border border-emerald-800/40"
+              >
+                <MessageCircle className="w-4 h-4 shrink-0" />
+                <span>الدعم الفني عبر واتساب (فوري)</span>
+              </a>
+            )}
+
+            {telegramUrl && (
+              <a
+                href={telegramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-sky-400 hover:text-sky-300 transition-colors"
+              >
+                <Send className="w-4 h-4 shrink-0" />
+                <span>قناة التليجرام الرسمية</span>
+              </a>
+            )}
+
+            {contactEmail && (
+              <a
+                href={contactEmail}
+                className="flex items-center gap-2 text-slate-300 hover:text-white transition-colors"
+              >
+                <Mail className="w-4 h-4 shrink-0 text-amber-400" />
+                <span>البريد الإلكتروني للإدارة</span>
+              </a>
+            )}
+
+            {/* Social Icons */}
+            <div className="flex items-center gap-3 pt-3">
+              {facebookUrl && (
+                <a
+                  href={facebookUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-8 h-8 rounded-lg bg-white/[0.05] hover:bg-blue-600/30 text-slate-300 hover:text-blue-400 flex items-center justify-center transition-colors border border-white/[0.08]"
+                  title="Facebook"
+                >
+                  <Facebook className="w-4 h-4" />
+                </a>
+              )}
+              {youtubeUrl && (
+                <a
+                  href={youtubeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-8 h-8 rounded-lg bg-white/[0.05] hover:bg-red-600/30 text-slate-300 hover:text-red-400 flex items-center justify-center transition-colors border border-white/[0.08]"
+                  title="YouTube"
+                >
+                  <Youtube className="w-4 h-4" />
+                </a>
+              )}
+              {linkedinUrl && (
+                <a
+                  href={linkedinUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-8 h-8 rounded-lg bg-white/[0.05] hover:bg-sky-600/30 text-slate-300 hover:text-sky-400 flex items-center justify-center transition-colors border border-white/[0.08]"
+                  title="LinkedIn"
+                >
+                  <Linkedin className="w-4 h-4" />
+                </a>
+              )}
             </div>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-6 border-t border-border/40 flex flex-col md:flex-row items-center justify-between text-xs text-zinc-500 gap-4">
-        <p>© {new Date().getFullYear()} {platformName}. جميع الحقوق محفوظة.</p>
-        <p className="flex items-center gap-1 text-[11px]">
-          تم التطوير بأعلى معايير الأمان والتصميم العربي الأصيل
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-6 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
+        <p>جميع الحقوق محفوظة © {new Date().getFullYear()} {platformName}. صُممت المنصة بأحدث معايير الأمان وتطوير البرمجيات الحديثة.</p>
+        <p className="flex items-center gap-1 text-slate-400">
+          <span>بإشراف وقيادة</span>
+          <strong className="text-amber-400 font-bold">{platformName}</strong>
         </p>
       </div>
     </footer>

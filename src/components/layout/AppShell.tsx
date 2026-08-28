@@ -9,12 +9,16 @@ interface AppShellProps {
   children: React.ReactNode;
   initialPlatformName?: string;
   initialPlatformTagline?: string;
+  initialSettings?: Record<string, string>;
+  initialUser?: any;
 }
 
 export default function AppShell({
   children,
   initialPlatformName,
   initialPlatformTagline,
+  initialSettings,
+  initialUser,
 }: AppShellProps) {
   const pathname = usePathname();
 
@@ -37,11 +41,12 @@ export default function AppShell({
       <Header
         initialPlatformName={initialPlatformName}
         initialPlatformTagline={initialPlatformTagline}
+        initialUser={initialUser}
       />
       <main className={`flex-1 w-full ${isAdmin ? 'pt-20 sm:pt-24' : 'pt-20 sm:pt-24 md:pt-28 pb-12'}`}>
         {children}
       </main>
-      {!isAdmin && <Footer />}
+      {!isAdmin && <Footer initialSettings={initialSettings} />}
     </div>
   );
 }
