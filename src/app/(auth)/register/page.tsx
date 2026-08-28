@@ -81,23 +81,22 @@ export default function RegisterPage() {
       </div>
 
       <div className="w-full max-w-xl space-y-6">
-        <div className="text-center space-y-2.5">
-          <div className="relative w-16 h-16 mx-auto flex items-center justify-center">
-            {/* Ambient Blurred Colored Glow Behind Icon */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-blue-600 via-indigo-500 to-fuchsia-500 rounded-2xl blur-lg opacity-60 animate-pulse" />
-            <div className="dynamic-auth-emblem w-14 h-14 rounded-2xl p-[2.5px] relative z-10 flex items-center justify-center">
-              <div className="w-full h-full bg-white dark:bg-zinc-950 rounded-[13px] flex items-center justify-center shadow-inner">
-                <UserPlus className="w-6 h-6 text-blue-600 dark:text-amber-400" />
+        <div className="text-center space-y-2">
+          <div className="relative w-16 h-16 mx-auto flex items-center justify-center mb-1">
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-amber-500/30 to-blue-600/30 blur-md" />
+            <div className="relative w-14 h-14 rounded-2xl p-[2px] bg-gradient-to-tr from-amber-500 via-indigo-500 to-amber-300 shadow-lg shadow-amber-500/15">
+              <div className="w-full h-full rounded-[14px] bg-[#0c0918] flex items-center justify-center border border-amber-400/25">
+                <UserPlus className="w-6 h-6 text-amber-400" />
               </div>
             </div>
           </div>
-          <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">إنشاء حساب جديد</h1>
-          <p className="text-xs font-bold text-blue-700 dark:text-amber-300">
-            أكاديمية م / محمد إبراهيم
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">إنشاء حساب جديد</h1>
+          <p className="text-xs sm:text-sm font-medium text-slate-500 dark:text-zinc-400">
+            انضم الآن إلى <span className="font-bold text-amber-500 dark:text-amber-400">أكاديمية م / محمد إبراهيم</span>
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-8 rounded-3xl bg-white/90 dark:bg-surface border border-slate-200/90 dark:border-zinc-800 shadow-2xl shadow-blue-900/10 dark:shadow-black/80 space-y-5 backdrop-blur-2xl">
+        <form onSubmit={handleSubmit} className="p-7 sm:p-9 rounded-3xl bg-white/95 dark:bg-[#0e0b1d] border border-slate-200/90 dark:border-amber-500/20 shadow-2xl shadow-blue-900/10 dark:shadow-black/90 space-y-5 backdrop-blur-2xl">
           {errorMessage && (
             <div className="p-3.5 rounded-2xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 text-xs flex items-center gap-2">
               <ShieldAlert className="w-4 h-4 shrink-0 text-rose-600" />
@@ -229,17 +228,16 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={loading}
-            className="dynamic-multi-cta w-full py-4 rounded-xl text-white font-black text-sm transition-all hover:scale-[1.01] flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer shadow-xl relative"
+            className="w-full h-12 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-500 hover:to-indigo-500 dark:from-amber-500 dark:via-yellow-500 dark:to-amber-600 dark:hover:from-amber-400 dark:hover:to-yellow-400 text-white dark:text-zinc-950 font-black text-sm transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-blue-600/25 dark:shadow-amber-500/20"
           >
-            <div className="shimmer-beam-gold opacity-40" />
-            <UserPlus className="w-4 h-4 relative z-10" />
-            <span className="relative z-10">{loading ? 'جاري إنشاء الحساب...' : 'إنشاء الحساب وبدء التعلم'}</span>
+            <UserPlus className="w-4 h-4" />
+            <span>{loading ? 'جاري إنشاء الحساب...' : 'إنشاء الحساب وبدء التعلم'}</span>
           </button>
         </form>
 
-        <p className="text-center text-xs text-slate-600 dark:text-zinc-400">
+        <p className="text-center text-xs sm:text-sm text-slate-500 dark:text-zinc-400 pt-2">
           لديك حساب بالفعل؟{' '}
-          <Link href="/login" className="font-black text-blue-600 hover:text-blue-800 dark:text-amber-400 dark:hover:text-amber-300">
+          <Link href="/login" className="font-bold text-blue-600 hover:text-blue-700 dark:text-amber-400 dark:hover:text-amber-300 transition-colors underline-offset-4 hover:underline">
             تسجيل الدخول
           </Link>
         </p>
