@@ -20,7 +20,8 @@ import {
   AlertTriangle,
   X,
   ExternalLink,
-  CheckCircle2
+  CheckCircle2,
+  Video
 } from 'lucide-react';
 
 interface InstructorClientProps {
@@ -295,7 +296,16 @@ export default function InstructorClient({
 
                 {/* Card Actions Bottom Row */}
                 <div className="flex items-center justify-between pt-3 border-t border-border/80 gap-2">
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2.5 flex-wrap">
+                    <Link
+                      href={`/instructor/courses/${course.id}/curriculum`}
+                      className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 hover:to-yellow-300 text-zinc-950 font-black text-xs shadow-md shadow-amber-950/40 transition-all hover:scale-105"
+                      title="إدارة الفيديوهات والمنهج ورفع المحاضرات تدريجياً"
+                    >
+                      <Video className="w-3.5 h-3.5 text-zinc-950" />
+                      <span>إدارة الفيديوهات والمنهج 🎬</span>
+                    </Link>
+
                     <Link
                       href={`/courses/${course.slug}`}
                       target="_blank"
@@ -314,10 +324,10 @@ export default function InstructorClient({
                       }
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-500 hover:to-purple-500 text-white font-bold text-xs shadow-md transition-all hover:scale-105"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 hover:text-white border border-zinc-700 text-xs font-bold transition-all"
                       title="دخول قاعة الدرس وتشغيل الفيديوهات مباشرة"
                     >
-                      <PlayCircle className="w-3.5 h-3.5 text-white" />
+                      <PlayCircle className="w-3.5 h-3.5 text-amber-400" />
                       <span>دخول قاعة الدرس</span>
                     </Link>
                   </div>

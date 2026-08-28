@@ -13,7 +13,8 @@ import {
   ExternalLink,
   Search,
   Users,
-  Layers
+  Layers,
+  Video
 } from 'lucide-react';
 
 interface AdminCoursesClientProps {
@@ -238,6 +239,15 @@ export default function AdminCoursesClient({ initialCourses }: AdminCoursesClien
                     </td>
                     <td className="p-4">
                       <div className="flex items-center justify-center gap-2">
+                        <Link
+                          href={`/instructor/courses/${c.id}/curriculum`}
+                          className="px-2.5 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 text-xs font-bold transition-all flex items-center gap-1"
+                          title="إدارة الفيديوهات والمنهج التعليمي"
+                        >
+                          <Video className="w-3.5 h-3.5" />
+                          <span>المنهج والفيديوهات 🎬</span>
+                        </Link>
+
                         <Link
                           href={`/courses/${c.slug}`}
                           className="p-1.5 rounded-lg bg-surface-raised hover:bg-surface-card text-zinc-300 hover:text-white transition-colors"

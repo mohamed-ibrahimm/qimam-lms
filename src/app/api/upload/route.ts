@@ -21,10 +21,14 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'لم يتم استلام أي ملف' }, { status: 400 });
     }
 
-    // Validate size (max 15MB)
-    const MAX_SIZE = 15 * 1024 * 1024;
+    const isVideo = file.type.startsWith('video/');
+    const MAX_SIZE = isVideo ? 250 * 1024 * 1024 : 25 * 1024 * 1024;
     if (file.size > MAX_SIZE) {
-      return NextResponse.json({ error: 'حجم الملف يتجاوز الحد الأقصى المسموح (15 ميجابايت)' }, { status: 400 });
+      return NextResponse.json({
+        error: isVideo
+          ? 'حجم الفيديو يتجاوز الحد الأقصى المسموح (250 ميجابايت)'
+          : 'حجم الملف يتجاوز الحد الأقصى المسموح (25 ميجابايت)',
+      }, { status: 400 });
     }
 
     // Validate mime type
@@ -36,12 +40,17 @@ export async function POST(req: Request) {
       'image/svg+xml',
       'application/pdf',
       'application/zip',
-      'application/x-zip-compressed'
+      'application/x-zip-compressed',
+      'video/mp4',
+      'video/webm',
+      'video/quicktime',
+      'video/x-matroska',
+      'video/ogg',
     ];
 
     if (!allowedTypes.includes(file.type)) {
       return NextResponse.json({
-        error: 'نوع الملف غير مدعوم. الأنواع المدعومة: صور (JPG, PNG, WEBP) وملفات PDF و ZIP',
+        error: 'نوع الملف غير مدعوم. الأنواع المدعومة: صور، مستندات PDF، وملفات فيديو MP4 / WebM / MOV',
       }, { status: 400 });
     }
 
@@ -50,7 +59,13 @@ export async function POST(req: Request) {
 
     // Sanitize folder name
     const safeFolder = folder.replace(/[^a-zA-Z0-9_-]/g, '');
-    const extension = path.extname(file.name) || (file.type.includes('pdf') ? '.pdf' : '.png');
+    let extension = path.extname(file.name);
+    if (!extension) {
+      if (file.type.includes('mp4')) extension = '.mp4';
+      else if (file.type.includes('webm')) extension = '.webm';
+      else if (file.type.includes('pdf')) extension = '.pdf';
+      else extension = '.png';
+    }
     const randomSuffix = Math.random().toString(36).substring(2, 8);
     const fileName = `${Date.now()}-${randomSuffix}${extension}`;
 

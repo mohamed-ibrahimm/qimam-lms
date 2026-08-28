@@ -25,7 +25,8 @@ import {
   ChevronUp,
   Download,
   RotateCcw,
-  Check
+  Check,
+  Unlock
 } from 'lucide-react';
 
 interface ClassroomClientProps {
@@ -204,12 +205,36 @@ export default function ClassroomClient({
       <div className="max-w-7xl mx-auto px-4 py-6 grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
         {/* Main Content Area (Video & Tabs) */}
         <div className="lg:col-span-2 space-y-6">
+          {/* Free Preview Banner if not enrolled */}
+          {!isEnrolled && activeLesson.isFreePreview && (
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-950 via-zinc-900 to-amber-950/40 border border-emerald-500/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xl">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center shrink-0 border border-emerald-500/40">
+                  <Unlock className="w-5 h-5 text-emerald-400" />
+                </div>
+                <div>
+                  <h4 className="text-xs sm:text-sm font-black text-white">أنت تشاهد هذا الدرس كمعاينة مجانية (Free Preview) 🎁</h4>
+                  <p className="text-[11px] text-zinc-400">سجل الآن واشترك في الكورس لفتح كافة المحاضرات والمشاريع والشهادة المعتمدة.</p>
+                </div>
+              </div>
+
+              <Link
+                href={`/checkout?courseId=${course.id}`}
+                className="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-zinc-950 font-black text-xs shadow-md transition-all self-start sm:self-center shrink-0"
+              >
+                الاشتراك في المسار كاملاً
+              </Link>
+            </div>
+          )}
+
           {/* Video Player */}
           {activeLesson.videoUrl ? (
             <VideoPlayer
               videoUrl={activeLesson.videoUrl}
               lessonId={activeLesson.id}
               courseSlug={course.slug}
+              isFreePreview={activeLesson.isFreePreview}
+              isEnrolled={isEnrolled}
               userWatermark={
                 user ? { username: user.username, email: user.email } : undefined
               }
