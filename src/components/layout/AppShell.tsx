@@ -7,9 +7,15 @@ import Footer from '@/components/Footer';
 
 interface AppShellProps {
   children: React.ReactNode;
+  initialPlatformName?: string;
+  initialPlatformTagline?: string;
 }
 
-export default function AppShell({ children }: AppShellProps) {
+export default function AppShell({
+  children,
+  initialPlatformName,
+  initialPlatformTagline,
+}: AppShellProps) {
   const pathname = usePathname();
 
   // Focused learning classroom: NO marketing header, NO footer, full height
@@ -28,7 +34,10 @@ export default function AppShell({ children }: AppShellProps) {
   // Shell with Header at the top across all pages (Public, Admin, Instructor, Student)
   return (
     <div className="min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-black relative">
-      <Header />
+      <Header
+        initialPlatformName={initialPlatformName}
+        initialPlatformTagline={initialPlatformTagline}
+      />
       <main className={`flex-1 w-full ${isAdmin ? 'pt-20 sm:pt-24' : 'pt-20 sm:pt-24 md:pt-28 pb-12'}`}>
         {children}
       </main>

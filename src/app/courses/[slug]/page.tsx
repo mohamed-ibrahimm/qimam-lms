@@ -28,10 +28,20 @@ export const dynamic = 'force-dynamic';
 
 export default async function CourseDetailPage({ params }: Props) {
   const user = await getCurrentUser();
+  let decodedSlug = params.slug;
+  try {
+    decodedSlug = decodeURIComponent(params.slug);
+  } catch (e) {}
+
   let course: any = null;
   try {
-    course = await prisma.course.findUnique({
-      where: { slug: params.slug },
+    course = await prisma.course.findFirst({
+      where: {
+        OR: [
+          { slug: params.slug },
+          { slug: decodedSlug },
+        ]
+      },
       include: {
         instructor: {
           select: { id: true, officialFullName: true, bio: true, avatarUrl: true }
@@ -265,7 +275,7 @@ export default async function CourseDetailPage({ params }: Props) {
             </div>
 
             <div className="space-y-4">
-              {course.sections.map((section, sIndex) => (
+              {course.sections.map((section: any, sIndex: number) => (
                 <div key={section.id} className="rounded-2xl bg-surface border border-border overflow-hidden">
                   <div className="p-4 bg-surface-raised/80 flex items-center justify-between border-b border-border/60">
                     <div className="flex items-center gap-2">
@@ -278,7 +288,7 @@ export default async function CourseDetailPage({ params }: Props) {
                   </div>
 
                   <div className="divide-y divide-border/40">
-                    {section.lessons.map((lesson, lIndex) => (
+                    {section.lessons.map((lesson: any, lIndex: number) => (
                       <div
                         key={lesson.id}
                         className="p-3.5 px-4 flex items-center justify-between text-xs hover:bg-surface-raised/40 transition-colors"

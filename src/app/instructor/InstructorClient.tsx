@@ -69,6 +69,7 @@ export default function InstructorClient({
     try {
       const res = await fetch(`/api/admin/courses?id=${deletingCourse.id}`, {
         method: 'DELETE',
+        credentials: 'include',
       });
 
       const data = await res.json();
@@ -98,6 +99,7 @@ export default function InstructorClient({
       const res = await fetch('/api/admin/courses', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(newCourse),
       });
 
@@ -182,10 +184,14 @@ export default function InstructorClient({
 
         <div className="flex items-center gap-3">
           <button
-            onClick={() => setShowAddModal(true)}
-            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-500 hover:to-purple-500 text-white font-bold text-xs shadow-lg shadow-primary-900/30 flex items-center gap-2 transition-all hover:scale-105"
+            type="button"
+            onClick={() => {
+              setModalError(null);
+              setShowAddModal(true);
+            }}
+            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 hover:to-yellow-300 text-zinc-950 font-black text-xs shadow-lg shadow-amber-950/40 flex items-center gap-2 transition-all hover:scale-105"
           >
-            <Plus className="w-4 h-4" />
+            <Plus className="w-4 h-4 text-zinc-950" />
             <span>إضافة كورس جديد</span>
           </button>
 

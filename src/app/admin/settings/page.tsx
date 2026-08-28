@@ -10,9 +10,13 @@ export default function AdminSettingsPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState<'success' | 'error'>('success');
 
   useEffect(() => {
-    fetch('/api/admin/settings')
+    fetch('/api/admin/settings', {
+      credentials: 'include',
+      cache: 'no-store',
+    })
       .then((r) => r.json())
       .then((data) => setSettings(data.settings || {}))
       .finally(() => setLoading(false));
@@ -31,19 +35,28 @@ export default function AdminSettingsPage() {
       const res = await fetch('/api/admin/settings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(settings),
       });
 
+      const data = await res.json().catch(() => ({}));
+
       if (res.ok) {
-        setMessage('تم حفظ وتحديث إعدادات المنصة وقنوات التواصل بنجاح! ✅');
+        setMessageType('success');
+        setMessage('تم حفظ وتحديث إعدادات المنصة وقنوات التواصل واسم الأكاديمية بنجاح! ✅');
         if (typeof window !== 'undefined') {
           window.dispatchEvent(new CustomEvent('platform-settings-updated', { detail: settings }));
+          localStorage.setItem('platform_name', settings.PLATFORM_NAME || '');
         }
         router.refresh();
-        setTimeout(() => setMessage(''), 4000);
+        setTimeout(() => setMessage(''), 5000);
+      } else {
+        setMessageType('error');
+        setMessage(data.error || 'فشل حفظ الإعدادات، يرجى التحقق من صلاحيات الحساب.');
       }
     } catch (e) {
-      setMessage('حدث خطأ في الاتصال');
+      setMessageType('error');
+      setMessage('حدث خطأ في الاتصال بالخادم، يرجى المحاولة ثانية.');
     } finally {
       setSaving(false);
     }
@@ -68,8 +81,12 @@ export default function AdminSettingsPage() {
       </div>
 
       {message && (
-        <div className="p-4 rounded-2xl bg-emerald-950/60 border border-emerald-800 text-emerald-300 text-xs font-bold flex items-center gap-2">
-          <ShieldCheck className="w-4 h-4" />
+        <div className={`p-4 rounded-2xl border text-xs font-bold flex items-center gap-2 ${
+          messageType === 'success'
+            ? 'bg-emerald-950/70 border-emerald-800 text-emerald-300'
+            : 'bg-rose-950/70 border-rose-800 text-rose-300'
+        }`}>
+          <ShieldCheck className="w-4 h-4 shrink-0" />
           <span>{message}</span>
         </div>
       )}

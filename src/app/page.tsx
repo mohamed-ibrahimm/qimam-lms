@@ -293,7 +293,7 @@ export default async function HomePage() {
                 <div className="h-4 w-px bg-zinc-800 hidden sm:block" />
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="w-4 h-4 text-amber-400" />
-                  <span className="text-amber-300">إشراف م. محمد إبراهيم</span>
+                  <span className="text-amber-300">إشراف {(settings.PLATFORM_NAME && !settings.PLATFORM_NAME.includes('?')) ? settings.PLATFORM_NAME : 'م. محمد إبراهيم'}</span>
                 </div>
                 <div className="h-4 w-px bg-zinc-800 hidden sm:block" />
                 <div className="flex items-center gap-2">

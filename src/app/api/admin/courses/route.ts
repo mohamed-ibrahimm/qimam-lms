@@ -32,9 +32,11 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { title, slug, description, shortDescription, price, durationHours, level, categoryId, thumbnail } = body;
 
-    if (!title?.trim() || !description?.trim()) {
-      return NextResponse.json({ error: 'يرجى إدخال عنوان ووصف الكورس بشكل كامل' }, { status: 400 });
+    if (!title?.trim()) {
+      return NextResponse.json({ error: 'يرجى إدخال عنوان الكورس' }, { status: 400 });
     }
+
+    const safeDescription = description?.trim() || shortDescription?.trim() || `دورة تدريبية متخصصة في ${title.trim()}`;
 
     // Generate safe unique slug
     let baseSlug = (slug?.trim() || title.trim().toLowerCase().replace(/[^\w\s\u0600-\u06FF-]/g, '').replace(/\s+/g, '-')).substring(0, 80);
@@ -48,19 +50,50 @@ export async function POST(req: Request) {
       finalSlug = `${baseSlug}-${Date.now().toString().slice(-4)}`;
     }
 
+    let targetInstructorId = user.id;
+    if (user.role === 'ADMIN' && body.instructorId) {
+      targetInstructorId = body.instructorId;
+    }
+
     const course = await prisma.course.create({
       data: {
         title: title.trim(),
         slug: finalSlug,
         thumbnail: thumbnail || null,
-        description: description.trim(),
+        description: safeDescription,
         shortDescription: shortDescription?.trim() || null,
         price: parseFloat(price) || 0,
         durationHours: parseInt(durationHours) || 10,
         level: level || 'ALL',
         categoryId: categoryId || null,
-        instructorId: user.id,
+        instructorId: targetInstructorId,
         status: 'PUBLISHED',
+        sections: {
+          create: {
+            title: 'الوحدة الأولى: المدخل والأساسيات',
+            orderIndex: 1,
+            lessons: {
+              create: {
+                title: 'المحاضرة التمهيدية والترحيب بالطلاب',
+                slug: `intro-${Date.now().toString().slice(-4)}`,
+                durationMinutes: 15,
+                isFreePreview: true,
+                orderIndex: 1,
+                videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+                description: `مرحباً بك في كورس ${title.trim()}. نستعرض في هذه المحاضرة التمهيدية المحاور الأساسية وخطة العمل التطبيقية للمسار.`,
+              }
+            }
+          }
+        }
+      },
+      include: {
+        instructor: { select: { officialFullName: true } },
+        _count: { select: { sections: true, enrollments: true } },
+        sections: {
+          include: {
+            lessons: true
+          }
+        }
       }
     });
 

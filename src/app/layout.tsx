@@ -27,11 +27,21 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  let platformName = 'أكاديمية م / محمد إبراهيم';
+  let platformTagline = 'بوابتك الاحترافية لاحتراف البرمجة والذكاء الاصطناعي والتصميم';
+
+  try {
+    const settings = await prisma.platformSetting.findMany();
+    const map = Object.fromEntries(settings.map((s) => [s.key, s.value]));
+    if (map['PLATFORM_NAME']) platformName = map['PLATFORM_NAME'];
+    if (map['PLATFORM_TAGLINE']) platformTagline = map['PLATFORM_TAGLINE'];
+  } catch (e) {}
+
   return (
     <html lang="ar" dir="rtl">
       <head>
@@ -54,7 +64,12 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen antialiased selection:bg-amber-500 selection:text-black relative">
         <ThemeProvider>
-          <AppShell>{children}</AppShell>
+          <AppShell
+            initialPlatformName={platformName}
+            initialPlatformTagline={platformTagline}
+          >
+            {children}
+          </AppShell>
         </ThemeProvider>
       </body>
     </html>

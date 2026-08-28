@@ -24,10 +24,20 @@ export const dynamic = 'force-dynamic';
 
 export default async function DiplomaDetailPage({ params }: Props) {
   const user = await getCurrentUser();
+  let decodedSlug = params.slug;
+  try {
+    decodedSlug = decodeURIComponent(params.slug);
+  } catch (e) {}
+
   let diploma: any = null;
   try {
-    diploma = await prisma.diploma.findUnique({
-      where: { slug: params.slug },
+    diploma = await prisma.diploma.findFirst({
+      where: {
+        OR: [
+          { slug: params.slug },
+          { slug: decodedSlug },
+        ]
+      },
       include: {
         category: true,
         diplomaCourses: {
@@ -72,7 +82,7 @@ export default async function DiplomaDetailPage({ params }: Props) {
 
   const learningObjectives: string[] = diploma.learningObjectives ? JSON.parse(diploma.learningObjectives) : [];
   const requirements: string[] = diploma.requirements ? JSON.parse(diploma.requirements) : [];
-  const totalOriginalPrice = diploma.diplomaCourses.reduce((sum, dc) => sum + dc.course.price, 0);
+  const totalOriginalPrice = diploma.diplomaCourses.reduce((sum: number, dc: any) => sum + dc.course.price, 0);
 
   return (
     <div className="pb-20 space-y-12">
@@ -184,7 +194,7 @@ export default async function DiplomaDetailPage({ params }: Props) {
         </div>
 
         <div className="space-y-6">
-          {diploma.diplomaCourses.map((dc, index) => {
+          {diploma.diplomaCourses.map((dc: any, index: number) => {
             const course = dc.course;
             return (
               <div
@@ -211,7 +221,7 @@ export default async function DiplomaDetailPage({ params }: Props) {
                 </div>
 
                 <div className="p-3 rounded-2xl bg-surface-raised/60 text-xs text-zinc-400">
-                  {course.sections.length} وحدات تعليمية • {course.sections.reduce((a, s) => a + s.lessons.length, 0)} درس
+                  {course.sections.length} وحدات تعليمية • {course.sections.reduce((a: number, s: any) => a + s.lessons.length, 0)} درس
                 </div>
               </div>
             );

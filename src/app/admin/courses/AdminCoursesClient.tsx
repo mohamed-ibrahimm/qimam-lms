@@ -34,10 +34,12 @@ export default function AdminCoursesClient({ initialCourses }: AdminCoursesClien
     title: '',
     shortDescription: '',
     description: '',
+    thumbnail: '',
     price: 1000,
     durationHours: 25,
     level: 'ALL',
   });
+  const [modalError, setModalError] = useState<string | null>(null);
 
   const handleDeleteCourse = async () => {
     if (!deletingCourse || isDeleting) return;
@@ -48,6 +50,7 @@ export default function AdminCoursesClient({ initialCourses }: AdminCoursesClien
     try {
       const res = await fetch(`/api/admin/courses?id=${deletingCourse.id}`, {
         method: 'DELETE',
+        credentials: 'include',
       });
 
       const data = await res.json();
@@ -71,11 +74,13 @@ export default function AdminCoursesClient({ initialCourses }: AdminCoursesClien
 
     setIsCreating(true);
     setMessage(null);
+    setModalError(null);
 
     try {
       const res = await fetch('/api/admin/courses', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(newCourse),
       });
 
@@ -84,27 +89,34 @@ export default function AdminCoursesClient({ initialCourses }: AdminCoursesClien
         setCourses((prev) => [
           {
             ...data.course,
-            instructor: { officialFullName: 'الإدارة' },
+            instructor: data.course.instructor || { officialFullName: 'الإدارة' },
             category: null,
-            _count: { sections: 0, enrollments: 0 },
+            _count: data.course._count || { sections: 1, enrollments: 0 },
+            sections: data.course.sections || [],
           },
           ...prev,
         ]);
         setMessage({ type: 'success', text: 'تم إنشاء ونشر الكورس بنجاح!' });
         setShowAddModal(false);
+        setModalError(null);
         setNewCourse({
           title: '',
           shortDescription: '',
           description: '',
+          thumbnail: '',
           price: 1000,
           durationHours: 25,
           level: 'ALL',
         });
       } else {
-        setMessage({ type: 'error', text: data.error || 'فشل إنشاء الكورس' });
+        const err = data.error || 'فشل إنشاء الكورس';
+        setModalError(err);
+        setMessage({ type: 'error', text: err });
       }
     } catch (e) {
-      setMessage({ type: 'error', text: 'حدث خطأ في الاتصال' });
+      const err = 'حدث خطأ أثناء الاتصال بالخادم، يرجى المحاولة ثانية';
+      setModalError(err);
+      setMessage({ type: 'error', text: err });
     } finally {
       setIsCreating(false);
     }
@@ -326,6 +338,12 @@ export default function AdminCoursesClient({ initialCourses }: AdminCoursesClien
             </div>
 
             <form onSubmit={handleCreateCourse} className="space-y-4">
+              {modalError && (
+                <div className="p-3 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-300 text-xs font-bold flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4 shrink-0 text-rose-400" />
+                  <span>{modalError}</span>
+                </div>
+              )}
               <div>
                 <label className="block text-xs font-bold text-zinc-300 mb-1">عنوان الكورس *</label>
                 <input

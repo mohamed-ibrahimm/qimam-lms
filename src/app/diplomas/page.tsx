@@ -45,9 +45,9 @@ export default async function DiplomasPage() {
 
       {/* Diplomas List */}
       <div className="space-y-8">
-        {diplomas.map((diploma) => {
-          const totalOriginalPrice = diploma.diplomaCourses.reduce((sum, dc) => sum + dc.course.price, 0);
-          const totalHours = diploma.diplomaCourses.reduce((sum, dc) => sum + dc.course.durationHours, diploma.durationHours);
+        {diplomas.map((diploma: any) => {
+          const totalOriginalPrice = diploma.diplomaCourses.reduce((sum: number, dc: any) => sum + dc.course.price, 0);
+          const totalHours = diploma.diplomaCourses.reduce((sum: number, dc: any) => sum + dc.course.durationHours, diploma.durationHours);
 
           return (
             <div
@@ -89,7 +89,7 @@ export default async function DiplomasPage() {
                   </p>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    {diploma.diplomaCourses.map((dc, i) => (
+                    {diploma.diplomaCourses.map((dc: any, i: number) => (
                       <div
                         key={dc.id}
                         className="p-2.5 px-3 rounded-xl bg-surface-card border border-border flex items-center justify-between text-xs"

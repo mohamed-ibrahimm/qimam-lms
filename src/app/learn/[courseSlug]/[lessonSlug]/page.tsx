@@ -17,9 +17,23 @@ export default async function ClassroomPage({ params }: Props) {
   const user = await getCurrentUser();
 
   let course: any = null;
+  let decodedCourseSlug = params.courseSlug;
+  let decodedLessonSlug = params.lessonSlug;
   try {
-    course = await prisma.course.findUnique({
-      where: { slug: params.courseSlug },
+    decodedCourseSlug = decodeURIComponent(params.courseSlug);
+  } catch (e) {}
+  try {
+    decodedLessonSlug = decodeURIComponent(params.lessonSlug);
+  } catch (e) {}
+
+  try {
+    course = await prisma.course.findFirst({
+      where: {
+        OR: [
+          { slug: params.courseSlug },
+          { slug: decodedCourseSlug },
+        ]
+      },
       include: {
         instructor: { select: { officialFullName: true } },
         sections: {
@@ -54,8 +68,8 @@ export default async function ClassroomPage({ params }: Props) {
 
   // Find target lesson
   let activeLesson = course.sections
-    .flatMap((s) => s.lessons)
-    .find((l) => l.slug === params.lessonSlug);
+    .flatMap((s: any) => s.lessons)
+    .find((l: any) => l.slug === params.lessonSlug || l.slug === decodedLessonSlug);
 
   if (!activeLesson) {
     activeLesson = course.sections[0]?.lessons[0];

@@ -26,7 +26,15 @@ import {
 } from 'lucide-react';
 import { useTheme } from '@/components/ThemeProvider';
 
-export default function Header() {
+interface HeaderProps {
+  initialPlatformName?: string;
+  initialPlatformTagline?: string;
+}
+
+export default function Header({
+  initialPlatformName = 'أكاديمية م / محمد إبراهيم',
+  initialPlatformTagline = 'بوابتك الاحترافية لاحتراف البرمجة والذكاء الاصطناعي والتصميم',
+}: HeaderProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [currentUser, setCurrentUser] = useState<any>(null);
@@ -36,8 +44,18 @@ export default function Header() {
   const [mounted, setMounted] = useState(false);
   const { theme, toggleTheme } = useTheme();
 
-  const [platformName, setPlatformName] = useState('أكاديمية المهندس محمد إبراهيم');
-  const [platformTagline, setPlatformTagline] = useState('بوابتك الاحترافية لاحتراف البرمجة والذكاء الاصطناعي والتصميم');
+  const [platformName, setPlatformName] = useState(initialPlatformName);
+  const [platformTagline, setPlatformTagline] = useState(initialPlatformTagline);
+
+  // Sync if prop updates from server
+  useEffect(() => {
+    if (initialPlatformName && !initialPlatformName.includes('?')) {
+      setPlatformName(initialPlatformName);
+    }
+    if (initialPlatformTagline && !initialPlatformTagline.includes('?')) {
+      setPlatformTagline(initialPlatformTagline);
+    }
+  }, [initialPlatformName, initialPlatformTagline]);
 
   const fetchSettings = async () => {
     try {
@@ -52,7 +70,10 @@ export default function Header() {
 
   const fetchUser = async () => {
     try {
-      const res = await fetch('/api/auth/me');
+      const res = await fetch('/api/auth/me', {
+        credentials: 'include',
+        cache: 'no-store',
+      });
       if (res.ok) {
         const data = await res.json();
         setCurrentUser(data.user);
@@ -72,12 +93,24 @@ export default function Header() {
     fetchSettings();
 
     const handleSettingsUpdated = (e: any) => {
-      if (e.detail?.PLATFORM_NAME) setPlatformName(e.detail.PLATFORM_NAME);
-      if (e.detail?.PLATFORM_TAGLINE) setPlatformTagline(e.detail.PLATFORM_TAGLINE);
+      const name = e.detail?.PLATFORM_NAME || e.detail?.settings?.PLATFORM_NAME;
+      const tagline = e.detail?.PLATFORM_TAGLINE || e.detail?.settings?.PLATFORM_TAGLINE;
+      if (name && !name.includes('?')) setPlatformName(name);
+      if (tagline && !tagline.includes('?')) setPlatformTagline(tagline);
+    };
+
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key === 'platform_name' && e.newValue && !e.newValue.includes('?')) {
+        setPlatformName(e.newValue);
+      }
     };
 
     window.addEventListener('platform-settings-updated', handleSettingsUpdated);
-    return () => window.removeEventListener('platform-settings-updated', handleSettingsUpdated);
+    window.addEventListener('storage', handleStorage);
+    return () => {
+      window.removeEventListener('platform-settings-updated', handleSettingsUpdated);
+      window.removeEventListener('storage', handleStorage);
+    };
   }, [pathname]);
 
   const handleLogout = async () => {
