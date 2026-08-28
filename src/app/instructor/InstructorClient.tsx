@@ -195,9 +195,9 @@ export default function InstructorClient({
               setModalError(null);
               setShowAddModal(true);
             }}
-            className="flex-1 sm:flex-initial px-4 sm:px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 hover:to-yellow-300 text-zinc-950 font-black text-xs shadow-lg shadow-amber-950/40 flex items-center justify-center gap-2 transition-all hover:scale-105"
+            className="dynamic-multi-cta flex-1 sm:flex-initial px-5 py-2.5 rounded-xl text-white font-black text-xs shadow-lg shadow-blue-600/25 flex items-center justify-center gap-2 transition-all hover:scale-105"
           >
-            <Plus className="w-4 h-4 text-zinc-950 shrink-0" />
+            <Plus className="w-4 h-4 text-white shrink-0" />
             <span>إضافة كورس جديد</span>
           </button>
 
@@ -234,21 +234,21 @@ export default function InstructorClient({
         </div>
       )}
 
-      {/* Stats Cards */}
+      {/* Stats Cards - Multi-Color Frosted Glass */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="p-5 rounded-2xl bg-surface border border-border space-y-2">
-          <span className="text-xs text-zinc-400">الدورات التدريبية النشطة</span>
-          <p className="text-2xl font-black text-white">{courses.length}</p>
+        <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-blue-500/15 via-indigo-500/5 to-white/90 dark:from-surface dark:to-surface border border-blue-500/30 shadow-lg shadow-blue-900/5 backdrop-blur-xl space-y-2 hover:-translate-y-1 transition-all">
+          <span className="text-xs font-bold text-slate-600 dark:text-zinc-400">الدورات التدريبية النشطة</span>
+          <p className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">{courses.length}</p>
         </div>
 
-        <div className="p-5 rounded-2xl bg-surface border border-border space-y-2">
-          <span className="text-xs text-zinc-400">إجمالي الطلاب في دوراتك</span>
-          <p className="text-2xl font-black text-white">{totalStudents} طالب</p>
+        <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-purple-500/15 via-fuchsia-500/5 to-white/90 dark:from-surface dark:to-surface border border-purple-500/30 shadow-lg shadow-purple-900/5 backdrop-blur-xl space-y-2 hover:-translate-y-1 transition-all">
+          <span className="text-xs font-bold text-slate-600 dark:text-zinc-400">إجمالي الطلاب في دوراتك</span>
+          <p className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">{totalStudents} طالب</p>
         </div>
 
-        <div className="p-5 rounded-2xl bg-surface border border-border space-y-2">
-          <span className="text-xs text-zinc-400">التقييم العام للمحاضر</span>
-          <p className="text-2xl font-black text-emerald-400">4.9 / 5.0 ⭐</p>
+        <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-emerald-500/15 via-teal-500/5 to-white/90 dark:from-surface dark:to-surface border border-emerald-500/30 shadow-lg shadow-emerald-900/5 backdrop-blur-xl space-y-2 hover:-translate-y-1 transition-all">
+          <span className="text-xs font-bold text-slate-600 dark:text-zinc-400">التقييم العام للمحاضر</span>
+          <p className="text-2xl font-black text-emerald-700 dark:text-emerald-400 tracking-tight">4.9 / 5.0 ⭐</p>
         </div>
       </div>
 

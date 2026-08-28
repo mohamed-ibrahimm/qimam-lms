@@ -34,7 +34,9 @@ module.exports = {
         }
       },
       fontFamily: {
-        arabic: ['var(--font-cairo)', 'Cairo', 'Tajawal', 'sans-serif'],
+        arabic: ['var(--font-tajawal)', 'Tajawal', 'IBM Plex Sans Arabic', 'sans-serif'],
+        sans: ['var(--font-tajawal)', 'Tajawal', 'IBM Plex Sans Arabic', 'sans-serif'],
+        display: ['var(--font-tajawal)', 'Tajawal', 'IBM Plex Sans Arabic', 'sans-serif'],
       },
     },
   },

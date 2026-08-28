@@ -159,56 +159,66 @@ export default async function HomePage() {
             
             {/* Promotional Dynamic Rotating Shimmer Banner */}
             {(settings.BANNER_ENABLED !== 'false') && (
-              <div className="mb-6 sm:mb-8 inline-block max-w-full">
-                <a href="#trending-diploma" className="shimmer-border-wrapper group block max-w-full">
+              <div className="mb-6 sm:mb-8 inline-block max-w-full px-2">
+                <a href="#trending-diploma" className="shimmer-border-wrapper group inline-block max-w-full">
                   <div className="shimmer-beam-gold" />
-                  <div className="shimmer-button-content px-3.5 sm:px-5 py-2 sm:py-2.5 text-[11px] sm:text-xs text-slate-800 dark:text-zinc-200 flex items-center gap-2 sm:gap-3 flex-wrap sm:flex-nowrap justify-center">
+                  <div className="shimmer-button-content px-4 sm:px-6 py-2 sm:py-2.5 text-[11px] sm:text-xs text-slate-800 dark:text-zinc-200 flex items-center gap-2 sm:gap-3 flex-nowrap justify-center">
                     <div className="flex items-center gap-1.5 shrink-0">
-                      <Rocket className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-indigo-600 dark:text-amber-400 animate-pulse" />
-                      <span className="text-indigo-600 dark:text-amber-300 font-black">{settings.HERO_BADGE || 'جديد!'}</span>
+                      <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600 dark:text-amber-400 animate-pulse" />
+                      <span className="text-blue-700 dark:text-amber-300 font-black">{settings.HERO_BADGE || 'جديد!'}</span>
                     </div>
-                    <div className="h-3.5 w-px bg-slate-300 dark:bg-amber-500/40 hidden sm:block" />
-                    <span className="group-hover:text-indigo-600 dark:group-hover:text-amber-200 transition-colors font-medium truncate max-w-[200px] xs:max-w-[280px] sm:max-w-none">
-                      {settings.BANNER_TEXT || 'خصم استثنائي 50% لفترة محدودة على جميع المسارات الهندسية 🚀'}
+                    <div className="h-3.5 w-px bg-slate-300 dark:bg-amber-500/40 shrink-0" />
+                    <span className="group-hover:text-blue-700 dark:group-hover:text-amber-200 transition-colors font-semibold text-[10px] xs:text-[11.5px] sm:text-xs leading-normal">
+                      {settings.BANNER_TEXT || 'خصم استثنائي 50% لفترة محدودة على جميع المسارات الهندسية'}
                     </span>
-                    <ArrowLeft className="w-3.5 h-3.5 text-indigo-600 dark:text-amber-400 group-hover:-translate-x-1 transition-transform shrink-0" />
+                    <ArrowLeft className="w-3.5 h-3.5 text-blue-600 dark:text-amber-400 group-hover:-translate-x-1 transition-transform shrink-0" />
                   </div>
                 </a>
               </div>
             )}
 
-            {/* Glowing Backlight & Hero Headline */}
+            {/* Glowing Dynamic Moving Orbs & Hero Headline */}
             <div className="relative">
-              {/* Luminous Glow Orb behind Headline */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[600px] md:w-[750px] h-[220px] sm:h-[320px] bg-gradient-to-r from-blue-500/20 via-indigo-500/20 to-purple-500/15 dark:from-purple-900/20 dark:via-amber-600/15 dark:to-yellow-500/10 blur-[80px] sm:blur-[110px] rounded-full pointer-events-none -z-10" />
+              {/* Dynamic Animated Floating Glowing Orbs behind the Headline */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-[360px] pointer-events-none -z-10 overflow-visible">
+                <div className="dynamic-drift-1 absolute -top-10 right-1/4 w-[280px] sm:w-[420px] h-[220px] sm:h-[300px] bg-amber-400/25 dark:bg-amber-500/15 rounded-full blur-[80px] sm:blur-[110px]" />
+                <div className="dynamic-drift-2 absolute -bottom-10 left-1/4 w-[300px] sm:w-[460px] h-[240px] sm:h-[320px] bg-blue-500/25 dark:bg-purple-600/15 rounded-full blur-[90px] sm:blur-[120px]" />
+                <div className="dynamic-drift-3 absolute top-1/4 left-1/2 -translate-x-1/2 w-[260px] sm:w-[380px] h-[200px] sm:h-[280px] bg-indigo-400/20 dark:bg-yellow-500/10 rounded-full blur-[75px] sm:blur-[100px]" />
+              </div>
 
-              <h1 className="font-display text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight mb-5 sm:mb-6 leading-[1.2] sm:leading-[1.18]">
-                <span className="text-slate-900 dark:text-white block mb-2 sm:mb-3 drop-shadow-xs">{settings.HERO_TITLE || 'نحو مستقبل برمجي وهندسي احترافي'}</span>
-                <span className="bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-600 dark:from-amber-200 dark:via-yellow-400 dark:to-amber-500 bg-clip-text text-transparent dark:drop-shadow-[0_2px_25px_rgba(245,158,11,0.35)] block">
-                  {(settings.PLATFORM_TAGLINE && !settings.PLATFORM_TAGLINE.includes('?')) ? settings.PLATFORM_TAGLINE : 'دبلومات تطبيقية ومشاريع واقعية تؤهلك لسوق العمل'}
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-black tracking-tight mb-5 sm:mb-6 leading-[1.3] sm:leading-[1.22] max-w-4xl mx-auto">
+                <span className="text-slate-900 dark:text-white block font-black mb-2.5 sm:mb-3.5">
+                  {settings.HERO_TITLE || 'نحو مستقبل برمجي وهندسي احترافي'}
+                </span>
+                <span className="hero-focal-gradient block font-black text-2xl sm:text-3xl md:text-4xl lg:text-[44px] leading-[1.3]">
+                  {(settings.PLATFORM_TAGLINE && !settings.PLATFORM_TAGLINE.includes('?')) ? settings.PLATFORM_TAGLINE : 'بوابتك لاحتراف البرمجة والذكاء الاصطناعي والتصميم'}
                 </span>
               </h1>
             </div>
 
-            <p className="text-xs sm:text-base md:text-lg text-slate-600 dark:text-zinc-400 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed text-balance">
+            <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-zinc-300 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed font-medium text-balance">
               {settings.HERO_SUBTITLE || `${(settings.PLATFORM_NAME && !settings.PLATFORM_NAME.includes('?')) ? settings.PLATFORM_NAME : 'أكاديمية م / محمد إبراهيم'} — نقدم مسارات تدريبية هندسية متكاملة، دبلومات برمجية شاملة، مشاريع إنتاج واقعية مطابقة لسوق العمل، ومساعد ذكاء اصطناعي تفاعلي يرافقك خطوة بخطوة.`}
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full max-w-md sm:max-w-none mx-auto">
-              <a href="#trending-diploma" className="w-full sm:w-auto shimmer-border-wrapper group">
-                <div className="shimmer-beam-gold" />
-                <div className="shimmer-button-content px-6 sm:px-8 py-3.5 text-sm font-bold text-white dark:text-amber-300 group-hover:opacity-95 flex items-center justify-center gap-2">
-                  <Flame className="w-4 h-4 text-amber-400 animate-bounce" />
-                  <span>{settings.FEATURED_DIPLOMA_BADGE || 'الدبلومة الأكثر طلباً (خصم 51%)'}</span>
-                  <ArrowLeft className="w-4 h-4 text-white dark:text-amber-400 group-hover:-translate-x-1.5 transition-transform duration-300" />
-                </div>
+            {/* Action Buttons: The Most Requested Diploma grabs the eye FIRST! */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4 w-full max-w-md sm:max-w-none mx-auto">
+              <a href="#trending-diploma" className="dynamic-trending-cta group">
+                <div className="shimmer-beam-gold opacity-50" />
+                <Flame className="w-5 h-5 text-amber-200 animate-bounce shrink-0" />
+                <span className="text-sm sm:text-[15px] font-black tracking-wide">
+                  {settings.FEATURED_DIPLOMA_BADGE || 'الدبلومة الأكثر طلباً'}
+                </span>
+                <span className="px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-[11px] font-black text-amber-100 border border-white/40 shadow-xs">
+                  خصم 51% 🔥
+                </span>
+                <ArrowLeft className="w-4 h-4 text-white group-hover:-translate-x-1.5 transition-transform shrink-0" />
               </a>
 
               <Link
                 href="/courses"
-                className="w-full sm:w-auto group flex items-center justify-center gap-2 px-6 sm:px-7 py-3.5 text-sm font-bold text-slate-800 hover:text-blue-600 dark:text-zinc-400 dark:hover:text-zinc-100 transition-all rounded-full border border-slate-200 hover:border-blue-400 bg-white/90 hover:bg-white dark:border-zinc-800/80 dark:bg-zinc-900/60 dark:hover:border-zinc-700 dark:hover:bg-zinc-900 shadow-sm hover:shadow-md"
+                className="w-full sm:w-auto group flex items-center justify-center gap-2 px-6 sm:px-7 py-3.5 text-sm font-bold text-slate-800 hover:text-blue-700 dark:text-zinc-200 dark:hover:text-white transition-all rounded-full border border-slate-300/90 hover:border-blue-500 bg-white/95 hover:bg-white dark:border-zinc-800/80 dark:bg-zinc-900/60 dark:hover:border-zinc-700 dark:hover:bg-zinc-900 shadow-sm hover:shadow-md backdrop-blur-md"
               >
-                <Sparkles className="w-4 h-4 text-blue-600 dark:text-zinc-400 group-hover:scale-110 transition-transform" />
+                <BookOpen className="w-4 h-4 text-blue-600 dark:text-amber-400 group-hover:scale-110 transition-transform" />
                 <span>{settings.HERO_CTA_PRIMARY || 'تصفح دليل الكورسات'}</span>
                 <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300" />
               </Link>
@@ -290,19 +300,19 @@ export default async function HomePage() {
               </div>
             )}
 
-            <div className="mt-10 flex flex-col items-center">
-              <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-slate-600 dark:text-zinc-500 pt-2">
-                <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/70 dark:bg-zinc-900/40 border border-slate-200/80 dark:border-zinc-800/50 backdrop-blur-md shadow-xs">
-                  <MapPin className="w-3.5 h-3.5 text-slate-500 dark:text-zinc-400" />
-                  <span>مصر — القاهرة & أونلاين بالعالم العربي</span>
+            <div className="mt-8 sm:mt-10 flex flex-col items-center">
+              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-[11px] sm:text-xs text-slate-600 dark:text-zinc-400 pt-2 w-full max-w-2xl px-2">
+                <div className="flex items-center justify-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 dark:bg-zinc-900/60 border border-slate-200/90 dark:border-zinc-800/70 backdrop-blur-md shadow-xs flex-1 min-w-[240px] sm:min-w-0 sm:flex-initial">
+                  <MapPin className="w-3.5 h-3.5 text-blue-600 dark:text-amber-400 shrink-0" />
+                  <span className="whitespace-nowrap font-medium text-slate-700 dark:text-zinc-300">مصر — القاهرة & أونلاين بالعالم العربي</span>
                 </div>
-                <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/70 dark:bg-zinc-900/40 border border-slate-200/80 dark:border-zinc-800/50 backdrop-blur-md shadow-xs">
-                  <ShieldCheck className="w-3.5 h-3.5 text-blue-600 dark:text-amber-400" />
-                  <span className="text-blue-700 dark:text-amber-300 font-semibold">إشراف {(settings.PLATFORM_NAME && !settings.PLATFORM_NAME.includes('?')) ? settings.PLATFORM_NAME : 'م. محمد إبراهيم'}</span>
+                <div className="flex items-center justify-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 dark:bg-zinc-900/60 border border-slate-200/90 dark:border-zinc-800/70 backdrop-blur-md shadow-xs flex-1 min-w-[200px] sm:min-w-0 sm:flex-initial">
+                  <ShieldCheck className="w-3.5 h-3.5 text-blue-600 dark:text-amber-400 shrink-0" />
+                  <span className="text-slate-800 dark:text-zinc-200 font-semibold whitespace-nowrap">إشراف {(settings.PLATFORM_NAME && !settings.PLATFORM_NAME.includes('?')) ? settings.PLATFORM_NAME : 'م. محمد إبراهيم'}</span>
                 </div>
-                <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/70 dark:bg-zinc-900/40 border border-slate-200/80 dark:border-zinc-800/50 backdrop-blur-md shadow-xs">
-                  <GraduationCap className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                  <span className="text-emerald-700 dark:text-emerald-400 font-semibold">شهادات تخرج رقمية معتمدة برمز QR</span>
+                <div className="flex items-center justify-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 dark:bg-zinc-900/60 border border-slate-200/90 dark:border-zinc-800/70 backdrop-blur-md shadow-xs flex-1 min-w-[220px] sm:min-w-0 sm:flex-initial">
+                  <Award className="w-3.5 h-3.5 text-blue-600 dark:text-amber-400 shrink-0" />
+                  <span className="text-slate-800 dark:text-zinc-200 font-semibold whitespace-nowrap">شهادات تخرج رقمية معتمدة برمز QR</span>
                 </div>
               </div>
             </div>
@@ -890,12 +900,24 @@ export default async function HomePage() {
           href={whatsappUrl}
           target="_blank"
           rel="noreferrer"
-          className="fixed bottom-6 left-6 z-50 flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-2xl border border-emerald-400/50 hover:scale-105 transition-all group"
-          title="تحدث مباشرة مع الإدارة عبر الواتساب"
+          className="fixed bottom-6 left-6 z-50 flex items-center gap-2.5 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs shadow-xl shadow-emerald-600/30 hover:shadow-emerald-600/50 hover:scale-105 transition-all group border border-white/40 backdrop-blur-md"
+          title="تحدث مباشرة مع إدارة الأكاديمية عبر الواتساب"
         >
-          <span className="w-2 h-2 rounded-full bg-white animate-ping" />
-          <MessageCircle className="w-4 h-4 text-white -mr-1" />
-          <span className="hidden sm:inline">واتساب مباشر</span>
+          <div className="relative flex items-center justify-center shrink-0">
+            <span className="absolute -inset-1 rounded-full bg-white/40 animate-ping pointer-events-none" />
+            <div className="w-6 h-6 rounded-full bg-white text-[#25D366] flex items-center justify-center shadow-xs">
+              <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+              </svg>
+            </div>
+          </div>
+          <div className="flex flex-col text-right">
+            <span className="text-[9px] sm:text-[10px] text-emerald-100 font-medium leading-none flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+              متاح أونلاين الآن
+            </span>
+            <span className="text-[11px] sm:text-xs font-black leading-tight mt-0.5 whitespace-nowrap">تواصل واتساب</span>
+          </div>
         </a>
       )}
 

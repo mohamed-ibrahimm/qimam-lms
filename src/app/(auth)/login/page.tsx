@@ -67,29 +67,41 @@ function LoginForm() {
   };
 
   return (
-    <div className="max-w-md mx-auto px-4 py-12">
-      <div className="rounded-3xl bg-surface border border-amber-500/20 p-8 shadow-2xl shadow-black/80 space-y-6">
-        <div className="text-center space-y-2">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500 via-yellow-400 to-amber-600 p-[2px] shadow-lg shadow-amber-950/60 mx-auto flex items-center justify-center">
-            <div className="w-full h-full bg-[#0c0918] rounded-[14px] flex items-center justify-center">
-              <LogIn className="w-6 h-6 text-amber-400" />
+    <div className="relative min-h-[85vh] flex items-center justify-center px-4 py-12 overflow-hidden">
+      {/* Dynamic Multi-Color Moving Glow Orbs in Background */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10">
+        <div className="dynamic-drift-1 absolute top-[10%] right-[25%] w-[420px] h-[420px] bg-sky-400/25 dark:bg-amber-500/10 rounded-full blur-[110px]" />
+        <div className="dynamic-drift-2 absolute bottom-[15%] left-[20%] w-[460px] h-[460px] bg-indigo-500/25 dark:bg-purple-600/15 rounded-full blur-[120px]" />
+        <div className="dynamic-drift-3 absolute top-[40%] left-[10%] w-[380px] h-[380px] bg-fuchsia-400/20 dark:bg-pink-600/10 rounded-full blur-[100px]" />
+        <div className="dynamic-drift-4 absolute bottom-[30%] right-[15%] w-[390px] h-[390px] bg-emerald-400/20 dark:bg-teal-600/10 rounded-full blur-[105px]" />
+      </div>
+
+      <div className="w-full max-w-md rounded-3xl bg-white/90 dark:bg-surface border border-slate-200/90 dark:border-zinc-800 p-7 sm:p-9 shadow-2xl shadow-blue-900/10 dark:shadow-black/80 space-y-6 backdrop-blur-2xl relative">
+        <div className="text-center space-y-2.5">
+          <div className="relative w-16 h-16 mx-auto flex items-center justify-center">
+            {/* Ambient Blurred Colored Glow Behind Icon */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-blue-600 via-indigo-500 to-fuchsia-500 rounded-2xl blur-lg opacity-60 animate-pulse" />
+            <div className="dynamic-auth-emblem w-14 h-14 rounded-2xl p-[2.5px] relative z-10 flex items-center justify-center">
+              <div className="w-full h-full bg-white dark:bg-zinc-950 rounded-[13px] flex items-center justify-center shadow-inner">
+                <LogIn className="w-6 h-6 text-blue-600 dark:text-amber-400" />
+              </div>
             </div>
           </div>
-          <h1 className="text-2xl font-black text-white">تسجيل الدخول</h1>
-          <p className="text-xs font-bold text-amber-300">
-            أكاديمية المهندس محمد إبراهيم
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">تسجيل الدخول</h1>
+          <p className="text-xs font-bold text-blue-700 dark:text-amber-300">
+            أكاديمية م / محمد إبراهيم
           </p>
         </div>
 
         {registered && (
-          <div className="p-3.5 rounded-2xl bg-emerald-950/40 border border-emerald-800/60 text-emerald-300 text-xs font-semibold text-center">
+          <div className="p-3.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 text-emerald-700 dark:text-emerald-300 text-xs font-semibold text-center">
             تم إنشاء حسابك بنجاح! يمكنك الآن تسجيل الدخول.
           </div>
         )}
 
         {error && (
-          <div className="p-3.5 rounded-2xl bg-rose-950/40 border border-rose-800/60 text-rose-300 text-xs font-semibold flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 shrink-0" />
+          <div className="p-3.5 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800/60 text-rose-700 dark:text-rose-300 text-xs font-semibold flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
             <span>{error}</span>
           </div>
         )}
@@ -109,15 +121,15 @@ function LoginForm() {
               return;
             }
           }}
-          className="space-y-4"
+          className="space-y-4.5"
         >
           <input type="hidden" name="callbackUrl" value={callbackUrl} />
 
           <div>
-            <label className="block text-xs font-bold text-zinc-300 mb-1.5">
+            <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 mb-1.5">
               اسم المستخدم أو البريد الإلكتروني
             </label>
-            <div className="relative">
+            <div className="relative group">
               <input
                 type="text"
                 name="identifier"
@@ -126,23 +138,23 @@ function LoginForm() {
                 defaultValue={formData.identifier}
                 onChange={(e) => setFormData({ ...formData, identifier: e.target.value })}
                 placeholder="admin أو student أو البريد الإلكتروني"
-                className="w-full pl-4 pr-10 py-3 rounded-2xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-amber-400 transition-colors"
+                className="w-full pl-4 pr-10 py-3 rounded-2xl bg-slate-50/80 dark:bg-surface-raised border border-slate-200 dark:border-border text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-xs focus:bg-white focus:outline-none focus:border-blue-600 dark:focus:border-amber-400 shadow-xs focus:shadow-md focus:shadow-blue-500/10 transition-all"
               />
-              <Mail className="w-4 h-4 text-zinc-500 absolute right-3.5 top-3.5" />
+              <Mail className="w-4 h-4 text-slate-400 dark:text-zinc-500 absolute right-3.5 top-3.5 group-focus-within:text-blue-600 dark:group-focus-within:text-amber-400 transition-colors" />
             </div>
           </div>
 
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="text-xs font-bold text-zinc-300">كلمة المرور</label>
+              <label className="text-xs font-bold text-slate-700 dark:text-zinc-300">كلمة المرور</label>
               <Link
                 href="/forgot-password"
-                className="text-[11px] font-semibold text-amber-400 hover:text-amber-300 transition-colors"
+                className="text-[11px] font-bold text-blue-600 hover:text-blue-800 dark:text-amber-400 dark:hover:text-amber-300 transition-colors"
               >
                 نسيت كلمة المرور؟
               </Link>
             </div>
-            <div className="relative">
+            <div className="relative group">
               <input
                 type="password"
                 name="password"
@@ -151,24 +163,25 @@ function LoginForm() {
                 defaultValue={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 placeholder="••••••••"
-                className="w-full pl-4 pr-10 py-3 rounded-2xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-amber-400 transition-colors"
+                className="w-full pl-4 pr-10 py-3 rounded-2xl bg-slate-50/80 dark:bg-surface-raised border border-slate-200 dark:border-border text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-xs focus:bg-white focus:outline-none focus:border-blue-600 dark:focus:border-amber-400 shadow-xs focus:shadow-md focus:shadow-blue-500/10 transition-all"
               />
-              <Lock className="w-4 h-4 text-zinc-500 absolute right-3.5 top-3.5" />
+              <Lock className="w-4 h-4 text-slate-400 dark:text-zinc-500 absolute right-3.5 top-3.5 group-focus-within:text-blue-600 dark:group-focus-within:text-amber-400 transition-colors" />
             </div>
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-zinc-950 font-black text-sm shadow-xl shadow-amber-950/40 transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 cursor-pointer"
+            className="dynamic-multi-cta w-full py-4 rounded-2xl text-white font-black text-sm transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 cursor-pointer flex items-center justify-center gap-2 shadow-xl relative"
           >
-            {loading ? 'جاري التحقق...' : 'دخول المنصة'}
+            <div className="shimmer-beam-gold opacity-40" />
+            <span className="relative z-10">{loading ? 'جاري التحقق...' : 'دخول المنصة'}</span>
           </button>
         </form>
 
-        <div className="text-center text-xs text-zinc-400 pt-2 border-t border-border/60">
+        <div className="text-center text-xs text-slate-600 dark:text-zinc-400 pt-3 border-t border-slate-100 dark:border-border/60">
           ليس لديك حساب بعد؟{' '}
-          <Link href="/register" className="font-bold text-amber-400 hover:text-amber-300">
+          <Link href="/register" className="font-black text-blue-600 hover:text-blue-800 dark:text-amber-400 dark:hover:text-amber-300">
             إنشاء حساب جديد
           </Link>
         </div>

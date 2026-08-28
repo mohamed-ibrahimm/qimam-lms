@@ -8,7 +8,7 @@ import { getCurrentUser } from '@/lib/auth';
 export const dynamic = 'force-dynamic';
 
 export async function generateMetadata(): Promise<Metadata> {
-  let title = 'أكاديمية المهندس محمد إبراهيم';
+  let title = 'أكاديمية م / محمد إبراهيم';
   let description = 'بوابتك الاحترافية لاحتراف البرمجة والذكاء الاصطناعي والتصميم ومشاريع الإنتاج الحقيقية.';
   try {
     const settings = await prisma.platformSetting.findMany();

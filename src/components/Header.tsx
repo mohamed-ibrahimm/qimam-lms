@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
+  Home,
   GraduationCap,
   BookOpen,
   Award,
@@ -46,8 +47,8 @@ export default function Header({
   const [mounted, setMounted] = useState(false);
   const { theme, toggleTheme } = useTheme();
 
-  const [platformName, setPlatformName] = useState(initialPlatformName);
-  const [platformTagline, setPlatformTagline] = useState(initialPlatformTagline);
+  const [platformName, setPlatformName] = useState(initialPlatformName || 'أكاديمية م / محمد إبراهيم');
+  const [platformTagline, setPlatformTagline] = useState(initialPlatformTagline || 'بوابتك الاحترافية لاحتراف البرمجة والذكاء الاصطناعي والتصميم');
 
   // Sync if prop updates from server
   useEffect(() => {
@@ -130,51 +131,69 @@ export default function Header({
   };
 
   const navLinks = [
-    { name: 'الرئيسية', href: '/' },
-    { name: 'الكورسات', href: '/courses', icon: BookOpen },
-    { name: 'الدبلومات الشاملة', href: '/diplomas', icon: Award, highlight: true },
+    { name: 'الرئيسية', href: '/', icon: Home },
+    { name: 'المسارات التدريبية', href: '/courses', icon: BookOpen },
+    { name: 'الدبلومات الشاملة', href: '/diplomas', icon: Award, isDiploma: true },
     { name: 'التحقق من الشهادات', href: '/verify', icon: ShieldCheck },
-    { name: 'الدعم الفني', href: '/support', icon: HelpCircle },
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 p-2 sm:p-4 md:p-5 transition-all">
-      <nav className="max-w-7xl mx-auto flex items-center justify-between min-h-[3.5rem] sm:min-h-[4.25rem] px-3 sm:px-6 md:px-8 rounded-full bg-zinc-900/90 border border-zinc-800/90 backdrop-blur-2xl shadow-2xl shadow-black/70 relative gap-1.5 sm:gap-4">
+    <header className="fixed top-0 left-0 right-0 z-50 p-2 sm:p-3 md:p-4 transition-all">
+      <nav className="dynamic-navbar-aura max-w-[1440px] w-[97%] sm:w-[94%] mx-auto flex items-center justify-between min-h-[4rem] sm:min-h-[4.5rem] px-3.5 sm:px-8 rounded-full bg-white/90 dark:bg-zinc-900/90 border border-slate-200/90 dark:border-zinc-800/90 backdrop-blur-2xl shadow-2xl shadow-slate-900/5 dark:shadow-black/70 relative gap-2 sm:gap-6">
         {/* Logo & Platform Name */}
-        <Link href="/" className="flex items-center gap-2.5 sm:gap-3 shrink-0 group py-1">
-          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 dark:from-amber-500 dark:via-yellow-400 dark:to-amber-600 p-[2px] shadow-sm group-hover:scale-105 transition-transform shrink-0">
-            <div className="w-full h-full bg-white dark:bg-[#0c0918] rounded-[10px] sm:rounded-[14px] flex items-center justify-center">
-              <GraduationCap className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-600 dark:text-amber-400" />
+        <Link href="/" className="flex items-center gap-2.5 sm:gap-3.5 shrink min-w-0 group py-1">
+          <div className="dynamic-logo-emblem w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl p-[2.5px] shadow-md group-hover:scale-105 transition-transform shrink-0">
+            <div className="w-full h-full bg-blue-600 dark:bg-[#0c0918] rounded-[10px] sm:rounded-[14px] flex items-center justify-center">
+              <GraduationCap className="w-4 h-4 sm:w-5 sm:h-5 text-white dark:text-amber-400" />
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <span className="text-xs sm:text-sm md:text-base font-black text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-amber-300 transition-colors tracking-tight">
+          <div className="flex flex-col text-right justify-center min-w-0">
+            <span className="text-[9px] sm:text-[10px] font-bold text-blue-600 dark:text-amber-400 flex items-center gap-1 leading-none mb-0.5 whitespace-nowrap">
+              ★ منصة تعليمية معتمدة
+            </span>
+            <span className="text-xs sm:text-base md:text-lg font-black text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-amber-300 transition-colors tracking-tight whitespace-nowrap leading-snug">
               {platformName}
             </span>
-            <span className="hidden sm:inline-flex text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 dark:bg-amber-500/15 dark:text-amber-300 dark:border-amber-400/40 font-bold whitespace-nowrap shadow-xs shrink-0">
-              ★ تعليم معتمد
+            <span className="text-[8.5px] sm:text-[10.5px] text-slate-500 dark:text-amber-200/80 font-medium whitespace-nowrap leading-none mt-0.5 block">
+              {platformTagline}
             </span>
           </div>
         </Link>
 
         {/* Desktop Nav (Center) */}
-        <div className="hidden lg:flex items-center gap-1 bg-slate-100/80 dark:bg-zinc-950/60 px-2 py-1 rounded-full border border-slate-200/80 dark:border-zinc-800/80 shadow-inner">
+        <div className="hidden lg:flex items-center gap-2 bg-slate-100/90 dark:bg-zinc-950/60 px-2.5 py-1.5 rounded-full border border-slate-200/90 dark:border-zinc-800/80 shadow-inner">
           {navLinks.map((link) => {
             const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
+            const isDiploma = (link as any).isDiploma;
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-3.5 py-1.5 text-xs font-bold rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
-                  isActive
-                    ? 'bg-white dark:bg-zinc-800 text-blue-700 dark:text-white border border-slate-200 dark:border-zinc-700 shadow-sm'
-                    : link.highlight
-                    ? 'text-indigo-700 dark:text-amber-300 hover:text-indigo-800 dark:hover:text-amber-200 bg-indigo-50/80 dark:bg-amber-500/15 hover:bg-indigo-100 dark:hover:bg-amber-500/25 border border-indigo-200/80 dark:border-amber-500/40 shadow-xs'
-                    : 'text-slate-600 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-zinc-800/70'
+                className={`px-4 py-1.5 text-xs font-bold rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
+                  isDiploma
+                    ? 'diploma-luxury-pill'
+                    : isActive
+                    ? 'bg-white dark:bg-zinc-800 text-blue-700 dark:text-white border border-slate-200 dark:border-zinc-700 shadow-xs'
+                    : 'text-slate-600 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-white hover:bg-white/80 dark:hover:bg-zinc-800/70'
                 }`}
               >
-                {link.icon && <link.icon className={`w-3.5 h-3.5 ${link.highlight ? 'text-indigo-600 dark:text-amber-400' : ''}`} />}
+                {link.icon && (
+                  <link.icon
+                    className={`w-3.5 h-3.5 ${
+                      isDiploma
+                        ? 'text-purple-600 dark:text-purple-300'
+                        : isActive
+                        ? 'text-blue-600 dark:text-amber-400'
+                        : 'text-slate-500 dark:text-zinc-400'
+                    }`}
+                  />
+                )}
                 <span>{link.name}</span>
+                {isDiploma && (
+                  <span className="text-[9px] bg-purple-600/15 dark:bg-purple-500/30 text-purple-700 dark:text-purple-200 px-1.5 py-0.5 rounded-full font-black border border-purple-300/60 dark:border-purple-500/40">
+                    VIP ✨
+                  </span>
+                )}
               </Link>
             );
           })}
@@ -319,7 +338,7 @@ export default function Header({
             title={theme === 'DARK' ? 'التحويل إلى الوضع النهاري' : 'التحويل إلى الوضع الليلي'}
             aria-label="تبديل المظهر"
           >
-            {theme === 'DARK' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4 text-blue-600" />}
+            {theme === 'DARK' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-blue-600" />}
           </button>
 
           {/* Mobile Menu Hamburger Button */}
@@ -341,7 +360,7 @@ export default function Header({
           Ultra-Luxurious Full Mobile Drawer Sheet
          ========================================================================= */}
       {mounted && mobileMenuOpen && typeof document !== 'undefined' && createPortal(
-        <div className="mobile-drawer-sheet lg:hidden fixed inset-0 z-[99999] w-screen h-[100dvh] flex flex-col bg-zinc-950/98 backdrop-blur-2xl p-4 sm:p-6 overflow-y-auto animate-in fade-in duration-200">
+        <div className="mobile-drawer-sheet lg:hidden fixed inset-0 z-[99999] w-screen h-[100dvh] flex flex-col bg-slate-50/98 dark:bg-zinc-950/98 backdrop-blur-2xl p-4 sm:p-6 overflow-y-auto animate-in fade-in duration-200">
           <div className="max-w-md w-full mx-auto space-y-4 pt-2 pb-10">
             
             {/* Drawer Top Header */}
@@ -483,6 +502,7 @@ export default function Header({
               <p className="text-[11px] font-semibold text-slate-400 dark:text-zinc-500 px-3 py-1 text-right">أقسام المنصة:</p>
               {navLinks.map((link) => {
                 const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
+                const isDiploma = (link as any).isDiploma;
                 return (
                   <Link
                     key={link.href}
@@ -491,16 +511,16 @@ export default function Header({
                     className={`flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-semibold transition-all ${
                       isActive
                         ? 'bg-blue-50 dark:bg-zinc-800 text-blue-700 dark:text-white border border-blue-200 dark:border-zinc-700'
-                        : link.highlight
-                        ? 'bg-blue-50/70 dark:bg-amber-500/10 text-blue-700 dark:text-amber-300 border border-blue-200 dark:border-amber-500/30'
+                        : isDiploma
+                        ? 'bg-purple-50/70 dark:bg-purple-500/10 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-500/30'
                         : 'text-slate-700 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800/60 hover:text-slate-900 dark:hover:text-white'
                     }`}
                   >
                     <div className="flex items-center gap-3">
                       {link.icon && (
                         <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-                          link.highlight
-                            ? 'bg-blue-100 text-blue-700 dark:bg-amber-500/20 dark:text-amber-400'
+                          isDiploma
+                            ? 'bg-purple-100 text-purple-700 dark:bg-purple-500/20 dark:text-purple-300'
                             : 'bg-slate-100 text-slate-600 dark:bg-zinc-800 dark:text-zinc-400'
                         }`}>
                           <link.icon className="w-4 h-4" />
@@ -508,9 +528,9 @@ export default function Header({
                       )}
                       <span>{link.name}</span>
                     </div>
-                    {link.highlight && (
-                      <span className="text-[10px] px-2.5 py-1 rounded-full bg-blue-100 dark:bg-amber-500/25 text-blue-800 dark:text-amber-300 font-bold border border-blue-200 dark:border-amber-500/40">
-                        خصم 51% 🔥
+                    {isDiploma && (
+                      <span className="text-[10px] px-2.5 py-1 rounded-full bg-purple-100 dark:bg-purple-500/25 text-purple-800 dark:text-purple-300 font-bold border border-purple-200 dark:border-purple-500/40">
+                        شاملة معتمدة ✨
                       </span>
                     )}
                   </Link>

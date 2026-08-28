@@ -71,31 +71,43 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-[90vh] flex items-center justify-center px-4 py-12">
+    <div className="relative min-h-[90vh] flex items-center justify-center px-4 py-12 overflow-hidden">
+      {/* Dynamic Multi-Color Moving Glow Orbs in Background */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10">
+        <div className="dynamic-drift-1 absolute top-[10%] right-[25%] w-[440px] h-[440px] bg-sky-400/25 dark:bg-amber-500/10 rounded-full blur-[110px]" />
+        <div className="dynamic-drift-2 absolute bottom-[15%] left-[20%] w-[480px] h-[480px] bg-indigo-500/25 dark:bg-purple-600/15 rounded-full blur-[120px]" />
+        <div className="dynamic-drift-3 absolute top-[40%] left-[10%] w-[400px] h-[400px] bg-fuchsia-400/20 dark:bg-pink-600/10 rounded-full blur-[100px]" />
+        <div className="dynamic-drift-4 absolute bottom-[30%] right-[15%] w-[420px] h-[420px] bg-emerald-400/20 dark:bg-teal-600/10 rounded-full blur-[105px]" />
+      </div>
+
       <div className="w-full max-w-xl space-y-6">
-        <div className="text-center space-y-2">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500 via-yellow-400 to-amber-600 p-[2px] shadow-lg shadow-amber-950/60 mx-auto flex items-center justify-center">
-            <div className="w-full h-full bg-[#0c0918] rounded-[14px] flex items-center justify-center">
-              <UserPlus className="w-6 h-6 text-amber-400" />
+        <div className="text-center space-y-2.5">
+          <div className="relative w-16 h-16 mx-auto flex items-center justify-center">
+            {/* Ambient Blurred Colored Glow Behind Icon */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-blue-600 via-indigo-500 to-fuchsia-500 rounded-2xl blur-lg opacity-60 animate-pulse" />
+            <div className="dynamic-auth-emblem w-14 h-14 rounded-2xl p-[2.5px] relative z-10 flex items-center justify-center">
+              <div className="w-full h-full bg-white dark:bg-zinc-950 rounded-[13px] flex items-center justify-center shadow-inner">
+                <UserPlus className="w-6 h-6 text-blue-600 dark:text-amber-400" />
+              </div>
             </div>
           </div>
-          <h1 className="text-3xl font-black text-white">إنشاء حساب جديد</h1>
-          <p className="text-xs font-bold text-amber-300">
-            أكاديمية المهندس محمد إبراهيم
+          <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">إنشاء حساب جديد</h1>
+          <p className="text-xs font-bold text-blue-700 dark:text-amber-300">
+            أكاديمية م / محمد إبراهيم
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-8 rounded-3xl bg-surface border border-amber-500/20 shadow-2xl space-y-5">
+        <form onSubmit={handleSubmit} className="p-8 rounded-3xl bg-white/90 dark:bg-surface border border-slate-200/90 dark:border-zinc-800 shadow-2xl shadow-blue-900/10 dark:shadow-black/80 space-y-5 backdrop-blur-2xl">
           {errorMessage && (
-            <div className="p-3.5 rounded-xl bg-rose-950/60 border border-rose-800 text-rose-300 text-xs flex items-center gap-2">
-              <ShieldAlert className="w-4 h-4 shrink-0" />
+            <div className="p-3.5 rounded-2xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 text-xs flex items-center gap-2">
+              <ShieldAlert className="w-4 h-4 shrink-0 text-rose-600" />
               <span>{errorMessage}</span>
             </div>
           )}
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
-              <label className="block text-xs font-bold text-zinc-300 mb-1.5">الاسم الأول *</label>
+              <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 mb-1.5">الاسم الأول *</label>
               <input
                 type="text"
                 name="firstName"
@@ -103,22 +115,22 @@ export default function RegisterPage() {
                 value={formData.firstName}
                 onChange={handleChange}
                 placeholder="أحمد"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-sm focus:outline-none focus:border-amber-400"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-surface-raised border border-slate-200 dark:border-border text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-sm focus:bg-white focus:outline-none focus:border-blue-600 dark:focus:border-amber-400 transition-all shadow-xs"
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-zinc-300 mb-1.5">اسم الأب</label>
+              <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 mb-1.5">اسم الأب</label>
               <input
                 type="text"
                 name="fatherName"
                 value={formData.fatherName}
                 onChange={handleChange}
                 placeholder="مصطفى"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-sm focus:outline-none focus:border-amber-400"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-surface-raised border border-slate-200 dark:border-border text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-sm focus:bg-white focus:outline-none focus:border-blue-600 dark:focus:border-amber-400 transition-all shadow-xs"
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-zinc-300 mb-1.5">اسم العائلة *</label>
+              <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 mb-1.5">اسم العائلة *</label>
               <input
                 type="text"
                 name="lastName"
@@ -126,14 +138,14 @@ export default function RegisterPage() {
                 value={formData.lastName}
                 onChange={handleChange}
                 placeholder="إبراهيم"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-sm focus:outline-none focus:border-amber-400"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-surface-raised border border-slate-200 dark:border-border text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-sm focus:bg-white focus:outline-none focus:border-blue-600 dark:focus:border-amber-400 transition-all shadow-xs"
               />
             </div>
           </div>
 
-          <div className="p-3.5 rounded-2xl bg-purple-950/30 border border-purple-800/40 space-y-1.5">
-            <div className="flex items-center gap-1.5 text-xs font-bold text-purple-300">
-              <Award className="w-4 h-4" />
+          <div className="p-4 rounded-2xl bg-blue-50/80 dark:bg-purple-950/30 border border-blue-200 dark:border-purple-800/40 space-y-2">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-blue-800 dark:text-purple-300">
+              <Award className="w-4 h-4 text-blue-600 dark:text-purple-400" />
               <span>الاسم الرسمي الكامل (الذي سيظهر على الشهادات المعتمدة):</span>
             </div>
             <input
@@ -143,14 +155,14 @@ export default function RegisterPage() {
               value={formData.officialFullName}
               onChange={handleChange}
               placeholder="الاسم الرباعي الرسمي للشهادات"
-              className="w-full px-3.5 py-2 rounded-xl bg-surface-card border border-purple-900 text-purple-100 text-sm font-semibold focus:outline-none focus:border-primary-400"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-surface-card border border-blue-200 dark:border-purple-900 text-slate-900 dark:text-purple-100 placeholder:text-slate-400 text-sm font-semibold focus:outline-none focus:border-blue-600 dark:focus:border-primary-400 shadow-xs"
             />
-            <p className="text-[11px] text-zinc-400">يرجى كتابة اسمك بدقة كما ترغب أن يظهر في وثيقة التخرج والشهادة الرسمية.</p>
+            <p className="text-[11px] text-slate-500 dark:text-zinc-400">يرجى كتابة اسمك بدقة كما ترغب أن يظهر في وثيقة التخرج والشهادة الرسمية.</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-bold text-zinc-300 mb-1.5">اسم المستخدم (Username) *</label>
+              <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 mb-1.5">اسم المستخدم (Username) *</label>
               <input
                 type="text"
                 name="username"
@@ -158,24 +170,24 @@ export default function RegisterPage() {
                 value={formData.username}
                 onChange={handleChange}
                 placeholder="ahmed_dev"
-                className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-sm focus:outline-none focus:border-amber-400"
+                className="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-surface-raised border border-slate-200 dark:border-border text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-sm focus:bg-white focus:outline-none focus:border-blue-600 dark:focus:border-amber-400 transition-all shadow-xs"
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-zinc-300 mb-1.5">رقم الهاتف (واتساب)</label>
+              <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 mb-1.5">رقم الهاتف (واتساب)</label>
               <input
                 type="tel"
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
                 placeholder="01012345678"
-                className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-sm focus:outline-none focus:border-amber-400"
+                className="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-surface-raised border border-slate-200 dark:border-border text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-sm focus:bg-white focus:outline-none focus:border-blue-600 dark:focus:border-amber-400 transition-all shadow-xs"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-zinc-300 mb-1.5">البريد الإلكتروني *</label>
+            <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 mb-1.5">البريد الإلكتروني *</label>
             <input
               type="email"
               name="email"
@@ -183,13 +195,13 @@ export default function RegisterPage() {
               value={formData.email}
               onChange={handleChange}
               placeholder="example@gmail.com"
-              className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-sm focus:outline-none focus:border-amber-400"
+              className="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-surface-raised border border-slate-200 dark:border-border text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-sm focus:bg-white focus:outline-none focus:border-blue-600 dark:focus:border-amber-400 transition-all shadow-xs"
             />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-bold text-zinc-300 mb-1.5">كلمة المرور *</label>
+              <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 mb-1.5">كلمة المرور *</label>
               <input
                 type="password"
                 name="password"
@@ -197,11 +209,11 @@ export default function RegisterPage() {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="••••••••"
-                className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-sm focus:outline-none focus:border-amber-400"
+                className="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-surface-raised border border-slate-200 dark:border-border text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-sm focus:bg-white focus:outline-none focus:border-blue-600 dark:focus:border-amber-400 transition-all shadow-xs"
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-zinc-300 mb-1.5">تأكيد كلمة المرور *</label>
+              <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 mb-1.5">تأكيد كلمة المرور *</label>
               <input
                 type="password"
                 name="confirmPassword"
@@ -209,7 +221,7 @@ export default function RegisterPage() {
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 placeholder="••••••••"
-                className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-sm focus:outline-none focus:border-amber-400"
+                className="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-surface-raised border border-slate-200 dark:border-border text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-sm focus:bg-white focus:outline-none focus:border-blue-600 dark:focus:border-amber-400 transition-all shadow-xs"
               />
             </div>
           </div>
@@ -217,20 +229,17 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-zinc-950 font-black text-sm shadow-xl shadow-amber-950/40 transition-all hover:scale-[1.01] flex items-center justify-center gap-2 disabled:opacity-50"
+            className="dynamic-multi-cta w-full py-4 rounded-xl text-white font-black text-sm transition-all hover:scale-[1.01] flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer shadow-xl relative"
           >
-            {loading ? 'جاري إنشاء الحساب...' : (
-              <>
-                <UserPlus className="w-4 h-4" />
-                إنشاء الحساب وبدء التعلم
-              </>
-            )}
+            <div className="shimmer-beam-gold opacity-40" />
+            <UserPlus className="w-4 h-4 relative z-10" />
+            <span className="relative z-10">{loading ? 'جاري إنشاء الحساب...' : 'إنشاء الحساب وبدء التعلم'}</span>
           </button>
         </form>
 
-        <p className="text-center text-xs text-zinc-400">
+        <p className="text-center text-xs text-slate-600 dark:text-zinc-400">
           لديك حساب بالفعل؟{' '}
-          <Link href="/login" className="font-bold text-amber-400 hover:text-amber-300">
+          <Link href="/login" className="font-black text-blue-600 hover:text-blue-800 dark:text-amber-400 dark:hover:text-amber-300">
             تسجيل الدخول
           </Link>
         </p>
