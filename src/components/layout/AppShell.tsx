@@ -4,6 +4,7 @@ import React from 'react';
 import { usePathname } from 'next/navigation';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import FloatingSupportIcon from '@/components/FloatingSupportIcon';
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -47,6 +48,7 @@ export default function AppShell({
         {children}
       </main>
       {!isAdmin && <Footer initialSettings={initialSettings} />}
+      <FloatingSupportIcon />
     </div>
   );
 }

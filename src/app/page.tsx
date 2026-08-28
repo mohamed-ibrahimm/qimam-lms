@@ -35,7 +35,8 @@ import {
   Bot,
   MapPin,
   CreditCard,
-  Laptop
+  Laptop,
+  Headphones
 } from 'lucide-react';
 
 async function getHomeData() {
@@ -241,6 +242,14 @@ export default async function HomePage() {
                     <span>واتساب</span>
                   </a>
                 )}
+                <Link
+                  href="/support"
+                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-50 hover:bg-amber-100 dark:bg-amber-500/10 dark:hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-500/30 text-xs font-semibold transition-all hover:scale-105 shadow-xs"
+                  title="الدعم الفني والمساعدة"
+                >
+                  <Headphones className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+                  <span>الدعم الفني</span>
+                </Link>
                 {settings.CONTACT_EMAIL && (
                   <a
                     href={`mailto:${settings.CONTACT_EMAIL}`}
@@ -303,7 +312,7 @@ export default async function HomePage() {
             )}
 
             <div className="mt-8 sm:mt-12 flex flex-col items-center">
-              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-[10.5px] sm:text-xs text-slate-600 dark:text-zinc-400 pt-2 w-full max-w-2xl px-2">
+              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-[10.5px] sm:text-xs text-slate-600 dark:text-zinc-400 pt-2 w-full max-w-2xl px-12 sm:px-2 pb-6">
                 <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 dark:bg-zinc-900/60 border border-slate-200/90 dark:border-zinc-800/70 backdrop-blur-md shadow-xs">
                   <MapPin className="w-3.5 h-3.5 text-blue-600 dark:text-amber-400 shrink-0" />
                   <span className="whitespace-nowrap font-medium text-slate-700 dark:text-zinc-300">مصر — القاهرة & أونلاين بالعالم العربي</span>
