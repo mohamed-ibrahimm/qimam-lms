@@ -770,7 +770,7 @@ export default async function HomePage() {
           href={whatsappUrl}
           target="_blank"
           rel="noreferrer"
-          className="fixed bottom-6 left-6 z-40 hidden sm:flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-xl shadow-emerald-600/30 hover:scale-105 transition-all group border border-white/40"
+          className="fixed bottom-5 left-4 sm:left-6 z-40 flex items-center gap-2 p-2.5 sm:px-4 sm:py-2.5 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-lg shadow-emerald-600/30 active:scale-95 transition-all group border border-white/30"
           title="تحدث مباشرة مع إدارة الأكاديمية عبر الواتساب"
         >
           <div className="relative flex items-center justify-center shrink-0">
