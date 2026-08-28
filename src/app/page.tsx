@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
 import { formatPrice, formatDuration } from '@/lib/utils';
 import DesktopHero from '@/components/home/DesktopHero';
+import MobileHero from '@/components/home/MobileHero';
 
 export const dynamic = 'force-dynamic';
 import {
@@ -161,8 +162,22 @@ export default async function HomePage() {
 
       <div className="relative z-10 space-y-16 sm:space-y-20 md:space-y-28">
 
-        {/* Main Hero (Exact computer styling & animations for all screens) */}
+        {/* 1. Desktop Hero (100% untouched computer design) */}
         <DesktopHero
+          settings={settings}
+          cleanPlatformName={cleanPlatformName}
+          trendingDiploma={trendingDiploma}
+          whatsappUrl={whatsappUrl}
+          contactEmail={contactEmail}
+          facebookUrl={facebookUrl}
+          telegramUrl={telegramUrl}
+          youtubeUrl={youtubeUrl}
+          linkedinUrl={linkedinUrl}
+          hasAnySocial={hasAnySocial}
+        />
+
+        {/* 2. Mobile Hero (Dedicated mobile copy with dark/light calibration, soft glow, and comfortable spacing) */}
+        <MobileHero
           settings={settings}
           cleanPlatformName={cleanPlatformName}
           trendingDiploma={trendingDiploma}
