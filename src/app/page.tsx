@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
 import { formatPrice, formatDuration } from '@/lib/utils';
 import DesktopHero from '@/components/home/DesktopHero';
-import MobileHero from '@/components/home/MobileHero';
 
 export const dynamic = 'force-dynamic';
 import {
@@ -162,22 +161,8 @@ export default async function HomePage() {
 
       <div className="relative z-10 space-y-16 sm:space-y-20 md:space-y-28">
 
-        {/* 1. Desktop-Specific Hero (100% untouched desktop styling, dimensions, and shimmer beams) */}
+        {/* Main Hero (Exact computer styling & animations for all screens) */}
         <DesktopHero
-          settings={settings}
-          cleanPlatformName={cleanPlatformName}
-          trendingDiploma={trendingDiploma}
-          whatsappUrl={whatsappUrl}
-          contactEmail={contactEmail}
-          facebookUrl={facebookUrl}
-          telegramUrl={telegramUrl}
-          youtubeUrl={youtubeUrl}
-          linkedinUrl={linkedinUrl}
-          hasAnySocial={hasAnySocial}
-        />
-
-        {/* 2. Mobile-Specific Hero (Dedicated mobile architecture, isolated clean pages, no glitchy conic overflows) */}
-        <MobileHero
           settings={settings}
           cleanPlatformName={cleanPlatformName}
           trendingDiploma={trendingDiploma}

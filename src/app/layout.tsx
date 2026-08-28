@@ -59,7 +59,7 @@ export default async function RootLayout({
   } catch (e) {}
 
   return (
-    <html lang="ar" dir="rtl" className={ibmPlexArabic.variable} suppressHydrationWarning>
+    <html lang="ar" dir="rtl" className={`${ibmPlexArabic.variable} dark`} suppressHydrationWarning>
       <head>
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="alternate icon" href="/favicon.ico" />
