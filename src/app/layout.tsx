@@ -55,6 +55,12 @@ export default async function RootLayout({
       <head>
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="alternate icon" href="/favicon.ico" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Cairo:wght@600;700;800;900&display=swap"
+          rel="stylesheet"
+        />
       </head>
       <body className="min-h-screen antialiased selection:bg-amber-500 selection:text-black relative" suppressHydrationWarning>
         <ThemeProvider>
