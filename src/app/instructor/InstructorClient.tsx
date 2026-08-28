@@ -90,7 +90,11 @@ export default function InstructorClient({
 
   const handleCreateCourse = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newCourse.title.trim() || isCreating) return;
+    if (!newCourse.title.trim()) {
+      setModalError('يرجى كتابة عنوان الكورس أولاً');
+      return;
+    }
+    if (isCreating) return;
 
     setIsCreating(true);
     setMessage(null);
@@ -109,9 +113,9 @@ export default function InstructorClient({
         setCourses((prev) => [
           {
             ...data.course,
-            instructor: { officialFullName: user.officialFullName },
-            _count: { sections: 0, enrollments: 0 },
-            sections: [],
+            instructor: data.course.instructor || { officialFullName: user.officialFullName },
+            _count: data.course._count || { sections: 1, enrollments: 0 },
+            sections: data.course.sections || [],
           },
           ...prev,
         ]);
@@ -127,6 +131,7 @@ export default function InstructorClient({
           durationHours: 20,
           level: 'BEGINNER',
         });
+        router.refresh();
       } else {
         const err = data.error || 'فشل إنشاء الكورس';
         setModalError(err);
@@ -260,8 +265,12 @@ export default function InstructorClient({
             <h3 className="text-base font-bold text-white">لا توجد لديك دورات حالياً</h3>
             <p className="text-xs text-zinc-400">قم بإضافة أول دورة تدريبية لك في الأكاديمية</p>
             <button
-              onClick={() => setShowAddModal(true)}
-              className="px-6 py-2.5 rounded-xl bg-primary-600 text-white font-bold text-xs inline-flex items-center gap-2"
+              type="button"
+              onClick={() => {
+                setModalError(null);
+                setShowAddModal(true);
+              }}
+              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 text-zinc-950 font-black text-xs inline-flex items-center gap-2 shadow-lg shadow-amber-950/40"
             >
               <Plus className="w-4 h-4" />
               <span>إضافة كورس جديد</span>
@@ -471,13 +480,12 @@ export default function InstructorClient({
               />
 
               <div>
-                <label className="block text-xs font-bold text-zinc-300 mb-1">الوصف التفصيلي للكورس *</label>
+                <label className="block text-xs font-bold text-zinc-300 mb-1">الوصف التفصيلي للكورس (اختياري)</label>
                 <textarea
                   rows={3}
-                  required
                   value={newCourse.description}
                   onChange={(e) => setNewCourse({ ...newCourse, description: e.target.value })}
-                  placeholder="اشرح محاور الدورة والمشاريع العملية المستهدفة..."
+                  placeholder="اشرح محاور الدورة والمشاريع العملية المستهدفة (يمكن تركه فارغاً وسيتم وضع وصف افتراضي)..."
                   className="w-full px-4 py-2.5 rounded-xl bg-zinc-800 border border-zinc-700 text-white text-xs focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30"
                 />
               </div>
@@ -528,7 +536,7 @@ export default function InstructorClient({
                 </button>
                 <button
                   type="submit"
-                  disabled={isCreating || !newCourse.title.trim()}
+                  disabled={isCreating}
                   className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-zinc-950 text-xs font-black shadow-lg shadow-amber-900/30 disabled:opacity-50 flex items-center gap-1.5 transition-all hover:scale-105"
                 >
                   <Plus className="w-4 h-4" />

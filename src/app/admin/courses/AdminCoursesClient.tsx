@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { formatPrice, formatDuration, formatDate } from '@/lib/utils';
 import {
   BookOpen,
@@ -22,6 +23,7 @@ interface AdminCoursesClientProps {
 }
 
 export default function AdminCoursesClient({ initialCourses }: AdminCoursesClientProps) {
+  const router = useRouter();
   const [courses, setCourses] = useState<any[]>(initialCourses);
   const [searchQuery, setSearchQuery] = useState('');
   const [deletingCourse, setDeletingCourse] = useState<any | null>(null);
@@ -59,6 +61,7 @@ export default function AdminCoursesClient({ initialCourses }: AdminCoursesClien
         setCourses((prev) => prev.filter((c) => c.id !== deletingCourse.id));
         setMessage({ type: 'success', text: data.message || 'تم حذف الكورس بنجاح.' });
         setDeletingCourse(null);
+        router.refresh();
       } else {
         setMessage({ type: 'error', text: data.error || 'فشل حذف الكورس' });
       }
@@ -71,7 +74,11 @@ export default function AdminCoursesClient({ initialCourses }: AdminCoursesClien
 
   const handleCreateCourse = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newCourse.title.trim() || isCreating) return;
+    if (!newCourse.title.trim()) {
+      setModalError('يرجى كتابة عنوان الكورس أولاً');
+      return;
+    }
+    if (isCreating) return;
 
     setIsCreating(true);
     setMessage(null);
@@ -109,6 +116,7 @@ export default function AdminCoursesClient({ initialCourses }: AdminCoursesClien
           durationHours: 25,
           level: 'ALL',
         });
+        router.refresh();
       } else {
         const err = data.error || 'فشل إنشاء الكورس';
         setModalError(err);
@@ -378,13 +386,12 @@ export default function AdminCoursesClient({ initialCourses }: AdminCoursesClien
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-zinc-300 mb-1">الوصف التفصيلي *</label>
+                <label className="block text-xs font-bold text-zinc-300 mb-1">الوصف التفصيلي (اختياري)</label>
                 <textarea
                   rows={3}
-                  required
                   value={newCourse.description}
                   onChange={(e) => setNewCourse({ ...newCourse, description: e.target.value })}
-                  placeholder="تفاصيل محتوى الكورس..."
+                  placeholder="تفاصيل محتوى الكورس (يمكن تركه فارغاً وسيتم وضع وصف افتراضي)..."
                   className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500"
                 />
               </div>
@@ -435,7 +442,7 @@ export default function AdminCoursesClient({ initialCourses }: AdminCoursesClien
                 </button>
                 <button
                   type="submit"
-                  disabled={isCreating || !newCourse.title.trim()}
+                  disabled={isCreating}
                   className="px-6 py-2.5 rounded-xl bg-primary-600 hover:bg-primary-500 text-white text-xs font-bold shadow-md disabled:opacity-50 flex items-center gap-1.5"
                 >
                   <Plus className="w-4 h-4" />
