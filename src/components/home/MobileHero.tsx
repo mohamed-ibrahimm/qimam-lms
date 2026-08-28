@@ -45,13 +45,13 @@ export default function MobileHero({
     <div className="block md:hidden">
       {/* 
         ========================================================================
-        SCREEN 1: THE FIRST FOLD (الشاشة الأولى)
+        SCREEN 1: THE FIRST FOLD (الشاشة الأولى بالكامل)
         - Top: Promotional 50% Discount Banner in place.
         - Middle: Large, wide, beautiful text filling the screen.
-        - Bottom: Diploma button + Course guide button at the very bottom edge.
+        - Bottom: Diploma button + Course guide button at the bottom edge.
         ========================================================================
       */}
-      <section className="pt-2 pb-12 px-4 text-center relative overflow-hidden">
+      <section className="min-h-[calc(100svh-5rem)] flex flex-col justify-between pt-1 pb-4 px-4 text-center relative overflow-hidden">
         
         {/* Soft, Gentle Floating Ambient Glow */}
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md h-[360px] pointer-events-none -z-10 overflow-visible">
@@ -61,7 +61,7 @@ export default function MobileHero({
         </div>
 
         {/* 1. TOP: Promotional Banner ("وبتاعت خصم 50% في مكانها") */}
-        <div className="w-full flex justify-center mb-5 px-2">
+        <div className="w-full flex justify-center pt-1 px-2">
           {settings.BANNER_ENABLED !== 'false' && (
             <a href="#trending-diploma" className="shimmer-border-wrapper group inline-block max-w-full">
               <div className="shimmer-beam-gold" />
@@ -81,9 +81,9 @@ export default function MobileHero({
         </div>
 
         {/* 2. MIDDLE: Large, Majestic Headline & Description ("والكلام ده كبروا ونسق وخليه شكله احسن ويملى الصفحه كده") */}
-        <div className="w-full max-w-lg mx-auto flex flex-col items-center px-1">
-          <h1 className="font-black tracking-tight w-full mb-3 [text-wrap:balance]">
-            <span className="text-slate-900 dark:text-white block font-black text-[30px] xs:text-[34px] sm:text-4xl leading-[1.22] mb-2 tracking-tight">
+        <div className="w-full max-w-lg mx-auto flex flex-col items-center my-auto px-1 py-4">
+          <h1 className="font-black tracking-tight w-full mb-3.5 [text-wrap:balance]">
+            <span className="text-slate-900 dark:text-white block font-black text-[29px] xs:text-[33px] sm:text-4xl leading-[1.22] mb-2 tracking-tight">
               {settings.HERO_TITLE || 'نحو مستقبل برمجي وهندسي احترافي'}
             </span>
             <span className="bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 bg-clip-text text-transparent block font-black text-[18px] xs:text-[21px] sm:text-2xl leading-snug">
@@ -93,18 +93,18 @@ export default function MobileHero({
             </span>
           </h1>
 
-          <p className="text-xs xs:text-sm text-slate-600 dark:text-zinc-300 max-w-sm mx-auto leading-relaxed font-normal px-2 mb-7">
+          <p className="text-xs xs:text-[13.5px] text-slate-600 dark:text-zinc-300 max-w-sm mx-auto leading-relaxed font-normal px-2">
             {settings.HERO_SUBTITLE ||
               `${cleanPlatformName} — مسارات تدريبية هندسية متكاملة، دبلومات برمجية معتمدة، ومشاريع إنتاج واقعية تؤهلك لسوق العمل بثقة واحتراف.`}
           </p>
         </div>
 
         {/* 3. BOTTOM: Action Buttons Anchored at the End of Screen 1 ("وايقونه تصفح الدليل الكورسات تبقى فالاخير هى والتانيه") */}
-        <div className="w-full max-w-sm mx-auto flex flex-col gap-3.5 px-1">
+        <div className="w-full max-w-sm mx-auto flex flex-col gap-3 pb-2 px-1">
           {/* Button 1: Diploma */}
           <a href="#trending-diploma" className="shimmer-border-wrapper group w-full">
             <div className="shimmer-beam-gold" />
-            <div className="shimmer-button-content w-full px-6 py-4 text-sm xs:text-base font-black text-white dark:text-amber-300 group-hover:opacity-95 flex items-center justify-center gap-2.5">
+            <div className="shimmer-button-content w-full px-6 py-3.5 text-sm xs:text-base font-black text-white dark:text-amber-300 group-hover:opacity-95 flex items-center justify-center gap-2.5">
               <Flame className="w-5 h-5 text-amber-400 animate-bounce shrink-0" />
               <span className="whitespace-nowrap">{settings.FEATURED_DIPLOMA_BADGE || 'الدبلومة الأكثر طلباً (خصم 51%)'}</span>
               <ArrowLeft className="w-5 h-5 text-white dark:text-amber-400 group-hover:-translate-x-1.5 transition-transform duration-300 shrink-0" />
@@ -130,7 +130,7 @@ export default function MobileHero({
         Dedicated, spacious section for Quick Contacts and Official Badges.
         ========================================================================
       */}
-      <section className="pt-10 pb-16 px-4 border-t border-slate-200/60 dark:border-zinc-800/60 bg-slate-50/50 dark:bg-zinc-950/50 space-y-7 text-center">
+      <section className="pt-12 pb-16 px-4 border-t border-slate-200/60 dark:border-zinc-800/60 bg-slate-50/50 dark:bg-zinc-950/50 space-y-7 text-center">
         
         {/* Quick Contacts */}
         {hasAnySocial && (
