@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import Link from 'next/link';
@@ -16,7 +16,7 @@ export default function FloatingSupportIcon() {
   return (
     <Link
       href="/support"
-      className="fixed bottom-6 right-6 z-40 group flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95"
+      className="fixed bottom-5 right-4 sm:right-6 z-40 group flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95"
       title="الدعم الفني المباشر"
       aria-label="تواصل مع فريق الدعم الفني"
     >

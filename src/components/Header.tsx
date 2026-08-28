@@ -151,8 +151,8 @@ export default function Header({
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 p-2 sm:p-3 md:p-4 transition-all">
-      <nav className="dynamic-navbar-aura max-w-[1440px] w-[97%] sm:w-[94%] mx-auto flex items-center justify-between min-h-[4rem] sm:min-h-[4.5rem] px-3.5 sm:px-8 rounded-full bg-white/90 dark:bg-zinc-900/90 border border-slate-200/90 dark:border-zinc-800/90 backdrop-blur-2xl shadow-2xl shadow-slate-900/5 dark:shadow-black/70 relative gap-2 sm:gap-6">
+    <header className="fixed top-0 left-0 right-0 z-50 p-1.5 sm:p-3 md:p-4 transition-all">
+      <nav className="dynamic-navbar-aura max-w-[1440px] w-[98%] sm:w-[94%] mx-auto flex items-center justify-between min-h-[3.5rem] sm:min-h-[4.5rem] px-3 sm:px-8 rounded-full bg-white/90 dark:bg-zinc-900/90 border border-slate-200/90 dark:border-zinc-800/90 backdrop-blur-2xl shadow-2xl shadow-slate-900/5 dark:shadow-black/70 relative gap-2 sm:gap-6">
         {/* Logo & Platform Name */}
         <Link href="/" className="flex items-center gap-2.5 sm:gap-3.5 shrink min-w-0 group py-1">
           <div className="dynamic-logo-emblem w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl p-[2px] shadow-md group-hover:scale-105 transition-transform shrink-0">

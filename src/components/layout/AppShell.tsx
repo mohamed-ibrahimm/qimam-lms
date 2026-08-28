@@ -44,7 +44,7 @@ export default function AppShell({
         initialPlatformTagline={initialPlatformTagline}
         initialUser={initialUser}
       />
-      <main className={`flex-1 w-full ${isAdmin ? 'pt-20 sm:pt-24' : 'pt-20 sm:pt-24 md:pt-28 pb-12'}`}>
+      <main className={`flex-1 w-full ${isAdmin ? 'pt-16 sm:pt-20 md:pt-24' : 'pt-14 sm:pt-20 md:pt-24 pb-8'}`}>
         {children}
       </main>
       {!isAdmin && <Footer initialSettings={initialSettings} />}
