@@ -141,46 +141,39 @@ export default function Header({
     <header className="fixed top-0 left-0 right-0 z-50 p-2 sm:p-4 md:p-5 transition-all">
       <nav className="max-w-7xl mx-auto flex items-center justify-between min-h-[3.5rem] sm:min-h-[4.25rem] px-3 sm:px-6 md:px-8 rounded-full bg-zinc-900/90 border border-zinc-800/90 backdrop-blur-2xl shadow-2xl shadow-black/70 relative gap-1.5 sm:gap-4">
         {/* Logo & Platform Name */}
-        <Link href="/" className="flex items-center gap-2 sm:gap-3 shrink min-w-0 group py-1">
-          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-[#cb6f43] via-[#d97746] to-[#112038] dark:from-amber-500 dark:via-yellow-400 dark:to-amber-600 p-[2px] shadow-md group-hover:scale-105 transition-transform shrink-0">
-            <div className="w-full h-full bg-[#112038] dark:bg-[#0c0918] rounded-[10px] sm:rounded-[14px] flex items-center justify-center">
-              <GraduationCap className="w-4 h-4 sm:w-5 sm:h-5 text-[#f3c4b6] dark:text-amber-400" />
+        <Link href="/" className="flex items-center gap-2.5 sm:gap-3 shrink-0 group py-1">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 dark:from-amber-500 dark:via-yellow-400 dark:to-amber-600 p-[2px] shadow-sm group-hover:scale-105 transition-transform shrink-0">
+            <div className="w-full h-full bg-white dark:bg-[#0c0918] rounded-[10px] sm:rounded-[14px] flex items-center justify-center">
+              <GraduationCap className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-600 dark:text-amber-400" />
             </div>
           </div>
-          <div className="flex flex-col text-right justify-center min-w-0">
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              <span className="text-xs sm:text-sm md:text-base font-black text-[#112038] dark:text-white group-hover:text-[#cb6f43] dark:group-hover:text-amber-300 transition-colors tracking-tight truncate max-w-[125px] xs:max-w-[180px] sm:max-w-none">
-                {platformName}
-              </span>
-              <span className="hidden sm:inline-flex text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full bg-[#fbf0eb] text-[#cb6f43] border border-[#f2d5c5] dark:bg-amber-500/15 dark:text-amber-300 dark:border-amber-400/40 font-bold whitespace-nowrap shadow-sm shrink-0">
-                ★ تعليم معتمد
-              </span>
-            </div>
-            {platformTagline && (
-              <span className="text-[9px] sm:text-[11px] text-[#6b7280] dark:text-amber-200/80 font-medium truncate mt-0.5 hidden sm:block">
-                {platformTagline}
-              </span>
-            )}
+          <div className="flex items-center gap-2">
+            <span className="text-xs sm:text-sm md:text-base font-black text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-amber-300 transition-colors tracking-tight">
+              {platformName}
+            </span>
+            <span className="hidden sm:inline-flex text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 dark:bg-amber-500/15 dark:text-amber-300 dark:border-amber-400/40 font-bold whitespace-nowrap shadow-xs shrink-0">
+              ★ تعليم معتمد
+            </span>
           </div>
         </Link>
 
         {/* Desktop Nav (Center) */}
-        <div className="hidden lg:flex items-center gap-1 bg-[#f4efe8] dark:bg-zinc-950/60 px-2 py-1 rounded-full border border-[#ede7df] dark:border-zinc-800/80 shadow-inner">
+        <div className="hidden lg:flex items-center gap-1 bg-slate-100/80 dark:bg-zinc-950/60 px-2 py-1 rounded-full border border-slate-200/80 dark:border-zinc-800/80 shadow-inner">
           {navLinks.map((link) => {
             const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-3 py-1.5 text-xs font-bold rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
+                className={`px-3.5 py-1.5 text-xs font-bold rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
                   isActive
-                    ? 'bg-[#ffffff] dark:bg-zinc-800 text-[#112038] dark:text-white border border-[#e3dcd2] dark:border-zinc-700 shadow-sm'
+                    ? 'bg-white dark:bg-zinc-800 text-blue-700 dark:text-white border border-slate-200 dark:border-zinc-700 shadow-sm'
                     : link.highlight
-                    ? 'text-[#cb6f43] dark:text-amber-300 hover:text-[#b45309] dark:hover:text-amber-200 bg-[#fbf0eb] dark:bg-amber-500/15 hover:bg-[#f5e3d8] dark:hover:bg-amber-500/25 border border-[#f2d5c5] dark:border-amber-500/40 shadow-sm'
-                    : 'text-[#4b5563] dark:text-zinc-300 hover:text-[#112038] dark:hover:text-white hover:bg-[#eae4db] dark:hover:bg-zinc-800/70'
+                    ? 'text-indigo-700 dark:text-amber-300 hover:text-indigo-800 dark:hover:text-amber-200 bg-indigo-50/80 dark:bg-amber-500/15 hover:bg-indigo-100 dark:hover:bg-amber-500/25 border border-indigo-200/80 dark:border-amber-500/40 shadow-xs'
+                    : 'text-slate-600 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-zinc-800/70'
                 }`}
               >
-                {link.icon && <link.icon className={`w-3.5 h-3.5 ${link.highlight ? 'text-[#cb6f43] dark:text-amber-400' : ''}`} />}
+                {link.icon && <link.icon className={`w-3.5 h-3.5 ${link.highlight ? 'text-indigo-600 dark:text-amber-400' : ''}`} />}
                 <span>{link.name}</span>
               </Link>
             );
@@ -194,9 +187,9 @@ export default function Header({
             <div className="relative">
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="flex items-center gap-2 sm:gap-3 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-zinc-800/80 hover:bg-zinc-800 border border-zinc-700/80 hover:border-zinc-600 transition-all text-right shadow-sm"
+                className="flex items-center gap-2 sm:gap-3 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/90 dark:bg-zinc-800/80 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-200 dark:border-zinc-700/80 transition-all text-right shadow-xs"
               >
-                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-tr from-amber-500 to-yellow-400 text-zinc-950 flex items-center justify-center font-bold text-xs shadow-inner overflow-hidden relative shrink-0">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 dark:from-amber-500 dark:to-yellow-400 text-white dark:text-zinc-950 flex items-center justify-center font-bold text-xs shadow-inner overflow-hidden relative shrink-0">
                   {currentUser.avatarUrl ? (
                     <img
                       src={currentUser.avatarUrl}
@@ -210,27 +203,27 @@ export default function Header({
                     <span>{currentUser.firstName?.[0] || 'ق'}</span>
                   )}
                 </div>
-                <span className="text-xs font-bold text-white max-w-[80px] sm:max-w-[120px] truncate hidden xs:inline">
+                <span className="text-xs font-bold text-slate-800 dark:text-white max-w-[80px] sm:max-w-[120px] truncate hidden xs:inline">
                   {currentUser.firstName}
                 </span>
-                <ChevronDown className="w-3.5 h-3.5 text-zinc-400 mr-0.5" />
+                <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-zinc-400 mr-0.5" />
               </button>
 
               {dropdownOpen && (
-                <div className="absolute left-0 mt-2 w-64 rounded-2xl bg-zinc-900 border border-zinc-800 shadow-2xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                  <div className="px-4 py-3 border-b border-zinc-800">
-                    <p className="text-xs text-zinc-400">مرحباً بك،</p>
-                    <p className="text-sm font-bold text-white truncate">{currentUser.officialFullName || currentUser.email}</p>
-                    <p className="text-[11px] text-zinc-500 truncate">{currentUser.email}</p>
+                <div className="absolute left-0 mt-2 w-64 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 shadow-2xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                  <div className="px-4 py-3 border-b border-slate-100 dark:border-zinc-800">
+                    <p className="text-xs text-slate-400 dark:text-zinc-400">مرحباً بك،</p>
+                    <p className="text-sm font-bold text-slate-900 dark:text-white truncate">{currentUser.officialFullName || currentUser.email}</p>
+                    <p className="text-[11px] text-slate-500 dark:text-zinc-500 truncate">{currentUser.email}</p>
                   </div>
 
                   {currentUser.role === 'ADMIN' && (
                     <Link
                       href="/admin"
                       onClick={() => setDropdownOpen(false)}
-                      className="flex items-center gap-2 px-4 py-2.5 text-xs text-amber-300 hover:bg-amber-950/40 hover:text-white transition-colors"
+                      className="flex items-center gap-2 px-4 py-2.5 text-xs text-blue-600 dark:text-amber-300 hover:bg-blue-50 dark:hover:bg-amber-950/40 hover:text-blue-800 dark:hover:text-white transition-colors"
                     >
-                      <LayoutDashboard className="w-4 h-4 text-amber-400" />
+                      <LayoutDashboard className="w-4 h-4 text-blue-600 dark:text-amber-400" />
                       لوحة تحكم الإدارة (Admin)
                     </Link>
                   )}
@@ -239,9 +232,9 @@ export default function Header({
                     <Link
                       href="/instructor"
                       onClick={() => setDropdownOpen(false)}
-                      className="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-200 hover:bg-zinc-800 hover:text-white transition-colors"
+                      className="flex items-center gap-2 px-4 py-2.5 text-xs text-slate-700 dark:text-zinc-200 hover:bg-slate-100 dark:hover:bg-zinc-800 hover:text-slate-900 dark:hover:text-white transition-colors"
                     >
-                      <GraduationCap className="w-4 h-4 text-purple-400" />
+                      <GraduationCap className="w-4 h-4 text-indigo-600 dark:text-purple-400" />
                       استوديو المعلم (Instructor)
                     </Link>
                   )}
@@ -249,43 +242,43 @@ export default function Header({
                   <Link
                     href="/dashboard/my-courses"
                     onClick={() => setDropdownOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2.5 text-xs text-amber-300 hover:bg-zinc-800 hover:text-white transition-colors font-bold"
+                    className="flex items-center gap-2 px-4 py-2.5 text-xs text-blue-700 dark:text-amber-300 hover:bg-blue-50 dark:hover:bg-zinc-800 transition-colors font-bold"
                   >
-                    <BookOpen className="w-4 h-4 text-amber-400" />
+                    <BookOpen className="w-4 h-4 text-blue-600 dark:text-amber-400" />
                     الكورسات المشترك فيها
                   </Link>
 
                   <Link
                     href="/dashboard"
                     onClick={() => setDropdownOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2 text-xs text-zinc-200 hover:bg-zinc-800 hover:text-white transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 text-xs text-slate-700 dark:text-zinc-200 hover:bg-slate-100 dark:hover:bg-zinc-800 hover:text-slate-900 dark:hover:text-white transition-colors"
                   >
-                    <LayoutDashboard className="w-4 h-4 text-zinc-400" />
+                    <LayoutDashboard className="w-4 h-4 text-slate-400 dark:text-zinc-400" />
                     لوحة المتابعة الأكاديمية
                   </Link>
 
                   <Link
                     href="/chat"
                     onClick={() => setDropdownOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-200 hover:bg-zinc-800 hover:text-white transition-colors"
+                    className="flex items-center gap-2 px-4 py-2.5 text-xs text-slate-700 dark:text-zinc-200 hover:bg-slate-100 dark:hover:bg-zinc-800 hover:text-slate-900 dark:hover:text-white transition-colors"
                   >
-                    <MessageSquare className="w-4 h-4 text-emerald-400" />
+                    <MessageSquare className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                     المحادثات المباشرة
                   </Link>
 
                   <Link
                     href="/profile"
                     onClick={() => setDropdownOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-200 hover:bg-zinc-800 hover:text-white transition-colors"
+                    className="flex items-center gap-2 px-4 py-2.5 text-xs text-slate-700 dark:text-zinc-200 hover:bg-slate-100 dark:hover:bg-zinc-800 hover:text-slate-900 dark:hover:text-white transition-colors"
                   >
-                    <User className="w-4 h-4 text-amber-400" />
+                    <User className="w-4 h-4 text-indigo-600 dark:text-amber-400" />
                     الملف الشخصي والشهادات
                   </Link>
 
-                  <div className="border-t border-zinc-800 mt-1 pt-1">
+                  <div className="border-t border-slate-100 dark:border-zinc-800 mt-1 pt-1">
                     <button
                       onClick={handleLogout}
-                      className="w-full flex items-center gap-2 px-4 py-2 text-xs text-rose-400 hover:bg-rose-950/30 transition-colors"
+                      className="w-full flex items-center gap-2 px-4 py-2 text-xs text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors"
                     >
                       <LogOut className="w-4 h-4" />
                       تسجيل الخروج
@@ -295,26 +288,26 @@ export default function Header({
               )}
             </div>
           ) : (
-            /* Auth Buttons (Desktop/Tablet only - on mobile they live inside the drawer) */
-            <div className="hidden sm:flex items-center gap-1.5 sm:gap-2">
+            /* Auth Buttons */
+            <div className="hidden sm:flex items-center gap-2">
               <Link
                 href="/login"
-                className="px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-bold text-zinc-200 hover:text-white hover:bg-zinc-800/80 border border-zinc-700/80 transition-all shadow-sm flex items-center gap-1"
+                className="px-3.5 py-1.5 rounded-full text-xs font-bold text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-100 dark:text-zinc-200 dark:hover:text-white dark:bg-transparent dark:hover:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700/80 transition-all shadow-xs flex items-center gap-1"
               >
-                <LogIn className="w-3.5 h-3.5 text-amber-400" />
+                <LogIn className="w-3.5 h-3.5 text-slate-600 dark:text-amber-400" />
                 <span>دخول</span>
               </Link>
               <Link
                 href="/register"
-                className="px-3.5 sm:px-4 py-1.5 rounded-full text-xs font-black bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-zinc-950 transition-all shadow-md shadow-amber-950/40 whitespace-nowrap flex items-center gap-1"
+                className="px-4 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white transition-all shadow-md shadow-blue-600/20 whitespace-nowrap flex items-center gap-1"
               >
-                <UserPlus className="w-3.5 h-3.5 text-zinc-950" />
+                <UserPlus className="w-3.5 h-3.5 text-white" />
                 <span>انضم الآن</span>
               </Link>
             </div>
           )}
 
-          {/* Theme Toggle Button (Light/Dark Mode) */}
+          {/* Theme Toggle Button */}
           <button
             type="button"
             onClick={(e) => {
@@ -322,11 +315,11 @@ export default function Header({
               e.stopPropagation();
               toggleTheme();
             }}
-            className="p-2 sm:p-2.5 rounded-full border border-zinc-800 bg-zinc-900/90 text-amber-400 hover:text-amber-300 hover:bg-zinc-800 transition-all flex items-center justify-center shrink-0 shadow-sm cursor-pointer"
+            className="p-2 sm:p-2.5 rounded-full border border-slate-200 dark:border-zinc-800 bg-white/90 dark:bg-zinc-900/90 text-slate-700 dark:text-amber-400 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-all flex items-center justify-center shrink-0 shadow-xs cursor-pointer"
             title={theme === 'DARK' ? 'التحويل إلى الوضع النهاري' : 'التحويل إلى الوضع الليلي'}
             aria-label="تبديل المظهر"
           >
-            {theme === 'DARK' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4 text-purple-400" />}
+            {theme === 'DARK' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4 text-blue-600" />}
           </button>
 
           {/* Mobile Menu Hamburger Button */}
@@ -334,8 +327,8 @@ export default function Header({
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className={`lg:hidden p-2 sm:p-2.5 rounded-full border transition-all flex items-center justify-center shrink-0 ${
               mobileMenuOpen
-                ? 'bg-purple-600 text-white border-purple-400 shadow-lg shadow-purple-950/50'
-                : 'bg-zinc-800/90 text-zinc-200 hover:text-white border-zinc-700/80 hover:bg-zinc-700'
+                ? 'bg-blue-600 text-white border-blue-500 shadow-md shadow-blue-600/30'
+                : 'bg-white/90 dark:bg-zinc-800/90 text-slate-700 dark:text-zinc-200 border-slate-200 dark:border-zinc-700/80 hover:bg-slate-100 dark:hover:bg-zinc-700 shadow-xs'
             }`}
             aria-label="فتح القائمة"
           >
