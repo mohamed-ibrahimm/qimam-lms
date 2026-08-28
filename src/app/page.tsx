@@ -148,8 +148,8 @@ export default async function HomePage() {
     <div className="page-canvas relative overflow-hidden pb-24 text-zinc-100">
       {/* Ambient Multi-Colored Radiant Lighting & Soft Atmospheric Blurs */}
       <div className="ambient-glow absolute inset-0 pointer-events-none overflow-hidden z-0">
-        {/* Top central indigo-gold dome (Desktop only to keep mobile top bar completely clean) */}
-        <div className="hidden md:block absolute top-0 left-1/2 -translate-x-1/2 w-[1100px] h-[550px] bg-[radial-gradient(ellipse_at_top,_rgba(99,102,241,0.14),_rgba(245,158,11,0.06)_40%,_transparent_72%)] dark:bg-[radial-gradient(ellipse_at_top,_rgba(245,158,11,0.07),_rgba(217,119,6,0.03)_40%,_transparent_72%)] blur-[70px]" />
+        {/* Top central indigo-gold dome */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1100px] h-[550px] bg-[radial-gradient(ellipse_at_top,_rgba(99,102,241,0.14),_rgba(245,158,11,0.06)_40%,_transparent_72%)] dark:bg-[radial-gradient(ellipse_at_top,_rgba(245,158,11,0.07),_rgba(217,119,6,0.03)_40%,_transparent_72%)] blur-[70px]" />
         {/* Right warm amber-rose flare */}
         <div className="absolute top-1/4 -right-24 w-[600px] h-[600px] bg-[radial-gradient(circle,_rgba(251,146,60,0.12),_transparent_65%)] dark:bg-[radial-gradient(circle,_rgba(245,158,11,0.05),_transparent_65%)] blur-[100px] rounded-full animate-ambient-drift" />
         {/* Left subtle purple-cyan bloom */}
