@@ -154,7 +154,7 @@ export default function Header({
 
   const navLinks = [
     { name: 'الرئيسية', href: '/', icon: Home },
-    { name: 'الكورسات', href: '/courses', icon: BookOpen, isFeatured: true, badge: 'الأكثر طلباً 🔥' },
+    { name: 'الكورسات', href: '/courses', icon: BookOpen, isFeatured: true },
     { name: 'الدبلومات الشاملة', href: '/diplomas', icon: Award },
   ];
 
@@ -187,7 +187,6 @@ export default function Header({
           {navLinks.map((link) => {
             const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
             const isFeatured = (link as any).isFeatured;
-            const badge = (link as any).badge;
             return (
               <Link
                 key={link.href}
@@ -213,11 +212,6 @@ export default function Header({
                   />
                 )}
                 <span>{link.name}</span>
-                {badge && (
-                  <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-gradient-to-r from-amber-500 to-yellow-400 text-zinc-950 font-black mr-0.5 shadow-xs animate-pulse">
-                    {badge}
-                  </span>
-                )}
               </Link>
             );
           })}
