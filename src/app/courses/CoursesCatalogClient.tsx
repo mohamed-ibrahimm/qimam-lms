@@ -22,7 +22,10 @@ import {
   BadgeCheck,
   Zap,
   PhoneCall,
-  ChevronLeft
+  ChevronLeft,
+  TrendingUp,
+  Crown,
+  Sparkle
 } from 'lucide-react';
 import { formatPrice, formatDuration } from '@/lib/utils';
 
@@ -87,11 +90,38 @@ export default function CoursesCatalogClient({
   const [sortBy, setSortBy] = useState<'POPULAR' | 'NEWEST' | 'RATING' | 'PRICE_LOW' | 'PRICE_HIGH'>('POPULAR');
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
 
-  // Top Featured / Trending & Hot Deals Courses
+  // Fallback high-res tech thumbnails for spotlight courses
+  const getThumbnail = (course: Course, idx: number) => {
+    if (course.thumbnail && course.thumbnail.trim() && !course.thumbnail.includes('1787916336074') && !course.thumbnail.includes('1787933474229')) {
+      return course.thumbnail;
+    }
+    const fallbacks = [
+      'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1677442136019-21780efad99a?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&auto=format&fit=crop&q=80',
+    ];
+    return fallbacks[idx % fallbacks.length];
+  };
+
+  // Top Featured / Trending & Hot Deals Courses (Prioritizing flagship courses with discounts and rich content)
   const featuredCourses = useMemo(() => {
-    return [...initialCourses]
-      .filter((c) => (c.compareAtPrice && c.compareAtPrice > c.price) || c._count.enrollments > 0 || c.price >= 800)
-      .slice(0, 3);
+    const sorted = [...initialCourses].sort((a, b) => {
+      // Prioritize active discounts
+      const aDiscount = (a.compareAtPrice && a.compareAtPrice > a.price) ? (a.compareAtPrice - a.price) : 0;
+      const bDiscount = (b.compareAtPrice && b.compareAtPrice > b.price) ? (b.compareAtPrice - b.price) : 0;
+      if (bDiscount !== aDiscount) return bDiscount - aDiscount;
+
+      // Prioritize enrollments
+      const aEnroll = a._count?.enrollments || 0;
+      const bEnroll = b._count?.enrollments || 0;
+      if (bEnroll !== aEnroll) return bEnroll - aEnroll;
+
+      // Prioritize higher price (full comprehensive diplomas)
+      return b.price - a.price;
+    });
+
+    return sorted.slice(0, 3);
   }, [initialCourses]);
 
   // Filtered & Sorted Courses
@@ -189,213 +219,260 @@ export default function CoursesCatalogClient({
 
   return (
     <div className="relative min-h-screen py-8 px-3 sm:px-6 lg:px-10 overflow-hidden">
-      {/* Dynamic Multi-Color Moving Ambient Glow Orbs in Background (Light & Dark Compatible) */}
+      {/* Dynamic Background Mesh Orbs (Dual-Theme Compatible) */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10">
-        <div className="dynamic-drift-1 absolute top-[5%] right-[15%] w-[550px] h-[550px] bg-amber-400/15 dark:bg-amber-500/10 rounded-full blur-[140px]" />
-        <div className="dynamic-drift-2 absolute bottom-[20%] left-[10%] w-[600px] h-[600px] bg-indigo-500/15 dark:bg-purple-600/15 rounded-full blur-[150px]" />
-        <div className="dynamic-drift-3 absolute top-[40%] left-[25%] w-[450px] h-[450px] bg-fuchsia-400/10 dark:bg-pink-600/10 rounded-full blur-[130px]" />
-        <div className="dynamic-drift-4 absolute bottom-[10%] right-[20%] w-[480px] h-[480px] bg-emerald-400/15 dark:bg-teal-600/10 rounded-full blur-[130px]" />
+        <div className="dynamic-drift-1 absolute top-[3%] right-[10%] w-[600px] h-[600px] bg-amber-400/20 dark:bg-amber-500/10 rounded-full blur-[150px]" />
+        <div className="dynamic-drift-2 absolute bottom-[15%] left-[8%] w-[650px] h-[650px] bg-indigo-500/20 dark:bg-purple-600/15 rounded-full blur-[160px]" />
+        <div className="dynamic-drift-3 absolute top-[35%] left-[20%] w-[450px] h-[450px] bg-cyan-400/15 dark:bg-cyan-500/10 rounded-full blur-[130px]" />
+        <div className="dynamic-drift-4 absolute bottom-[8%] right-[18%] w-[500px] h-[500px] bg-rose-400/15 dark:bg-rose-600/10 rounded-full blur-[140px]" />
       </div>
 
       <div className="max-w-[1650px] w-full mx-auto space-y-10">
         
-        {/* 1. TOP HERO: FEATURED & TRENDING / HOT DEALS SHOWCASE */}
-        <div className="relative rounded-3xl p-6 sm:p-10 bg-white/90 dark:bg-[#120e24]/90 border border-slate-200/90 dark:border-amber-500/30 shadow-2xl shadow-purple-950/20 backdrop-blur-2xl overflow-hidden text-center">
+        {/* =========================================================================
+            1. DYNAMIC SPOTLIGHT VIP STAGE (الكورسات الأكثر نشراً، بحثاً وضجة)
+           ========================================================================= */}
+        <div className="relative p-[2px] rounded-[32px] bg-gradient-to-r from-amber-500/50 via-purple-600/50 to-cyan-500/50 shadow-2xl shadow-purple-950/25 overflow-hidden group">
           
-          <div className="relative z-10 max-w-4xl mx-auto space-y-4">
-            {/* Top Glowing Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-xs sm:text-sm font-black shadow-xs">
-              <Flame className="w-4 h-4 text-amber-500 animate-pulse" />
-              <span>عروض حصرية وخصومات استثنائية على أهم الكورسات التقنية</span>
+          {/* Inner Glowing Container */}
+          <div className="relative rounded-[30px] p-6 sm:p-10 bg-white/95 dark:bg-gradient-to-b dark:from-[#15102d] dark:via-[#100c24] dark:to-[#0b0818] backdrop-blur-2xl overflow-hidden text-center">
+            
+            {/* Ambient Internal Glow Highlights */}
+            <div className="absolute top-0 right-1/4 w-80 h-80 bg-amber-500/15 dark:bg-amber-500/15 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-purple-600/20 dark:bg-purple-600/20 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute top-1/2 left-0 w-64 h-64 bg-cyan-500/15 dark:bg-cyan-500/15 rounded-full blur-[90px] pointer-events-none" />
+
+            {/* Header Area */}
+            <div className="relative z-10 max-w-4xl mx-auto space-y-3">
+              
+              {/* Pulsing Dynamic Badge */}
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/15 dark:bg-amber-400/10 border border-amber-500/40 text-amber-700 dark:text-amber-300 text-xs sm:text-sm font-black shadow-xs">
+                <Flame className="w-4 h-4 text-amber-500 animate-bounce" />
+                <span>منصة الصدارة: الكورسات الأكثر نشراً وبحثاً والضجة الأكبر في سوق العمل</span>
+              </div>
+
+              {/* Main Headline */}
+              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+                دليل الكورسات والدبلومات الأكثر طلباً
+              </h1>
+              
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-300 font-medium max-w-2xl mx-auto leading-relaxed">
+                انضم إلى آلاف المتعلمين واحترف البرمجة والذكاء الاصطناعي والتصميم مع <span className="font-black text-amber-600 dark:text-amber-400">المهندس محمد إبراهيم</span> عبر مسارات عملية كاملة.
+              </p>
+
+              {/* Top 3 Spotlight Key Metrics */}
+              <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 pt-1">
+                <div className="px-4 py-1.5 rounded-xl bg-amber-500/10 dark:bg-amber-500/15 border border-amber-500/30 text-amber-700 dark:text-amber-300 text-xs font-black flex items-center gap-1.5">
+                  <Flame className="w-3.5 h-3.5 text-amber-500" />
+                  <span>الأكثر ضجة وإقبالاً</span>
+                </div>
+                <div className="px-4 py-1.5 rounded-xl bg-cyan-500/10 dark:bg-cyan-500/15 border border-cyan-500/30 text-cyan-700 dark:text-cyan-300 text-xs font-black flex items-center gap-1.5">
+                  <Zap className="w-3.5 h-3.5 text-cyan-500" />
+                  <span>الأكثر بحثاً في 2026</span>
+                </div>
+                <div className="px-4 py-1.5 rounded-xl bg-emerald-500/10 dark:bg-emerald-500/15 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300 text-xs font-black flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-emerald-500" />
+                  <span>خصومات ذهبية حصرية</span>
+                </div>
+              </div>
             </div>
 
-            {/* Title & Subtitle Centered */}
-            <h1 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
-              دليل الكورسات والدبلومات الاحترافية
-            </h1>
-            <p className="text-sm sm:text-base text-slate-600 dark:text-zinc-300 font-medium leading-relaxed max-w-2xl mx-auto">
-              اكتسب المهارات البرمجية والتقنية المطابقة لاحتياجات سوق العمل الحديث خطوة بخطوة مع <span className="font-black text-amber-500 dark:text-amber-400">المهندس محمد إبراهيم</span>.
-            </p>
+            {/* =========================================================
+                THE 3 DAZZLING SPOTLIGHT CARDS (SLEEK & REFINED)
+               ========================================================= */}
+            {featuredCourses.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pt-8 relative z-10 text-center">
+                {featuredCourses.map((course, idx) => {
+                  const discountPercent = course.compareAtPrice && course.compareAtPrice > course.price
+                    ? Math.round(((course.compareAtPrice - course.price) / course.compareAtPrice) * 100)
+                    : 50;
 
-            {/* Live Counters Banner */}
-            <div className="flex items-center justify-center gap-3 sm:gap-6 pt-2">
-              <div className="px-5 py-2.5 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200/90 dark:border-white/10 text-center shadow-xs">
-                <span className="block text-xl font-black text-amber-600 dark:text-amber-400">{initialCourses.length}</span>
-                <span className="text-xs font-bold text-slate-500 dark:text-zinc-400">كورس ودبلومة متاحة</span>
-              </div>
-              <div className="px-5 py-2.5 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200/90 dark:border-white/10 text-center shadow-xs">
-                <span className="block text-xl font-black text-emerald-600 dark:text-emerald-400">100%</span>
-                <span className="text-xs font-bold text-slate-500 dark:text-zinc-400">مشاريع حقيقية عملية</span>
-              </div>
-              <div className="px-5 py-2.5 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200/90 dark:border-white/10 text-center shadow-xs">
-                <span className="block text-xl font-black text-indigo-600 dark:text-indigo-400">معتمدة</span>
-                <span className="text-xs font-bold text-slate-500 dark:text-zinc-400">شهادات بكود تحقق</span>
-              </div>
-            </div>
-          </div>
+                  // Spotlight rank metadata
+                  const rankConfig = idx === 0 ? {
+                    label: '#1 الأكثر ضجة وطلباً',
+                    badgeBg: 'bg-gradient-to-r from-amber-500 to-yellow-400 text-zinc-950 shadow-amber-500/30',
+                    borderHover: 'hover:border-amber-500/80 hover:shadow-amber-500/20',
+                    icon: Flame,
+                    highlightText: '🔥 إقبال هائل هذا الأسبوع',
+                  } : idx === 1 ? {
+                    label: '#2 الأكثر بحثاً ورواجاً',
+                    badgeBg: 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-cyan-500/30',
+                    borderHover: 'hover:border-cyan-500/80 hover:shadow-cyan-500/20',
+                    icon: Zap,
+                    highlightText: '⚡ الأعلى نمواً في سوق العمل',
+                  } : {
+                    label: '#3 العرض الذهبي الأقوى',
+                    badgeBg: 'bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-rose-500/30',
+                    borderHover: 'hover:border-rose-500/80 hover:shadow-rose-500/20',
+                    icon: Sparkles,
+                    highlightText: '💎 خصم استثنائي لفترة محدودة',
+                  };
 
-          {/* 3 Hot Deals Cards Highlight - Centered Layout */}
-          {featuredCourses.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8 text-center">
-              {featuredCourses.map((course, idx) => {
-                const discountPercent = course.compareAtPrice && course.compareAtPrice > course.price
-                  ? Math.round(((course.compareAtPrice - course.price) / course.compareAtPrice) * 100)
-                  : null;
+                  const RankIcon = rankConfig.icon;
+                  const thumb = getThumbnail(course, idx);
 
-                return (
-                  <div
-                    key={course.id}
-                    className="relative group rounded-3xl bg-slate-50/90 dark:bg-[#181330]/90 border border-slate-200 dark:border-purple-900/60 hover:border-amber-500/60 p-5 transition-all duration-300 flex flex-col justify-between shadow-lg hover:shadow-2xl hover:shadow-amber-500/10 hover:-translate-y-1"
-                  >
-                    <div className="space-y-4">
-                      {/* Image Preview & Badges */}
-                      <div className="relative h-44 rounded-2xl overflow-hidden bg-slate-900">
-                        <img
-                          src={course.thumbnail || 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800'}
-                          alt={course.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                        
-                        {/* Top Badges */}
-                        <div className="absolute top-3 right-3 flex items-center gap-1.5">
-                          {idx === 0 ? (
-                            <span className="px-2.5 py-1 rounded-xl bg-amber-500 text-zinc-950 font-black text-xs flex items-center gap-1 shadow-md">
-                              <Flame className="w-3.5 h-3.5" />
-                              الأكثر طلباً
+                  return (
+                    <div
+                      key={course.id}
+                      className={`group relative rounded-3xl bg-white dark:bg-[#16122f]/90 border border-slate-200/90 dark:border-purple-800/40 ${rankConfig.borderHover} p-4 transition-all duration-300 flex flex-col justify-between shadow-lg hover:shadow-2xl hover:-translate-y-1.5 backdrop-blur-xl text-center`}
+                    >
+                      <div className="space-y-3">
+                        {/* Compact Thumbnail Container */}
+                        <div className="relative h-38 sm:h-40 rounded-2xl overflow-hidden bg-slate-900 shadow-inner">
+                          <img
+                            src={thumb}
+                            alt={course.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+
+                          {/* Floating Rank Badge (Top-Right) */}
+                          <div className="absolute top-2.5 right-2.5">
+                            <span className={`px-3 py-1 rounded-xl font-black text-xs flex items-center gap-1 shadow-md ${rankConfig.badgeBg}`}>
+                              <RankIcon className="w-3.5 h-3.5" />
+                              <span>{rankConfig.label}</span>
                             </span>
-                          ) : discountPercent ? (
-                            <span className="px-2.5 py-1 rounded-xl bg-rose-600 text-white font-black text-xs flex items-center gap-1 shadow-md">
-                              <Percent className="w-3.5 h-3.5" />
-                              خصم {discountPercent}%
+                          </div>
+
+                          {/* Floating Discount Tag (Top-Left) */}
+                          {discountPercent > 0 && (
+                            <div className="absolute top-2.5 left-2.5">
+                              <span className="px-2.5 py-1 rounded-xl bg-rose-600/90 backdrop-blur-md text-white font-black text-xs flex items-center gap-1 shadow-md border border-rose-400/40 animate-pulse">
+                                <Percent className="w-3 h-3" />
+                                <span>وفر {discountPercent}%</span>
+                              </span>
+                            </div>
+                          )}
+
+                          {/* Bottom Category Bar */}
+                          <div className="absolute bottom-2.5 right-2.5 left-2.5 flex items-center justify-between">
+                            <span className="px-2.5 py-0.5 rounded-lg bg-black/75 backdrop-blur-md text-[11px] font-bold text-white border border-white/10">
+                              {course.category?.name || 'برمجة وتطوير'}
                             </span>
-                          ) : (
-                            <span className="px-2.5 py-1 rounded-xl bg-blue-600 text-white font-black text-xs">
-                              كورس متميز
+                            <span className="px-2 py-0.5 rounded-lg bg-black/75 backdrop-blur-md text-[11px] font-bold text-amber-400 flex items-center gap-1 border border-white/10">
+                              <Star className="w-3 h-3 fill-amber-400" />
+                              <span>4.9</span>
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Live Social Proof Micro-Bar */}
+                        <div className="py-1 px-2.5 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200/60 dark:border-white/5 text-[11px] font-bold text-slate-600 dark:text-zinc-300 flex items-center justify-center gap-1.5">
+                          <span>{rankConfig.highlightText}</span>
+                        </div>
+
+                        {/* Course Title Centered */}
+                        <h3 className="text-sm sm:text-base font-black text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors leading-snug line-clamp-2 px-1">
+                          {course.title}
+                        </h3>
+
+                        {/* Compact Metadata Row */}
+                        <div className="flex items-center justify-center gap-2.5 text-[11px] font-bold text-slate-500 dark:text-zinc-400">
+                          <span className="flex items-center gap-1 text-amber-600 dark:text-amber-400">
+                            <Clock className="w-3.5 h-3.5" />
+                            {formatDuration(course.durationHours)}
+                          </span>
+                          <span>•</span>
+                          <span className="flex items-center gap-1">
+                            <Layers className="w-3.5 h-3.5" />
+                            {course._count.sections} وحدات
+                          </span>
+                          <span>•</span>
+                          <span className="flex items-center gap-1">
+                            <BadgeCheck className="w-3.5 h-3.5 text-emerald-500" />
+                            شهادة معتمدة
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Pricing & CTA Button */}
+                      <div className="pt-3 mt-3 border-t border-slate-200/90 dark:border-purple-900/40 space-y-2.5 text-center">
+                        <div className="flex items-center justify-center gap-2">
+                          <span className="text-lg font-black text-slate-900 dark:text-white">
+                            {course.isFree || course.price === 0 ? 'مجاناً' : formatPrice(course.price)}
+                          </span>
+                          {course.compareAtPrice && course.compareAtPrice > course.price && (
+                            <span className="text-xs text-slate-400 dark:text-zinc-500 line-through font-bold">
+                              {formatPrice(course.compareAtPrice)}
                             </span>
                           )}
                         </div>
 
-                        {/* Category badge */}
-                        {course.category && (
-                          <span className="absolute bottom-3 right-3 px-3 py-1 rounded-xl bg-black/75 backdrop-blur-md text-xs font-bold text-white border border-white/10">
-                            {course.category.name}
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Title & Short info (Centered) */}
-                      <div className="space-y-2 text-center">
-                        <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white group-hover:text-amber-500 dark:group-hover:text-amber-400 transition-colors line-clamp-2 leading-snug">
-                          {course.title}
-                        </h3>
-                        <p className="text-xs text-slate-600 dark:text-zinc-400 line-clamp-2 leading-relaxed">
-                          {course.shortDescription || course.description}
-                        </p>
-                      </div>
-
-                      {/* Metadata Chips Centered */}
-                      <div className="flex items-center justify-center gap-3 text-xs text-slate-500 dark:text-zinc-400 font-bold">
-                        <span className="flex items-center gap-1 text-amber-600 dark:text-amber-400">
-                          <Clock className="w-3.5 h-3.5" />
-                          {formatDuration(course.durationHours)}
-                        </span>
-                        <span>•</span>
-                        <span className="flex items-center gap-1">
-                          <Layers className="w-3.5 h-3.5" />
-                          {course._count.sections} وحدات
-                        </span>
-                        <span>•</span>
-                        <span className="flex items-center gap-1">
-                          <Users className="w-3.5 h-3.5" />
-                          {course._count.enrollments} طالب
-                        </span>
+                        <Link
+                          href={`/courses/${course.slug}`}
+                          className="w-full h-10 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 hover:from-amber-600 hover:to-yellow-500 text-zinc-950 font-black text-xs transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-amber-500/20 hover:scale-[1.02] active:scale-[0.98]"
+                        >
+                          <span>عرض تفاصيل الكورس والعرض</span>
+                          <ArrowLeft className="w-3.5 h-3.5 text-zinc-950" />
+                        </Link>
                       </div>
                     </div>
+                  );
+                })}
+              </div>
+            )}
 
-                    {/* Price & CTA Centered */}
-                    <div className="pt-4 mt-4 border-t border-slate-200 dark:border-purple-900/40 space-y-3 text-center">
-                      <div className="flex items-center justify-center gap-2">
-                        <span className="text-lg font-black text-amber-600 dark:text-amber-400">{formatPrice(course.price)}</span>
-                        {course.compareAtPrice && course.compareAtPrice > course.price && (
-                          <span className="text-xs text-slate-400 dark:text-zinc-500 line-through font-bold">
-                            {formatPrice(course.compareAtPrice)}
-                          </span>
-                        )}
-                      </div>
+            {/* Quick Filter Picks Horizontal Bar */}
+            <div className="flex flex-wrap items-center justify-center gap-2 pt-6 border-t border-slate-200/90 dark:border-purple-900/40 relative z-10">
+              <span className="text-xs font-bold text-slate-500 dark:text-zinc-400">تصفح سريع:</span>
 
-                      <Link
-                        href={`/courses/${course.slug}`}
-                        className="w-full h-11 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 hover:from-amber-600 hover:to-yellow-500 text-zinc-950 font-black text-xs sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-amber-500/20 hover:scale-[1.02] active:scale-[0.98]"
-                      >
-                        <span>عرض تفاصيل الكورس والعرض</span>
-                        <ArrowLeft className="w-4 h-4 text-zinc-950" />
-                      </Link>
-                    </div>
-                  </div>
-                );
-              })}
+              <button
+                type="button"
+                onClick={() => { setSelectedPriceFilter('ALL'); setSelectedCategory(''); }}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  selectedPriceFilter === 'ALL' && !selectedCategory
+                    ? 'bg-amber-500 text-zinc-950 shadow-sm shadow-amber-500/20'
+                    : 'bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-zinc-300 hover:bg-slate-200 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10'
+                }`}
+              >
+                جميع الكورسات ({initialCourses.length})
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setSelectedPriceFilter('DISCOUNTED')}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+                  selectedPriceFilter === 'DISCOUNTED'
+                    ? 'bg-rose-600 text-white shadow-sm shadow-rose-600/30'
+                    : 'bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 hover:bg-rose-100 dark:hover:bg-rose-900/40 border border-rose-200 dark:border-rose-800/40'
+                }`}
+              >
+                <Percent className="w-3.5 h-3.5" />
+                <span>عروض وتخفيضات خاصة</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setSortBy('POPULAR')}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+                  sortBy === 'POPULAR' && selectedPriceFilter !== 'DISCOUNTED'
+                    ? 'bg-purple-600 text-white shadow-sm shadow-purple-600/30'
+                    : 'bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 hover:bg-purple-100 dark:hover:bg-purple-900/40 border border-purple-200 dark:border-purple-800/40'
+                }`}
+              >
+                <Flame className="w-3.5 h-3.5 text-amber-500" />
+                <span>الأكثر طلباً ورواجاً</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setOnlyCertified(!onlyCertified)}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+                  onlyCertified
+                    ? 'bg-emerald-600 text-white shadow-sm shadow-emerald-600/30'
+                    : 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 border border-emerald-200 dark:border-emerald-800/40'
+                }`}
+              >
+                <BadgeCheck className="w-3.5 h-3.5" />
+                <span>شهادات معتمدة</span>
+              </button>
             </div>
-          )}
-
-          {/* Quick Filter Pills (Top Horizontal Quick Picks) */}
-          <div className="flex flex-wrap items-center justify-center gap-2.5 pt-6 border-t border-slate-200 dark:border-purple-900/40">
-            <span className="text-xs font-bold text-slate-500 dark:text-zinc-400">عرض سريع:</span>
-            
-            <button
-              type="button"
-              onClick={() => { setSelectedPriceFilter('ALL'); setSelectedCategory(''); }}
-              className={`px-4 py-2 rounded-2xl text-xs font-bold transition-all cursor-pointer ${
-                selectedPriceFilter === 'ALL' && !selectedCategory
-                  ? 'bg-amber-500 text-zinc-950 shadow-md shadow-amber-500/20'
-                  : 'bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-zinc-300 hover:bg-slate-200 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10'
-              }`}
-            >
-              جميع الكورسات ({initialCourses.length})
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setSelectedPriceFilter('DISCOUNTED')}
-              className={`px-4 py-2 rounded-2xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
-                selectedPriceFilter === 'DISCOUNTED'
-                  ? 'bg-rose-600 text-white shadow-md shadow-rose-600/30'
-                  : 'bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 hover:bg-rose-100 dark:hover:bg-rose-900/40 border border-rose-200 dark:border-rose-800/40'
-              }`}
-            >
-              <Percent className="w-3.5 h-3.5" />
-              <span>عروض وتخفيضات خاصة</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setSortBy('POPULAR')}
-              className={`px-4 py-2 rounded-2xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
-                sortBy === 'POPULAR' && selectedPriceFilter !== 'DISCOUNTED'
-                  ? 'bg-purple-600 text-white shadow-md shadow-purple-600/30'
-                  : 'bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 hover:bg-purple-100 dark:hover:bg-purple-900/40 border border-purple-200 dark:border-purple-800/40'
-              }`}
-            >
-              <Flame className="w-3.5 h-3.5 text-amber-500" />
-              <span>الأكثر طلباً ورواجاً</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setOnlyCertified(!onlyCertified)}
-              className={`px-4 py-2 rounded-2xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
-                onlyCertified
-                  ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/30'
-                  : 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 border border-emerald-200 dark:border-emerald-800/40'
-              }`}
-            >
-              <BadgeCheck className="w-3.5 h-3.5" />
-              <span>شهادات معتمدة</span>
-            </button>
           </div>
         </div>
 
-        {/* 2. MAIN LAYOUT: SIDEBAR + COURSES CATALOG (WIDE LAYOUT) */}
+        {/* =========================================================================
+            2. MAIN CATALOG: SIDEBAR + COURSES GRID
+           ========================================================================= */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
           
           {/* ===================== SIDEBAR ===================== */}
@@ -533,7 +610,7 @@ export default function CoursesCatalogClient({
                 </div>
               </div>
 
-              {/* Sidebar Smart Innovation Card 1: AI Advisor */}
+              {/* Innovation Card: AI Advisor */}
               <div className="p-6 rounded-3xl bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/80 dark:to-purple-950/80 border border-indigo-200 dark:border-indigo-700/50 shadow-xl space-y-3 text-center">
                 <div className="w-10 h-10 rounded-2xl bg-indigo-600 text-white flex items-center justify-center mx-auto shadow-md shadow-indigo-600/30">
                   <Zap className="w-5 h-5" />
@@ -555,7 +632,7 @@ export default function CoursesCatalogClient({
                 </a>
               </div>
 
-              {/* Sidebar Smart Innovation Card 2: 100% Guarantee */}
+              {/* Innovation Card: 100% Guarantee */}
               <div className="p-5 rounded-3xl bg-white/90 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 space-y-2 text-center shadow-md">
                 <div className="flex items-center justify-center gap-2 text-xs font-bold text-amber-600 dark:text-amber-400">
                   <BadgeCheck className="w-4 h-4" />
@@ -588,7 +665,7 @@ export default function CoursesCatalogClient({
                   <button
                     type="button"
                     onClick={() => setSearchQuery('')}
-                    className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 dark:hover:text-white"
+                    className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 dark:hover:text-white cursor-pointer"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -680,7 +757,7 @@ export default function CoursesCatalogClient({
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                {filteredCourses.map((course) => {
+                {filteredCourses.map((course, idx) => {
                   const discountPercent = course.compareAtPrice && course.compareAtPrice > course.price
                     ? Math.round(((course.compareAtPrice - course.price) / course.compareAtPrice) * 100)
                     : null;
@@ -689,6 +766,8 @@ export default function CoursesCatalogClient({
                     course.level === 'BEGINNER' ? 'مبتدئ' :
                     course.level === 'INTERMEDIATE' ? 'متوسط' :
                     course.level === 'ADVANCED' ? 'متقدم' : 'شامل لجميع المستويات';
+
+                  const thumb = getThumbnail(course, idx);
 
                   return (
                     <div
@@ -699,7 +778,7 @@ export default function CoursesCatalogClient({
                         {/* Thumbnail & Floating Badges */}
                         <div className="relative h-48 rounded-2xl overflow-hidden bg-slate-900">
                           <img
-                            src={course.thumbnail || 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800'}
+                            src={thumb}
                             alt={course.title}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                           />
