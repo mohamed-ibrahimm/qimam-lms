@@ -121,9 +121,9 @@ export default function HomeCoursesSection({
       <div className="max-w-[1440px] mx-auto space-y-10">
         
         {/* =========================================================================
-            1. SECTION HEADER (Futuristic, Symmetrical, High Impact)
+            1. SECTION HEADER (Symmetrical, High Impact)
            ========================================================================= */}
-        <div className="text-center max-w-3xl mx-auto space-y-3.5">
+        <div className="text-center max-w-3xl mx-auto space-y-3">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-amber-500/10 border border-blue-200/80 dark:border-amber-500/25 text-blue-700 dark:text-amber-300 text-xs font-black shadow-xs">
             <Sparkles className="w-4 h-4 text-blue-600 dark:text-amber-400 animate-pulse" />
             <span>دليل كافة مسارات وكورسات المنصة المعتمدة</span>
@@ -188,22 +188,20 @@ export default function HomeCoursesSection({
         )}
 
         {/* =========================================================================
-            3. SLEEK, WIDE & COMPACT LUXURY CARDS GRID (Modern Golden Ratio Proportions)
+            3. SLEEK, WIDE & CENTERED LUXURY CARDS GRID
            ========================================================================= */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
           {filteredCourses.map((course, idx) => {
             const theme = THEME_STYLES[idx % THEME_STYLES.length];
             const CatIcon = getCategoryIcon(course.category?.slug);
             
-            // Clean fallback image
-            const imageSrc = course.thumbnail && !course.thumbnail.includes('1787933474229') && !course.thumbnail.includes('1787916336074')
-              ? course.thumbnail
-              : theme.fallbackImg;
+            // Direct clean image (supports user-uploaded /uploads/... or external URLs)
+            const imageSrc = course.thumbnail || theme.fallbackImg;
 
-            // Fake original price for attractive discount
+            // Discount calculation for luxury presentation
             const originalPrice = Math.round((course.price * 1.55) / 50) * 50;
 
-            // Clean concise description
+            // Normalized description
             const cleanDescription = course.shortDescription && course.shortDescription.length > 10 && !course.shortDescription.includes('سسس')
               ? course.shortDescription
               : (course.description && course.description.length > 10 && !course.description.includes('سسس')
@@ -213,18 +211,18 @@ export default function HomeCoursesSection({
             return (
               <div
                 key={course.id}
-                className={`group relative flex flex-col justify-between rounded-2xl bg-white/95 dark:bg-zinc-900/75 backdrop-blur-2xl border border-slate-200/90 dark:border-zinc-800/90 ${theme.glowBorder} shadow-lg shadow-slate-900/5 dark:shadow-black/70 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1.5 overflow-hidden`}
+                className={`group relative flex flex-col justify-between rounded-2xl bg-white/95 dark:bg-zinc-900/80 backdrop-blur-2xl border border-slate-200/90 dark:border-zinc-800/90 ${theme.glowBorder} shadow-lg shadow-slate-900/5 dark:shadow-black/70 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1.5 overflow-hidden`}
               >
-                {/* 1. Dynamic Top 2px Luminous Accent Line */}
+                {/* 1. Dynamic Top 2px Accent Beam */}
                 <div className={`h-1 w-full bg-gradient-to-r ${theme.topBar}`} />
 
                 {/* 2. Ambient Glow Flare */}
                 <div className={`absolute -top-20 -right-20 w-44 h-44 rounded-full bg-gradient-to-br ${theme.aura} blur-2xl group-hover:scale-150 transition-transform duration-700 pointer-events-none`} />
 
-                {/* 3. Card Content Area (Compact, Elegant, Balanced) */}
-                <div className="p-3.5 sm:p-4 space-y-3">
+                {/* 3. Card Content Area (Centered, Compact & Balanced) */}
+                <div className="p-3.5 sm:p-4 space-y-3 text-center">
                   
-                  {/* Widescreen Compact Image (h-40 / aspect-[16/9]) */}
+                  {/* Widescreen Image */}
                   <div className="relative h-40 rounded-xl overflow-hidden bg-slate-100 dark:bg-zinc-950 border border-slate-200/80 dark:border-zinc-800/80 shadow-xs">
                     <img
                       src={imageSrc}
@@ -239,12 +237,12 @@ export default function HomeCoursesSection({
                     {/* Top Badges */}
                     <div className="absolute top-2.5 right-2.5 left-2.5 flex items-center justify-between pointer-events-none">
                       {course.category ? (
-                        <span className="px-2.5 py-0.5 rounded-full text-[10.5px] font-black bg-black/70 backdrop-blur-md text-amber-300 border border-amber-500/30 flex items-center gap-1 shadow-sm">
+                        <span className="px-2.5 py-0.5 rounded-full text-[10.5px] font-black bg-black/75 backdrop-blur-md text-amber-300 border border-amber-500/30 flex items-center gap-1 shadow-sm">
                           <CatIcon className="w-3 h-3 text-amber-400" />
                           <span>{course.category.name}</span>
                         </span>
                       ) : (
-                        <span className="px-2.5 py-0.5 rounded-full text-[10.5px] font-black bg-black/70 backdrop-blur-md text-sky-300 border border-sky-500/30 flex items-center gap-1 shadow-sm">
+                        <span className="px-2.5 py-0.5 rounded-full text-[10.5px] font-black bg-black/75 backdrop-blur-md text-sky-300 border border-sky-500/30 flex items-center gap-1 shadow-sm">
                           <Code2 className="w-3 h-3 text-sky-400" />
                           <span>مسار هندسي</span>
                         </span>
@@ -275,12 +273,12 @@ export default function HomeCoursesSection({
                     </div>
                   </div>
 
-                  {/* Course Details (Compact & Symmetrical) */}
-                  <div className="space-y-1.5 text-right">
+                  {/* Course Details (100% CENTERED) */}
+                  <div className="space-y-2 text-center">
                     
-                    {/* Badge & Perk */}
-                    <div className="flex items-center justify-between text-[11px] pt-0.5">
-                      <span className={`px-2 py-0.5 rounded-full font-black border ${theme.badge} flex items-center gap-1`}>
+                    {/* Centered Micro-Badge */}
+                    <div className="flex items-center justify-center gap-2 text-[11px]">
+                      <span className={`px-2.5 py-0.5 rounded-full font-black border ${theme.badge} flex items-center gap-1 shadow-xs`}>
                         <Zap className="w-2.5 h-2.5" />
                         <span>{theme.badgeText}</span>
                       </span>
@@ -289,63 +287,67 @@ export default function HomeCoursesSection({
                       </span>
                     </div>
 
-                    {/* Title (Sleek & High Contrast) */}
-                    <h3 className={`font-black text-base sm:text-lg text-slate-900 dark:text-white ${theme.titleHover} transition-colors line-clamp-1 leading-snug pt-0.5`}>
+                    {/* Centered Title */}
+                    <h3 className={`font-black text-lg sm:text-xl text-slate-900 dark:text-white ${theme.titleHover} transition-colors line-clamp-1 leading-snug text-center`}>
                       {course.title}
                     </h3>
                     
-                    {/* Concise Description */}
-                    <p className="text-xs text-slate-600 dark:text-zinc-400 line-clamp-1 leading-relaxed">
+                    {/* Centered Concise Description */}
+                    <p className="text-xs text-slate-600 dark:text-zinc-400 line-clamp-1 leading-relaxed text-center max-w-sm mx-auto">
                       {cleanDescription}
                     </p>
 
-                    {/* Sleek Integrated Instructor Row */}
-                    <div className="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-zinc-800/80">
-                      <div className="flex items-center gap-2">
-                        <div className={`w-7 h-7 rounded-full bg-gradient-to-tr ${theme.avatarRing} p-[1.5px] shrink-0 shadow-xs`}>
-                          <div className="w-full h-full rounded-full bg-slate-900 dark:bg-zinc-950 flex items-center justify-center text-[10px] font-black text-white">
+                    {/* Centered Sleek Instructor Pill */}
+                    <div className="pt-1 flex justify-center">
+                      <div className="inline-flex items-center gap-2 py-1 px-3 rounded-full bg-slate-100/90 dark:bg-zinc-800/60 border border-slate-200/80 dark:border-zinc-700/60 shadow-xs">
+                        <div className={`w-5 h-5 rounded-full bg-gradient-to-tr ${theme.avatarRing} p-[1px] shrink-0`}>
+                          <div className="w-full h-full rounded-full bg-slate-900 dark:bg-zinc-950 flex items-center justify-center text-[9px] font-black text-white">
                             {course.instructor?.officialFullName?.[0] || 'م'}
                           </div>
                         </div>
                         <span className="text-xs font-bold text-slate-800 dark:text-zinc-200">
                           {course.instructor?.officialFullName || 'م / محمد إبراهيم'}
                         </span>
+                        <span className="text-[9.5px] px-1.5 py-0.2 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold">
+                          محاضر معتمد
+                        </span>
                       </div>
-
-                      <span className="text-[10px] px-2 py-0.5 rounded-md bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 font-semibold">
-                        محاضر معتمد
-                      </span>
                     </div>
 
                   </div>
                 </div>
 
-                {/* 4. Sleek Horizontal Price & Action Base (Wide & Compact) */}
-                <div className="px-3.5 py-3 sm:px-4 sm:py-3 bg-slate-50/90 dark:bg-zinc-950/80 border-t border-slate-100 dark:border-zinc-800/80 flex items-center justify-between gap-3 mt-auto rounded-b-2xl">
+                {/* 4. DAZZLING CENTERED PRICING & FULL-WIDTH BUTTON BASE */}
+                <div className="p-3.5 sm:p-4 bg-slate-50/95 dark:bg-zinc-950/85 border-t border-slate-100 dark:border-zinc-800/80 flex flex-col items-center gap-2.5 rounded-b-2xl text-center">
                   
-                  {/* Price Block */}
-                  <div className="text-right">
-                    <div className="flex items-center gap-1.5 leading-none mb-1">
-                      <span className="text-[10px] text-slate-400 dark:text-zinc-500 line-through font-bold">
+                  {/* Mesmerizing Centered Price Display */}
+                  <div className="flex items-center justify-center gap-3">
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-xs text-slate-400 dark:text-zinc-500 line-through font-bold">
                         {formatPrice(originalPrice)}
                       </span>
-                      <span className="text-[9px] px-1.5 py-0.2 rounded bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 font-black">
-                        وفر 35%
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-black border border-emerald-500/25">
+                        وفر 35% 🔥
                       </span>
                     </div>
-                    <span className={`text-lg sm:text-xl font-black ${theme.priceColor} tracking-tight leading-none block`}>
-                      {formatPrice(course.price)}
-                    </span>
+
+                    <div className="h-4 w-px bg-slate-200 dark:bg-zinc-800" />
+
+                    <div className="flex items-baseline gap-1">
+                      <span className={`text-2xl sm:text-3xl font-black ${theme.priceColor} tracking-tight drop-shadow-sm`}>
+                        {formatPrice(course.price)}
+                      </span>
+                    </div>
                   </div>
 
-                  {/* Sleek Action CTA Button */}
+                  {/* Full-Width Luxury Button */}
                   <Link
                     href={`/courses/${course.slug}`}
                     prefetch={true}
-                    className={`px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center gap-1.5 shadow-md active:scale-95 ${theme.btn} dark:${theme.btnDark}`}
+                    className={`w-full py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center justify-center gap-2 shadow-md active:scale-98 ${theme.btn} dark:${theme.btnDark}`}
                   >
-                    <span>عرض الكورس</span>
-                    <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
+                    <span>عرض الكورس والاشتراك</span>
+                    <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1.5 transition-transform" />
                   </Link>
                 </div>
 
