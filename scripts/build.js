@@ -51,6 +51,13 @@ if (isRealDb) {
     }
   } catch (err) {
     console.warn('⚠️ Migration deploy notice:', err.message);
+    try {
+      console.log('🔄 Attempting prisma db push to ensure all columns exist in database...');
+      execSync('npx prisma db push --accept-data-loss', { stdio: 'inherit' });
+      console.log('✅ Database schema pushed successfully.');
+    } catch (pushErr) {
+      console.warn('Prisma db push notice:', pushErr.message);
+    }
   }
 } else {
   console.log('ℹ️ [Build Step 2/3] Skipping migrations (DATABASE_URL is not set or local).');

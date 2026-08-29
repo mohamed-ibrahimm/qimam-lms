@@ -1,4 +1,4 @@
-﻿import { NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { getCurrentUser } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
@@ -61,7 +61,13 @@ export async function PUT(req: Request) {
             course: true,
           }
         },
-        user: true,
+        user: {
+          select: {
+            id: true,
+            email: true,
+            officialFullName: true,
+          }
+        },
       }
     });
 

@@ -42,7 +42,25 @@ export async function PUT(req: Request) {
 
     const payment = await prisma.payment.findUnique({
       where: { id: paymentId },
-      include: { order: true, user: true }
+      include: {
+        order: {
+          select: {
+            id: true,
+            orderNumber: true,
+            courseId: true,
+            diplomaId: true,
+            totalAmount: true,
+            finalAmount: true,
+          }
+        },
+        user: {
+          select: {
+            id: true,
+            email: true,
+            officialFullName: true,
+          }
+        }
+      }
     });
 
     if (!payment) {
