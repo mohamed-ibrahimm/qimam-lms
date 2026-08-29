@@ -451,9 +451,9 @@ export default function Header({
                 <span>إنشاء حساب</span>
               </Link>
               <Link
-                href="/register?role=instructor"
+                href="/instructors/join"
                 className="px-3 py-1.5 rounded-full text-xs font-bold bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/30 text-purple-700 dark:text-purple-300 transition-all flex items-center gap-1 shrink-0"
-                title="سجل كمحاضر مستقل - 14 يوماً مجاناً"
+                title="سجل كمحاضر مستقل - 14 يوماً مجاناً وعروض حصرية"
               >
                 <Video className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
                 <span>انضم كمحاضر</span>
@@ -630,7 +630,7 @@ export default function Header({
                   </Link>
                 </div>
                 <Link
-                  href="/register?role=instructor"
+                  href="/instructors/join"
                   onClick={() => setMobileMenuOpen(false)}
                   className="w-full py-2.5 px-3 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/40 text-purple-700 dark:text-purple-300 font-bold text-xs flex items-center justify-center gap-2 transition-colors"
                 >
