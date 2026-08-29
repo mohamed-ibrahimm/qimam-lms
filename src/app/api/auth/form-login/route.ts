@@ -9,7 +9,12 @@ export async function POST(req: Request) {
     let callbackUrl = '';
 
     const reqUrl = new URL(req.url);
-    const origin = reqUrl.origin;
+    let host = req.headers.get('x-forwarded-host') || req.headers.get('host') || reqUrl.host || 'localhost:3000';
+    if (host.startsWith('0.0.0.0')) {
+      host = host.replace('0.0.0.0', '192.168.100.2');
+    }
+    const proto = req.headers.get('x-forwarded-proto') || (reqUrl.protocol ? reqUrl.protocol.replace(':', '') : 'http');
+    const origin = `${proto}://${host}`;
 
     const contentType = req.headers.get('content-type') || '';
 
