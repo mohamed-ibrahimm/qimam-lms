@@ -12,9 +12,6 @@ import {
   Send,
   Youtube,
   Linkedin,
-  MapPin,
-  ShieldCheck,
-  Award,
 } from 'lucide-react';
 
 interface MobileHeroProps {
@@ -200,22 +197,6 @@ export default function MobileHero({
             </div>
           </div>
         )}
-
-        {/* Accreditation & Location Badges */}
-        <div className="space-y-2.5 max-w-sm mx-auto pt-2">
-          <div className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-full bg-white dark:bg-zinc-900/80 border border-slate-200 dark:border-zinc-800 text-xs text-slate-700 dark:text-zinc-300 shadow-xs">
-            <MapPin className="w-3.5 h-3.5 text-blue-600 dark:text-amber-400 shrink-0" />
-            <span className="whitespace-nowrap font-medium">مصر — القاهرة & أونلاين بالعالم العربي</span>
-          </div>
-          <div className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-full bg-white dark:bg-zinc-900/80 border border-slate-200 dark:border-zinc-800 text-xs text-slate-800 dark:text-zinc-200 font-semibold shadow-xs">
-            <ShieldCheck className="w-3.5 h-3.5 text-blue-600 dark:text-amber-400 shrink-0" />
-            <span>إشراف {cleanPlatformName}</span>
-          </div>
-          <div className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-full bg-white dark:bg-zinc-900/80 border border-slate-200 dark:border-zinc-800 text-xs text-slate-800 dark:text-zinc-200 font-semibold shadow-xs">
-            <Award className="w-3.5 h-3.5 text-blue-600 dark:text-amber-400 shrink-0" />
-            <span>شهادات تخرج رقمية معتمدة برمز QR</span>
-          </div>
-        </div>
 
       </section>
     </div>

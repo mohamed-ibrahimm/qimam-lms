@@ -12,9 +12,6 @@ import {
   Send,
   Youtube,
   Linkedin,
-  MapPin,
-  ShieldCheck,
-  Award,
 } from 'lucide-react';
 
 interface DesktopHeroProps {
@@ -193,23 +190,6 @@ export default function DesktopHero({
             )}
           </div>
         )}
-
-        <div className="mt-12 flex flex-col items-center">
-          <div className="flex flex-wrap items-center justify-center gap-3.5 text-sm text-slate-600 dark:text-zinc-400 pt-2 w-full max-w-3xl px-2 pb-4">
-            <div className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-white/90 dark:bg-zinc-900/70 border border-slate-200/90 dark:border-zinc-800/80 backdrop-blur-md shadow-xs">
-              <MapPin className="w-4 h-4 text-blue-600 dark:text-amber-400 shrink-0" />
-              <span className="whitespace-nowrap font-medium text-slate-700 dark:text-zinc-300">مصر — القاهرة & أونلاين بالعالم العربي</span>
-            </div>
-            <div className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-white/90 dark:bg-zinc-900/70 border border-slate-200/90 dark:border-zinc-800/80 backdrop-blur-md shadow-xs">
-              <ShieldCheck className="w-4 h-4 text-blue-600 dark:text-amber-400 shrink-0" />
-              <span className="text-slate-800 dark:text-zinc-200 font-semibold whitespace-nowrap">إشراف {cleanPlatformName}</span>
-            </div>
-            <div className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-white/90 dark:bg-zinc-900/70 border border-slate-200/90 dark:border-zinc-800/80 backdrop-blur-md shadow-xs">
-              <Award className="w-4 h-4 text-blue-600 dark:text-amber-400 shrink-0" />
-              <span className="text-slate-800 dark:text-zinc-200 font-semibold whitespace-nowrap">شهادات تخرج رقمية معتمدة برمز QR</span>
-            </div>
-          </div>
-        </div>
 
       </div>
     </section>
