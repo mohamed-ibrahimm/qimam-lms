@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import TopProgressBar from '@/components/layout/TopProgressBar';
+import FloatingWhatsApp from '@/components/FloatingWhatsApp';
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -52,6 +53,7 @@ export default function AppShell({
         </div>
       </main>
       {!isAdmin && <Footer initialSettings={initialSettings} />}
+      <FloatingWhatsApp settings={initialSettings} />
     </div>
   );
 }
