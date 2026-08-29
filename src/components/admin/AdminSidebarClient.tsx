@@ -273,7 +273,7 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
   return (
     <>
       {/* Mobile Top Controls Bar (Below Fixed Header) */}
-      <div className="md:hidden sticky top-14 sm:top-16 z-30 flex items-center justify-between p-3.5 bg-white/95 dark:bg-[#120e24]/95 border-b border-slate-200 dark:border-purple-900/50 backdrop-blur-xl shadow-xs">
+      <div className="md:hidden relative z-20 flex items-center justify-between p-3.5 bg-white/95 dark:bg-[#120e24]/95 border-b border-slate-200 dark:border-purple-900/50 backdrop-blur-xl shadow-xs">
         <div className="flex items-center gap-2 min-w-0">
           <span className="text-xs font-black text-slate-900 dark:text-white truncate">{platformName}</span>
           <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-800 dark:text-amber-300 font-bold border border-amber-500/30 shrink-0">

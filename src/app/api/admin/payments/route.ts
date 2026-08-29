@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import { requireAuth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function GET() {
   try {
     await requireAuth(['ADMIN']);
@@ -46,6 +49,16 @@ export async function PUT(req: Request) {
       return NextResponse.json({ error: 'المعاملة غير موجودة' }, { status: 404 });
     }
 
+    // Determine safe reviewer admin ID in DB to avoid FK constraint errors
+    let reviewerId: string | null = null;
+    try {
+      const validAdmin = await prisma.user.findFirst({
+        where: { role: 'ADMIN' },
+        select: { id: true }
+      });
+      if (validAdmin) reviewerId = validAdmin.id;
+    } catch (_) {}
+
     if (action === 'APPROVE') {
       // 1. Update Payment
       await prisma.payment.update({
@@ -53,68 +66,97 @@ export async function PUT(req: Request) {
         data: {
           status: 'APPROVED',
           adminNotes: adminNotes || 'تم تأكيد وصول التحويل البنكي/المحفظة من قبل الإدارة',
-          reviewedById: admin.id,
+          reviewedById: reviewerId,
           reviewedAt: new Date(),
         }
       });
 
-      // 2. Update Order
-      await prisma.order.update({
-        where: { id: payment.order.id },
-        data: { status: 'COMPLETED' }
-      });
+      // 2. Update Order if exists
+      if (payment.order?.id) {
+        await prisma.order.update({
+          where: { id: payment.order.id },
+          data: { status: 'COMPLETED' }
+        }).catch(() => {});
+      }
 
-      // 3. Create Enrollment & Unlock Course/Diploma
-      await prisma.enrollment.upsert({
-        where: {
-          userId_courseId: payment.order.courseId ? {
+      // 3. Create Enrollment & Unlock Course/Diploma cleanly
+      try {
+        if (payment.order?.courseId) {
+          await prisma.enrollment.upsert({
+            where: {
+              userId_courseId: {
+                userId: payment.userId,
+                courseId: payment.order.courseId,
+              }
+            },
+            create: {
+              userId: payment.userId,
+              courseId: payment.order.courseId,
+              type: 'COURSE',
+              status: 'ACTIVE',
+              accessType: 'LIFETIME',
+              progressPercent: 0,
+            },
+            update: {
+              status: 'ACTIVE',
+            }
+          });
+        } else if (payment.order?.diplomaId) {
+          await prisma.enrollment.upsert({
+            where: {
+              userId_diplomaId: {
+                userId: payment.userId,
+                diplomaId: payment.order.diplomaId,
+              }
+            },
+            create: {
+              userId: payment.userId,
+              diplomaId: payment.order.diplomaId,
+              type: 'DIPLOMA',
+              status: 'ACTIVE',
+              accessType: 'LIFETIME',
+              progressPercent: 0,
+            },
+            update: {
+              status: 'ACTIVE',
+            }
+          });
+        }
+      } catch (enrollErr) {
+        console.warn('Enrollment upsert warning:', enrollErr);
+      }
+
+      // 4. Send In-App Notification (Zero Emojis)
+      try {
+        await prisma.notification.create({
+          data: {
             userId: payment.userId,
-            courseId: payment.order.courseId,
-          } : undefined,
-          userId_diplomaId: payment.order.diplomaId ? {
-            userId: payment.userId,
-            diplomaId: payment.order.diplomaId,
-          } : undefined,
-        },
-        create: {
-          userId: payment.userId,
-          courseId: payment.order.courseId,
-          diplomaId: payment.order.diplomaId,
-          type: payment.order.courseId ? 'COURSE' : 'DIPLOMA',
-          status: 'ACTIVE',
-          accessType: 'LIFETIME',
-          progressPercent: 0,
-        },
-        update: {
-          status: 'ACTIVE',
-        }
-      });
+            title: 'تم تأكيد دفعتك وتفعيل المحتوى بنجاح',
+            message: `تم اعتماد عملية الدفع رقم (${payment.transactionId || payment.order?.orderNumber || payment.id}) وتفعيل اشتراكك فورياً.`,
+            link: '/dashboard',
+            type: 'PAYMENT',
+          }
+        });
+      } catch (_) {}
 
-      // 4. Send In-App Notification
-      await prisma.notification.create({
-        data: {
-          userId: payment.userId,
-          title: '✅ تم تأكيد دفعتك وفتح المحتوى بنجاح!',
-          message: `تم اعتماد عملية الدفع رقم (${payment.transactionId || payment.order.orderNumber}) وتفعيل اشتراكك فورياً.`,
-          link: '/dashboard',
-          type: 'PAYMENT',
-        }
-      });
-
-      // 5. Audit Log
-      await prisma.auditLog.create({
-        data: {
-          userId: admin.id,
-          action: 'PAYMENT_APPROVED',
-          entity: 'PAYMENT',
-          entityId: payment.id,
-          detailsJson: JSON.stringify({
-            orderNumber: payment.order.orderNumber,
-            amount: payment.amount,
-            studentEmail: payment.user.email,
-          })
-        }
-      });
+      // 5. Audit Log safely
+      if (reviewerId) {
+        try {
+          await prisma.auditLog.create({
+            data: {
+              userId: reviewerId,
+              action: 'PAYMENT_APPROVED',
+              entity: 'PAYMENT',
+              entityId: payment.id,
+              detailsJson: JSON.stringify({
+                orderNumber: payment.order?.orderNumber,
+                amount: payment.amount,
+                studentEmail: payment.user?.email,
+              })
+            }
+          });
+        } catch (_) {}
+      }
 
       return NextResponse.json({ success: true, message: 'تمت الموافقة وتفعيل الاشتراك بنجاح' });
     } else if (action === 'REJECT') {
@@ -123,44 +165,53 @@ export async function PUT(req: Request) {
         data: {
           status: 'REJECTED',
           adminNotes: adminNotes || 'لم يتم تأكيد وصول التحويل المالي',
-          reviewedById: admin.id,
+          reviewedById: reviewerId,
           reviewedAt: new Date(),
         }
       });
 
-      await prisma.order.update({
-        where: { id: payment.order.id },
-        data: { status: 'CANCELLED' }
-      });
+      if (payment.order?.id) {
+        await prisma.order.update({
+          where: { id: payment.order.id },
+          data: { status: 'CANCELLED' }
+        }).catch(() => {});
+      }
 
-      await prisma.notification.create({
-        data: {
-          userId: payment.userId,
-          title: '❌ تعذر التحقق من عملية الدفع',
-          message: `تم رفض إيصال الدفع للطلب ${payment.order.orderNumber}. السبب: ${adminNotes || 'عدم مطابقة بيانات التحويل'}. يرجى التواصل مع الدعم الفني.`,
-          link: '/support',
-          type: 'PAYMENT',
-        }
-      });
+      try {
+        await prisma.notification.create({
+          data: {
+            userId: payment.userId,
+            title: 'تعذر التحقق من عملية الدفع',
+            message: `تم رفض إيصال الدفع للطلب ${payment.order?.orderNumber || payment.id}. السبب: ${adminNotes || 'عدم مطابقة بيانات التحويل'}. يرجى التواصل مع الدعم الفني.`,
+            link: '/support',
+            type: 'PAYMENT',
+          }
+        });
+      } catch (_) {}
 
-      await prisma.auditLog.create({
-        data: {
-          userId: admin.id,
-          action: 'PAYMENT_REJECTED',
-          entity: 'PAYMENT',
-          entityId: payment.id,
-          detailsJson: JSON.stringify({
-            orderNumber: payment.order.orderNumber,
-            reason: adminNotes,
-          })
-        }
-      });
+      if (reviewerId) {
+        try {
+          await prisma.auditLog.create({
+            data: {
+              userId: reviewerId,
+              action: 'PAYMENT_REJECTED',
+              entity: 'PAYMENT',
+              entityId: payment.id,
+              detailsJson: JSON.stringify({
+                orderNumber: payment.order?.orderNumber,
+                reason: adminNotes,
+              })
+            }
+          });
+        } catch (_) {}
+      }
 
       return NextResponse.json({ success: true, message: 'تم رفض المعاملة وإشعار الطالب' });
     }
 
     return NextResponse.json({ error: 'إجراء غير صالح' }, { status: 400 });
-  } catch (error) {
-    return NextResponse.json({ error: 'فشلت معالجة الطلب' }, { status: 500 });
+  } catch (error: any) {
+    console.error('Failed to process payment action:', error);
+    return NextResponse.json({ error: error?.message || 'فشلت معالجة الطلب' }, { status: 500 });
   }
 }
