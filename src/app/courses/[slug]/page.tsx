@@ -132,25 +132,37 @@ export default async function CourseDetailPage({ params }: Props) {
   const cleanThumbnail = course.thumbnail || 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800';
 
   return (
-    <div className="pb-24 pt-6 sm:pt-8 min-h-screen">
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="pb-24 pt-6 sm:pt-8 min-h-screen relative overflow-hidden">
+      
+      {/* Background Multi-Colored Aurora Lighting */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10">
+        <div className="absolute top-0 right-1/4 w-[600px] h-[400px] bg-blue-500/10 dark:bg-amber-500/10 rounded-full blur-[120px]" />
+        <div className="absolute top-1/3 left-10 w-[500px] h-[500px] bg-purple-500/10 dark:bg-purple-600/10 rounded-full blur-[140px]" />
+        <div className="absolute bottom-1/4 right-10 w-[550px] h-[450px] bg-emerald-500/8 dark:bg-yellow-500/8 rounded-full blur-[130px]" />
+      </div>
+
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
         {/* =========================================================================
-            UNIFIED TWO-COLUMN MASTERPIECE LAYOUT (Zero Empty Voids)
+            1. TOP HERO SHOWCASE: Title + Compact Preview Media Side-by-Side!
+               (صورة المعاينة المصغرة بجوار اسم الدورة في هيدر موحد وفخم)
            ========================================================================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+        <div className="rounded-3xl bg-white/95 dark:bg-zinc-900/85 backdrop-blur-2xl border border-slate-200/90 dark:border-zinc-800/90 p-6 sm:p-8 lg:p-10 shadow-2xl relative overflow-hidden">
           
-          {/* =========================================================================
-              RIGHT COLUMN: Main Course Info, Curriculum, Instructor & Reviews (col-span-7)
-             ========================================================================= */}
-          <div className="lg:col-span-7 space-y-8">
+          {/* Luminous Top Gold/Blue Accent Line */}
+          <div className="h-1.5 absolute top-0 inset-x-0 bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-400 dark:from-amber-400 dark:via-yellow-400 dark:to-amber-500" />
+          
+          {/* Ambient glowing background aura */}
+          <div className="absolute -top-24 -right-24 w-80 h-80 bg-blue-500/10 dark:bg-amber-500/10 rounded-full blur-3xl pointer-events-none -z-10" />
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
-            {/* 1. Header & Breadcrumbs Card */}
-            <div className="space-y-4">
+            {/* Right: Title, Breadcrumbs, Description & Meta Badges */}
+            <div className="lg:col-span-7 xl:col-span-8 space-y-4 text-right">
               
-              {/* Badges & Breadcrumb */}
+              {/* Badges & Breadcrumbs */}
               <div className="flex flex-wrap items-center gap-2 text-xs">
-                <Link href="/courses" className="text-slate-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-amber-400 transition-colors font-medium">
+                <Link href="/courses" className="text-slate-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-amber-400 transition-colors font-semibold">
                   الكورسات
                 </Link>
                 <span className="text-slate-400 dark:text-zinc-600">/</span>
@@ -170,12 +182,12 @@ export default async function CourseDetailPage({ params }: Props) {
               </div>
 
               {/* Course Title */}
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 dark:text-white leading-tight">
+              <h1 className="text-2xl sm:text-3xl lg:text-5xl font-black text-slate-900 dark:text-white leading-tight tracking-tight">
                 {course.title}
               </h1>
 
               {/* Course Description */}
-              <p className="text-sm sm:text-base text-slate-600 dark:text-zinc-300 leading-relaxed">
+              <p className="text-sm sm:text-base text-slate-600 dark:text-zinc-300 leading-relaxed max-w-3xl">
                 {course.description}
               </p>
 
@@ -183,7 +195,7 @@ export default async function CourseDetailPage({ params }: Props) {
               <div className="flex flex-wrap items-center gap-3 pt-2">
                 
                 {/* Instructor */}
-                <div className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-slate-100/90 dark:bg-zinc-900/80 border border-slate-200 dark:border-zinc-800 text-xs">
+                <div className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-slate-100/90 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700 text-xs">
                   <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 dark:from-amber-500 dark:to-yellow-500 flex items-center justify-center font-black text-white text-[10px]">
                     {course.instructor?.officialFullName?.[0] || 'م'}
                   </div>
@@ -193,13 +205,13 @@ export default async function CourseDetailPage({ params }: Props) {
                 </div>
 
                 {/* Duration */}
-                <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-100/90 dark:bg-zinc-900/80 border border-slate-200 dark:border-zinc-800 text-xs text-slate-700 dark:text-zinc-300 font-semibold">
+                <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-100/90 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700 text-xs text-slate-700 dark:text-zinc-300 font-semibold">
                   <Clock className="w-3.5 h-3.5 text-blue-600 dark:text-amber-400" />
                   <span>{formatDuration(course.durationHours)}</span>
                 </div>
 
                 {/* Sections & Lessons */}
-                <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-100/90 dark:bg-zinc-900/80 border border-slate-200 dark:border-zinc-800 text-xs text-slate-700 dark:text-zinc-300 font-semibold">
+                <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-100/90 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700 text-xs text-slate-700 dark:text-zinc-300 font-semibold">
                   <Layers className="w-3.5 h-3.5 text-indigo-600 dark:text-amber-400" />
                   <span>{course.sections.length} وحدات • {totalLessons} درس</span>
                 </div>
@@ -216,7 +228,59 @@ export default async function CourseDetailPage({ params }: Props) {
 
             </div>
 
-            {/* 2. What You'll Learn (ماذا ستتعلم في هذا الكورس) */}
+            {/* Left: Compact Interactive Preview Media (بجوار اسم الدورة) */}
+            <div className="lg:col-span-5 xl:col-span-4">
+              <div className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-slate-950 border-2 border-slate-200/80 dark:border-zinc-800 shadow-xl group">
+                <img
+                  src={cleanThumbnail}
+                  alt={course.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                />
+
+                {/* Gradient vignette */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none" />
+
+                {/* Top Floating Badges */}
+                <div className="absolute top-3 right-3 left-3 flex items-center justify-between pointer-events-none">
+                  <span className="px-3 py-1 rounded-full text-[11px] font-black bg-black/75 backdrop-blur-md text-amber-300 border border-amber-500/30 flex items-center gap-1.5 shadow-sm">
+                    <PlayCircle className="w-3.5 h-3.5 text-amber-400" />
+                    <span>معاينة مجانية 🎥</span>
+                  </span>
+
+                  <span className="px-3 py-1 rounded-full text-[11px] font-black bg-rose-500/90 backdrop-blur-md text-white border border-rose-400/40 flex items-center gap-1 shadow-sm">
+                    <Flame className="w-3 h-3 animate-bounce" />
+                    <span>خصم {discountPercent}%</span>
+                  </span>
+                </div>
+
+                {/* Centered Glowing Play Button */}
+                <Link
+                  href={firstLessonSlug ? `/learn/${course.slug}/${firstLessonSlug}` : '#curriculum'}
+                  className="absolute inset-0 flex items-center justify-center group cursor-pointer"
+                  title="تشغيل فيديو المعاينة"
+                >
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-amber-500 to-yellow-400 text-zinc-950 flex items-center justify-center shadow-2xl group-hover:scale-115 transition-transform duration-300 ring-4 ring-white/20">
+                    <PlayCircle className="w-9 h-9 fill-zinc-950 text-amber-400 mr-0.5" />
+                  </div>
+                </Link>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* =========================================================================
+            2. MAIN DETAILS & ELEVATED PURCHASE SECTION (Zero Empty Voids)
+           ========================================================================= */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+          
+          {/* =========================================================================
+              RIGHT COLUMN: Curriculum, What You'll Learn, Instructor & Reviews (col-span-7)
+             ========================================================================= */}
+          <div className="lg:col-span-7 space-y-8">
+
+            {/* What You'll Learn (ماذا ستتعلم في هذا الكورس) */}
             <div className="p-6 sm:p-7 rounded-2xl bg-white/95 dark:bg-zinc-900/70 border border-slate-200/90 dark:border-zinc-800/80 shadow-md space-y-4">
               <h2 className="text-base sm:text-lg font-black text-slate-900 dark:text-white flex items-center gap-2">
                 <Sparkles className="w-5 h-5 text-blue-600 dark:text-amber-400" />
@@ -234,7 +298,7 @@ export default async function CourseDetailPage({ params }: Props) {
               </div>
             </div>
 
-            {/* 3. Curriculum & Lessons Accordion (المنهج وخطة الدروس) - LIFTED UP! */}
+            {/* Curriculum & Lessons Accordion (المنهج وخطة الدروس) */}
             <div id="curriculum" className="space-y-4">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
@@ -307,14 +371,14 @@ export default async function CourseDetailPage({ params }: Props) {
               </div>
             </div>
 
-            {/* 4. Requirements (المتطلبات المسبقة) */}
+            {/* Requirements (المتطلبات المسبقة) */}
             {requirements.length > 0 && (
               <div className="p-6 rounded-2xl bg-white/95 dark:bg-zinc-900/70 border border-slate-200/90 dark:border-zinc-800/80 shadow-xs space-y-3">
                 <h2 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white">المتطلبات المسبقة</h2>
                 <ul className="space-y-2 text-xs sm:text-sm text-slate-600 dark:text-zinc-300">
                   {requirements.map((req, i) => (
                     <li key={i} className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-amber-400" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:amber-400" />
                       <span>{req}</span>
                     </li>
                   ))}
@@ -322,7 +386,7 @@ export default async function CourseDetailPage({ params }: Props) {
               </div>
             )}
 
-            {/* 5. Instructor Bio (عن المحاضر) */}
+            {/* Instructor Bio (عن المحاضر) */}
             <div className="p-6 sm:p-7 rounded-2xl bg-white/95 dark:bg-zinc-900/70 border border-slate-200/90 dark:border-zinc-800/80 shadow-md space-y-4">
               <h2 className="text-sm sm:text-base font-black text-slate-900 dark:text-white">عن المحاضر</h2>
               <div className="flex items-start gap-4">
@@ -345,7 +409,7 @@ export default async function CourseDetailPage({ params }: Props) {
               </div>
             </div>
 
-            {/* 6. Student Reviews (تقييمات وآراء الطلاب) */}
+            {/* Student Reviews (تقييمات وآراء الطلاب) */}
             <div className="p-6 sm:p-7 rounded-2xl bg-white/95 dark:bg-zinc-900/70 border border-slate-200/90 dark:border-zinc-800/80 shadow-md space-y-5">
               <div className="flex items-center justify-between">
                 <h2 className="text-base sm:text-lg font-black text-slate-900 dark:text-white flex items-center gap-2">
@@ -390,7 +454,7 @@ export default async function CourseDetailPage({ params }: Props) {
           </div>
 
           {/* =========================================================================
-              LEFT COLUMN: High-Converting Sticky Purchase & Offer Card (col-span-5)
+              LEFT COLUMN: ELEVATED STICKY PURCHASE CARD (السعر مرفوع للأعلى فوراً!)
              ========================================================================= */}
           <div className="lg:col-span-5 sticky top-24 space-y-4">
             
@@ -400,57 +464,19 @@ export default async function CourseDetailPage({ params }: Props) {
               {/* Luminous Top Gold/Blue Accent Line */}
               <div className="h-1.5 w-full bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-400 dark:from-amber-400 dark:via-yellow-400 dark:to-amber-500" />
 
-              {/* Dynamic Moving Ambient Glow Flares behind the card */}
+              {/* Dynamic Moving Ambient Glow Flares */}
               <div className="absolute -top-20 -right-20 w-56 h-56 rounded-full bg-amber-500/20 dark:bg-amber-500/15 blur-3xl pointer-events-none -z-10" />
               <div className="absolute -bottom-20 -left-20 w-56 h-56 rounded-full bg-blue-500/15 dark:bg-purple-600/15 blur-3xl pointer-events-none -z-10" />
 
-              {/* Upper Media Section */}
-              <div className="p-4 sm:p-5 pb-0">
-                <div className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-slate-950 border border-slate-200/80 dark:border-zinc-800 shadow-md group">
-                  <img
-                    src={cleanThumbnail}
-                    alt={course.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                  />
-
-                  {/* Gradient vignette */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none" />
-
-                  {/* Top Floating Badges */}
-                  <div className="absolute top-3 right-3 left-3 flex items-center justify-between pointer-events-none">
-                    <span className="px-3 py-1 rounded-full text-[11px] font-black bg-black/75 backdrop-blur-md text-amber-300 border border-amber-500/30 flex items-center gap-1.5 shadow-sm">
-                      <PlayCircle className="w-3.5 h-3.5 text-amber-400" />
-                      <span>معاينة مجانية 🎥</span>
-                    </span>
-
-                    <span className="px-3 py-1 rounded-full text-[11px] font-black bg-rose-500/90 backdrop-blur-md text-white border border-rose-400/40 flex items-center gap-1 shadow-sm">
-                      <Flame className="w-3 h-3 animate-bounce" />
-                      <span>خصم استثنائي</span>
-                    </span>
-                  </div>
-
-                  {/* Centered Glowing Play Button for Preview */}
-                  <Link
-                    href={firstLessonSlug ? `/learn/${course.slug}/${firstLessonSlug}` : '#curriculum'}
-                    className="absolute inset-0 flex items-center justify-center group cursor-pointer"
-                    title="بدء المعاينة وتشغيل الفيديو"
-                  >
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-amber-500 to-yellow-400 text-zinc-950 flex items-center justify-center shadow-2xl group-hover:scale-115 transition-transform duration-300 ring-4 ring-white/20">
-                      <PlayCircle className="w-9 h-9 fill-zinc-950 text-amber-400 mr-0.5" />
-                    </div>
-                  </Link>
-                </div>
-              </div>
-
-              {/* Limited-Time Offer Alert Ticker */}
-              <div className="mx-4 sm:mx-5 mt-4 px-4 py-2.5 rounded-2xl bg-gradient-to-r from-amber-500/15 via-orange-500/10 to-amber-500/15 border border-amber-500/30 text-amber-700 dark:text-amber-300 flex items-center justify-center gap-2 text-center text-xs font-black shadow-xs">
-                <Zap className="w-4 h-4 text-amber-500 animate-pulse shrink-0" />
-                <span>عرض استثنائي: وفر {discountPercent}% فوراً عند التسجيل اليوم!</span>
-              </div>
-
-              {/* Center Dazzling Pricing Block */}
-              <div className="p-4 sm:p-5 pt-3 space-y-4">
+              <div className="p-4 sm:p-6 space-y-5">
                 
+                {/* 1. Limited-Time Offer Alert Ticker (مرفوع للأعلى فوراً) */}
+                <div className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-amber-500/15 via-orange-500/10 to-amber-500/15 border border-amber-500/30 text-amber-700 dark:text-amber-300 flex items-center justify-center gap-2 text-center text-xs font-black shadow-xs">
+                  <Zap className="w-4 h-4 text-amber-500 animate-pulse shrink-0" />
+                  <span>عرض استثنائي: وفر {discountPercent}% فوراً عند التسجيل اليوم!</span>
+                </div>
+
+                {/* 2. Dazzling Centered Price Box (السعر في المنتصف كقطعة مجوهرات) */}
                 <div className="text-center p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-zinc-950/70 border border-slate-200/80 dark:border-zinc-800/80 shadow-xs space-y-2">
                   <div className="flex items-center justify-center gap-2.5">
                     <span className="text-xs sm:text-sm text-slate-400 dark:text-zinc-500 line-through font-bold">
@@ -473,7 +499,7 @@ export default async function CourseDetailPage({ params }: Props) {
                   </p>
                 </div>
 
-                {/* Primary CTA Buttons */}
+                {/* 3. Primary Action Buttons */}
                 {isEnrolled ? (
                   <Link
                     href={firstLessonSlug ? `/learn/${course.slug}/${firstLessonSlug}` : '#curriculum'}
@@ -510,7 +536,7 @@ export default async function CourseDetailPage({ params }: Props) {
                   </div>
                 )}
 
-                {/* Centered Luxury Perks Capsules (المزايا بشكل كبسولات فخمة متناسقة) */}
+                {/* 4. Centered Luxury Perks Capsules (المزايا بشكل كبسولات فخمة متناسقة) */}
                 <div className="border-t border-slate-100 dark:border-zinc-800/80 pt-4 space-y-3">
                   
                   <div className="text-center pb-1">
@@ -550,7 +576,7 @@ export default async function CourseDetailPage({ params }: Props) {
 
                 </div>
 
-                {/* Centered Trust Guarantee Banner */}
+                {/* 5. Centered Trust Guarantee Banner */}
                 <div className="pt-2">
                   <div className="p-3 rounded-2xl bg-gradient-to-r from-amber-500/10 via-yellow-500/5 to-amber-500/10 border border-amber-500/25 flex items-center justify-center gap-2 text-center shadow-xs">
                     <ShieldCheck className="w-4.5 h-4.5 text-amber-500 shrink-0" />
