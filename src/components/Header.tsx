@@ -156,8 +156,8 @@ export default function Header({
     { name: 'الرئيسية', href: '/', icon: Home },
     { name: 'المسارات التدريبية', href: '/courses', icon: BookOpen },
     { name: 'الدبلومات الشاملة', href: '/diplomas', icon: Award, isDiploma: true },
-    { name: 'التحقق من الشهادات', href: '/verify', icon: ShieldCheck },
-    { name: 'الدعم الفني', href: '/support', icon: Headphones },
+    { name: 'التحقق من الشهادات', href: '/verify', icon: ShieldCheck, xlOnly: true },
+    { name: 'الدعم الفني', href: '/support', icon: Headphones, xlOnly: true },
   ];
 
   return (
@@ -165,13 +165,13 @@ export default function Header({
       <nav className="dynamic-navbar-aura max-w-[1440px] w-full sm:w-[96%] mx-auto flex items-center justify-between min-h-[3.5rem] sm:min-h-[4.5rem] px-2.5 sm:px-6 md:px-8 rounded-full bg-white/95 dark:bg-zinc-900/95 border border-slate-200/90 dark:border-zinc-800/90 backdrop-blur-2xl shadow-xl shadow-slate-900/5 dark:shadow-black/70 relative gap-1.5 sm:gap-6">
         
         {/* Logo & Platform Name */}
-        <Link href="/" className="flex items-center gap-2.5 sm:gap-3.5 shrink min-w-0 group py-1">
+        <Link href="/" className="flex items-center gap-2 sm:gap-3 shrink-0 group py-1">
           <div className="dynamic-logo-emblem w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl p-[2px] shadow-lg shadow-amber-500/10 group-hover:scale-105 transition-transform shrink-0">
             <div className="w-full h-full bg-[#0c0918] dark:bg-[#0c0918] rounded-[10px] sm:rounded-[14px] flex items-center justify-center border border-amber-500/40">
               <GraduationCap className="w-5 h-5 sm:w-6 sm:h-6 text-amber-400" />
             </div>
           </div>
-          <div className="flex flex-col text-right justify-center min-w-0">
+          <div className="flex flex-col text-right justify-center shrink-0">
             <span className="text-[9px] sm:text-[10px] font-bold text-amber-500 dark:text-amber-400 flex items-center gap-1 leading-none mb-0.5 whitespace-nowrap">
               ★ منصة تعليمية معتمدة
             </span>
@@ -185,16 +185,19 @@ export default function Header({
         </Link>
 
         {/* Desktop Nav (Center) */}
-        <div className="hidden lg:flex items-center gap-2 bg-slate-100/90 dark:bg-zinc-950/60 px-2.5 py-1.5 rounded-full border border-slate-200/90 dark:border-zinc-800/80 shadow-inner">
+        <div className="hidden lg:flex items-center gap-1 xl:gap-1.5 bg-slate-100/90 dark:bg-zinc-950/60 px-2 xl:px-3 py-1.5 rounded-full border border-slate-200/90 dark:border-zinc-800/80 shadow-inner shrink-0">
           {navLinks.map((link) => {
             const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
             const isDiploma = (link as any).isDiploma;
+            const xlOnly = (link as any).xlOnly;
             return (
               <Link
                 key={link.href}
                 href={link.href}
                 prefetch={true}
-                className={`px-4 py-1.5 text-xs font-bold rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
+                className={`px-2.5 xl:px-3.5 py-1.5 text-xs font-bold rounded-full transition-all items-center gap-1.5 whitespace-nowrap shrink-0 ${
+                  xlOnly ? 'hidden xl:inline-flex' : 'inline-flex'
+                } ${
                   isDiploma
                     ? 'diploma-luxury-pill'
                     : isActive
@@ -329,24 +332,24 @@ export default function Header({
             </div>
           ) : (
             /* Auth Buttons - ONLY ON DESKTOP (hidden on mobile, managed in mobile menu drawer) */
-            <div className="hidden lg:flex items-center gap-2">
+            <div className="hidden lg:flex items-center gap-1.5 xl:gap-2 shrink-0">
               <Link
                 href="/login"
-                className="px-3.5 py-1.5 rounded-full text-xs font-bold text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-100 dark:text-zinc-200 dark:hover:text-white dark:bg-transparent dark:hover:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700/80 transition-all shadow-xs flex items-center gap-1.5"
+                className="px-3 py-1.5 rounded-full text-xs font-bold text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-100 dark:text-zinc-200 dark:hover:text-white dark:bg-transparent dark:hover:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700/80 transition-all shadow-xs flex items-center gap-1 shrink-0"
               >
                 <LogIn className="w-3.5 h-3.5 text-slate-600 dark:text-amber-400" />
                 <span>دخول</span>
               </Link>
               <Link
                 href="/register"
-                className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white transition-all shadow-md shadow-blue-600/20 whitespace-nowrap flex items-center gap-1.5"
+                className="px-3 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white transition-all shadow-md shadow-blue-600/20 whitespace-nowrap flex items-center gap-1 shrink-0"
               >
                 <UserPlus className="w-3.5 h-3.5 text-white" />
                 <span>إنشاء حساب</span>
               </Link>
               <Link
                 href="/register?role=instructor"
-                className="px-3 py-1.5 rounded-full text-xs font-bold bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/40 text-purple-700 dark:text-purple-300 transition-all whitespace-nowrap flex items-center gap-1.5"
+                className="hidden xl:inline-flex px-3 py-1.5 rounded-full text-xs font-bold bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/40 text-purple-700 dark:text-purple-300 transition-all whitespace-nowrap items-center gap-1 shrink-0"
                 title="سجل كمحاضر مستقل واحصل على 14 يوماً تجربة مجانية"
               >
                 <Video className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
