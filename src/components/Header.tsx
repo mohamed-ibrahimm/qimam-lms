@@ -635,8 +635,35 @@ export default function Header({
                   className="w-full py-2.5 px-3 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/40 text-purple-700 dark:text-purple-300 font-bold text-xs flex items-center justify-center gap-2 transition-colors"
                 >
                   <Video className="w-4 h-4 text-purple-600 dark:text-purple-400" />
-                  <span>انضم كمحاضر مستقل (14 يوماً مجاناً 🚀)</span>
+                  <span>انضم كمحاضر مستقل (14 يوماً مجاناً)</span>
                 </Link>
+
+                {/* 1-Click Role Preview for Mobile Testing */}
+                <div className="pt-2 border-t border-slate-200/80 dark:border-white/5 space-y-1.5">
+                  <span className="text-[10px] font-bold text-slate-500 dark:text-zinc-400 block text-right">
+                    معاينة أدوار المنصة بضغطة زر واحدة:
+                  </span>
+                  <div className="grid grid-cols-3 gap-1.5 text-center">
+                    <a
+                      href="/api/auth/quick-role?role=ADMIN"
+                      className="py-2 px-1 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-800 dark:text-amber-300 border border-amber-500/30 text-[10px] font-black block transition-all"
+                    >
+                      دخول الأدمن
+                    </a>
+                    <a
+                      href="/api/auth/quick-role?role=INSTRUCTOR"
+                      className="py-2 px-1 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 text-purple-800 dark:text-purple-300 border border-purple-500/30 text-[10px] font-black block transition-all"
+                    >
+                      استوديو المحاضر
+                    </a>
+                    <a
+                      href="/api/auth/quick-role?role=STUDENT"
+                      className="py-2 px-1 rounded-xl bg-blue-500/15 hover:bg-blue-500/25 text-blue-800 dark:text-blue-300 border border-blue-500/30 text-[10px] font-black block transition-all"
+                    >
+                      لوحة الطالب
+                    </a>
+                  </div>
+                </div>
               </div>
             )}
 

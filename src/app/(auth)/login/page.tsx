@@ -106,6 +106,32 @@ function LoginForm() {
           </div>
         )}
 
+        {/* Quick Role One-Tap Login Bar for Mobile & Desktop */}
+        <div className="p-3 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 space-y-2 text-center">
+          <span className="text-[11px] font-bold text-slate-600 dark:text-zinc-300 block">
+            دخول فوري بضغطة زر (للمعاينة على الهاتف):
+          </span>
+          <div className="grid grid-cols-3 gap-2">
+            <a
+              href={`/api/auth/quick-role?role=ADMIN&redirect=${encodeURIComponent(callbackUrl === '/dashboard' ? '/admin' : callbackUrl)}`}
+              className="py-2 px-1 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-800 dark:text-amber-300 border border-amber-500/30 text-xs font-black block transition-all"
+            >
+              المدير (Admin)
+            </a>
+            <a
+              href={`/api/auth/quick-role?role=INSTRUCTOR&redirect=${encodeURIComponent(callbackUrl === '/dashboard' ? '/instructor' : callbackUrl)}`}
+              className="py-2 px-1 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 text-purple-800 dark:text-purple-300 border border-purple-500/30 text-xs font-black block transition-all"
+            >
+              المحاضر
+            </a>
+            <a
+              href={`/api/auth/quick-role?role=STUDENT&redirect=${encodeURIComponent(callbackUrl)}`}
+              className="py-2 px-1 rounded-xl bg-blue-500/15 hover:bg-blue-500/25 text-blue-800 dark:text-blue-300 border border-blue-500/30 text-xs font-black block transition-all"
+            >
+              الطالب
+            </a>
+          </div>
+        </div>
 
 
         <form

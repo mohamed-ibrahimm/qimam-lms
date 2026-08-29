@@ -17,7 +17,8 @@ import {
   ShieldCheck,
   TrendingUp,
   MessageSquare,
-  ArrowLeft
+  ArrowLeft,
+  KeyRound
 } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
@@ -25,7 +26,49 @@ export const dynamic = 'force-dynamic';
 export default async function StudentDashboardPage() {
   const user = await getCurrentUser();
   if (!user) {
-    redirect('/login?callbackUrl=/dashboard');
+    return (
+      <div className="min-h-[80vh] flex items-center justify-center p-4 sm:p-6 relative">
+        <div className="max-w-md w-full p-6 sm:p-8 rounded-3xl bg-white/95 dark:bg-[#120e24]/95 border border-slate-200 dark:border-blue-500/40 shadow-2xl text-center space-y-5 backdrop-blur-xl">
+          <div className="w-16 h-16 rounded-2xl bg-blue-500/15 border border-blue-500/30 text-blue-600 dark:text-blue-400 flex items-center justify-center mx-auto shadow-md">
+            <BookOpen className="w-8 h-8" />
+          </div>
+          
+          <div className="space-y-1.5">
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
+              لوحة متابعة الطالب (Student Dashboard)
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-300 leading-relaxed font-medium">
+              تابع دوراتك المسجلة، الشهادات المعتمدة، ودروسك القادمة. يمكنك الدخول الفوري بضغطة زر واحدة للتجربة على الهاتف.
+            </p>
+          </div>
+
+          <div className="space-y-2.5 pt-2">
+            <a
+              href="/api/auth/quick-role?role=STUDENT&redirect=/dashboard"
+              className="w-full h-12 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-600/25 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+            >
+              <span>دخول فوري كـ طالب بالأكاديمية الآن</span>
+              <ArrowLeft className="w-4 h-4 text-white" />
+            </a>
+
+            <Link
+              href="/login?callbackUrl=/dashboard"
+              className="w-full h-11 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-800 dark:text-zinc-200 text-xs font-bold flex items-center justify-center gap-2 transition-colors border border-slate-200 dark:border-white/10 cursor-pointer"
+            >
+              <KeyRound className="w-4 h-4" />
+              <span>تسجيل الدخول بحسابك المسجل</span>
+            </Link>
+
+            <Link
+              href="/courses"
+              className="w-full text-center text-xs text-slate-500 dark:text-zinc-400 hover:underline block pt-1"
+            >
+              تصفح دليل الكورسات والدبلومات
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   // Fetch student data
@@ -88,7 +131,7 @@ export default async function StudentDashboardPage() {
   const activeEnrollment = courseEnrollments.find((e) => !e.isCompleted) || courseEnrollments[0];
 
   return (
-    <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-8 overflow-hidden">
+    <div className="relative max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-8">
       {/* Dynamic Multi-Color Moving Glow Orbs in Dashboard Background */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
         <div className="dynamic-drift-1 absolute top-[10%] right-[20%] w-[500px] h-[500px] bg-blue-400/20 dark:bg-amber-500/10 rounded-full blur-[130px]" />
