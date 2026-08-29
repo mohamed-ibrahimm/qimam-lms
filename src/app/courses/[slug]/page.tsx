@@ -157,11 +157,11 @@ export default async function CourseDetailPage({ params }: Props) {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
-            {/* Right: Title, Breadcrumbs, Description & Meta Badges */}
-            <div className="lg:col-span-7 xl:col-span-8 space-y-4 text-right">
+            {/* Centered Title, Dynamic Badges, Description & Dynamic Meta Pills */}
+            <div className="lg:col-span-7 xl:col-span-8 space-y-4 text-center flex flex-col items-center justify-center">
               
-              {/* Badges & Breadcrumbs */}
-              <div className="flex flex-wrap items-center gap-2 text-xs">
+              {/* Badges & Breadcrumbs (Centered) */}
+              <div className="flex flex-wrap items-center justify-center gap-2 text-xs">
                 <Link href="/courses" className="text-slate-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-amber-400 transition-colors font-semibold">
                   الكورسات
                 </Link>
@@ -181,46 +181,57 @@ export default async function CourseDetailPage({ params }: Props) {
                 </div>
               </div>
 
-              {/* Course Title */}
-              <h1 className="text-2xl sm:text-3xl lg:text-5xl font-black text-slate-900 dark:text-white leading-tight tracking-tight">
+              {/* Course Title (CENTERED with Molten Gold / Blue Glow) */}
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white leading-tight tracking-tight text-center">
                 {course.title}
               </h1>
 
-              {/* Course Description */}
-              <p className="text-sm sm:text-base text-slate-600 dark:text-zinc-300 leading-relaxed max-w-3xl">
-                {course.description}
+              {/* Course Description (Clean & Centered) */}
+              <p className="text-sm sm:text-base text-slate-600 dark:text-zinc-300 leading-relaxed max-w-2xl text-center mx-auto">
+                {course.description && course.description.length > 5 && !course.description.includes('سسس')
+                  ? course.description
+                  : 'مسار تطبيقي مكثف يركز على إتقان أحدث المعايير الهندسية والبرمجية وبناء مشاريع واقعية تؤهلك لسوق العمل بثقة واحتراف.'}
               </p>
 
-              {/* Key Highlights Pill Bar */}
-              <div className="flex flex-wrap items-center gap-3 pt-2">
+              {/* DYNAMIC LUXURY METADATA PILLS (Centered with Dynamic Animated Neon Icons) */}
+              <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
                 
-                {/* Instructor */}
-                <div className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-slate-100/90 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700 text-xs">
-                  <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 dark:from-amber-500 dark:to-yellow-500 flex items-center justify-center font-black text-white text-[10px]">
-                    {course.instructor?.officialFullName?.[0] || 'م'}
+                {/* 1. Instructor Pill with Glowing Ring */}
+                <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100/90 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700/80 text-xs shadow-xs hover:scale-105 transition-transform">
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-amber-400 via-yellow-400 to-amber-500 p-[1.5px] shadow-sm">
+                    <div className="w-full h-full bg-slate-900 dark:bg-zinc-950 rounded-full flex items-center justify-center font-black text-white text-[10px]">
+                      {course.instructor?.officialFullName?.[0] || 'م'}
+                    </div>
                   </div>
                   <span className="font-bold text-slate-800 dark:text-zinc-200">
                     {course.instructor?.officialFullName || 'م / محمد إبراهيم'}
                   </span>
+                  <UserCheck className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
                 </div>
 
-                {/* Duration */}
-                <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-100/90 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700 text-xs text-slate-700 dark:text-zinc-300 font-semibold">
-                  <Clock className="w-3.5 h-3.5 text-blue-600 dark:text-amber-400" />
+                {/* 2. Dynamic Pulsing Duration Pill */}
+                <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/25 text-xs text-amber-700 dark:text-amber-300 font-bold shadow-xs hover:scale-105 transition-transform">
+                  <div className="w-5 h-5 rounded-full bg-amber-500/20 flex items-center justify-center">
+                    <Clock className="w-3.5 h-3.5 text-amber-500 animate-pulse" />
+                  </div>
                   <span>{formatDuration(course.durationHours)}</span>
                 </div>
 
-                {/* Sections & Lessons */}
-                <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-100/90 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700 text-xs text-slate-700 dark:text-zinc-300 font-semibold">
-                  <Layers className="w-3.5 h-3.5 text-indigo-600 dark:text-amber-400" />
+                {/* 3. Dynamic Modules & Lessons Pill */}
+                <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/25 text-xs text-blue-700 dark:text-blue-300 font-bold shadow-xs hover:scale-105 transition-transform">
+                  <div className="w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center">
+                    <Layers className="w-3.5 h-3.5 text-blue-500" />
+                  </div>
                   <span>{course.sections.length} وحدات • {totalLessons} درس</span>
                 </div>
 
-                {/* Certificate */}
+                {/* 4. Dynamic Certificate Pill with Golden Ribbon */}
                 {course.certificateEnabled && (
-                  <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800/60 text-xs text-purple-700 dark:text-purple-300 font-bold">
-                    <Award className="w-3.5 h-3.5 text-purple-500" />
-                    <span>شهادة إتمام معتمدة</span>
+                  <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800/60 text-xs text-purple-700 dark:text-purple-300 font-bold shadow-xs hover:scale-105 transition-transform">
+                    <div className="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center">
+                      <Award className="w-3.5 h-3.5 text-purple-400" />
+                    </div>
+                    <span>شهادة إتمام معتمدة بـ QR</span>
                   </div>
                 )}
 
