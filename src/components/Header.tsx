@@ -164,20 +164,20 @@ export default function Header({
       <nav className="dynamic-navbar-aura max-w-[1440px] w-full sm:w-[96%] mx-auto flex items-center justify-between min-h-[3.5rem] sm:min-h-[4.5rem] px-2.5 sm:px-6 md:px-8 rounded-full bg-white/95 dark:bg-zinc-900/95 border border-slate-200/90 dark:border-zinc-800/90 backdrop-blur-2xl shadow-xl shadow-slate-900/5 dark:shadow-black/70 relative gap-1.5 sm:gap-6">
         
         {/* Logo & Platform Name */}
-        <Link href="/" className="flex items-center gap-2 sm:gap-3.5 shrink min-w-0 group py-1">
-          <div className="dynamic-logo-emblem w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl p-[2px] shadow-md group-hover:scale-105 transition-transform shrink-0">
+        <Link href="/" className="flex items-center gap-2.5 sm:gap-3.5 shrink min-w-0 group py-1">
+          <div className="dynamic-logo-emblem w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl p-[2px] shadow-lg shadow-amber-500/10 group-hover:scale-105 transition-transform shrink-0">
             <div className="w-full h-full bg-[#0c0918] dark:bg-[#0c0918] rounded-[10px] sm:rounded-[14px] flex items-center justify-center border border-amber-500/40">
-              <GraduationCap className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-amber-400" />
+              <GraduationCap className="w-5 h-5 sm:w-6 sm:h-6 text-amber-400" />
             </div>
           </div>
-          <div className="flex flex-col text-right justify-center min-w-0 overflow-hidden">
-            <span className="text-[8.5px] sm:text-[10px] font-bold text-amber-500 dark:text-amber-400 flex items-center gap-1 leading-none mb-0.5 whitespace-nowrap">
-              ★ منصة معتمدة
+          <div className="flex flex-col text-right justify-center min-w-0">
+            <span className="text-[9px] sm:text-[10px] font-bold text-amber-500 dark:text-amber-400 flex items-center gap-1 leading-none mb-0.5 whitespace-nowrap">
+              ★ منصة تعليمية معتمدة
             </span>
-            <span className="text-xs xs:text-sm sm:text-base md:text-lg font-black text-slate-900 dark:text-white dark:bg-gradient-to-r dark:from-white dark:via-amber-100 dark:to-amber-300 dark:bg-clip-text dark:text-transparent group-hover:text-blue-600 dark:group-hover:text-amber-300 transition-colors tracking-tight truncate max-w-[140px] xs:max-w-[180px] sm:max-w-none leading-tight drop-shadow-xs">
+            <span className="text-sm xs:text-base sm:text-lg md:text-xl font-black text-slate-900 dark:text-white dark:bg-gradient-to-r dark:from-white dark:via-amber-100 dark:to-amber-300 dark:bg-clip-text dark:text-transparent group-hover:text-blue-600 dark:group-hover:text-amber-300 transition-colors tracking-tight whitespace-nowrap leading-tight drop-shadow-xs">
               {platformName}
             </span>
-            <span className="text-[9px] sm:text-[10.5px] text-slate-500 dark:text-amber-200/80 font-medium whitespace-nowrap leading-none mt-0.5 hidden sm:block">
+            <span className="text-[8.5px] xs:text-[9.5px] sm:text-[10.5px] text-slate-500 dark:text-amber-200/80 font-medium whitespace-nowrap leading-none mt-0.5 block">
               {platformTagline}
             </span>
           </div>
@@ -219,13 +219,13 @@ export default function Header({
         </div>
 
         {/* Action Buttons: Desktop + Mobile */}
-        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          {/* User Dropdown - ONLY ON DESKTOP (hidden on mobile, managed in mobile menu drawer) */}
           {currentUser ? (
-            /* User Dropdown */
-            <div className="relative">
+            <div className="relative hidden lg:block">
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="flex items-center gap-1.5 p-1 sm:px-3 sm:py-1.5 rounded-full bg-slate-100/90 dark:bg-zinc-800/80 hover:bg-slate-200 dark:hover:bg-zinc-700 border border-slate-200 dark:border-zinc-700/80 transition-all text-right shadow-xs"
+                className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-slate-100/90 dark:bg-zinc-800/80 hover:bg-slate-200 dark:hover:bg-zinc-700 border border-slate-200 dark:border-zinc-700/80 transition-all text-right shadow-xs"
                 title={currentUser.officialFullName || 'حسابك الشخصي'}
               >
                 <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 dark:from-amber-500 dark:to-yellow-400 text-white dark:text-zinc-950 flex items-center justify-center font-bold text-xs shadow-inner overflow-hidden relative shrink-0">
@@ -242,10 +242,10 @@ export default function Header({
                     <span>{currentUser.firstName?.[0] || 'ق'}</span>
                   )}
                 </div>
-                <span className="text-xs font-bold text-slate-800 dark:text-white max-w-[80px] sm:max-w-[120px] truncate hidden md:inline">
+                <span className="text-xs font-bold text-slate-800 dark:text-white max-w-[120px] truncate">
                   {currentUser.firstName}
                 </span>
-                <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-zinc-400 mr-0.5 hidden sm:block" />
+                <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-zinc-400 mr-0.5" />
               </button>
 
               {dropdownOpen && (
@@ -327,8 +327,8 @@ export default function Header({
               )}
             </div>
           ) : (
-            /* Auth Buttons */
-            <div className="hidden sm:flex items-center gap-2">
+            /* Auth Buttons - ONLY ON DESKTOP (hidden on mobile, managed in mobile menu drawer) */
+            <div className="hidden lg:flex items-center gap-2">
               <Link
                 href="/login"
                 className="px-3.5 py-1.5 rounded-full text-xs font-bold text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-100 dark:text-zinc-200 dark:hover:text-white dark:bg-transparent dark:hover:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700/80 transition-all shadow-xs flex items-center gap-1"
