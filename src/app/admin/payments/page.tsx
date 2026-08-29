@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { formatPrice, formatDate } from '@/lib/utils';
 import {
   CreditCard,
@@ -30,6 +31,16 @@ export default function AdminPaymentsPage() {
   const [selectedScreenshot, setSelectedScreenshot] = useState<string | null>(null);
   const [processingId, setProcessingId] = useState<string | null>(null);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSelectedScreenshot(null);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const loadPayments = async () => {
     setLoading(true);
@@ -478,38 +489,46 @@ export default function AdminPaymentsPage() {
         </>
       )}
 
-      {/* Screenshot Preview Modal */}
-      {selectedScreenshot && (
-        <div className="fixed inset-0 z-[110] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="relative max-w-xl w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-3xl p-6 space-y-4 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-slate-100 dark:border-zinc-800 pb-3">
+      {/* Screenshot Preview Modal (Portal to body so it never clips or offsets) */}
+      {mounted && selectedScreenshot && createPortal(
+        <div
+          onClick={() => setSelectedScreenshot(null)}
+          className="fixed inset-0 z-[9999] bg-black/75 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-150 cursor-pointer"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative max-w-lg w-full max-h-[90vh] bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-3xl p-5 space-y-4 shadow-2xl flex flex-col cursor-default animate-in zoom-in-95 duration-150"
+          >
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-zinc-800 pb-3 shrink-0">
               <h3 className="text-sm font-black text-slate-900 dark:text-white">صورة إيصال التحويل المالي</h3>
               <button
                 type="button"
                 onClick={() => setSelectedScreenshot(null)}
-                className="p-1.5 rounded-xl bg-slate-100 dark:bg-zinc-800 text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white"
+                className="p-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
-            <div className="max-h-[70vh] overflow-auto rounded-2xl bg-slate-950 flex items-center justify-center p-2">
+            <div className="flex-1 overflow-auto rounded-2xl bg-slate-950 flex items-center justify-center p-2 min-h-48 max-h-[60vh]">
               <img
                 src={selectedScreenshot}
                 alt="Proof Screenshot"
-                className="max-h-[65vh] w-auto object-contain rounded-xl"
+                className="max-h-[55vh] w-auto object-contain rounded-xl"
               />
             </div>
-            <div className="flex justify-end">
+            <div className="flex justify-between items-center pt-1 shrink-0 border-t border-slate-100 dark:border-zinc-800">
+              <span className="text-[11px] text-slate-400 dark:text-zinc-500">اضغط في أي مكان خارجي أو Esc للإغلاق</span>
               <button
                 type="button"
                 onClick={() => setSelectedScreenshot(null)}
-                className="px-5 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-xs font-bold text-slate-900 dark:text-white"
+                className="px-5 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-xs font-bold text-slate-900 dark:text-white transition-colors cursor-pointer"
               >
                 إغلاق
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
