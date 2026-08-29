@@ -32,7 +32,12 @@ function LoginForm() {
       e.preventDefault();
       e.stopPropagation();
     }
-    if (!formData.identifier.trim() || !formData.password.trim()) {
+    const identEl = document.getElementById('login-identifier') as HTMLInputElement | null;
+    const passEl = document.getElementById('login-password') as HTMLInputElement | null;
+    const identifier = (identEl?.value || formData.identifier || '').trim();
+    const password = (passEl?.value || formData.password || '').trim();
+
+    if (!identifier || !password) {
       setError('يرجى إدخال اسم المستخدم وكلمة المرور');
       return;
     }
@@ -43,7 +48,7 @@ function LoginForm() {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ identifier, password }),
       });
 
       const data = await res.json();
@@ -58,7 +63,7 @@ function LoginForm() {
         } else if (callbackUrl && callbackUrl !== '/login' && !callbackUrl.startsWith('/login')) {
           target = callbackUrl;
         }
-        window.location.replace(target);
+        window.location.href = target;
       }
     } catch (err: any) {
       setError('حدث خطأ في الاتصال بالخادم');
@@ -109,18 +114,7 @@ function LoginForm() {
         <form
           action="/api/auth/form-login"
           method="POST"
-          onSubmit={async (e) => {
-            const identEl = document.getElementById('login-identifier') as HTMLInputElement | null;
-            const passEl = document.getElementById('login-password') as HTMLInputElement | null;
-            const idVal = (identEl?.value || formData.identifier || '').trim();
-            const passVal = (passEl?.value || formData.password || '').trim();
-            
-            if (!idVal || !passVal) {
-              e.preventDefault();
-              setError('يرجى إدخال اسم المستخدم وكلمة المرور');
-              return;
-            }
-          }}
+          onSubmit={handleSubmit}
           className="space-y-4"
         >
           <input type="hidden" name="callbackUrl" value={callbackUrl} />
