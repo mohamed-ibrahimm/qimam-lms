@@ -98,6 +98,6 @@ export async function POST(req: Request) {
     return response;
   } catch (error: any) {
     console.error('Login error:', error);
-    return NextResponse.json({ error: 'حدث خطأ أثناء تسجيل الدخول' }, { status: 500 });
+    return NextResponse.json({ error: error?.message || 'حدث خطأ أثناء تسجيل الدخول', details: String(error) }, { status: 500 });
   }
 }
