@@ -4,7 +4,34 @@ const bcrypt = require('bcryptjs');
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('Seeding Qimam Academy Database...');
+  console.log('Checking Qimam Academy Database seed state...');
+  
+  try {
+    const userCount = await prisma.user.count();
+    if (userCount > 0) {
+      console.log('Database already initialized. Updating platform WhatsApp contact settings without wiping data...');
+      await prisma.platformSetting.upsert({
+        where: { key: 'WHATSAPP_NUMBER' },
+        create: { key: 'WHATSAPP_NUMBER', value: '01555791568', description: 'رقم الواتساب للتواصل والطلب الفوري' },
+        update: { value: '01555791568' }
+      });
+      await prisma.platformSetting.upsert({
+        where: { key: 'CONTACT_WHATSAPP' },
+        create: { key: 'CONTACT_WHATSAPP', value: '01555791568', description: 'رقم الواتساب للدعم الفوري' },
+        update: { value: '01555791568' }
+      });
+      await prisma.platformSetting.upsert({
+        where: { key: 'CONTACT_PHONE' },
+        create: { key: 'CONTACT_PHONE', value: '01555791568', description: 'رقم الهاتف المباشر' },
+        update: { value: '01555791568' }
+      });
+      return;
+    }
+  } catch (e) {
+    console.warn('Could not check user count, proceeding with seed:', e.message);
+  }
+
+  console.log('Seeding Qimam Academy Database for first-time setup...');
   
   const models = [
     'auditLog', 'emailLog', 'notification', 'ticketMessage', 'supportTicket',
@@ -523,9 +550,10 @@ async function main() {
     { key: 'VODAFONE_CASH_NUMBER', value: '01001234567', description: 'رقم محفظة فودافون كاش' },
     { key: 'VODAFONE_CASH_NAME', value: 'أكاديمية قمم التعليمية', description: 'اسم صاحب المحفظة' },
     { key: 'VODAFONE_CASH_INSTRUCTIONS', value: 'قم بالتحويل لرقم المحفظة، وأدخل رقم المحفظة المحول منها ورقم العملية وصورة الإيصال.', description: 'تعليمات فودافون كاش' },
-    { key: 'CONTACT_EMAIL', value: 'support@qimam.edu', description: 'البريد الرسمي للدعم' },
-    { key: 'CONTACT_PHONE', value: '+201001234567', description: 'رقم الهاتف المباشر' },
-    { key: 'CONTACT_WHATSAPP', value: '+201001234567', description: 'رقم الواتساب للدعم الفوري' },
+    { key: 'CONTACT_EMAIL', value: 'mehac196@gmail.com', description: 'البريد الرسمي للدعم' },
+    { key: 'CONTACT_PHONE', value: '01555791568', description: 'رقم الهاتف المباشر' },
+    { key: 'CONTACT_WHATSAPP', value: '01555791568', description: 'رقم الواتساب للدعم الفوري' },
+    { key: 'WHATSAPP_NUMBER', value: '01555791568', description: 'رقم الواتساب للتواصل والطلب الفوري' },
     { key: 'WATERMARK_ENABLED', value: 'true', description: 'تفعيل العلامة المائية على مشغل الفيديو لمنع التسريب' },
     { key: 'LESSON_COMPLETION_THRESHOLD', value: '80', description: 'النسبة المئوية المطلوبة لاحتساب الدرس مكتملاً تلقائياً' }
   ];
@@ -535,7 +563,7 @@ async function main() {
   }
 
   const socialLinks = [
-    { platform: 'WHATSAPP', label: 'واتساب الدعم المباشر', url: 'https://wa.me/201001234567', icon: 'MessageCircle', isEnabled: true, orderIndex: 1 },
+    { platform: 'WHATSAPP', label: 'واتساب الدعم المباشر', url: 'https://wa.me/201555791568', icon: 'MessageCircle', isEnabled: true, orderIndex: 1 },
     { platform: 'TELEGRAM', label: 'قناة التليجرام الرسمية', url: 'https://t.me/qimam_academy', icon: 'Send', isEnabled: true, orderIndex: 2 },
     { platform: 'YOUTUBE', label: 'قناة اليوتيوب التعليمية', url: 'https://youtube.com', icon: 'Youtube', isEnabled: true, orderIndex: 3 },
     { platform: 'FACEBOOK', label: 'صفحة الفيسبوك', url: 'https://facebook.com', icon: 'Facebook', isEnabled: true, orderIndex: 4 },
