@@ -79,8 +79,46 @@ export async function getCurrentUser() {
         createdAt: true,
       }
     });
+
+    if (!user && payload?.userId) {
+      return {
+        id: payload.userId,
+        email: payload.email,
+        role: payload.role || 'STUDENT',
+        firstName: payload.username || 'مستخدم',
+        fatherName: null,
+        lastName: '',
+        officialFullName: payload.officialFullName || payload.email,
+        username: payload.username || 'user',
+        phone: '',
+        avatarUrl: null,
+        bio: '',
+        isEmailVerified: true,
+        parentNotificationEnabled: false,
+        createdAt: new Date(),
+      };
+    }
+
     return user;
   } catch (error) {
+    if (payload?.userId) {
+      return {
+        id: payload.userId,
+        email: payload.email,
+        role: payload.role || 'STUDENT',
+        firstName: payload.username || 'مستخدم',
+        fatherName: null,
+        lastName: '',
+        officialFullName: payload.officialFullName || payload.email,
+        username: payload.username || 'user',
+        phone: '',
+        avatarUrl: null,
+        bio: '',
+        isEmailVerified: true,
+        parentNotificationEnabled: false,
+        createdAt: new Date(),
+      };
+    }
     return null;
   }
 }

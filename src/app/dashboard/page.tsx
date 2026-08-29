@@ -28,53 +28,68 @@ export default async function StudentDashboardPage() {
     redirect('/login?callbackUrl=/dashboard');
   }
 
-  // Fetch student data
-  const [enrollments, certificates, quizAttempts, notes, parentContact] = await Promise.all([
-    prisma.enrollment.findMany({
-      where: { userId: user.id, status: 'ACTIVE' },
-      include: {
-        course: {
-          include: {
-            instructor: { select: { officialFullName: true } },
-            sections: {
-              include: {
-                lessons: {
-                  select: { id: true, title: true, slug: true, durationMinutes: true }
+  // Fetch student data safely
+  let enrollments: any[] = [];
+  let certificates: any[] = [];
+  let quizAttempts: any[] = [];
+  let notes: any[] = [];
+  let parentContact: any = null;
+
+  try {
+    const res = await Promise.all([
+      prisma.enrollment.findMany({
+        where: { userId: user.id, status: 'ACTIVE' },
+        include: {
+          course: {
+            include: {
+              instructor: { select: { officialFullName: true } },
+              sections: {
+                include: {
+                  lessons: {
+                    select: { id: true, title: true, slug: true, durationMinutes: true }
+                  }
                 }
+              }
+            }
+          },
+          diploma: {
+            include: {
+              diplomaCourses: {
+                include: { course: true }
               }
             }
           }
         },
-        diploma: {
-          include: {
-            diplomaCourses: {
-              include: { course: true }
-            }
-          }
-        }
-      },
-      orderBy: { enrolledAt: 'desc' },
-    }),
-    prisma.certificate.findMany({
-      where: { userId: user.id, isValid: true },
-      orderBy: { issuedAt: 'desc' },
-    }),
-    prisma.quizAttempt.findMany({
-      where: { userId: user.id },
-      include: { quiz: true },
-      orderBy: { completedAt: 'desc' },
-      take: 10,
-    }),
-    prisma.studentNote.findMany({
-      where: { userId: user.id },
-      include: { lesson: true },
-      orderBy: { createdAt: 'desc' },
-      take: 5,
-    }),
-    prisma.parentContact.findFirst({
-      where: { userId: user.id }
-    })
-  ]);
+        orderBy: { enrolledAt: 'desc' },
+      }),
+      prisma.certificate.findMany({
+        where: { userId: user.id, isValid: true },
+        orderBy: { issuedAt: 'desc' },
+      }),
+      prisma.quizAttempt.findMany({
+        where: { userId: user.id },
+        include: { quiz: true },
+        orderBy: { completedAt: 'desc' },
+        take: 10,
+      }),
+      prisma.studentNote.findMany({
+        where: { userId: user.id },
+        include: { lesson: true },
+        orderBy: { createdAt: 'desc' },
+        take: 5,
+      }),
+      prisma.parentContact.findFirst({
+        where: { userId: user.id }
+      })
+    ]);
+    enrollments = res[0] || [];
+    certificates = res[1] || [];
+    quizAttempts = res[2] || [];
+    notes = res[3] || [];
+    parentContact = res[4] || null;
+  } catch (e) {
+    console.error('Failed to fetch student data:', e);
+  }
 
   const courseEnrollments = enrollments.filter((e) => e.courseId && e.course);
   const diplomaEnrollments = enrollments.filter((e) => e.diplomaId && e.diploma);

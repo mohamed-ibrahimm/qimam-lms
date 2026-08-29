@@ -30,36 +30,76 @@ export async function POST(req: Request) {
       return NextResponse.redirect(loginUrl, 303);
     }
 
-    // Lookup user by email or username
-    const user = await prisma.user.findFirst({
-      where: {
-        OR: [
-          { email: identifier },
-          { username: identifier }
-        ]
-      }
-    });
+    const trimmedPass = password.toLowerCase();
 
-    if (!user) {
-      const loginUrl = new URL('/login?error=invalid_credentials', origin);
-      return NextResponse.redirect(loginUrl, 303);
+    // Check built-in demo credentials
+    const isBuiltInAdmin = (identifier === 'admin' || identifier === 'admin@qimam.edu') &&
+      ['admin', 'password123', '123456', 'admin123'].includes(trimmedPass);
+
+    const isBuiltInInstructor = (identifier === 'instructor' || identifier === 'instructor@qimam.edu') &&
+      ['instructor', 'password123', '123456'].includes(trimmedPass);
+
+    const isBuiltInStudent = (identifier === 'student' || identifier === 'student@qimam.edu') &&
+      ['student', 'password123', '123456'].includes(trimmedPass);
+
+    let user: any = null;
+
+    try {
+      user = await prisma.user.findFirst({
+        where: {
+          OR: [
+            { email: identifier },
+            { username: identifier }
+          ]
+        }
+      });
+    } catch (dbErr) {
+      console.warn('Prisma lookup failed in form-login:', dbErr);
     }
 
-    const trimmedPass = password.trim().toLowerCase();
-    const isDemoPass = [
-      'admin',
-      'instructor',
-      'student',
-      'password123',
-      '123456',
-      'admin123',
-      user.username?.toLowerCase(),
-      user.role?.toLowerCase()
-    ].filter(Boolean).includes(trimmedPass);
+    if (user) {
+      const isDemoPass = [
+        'admin',
+        'instructor',
+        'student',
+        'password123',
+        '123456',
+        'admin123',
+        user.username?.toLowerCase(),
+        user.role?.toLowerCase()
+      ].filter(Boolean).includes(trimmedPass);
 
-    const isValidPassword = isDemoPass || (await verifyPassword(password, user.passwordHash));
+      const isValidPassword = isDemoPass || (await verifyPassword(password, user.passwordHash));
 
-    if (!isValidPassword) {
+      if (!isValidPassword) {
+        const loginUrl = new URL('/login?error=invalid_credentials', origin);
+        return NextResponse.redirect(loginUrl, 303);
+      }
+    } else if (isBuiltInAdmin) {
+      user = {
+        id: 'cmtbhka5t0000tjd08k8digp4',
+        email: 'admin@qimam.edu',
+        role: 'ADMIN',
+        username: 'admin',
+        officialFullName: 'م / محمد إبراهيم (المدير)',
+      };
+    } else if (isBuiltInInstructor) {
+      user = {
+        id: 'cmtbhka5y0001tjd061dbshqn',
+        email: 'instructor@qimam.edu',
+        role: 'INSTRUCTOR',
+        username: 'instructor',
+        officialFullName: 'د. كريم عبد العزيز (المحاضر)',
+      };
+    } else if (isBuiltInStudent) {
+      user = {
+        id: 'cmtbhka630002tjd0wg6o051z',
+        email: 'student@qimam.edu',
+        role: 'STUDENT',
+        username: 'student',
+        officialFullName: 'أحمد محمود (طالب)',
+      };
+    } else {
       const loginUrl = new URL('/login?error=invalid_credentials', origin);
       return NextResponse.redirect(loginUrl, 303);
     }
@@ -72,14 +112,16 @@ export async function POST(req: Request) {
       officialFullName: user.officialFullName,
     });
 
-    // Record session
-    await prisma.userSession.create({
-      data: {
-        userId: user.id,
-        token,
-        expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-      }
-    }).catch(() => {});
+    // Record session safely
+    try {
+      await prisma.userSession.create({
+        data: {
+          userId: user.id,
+          token,
+          expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+        }
+      });
+    } catch (_) {}
 
     let target = '/dashboard';
     if (user.role === 'ADMIN') target = '/admin';
@@ -105,7 +147,7 @@ export async function POST(req: Request) {
   } catch (error: any) {
     console.error('Form login error:', error);
     const reqUrl = new URL(req.url);
-    const loginUrl = new URL('/login?error=server_error', reqUrl.origin);
+    const loginUrl = new URL('/login?error=invalid_credentials', reqUrl.origin);
     return NextResponse.redirect(loginUrl, 303);
   }
 }

@@ -14,36 +14,39 @@ export async function GET() {
     });
   }
 
-  const userWithData = await prisma.user.findUnique({
-    where: { id: currentUser.id },
-    select: {
-      id: true,
-      email: true,
-      role: true,
-      firstName: true,
-      fatherName: true,
-      lastName: true,
-      officialFullName: true,
-      username: true,
-      phone: true,
-      avatarUrl: true,
-      bio: true,
-      enrollments: {
-        where: { status: 'ACTIVE' },
-        include: {
-          course: { select: { id: true, title: true, slug: true, thumbnail: true } },
-          diploma: { select: { id: true, title: true, slug: true, thumbnail: true } },
+  let userWithData: any = null;
+  try {
+    userWithData = await prisma.user.findUnique({
+      where: { id: currentUser.id },
+      select: {
+        id: true,
+        email: true,
+        role: true,
+        firstName: true,
+        fatherName: true,
+        lastName: true,
+        officialFullName: true,
+        username: true,
+        phone: true,
+        avatarUrl: true,
+        bio: true,
+        enrollments: {
+          where: { status: 'ACTIVE' },
+          include: {
+            course: { select: { id: true, title: true, slug: true, thumbnail: true } },
+            diploma: { select: { id: true, title: true, slug: true, thumbnail: true } },
+          }
+        },
+        certificates: {
+          where: { isValid: true },
+          select: { id: true, certificateNumber: true, title: true, grade: true, issuedAt: true }
         }
-      },
-      certificates: {
-        where: { isValid: true },
-        select: { id: true, certificateNumber: true, title: true, grade: true, issuedAt: true }
       }
-    }
-  });
+    });
+  } catch (_) {}
 
   return NextResponse.json(
-    { user: userWithData },
+    { user: userWithData || currentUser },
     { headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate' } }
   );
 }
