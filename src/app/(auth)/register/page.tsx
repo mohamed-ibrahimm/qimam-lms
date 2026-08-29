@@ -85,8 +85,7 @@ export default function RegisterPage() {
       if (!res.ok) {
         setErrorMessage(data.error || 'فشل إنشاء الحساب');
       } else {
-        router.push(data.redirectTo || (role === 'INSTRUCTOR' ? '/instructor' : '/dashboard'));
-        router.refresh();
+        window.location.href = data.redirectTo || (role === 'INSTRUCTOR' ? '/instructor' : '/dashboard');
       }
     } catch {
       setErrorMessage('حدث خطأ أثناء الاتصال بالخادم، يرجى المحاولة مرة أخرى');
