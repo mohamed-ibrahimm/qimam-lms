@@ -31,6 +31,27 @@ export async function POST(req: Request) {
       });
     }
 
+    // Ensure WhatsApp number is mirrored across all contact keys
+    const syncWhatsapp = settingsData.WHATSAPP_NUMBER || settingsData.CONTACT_WHATSAPP;
+    if (syncWhatsapp) {
+      const cleanVal = String(syncWhatsapp).trim();
+      await prisma.platformSetting.upsert({
+        where: { key: 'CONTACT_WHATSAPP' },
+        create: { key: 'CONTACT_WHATSAPP', value: cleanVal },
+        update: { value: cleanVal, updatedAt: new Date() }
+      });
+      await prisma.platformSetting.upsert({
+        where: { key: 'WHATSAPP_NUMBER' },
+        create: { key: 'WHATSAPP_NUMBER', value: cleanVal },
+        update: { value: cleanVal, updatedAt: new Date() }
+      });
+      await prisma.platformSetting.upsert({
+        where: { key: 'CONTACT_PHONE' },
+        create: { key: 'CONTACT_PHONE', value: cleanVal },
+        update: { value: cleanVal, updatedAt: new Date() }
+      });
+    }
+
     try {
       await prisma.auditLog.create({
         data: {

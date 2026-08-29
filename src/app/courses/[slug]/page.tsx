@@ -96,14 +96,24 @@ export default async function CourseDetailPage({ params }: Props) {
   }
 
   // Fetch WhatsApp number for direct contact
-  let whatsappNum = '201001234567';
+  let whatsappNum = '01555791568';
   try {
-    const wsSetting = await prisma.platformSetting.findFirst({
-      where: { key: { in: ['CONTACT_WHATSAPP', 'WHATSAPP_NUMBER', 'CONTACT_PHONE'] } }
+    const wsSettings = await prisma.platformSetting.findMany({
+      where: { key: { in: ['WHATSAPP_NUMBER', 'CONTACT_WHATSAPP', 'CONTACT_PHONE'] } }
     });
-    if (wsSetting?.value) whatsappNum = wsSetting.value.replace(/[^0-9]/g, '');
+    const wsMap = Object.fromEntries(wsSettings.map((s) => [s.key, s.value]));
+    const rawVal = wsMap['WHATSAPP_NUMBER'] || wsMap['CONTACT_WHATSAPP'] || wsMap['CONTACT_PHONE'] || '';
+    if (rawVal) whatsappNum = rawVal.replace(/[^0-9]/g, '');
   } catch (e) {}
-  const formattedWhatsapp = whatsappNum.startsWith('0') ? '2' + whatsappNum : (whatsappNum.length < 10 ? '201001234567' : whatsappNum);
+
+  let formattedWhatsapp = whatsappNum;
+  if (formattedWhatsapp.startsWith('002')) {
+    formattedWhatsapp = formattedWhatsapp.slice(2);
+  } else if (formattedWhatsapp.startsWith('0')) {
+    formattedWhatsapp = '2' + formattedWhatsapp;
+  } else if (formattedWhatsapp.length === 10 && formattedWhatsapp.startsWith('1')) {
+    formattedWhatsapp = '20' + formattedWhatsapp;
+  }
   const whatsappCourseUrl = `https://wa.me/${formattedWhatsapp}?text=${encodeURIComponent(`السلام عليكم، أود الاستفسار والتسجيل في دورة: ${course.title}`)}`;
 
   const firstLessonSlug = course.sections[0]?.lessons[0]?.slug;

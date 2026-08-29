@@ -28,8 +28,15 @@ export default function Footer({ initialSettings }: FooterProps) {
   const platformName = (initialSettings?.['PLATFORM_NAME'] || 'أكاديمية م / محمد إبراهيم').replace(/سنجر/g, '').trim() || 'أكاديمية م / محمد إبراهيم';
   const platformTagline = initialSettings?.['PLATFORM_TAGLINE'] || 'بوابتك الاحترافية لاحتراف البرمجة والذكاء الاصطناعي والتصميم ومشاريع الإنتاج الفعلية.';
 
-  const whatsappNum = (initialSettings?.['CONTACT_WHATSAPP'] || initialSettings?.['WHATSAPP_NUMBER'] || initialSettings?.['CONTACT_PHONE'] || '201001234567').replace(/[^0-9]/g, '');
-  const formattedWhatsapp = whatsappNum.startsWith('0') ? '2' + whatsappNum : (whatsappNum.length < 10 ? '201001234567' : whatsappNum);
+  const whatsappNum = (initialSettings?.['WHATSAPP_NUMBER'] || initialSettings?.['CONTACT_WHATSAPP'] || initialSettings?.['CONTACT_PHONE'] || '01555791568').replace(/[^0-9]/g, '');
+  let formattedWhatsapp = whatsappNum;
+  if (formattedWhatsapp.startsWith('002')) {
+    formattedWhatsapp = formattedWhatsapp.slice(2);
+  } else if (formattedWhatsapp.startsWith('0')) {
+    formattedWhatsapp = '2' + formattedWhatsapp;
+  } else if (formattedWhatsapp.length === 10 && formattedWhatsapp.startsWith('1')) {
+    formattedWhatsapp = '20' + formattedWhatsapp;
+  }
   const whatsappUrl = `https://wa.me/${formattedWhatsapp}`;
 
   const contactEmail = initialSettings?.['CONTACT_EMAIL'] ? `mailto:${initialSettings['CONTACT_EMAIL']}` : '';

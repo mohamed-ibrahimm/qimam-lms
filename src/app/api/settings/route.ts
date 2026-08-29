@@ -11,7 +11,7 @@ export async function GET() {
       platformName: (map['PLATFORM_NAME'] || 'أكاديمية م / محمد إبراهيم').replace(/سنجر/g, '').trim() || 'أكاديمية م / محمد إبراهيم',
       platformTagline: map['PLATFORM_TAGLINE'] || 'بوابتك الاحترافية لاحتراف البرمجة والذكاء الاصطناعي والتصميم',
       watermarkEnabled: map['WATERMARK_ENABLED'] !== 'false',
-      whatsappNumber: map['CONTACT_WHATSAPP'] || map['WHATSAPP_NUMBER'] || map['CONTACT_PHONE'] || '+201001234567',
+      whatsappNumber: map['WHATSAPP_NUMBER'] || map['CONTACT_WHATSAPP'] || map['CONTACT_PHONE'] || '01555791568',
       contactEmail: map['CONTACT_EMAIL'] || '',
       facebookUrl: map['FACEBOOK_URL'] || '',
       telegramUrl: map['TELEGRAM_URL'] || '',
