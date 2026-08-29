@@ -5,6 +5,7 @@ import { useTheme } from '@/components/ThemeProvider';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { LogIn, Mail, Lock, AlertCircle, ArrowLeft, ShieldCheck, UserCheck } from 'lucide-react';
+import GoogleConnectModal from '@/components/GoogleConnectModal';
 
 function LoginForm() {
   const router = useRouter();
@@ -26,6 +27,7 @@ function LoginForm() {
   };
   const [error, setError] = useState(getInitialError);
   const [loading, setLoading] = useState(false);
+  const [showGoogleModal, setShowGoogleModal] = useState(false);
 
   const handleSubmit = async (e?: React.FormEvent) => {
     if (e) {
@@ -106,10 +108,11 @@ function LoginForm() {
           </div>
         )}
 
-        {/* Real Google Sign-In (No Facebook, No GitHub) */}
+        {/* Google Sign-In with Direct Approval */}
         <div className="space-y-3 pt-1">
-          <a
-            href={`/api/auth/google?role=STUDENT&callbackUrl=${encodeURIComponent(callbackUrl)}`}
+          <button
+            type="button"
+            onClick={() => setShowGoogleModal(true)}
             className="w-full h-12 rounded-2xl bg-white hover:bg-slate-50 dark:bg-[#181330] dark:hover:bg-[#1f193f] border border-slate-300 dark:border-purple-900/80 flex items-center justify-center gap-3 text-xs sm:text-sm font-bold text-slate-800 dark:text-zinc-100 transition-all hover:scale-[1.01] active:scale-[0.99] cursor-pointer shadow-sm hover:shadow-md"
             title="تسجيل الدخول بواسطة Google"
           >
@@ -120,7 +123,7 @@ function LoginForm() {
               <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
             </svg>
             <span>تسجيل الدخول بواسطة Google</span>
-          </a>
+          </button>
 
           {/* Divider */}
           <div className="relative flex items-center justify-center pt-1 pb-1">
@@ -130,6 +133,18 @@ function LoginForm() {
             </span>
           </div>
         </div>
+
+        {/* Google Connect Modal */}
+        {showGoogleModal && (
+          <GoogleConnectModal
+            role="STUDENT"
+            callbackUrl={callbackUrl}
+            onClose={() => setShowGoogleModal(false)}
+            onSuccess={(target) => {
+              window.location.replace(target);
+            }}
+          />
+        )}
 
         <form
           action="/api/auth/form-login"
