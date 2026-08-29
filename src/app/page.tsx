@@ -109,7 +109,9 @@ export default async function HomePage() {
     : 'أكاديمية م / محمد إبراهيم').replace(/سنجر/g, '').trim() || 'أكاديمية م / محمد إبراهيم';
 
   // Social & Quick Contact URL computations (guaranteeing WhatsApp is ALWAYS active with Admin-configured number)
-  const whatsappNum = (settings.WHATSAPP_NUMBER || settings.CONTACT_WHATSAPP || settings.CONTACT_PHONE || '01555791568').replace(/[^0-9]/g, '');
+  const rawWhatsApp = settings.WHATSAPP_NUMBER || settings.CONTACT_WHATSAPP || settings.CONTACT_PHONE || '';
+  const safeWhatsApp = (rawWhatsApp && !rawWhatsApp.includes('1001234567')) ? rawWhatsApp : '01555791568';
+  const whatsappNum = safeWhatsApp.replace(/[^0-9]/g, '');
   let formattedWhatsapp = whatsappNum;
   if (formattedWhatsapp.startsWith('002')) {
     formattedWhatsapp = formattedWhatsapp.slice(2);

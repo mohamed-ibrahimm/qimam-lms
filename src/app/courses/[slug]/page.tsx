@@ -103,7 +103,9 @@ export default async function CourseDetailPage({ params }: Props) {
     });
     const wsMap = Object.fromEntries(wsSettings.map((s) => [s.key, s.value]));
     const rawVal = wsMap['WHATSAPP_NUMBER'] || wsMap['CONTACT_WHATSAPP'] || wsMap['CONTACT_PHONE'] || '';
-    if (rawVal) whatsappNum = rawVal.replace(/[^0-9]/g, '');
+    if (rawVal && !rawVal.includes('1001234567')) {
+      whatsappNum = rawVal.replace(/[^0-9]/g, '');
+    }
   } catch (e) {}
 
   let formattedWhatsapp = whatsappNum;

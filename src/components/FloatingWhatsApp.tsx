@@ -15,9 +15,17 @@ export default function FloatingWhatsApp({ settings = {} }: FloatingWhatsAppProp
     return null;
   }
 
-  const rawNum = settings.WHATSAPP_NUMBER || settings.CONTACT_WHATSAPP || settings.CONTACT_PHONE || '201555791568';
+  const candidateNum = settings.WHATSAPP_NUMBER || settings.CONTACT_WHATSAPP || settings.CONTACT_PHONE || '';
+  const rawNum = (candidateNum && !candidateNum.includes('1001234567')) ? candidateNum : '01555791568';
   const cleanNum = rawNum.replace(/[^0-9]/g, '');
-  const formattedWhatsapp = cleanNum.startsWith('0') ? '2' + cleanNum : (cleanNum.length < 10 ? '201555791568' : cleanNum);
+  let formattedWhatsapp = cleanNum;
+  if (formattedWhatsapp.startsWith('002')) {
+    formattedWhatsapp = formattedWhatsapp.slice(2);
+  } else if (formattedWhatsapp.startsWith('0')) {
+    formattedWhatsapp = '2' + formattedWhatsapp;
+  } else if (formattedWhatsapp.length === 10 && formattedWhatsapp.startsWith('1')) {
+    formattedWhatsapp = '20' + formattedWhatsapp;
+  }
   const whatsappUrl = `https://wa.me/${formattedWhatsapp}?text=${encodeURIComponent('السلام عليكم، أود الاستفسار عن تفاصيل الكورسات والدبلومات')}`;
 
   return (

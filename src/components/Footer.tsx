@@ -28,7 +28,9 @@ export default function Footer({ initialSettings }: FooterProps) {
   const platformName = (initialSettings?.['PLATFORM_NAME'] || 'أكاديمية م / محمد إبراهيم').replace(/سنجر/g, '').trim() || 'أكاديمية م / محمد إبراهيم';
   const platformTagline = initialSettings?.['PLATFORM_TAGLINE'] || 'بوابتك الاحترافية لاحتراف البرمجة والذكاء الاصطناعي والتصميم ومشاريع الإنتاج الفعلية.';
 
-  const whatsappNum = (initialSettings?.['WHATSAPP_NUMBER'] || initialSettings?.['CONTACT_WHATSAPP'] || initialSettings?.['CONTACT_PHONE'] || '01555791568').replace(/[^0-9]/g, '');
+  const rawWhatsApp = initialSettings?.['WHATSAPP_NUMBER'] || initialSettings?.['CONTACT_WHATSAPP'] || initialSettings?.['CONTACT_PHONE'] || '';
+  const safeWhatsApp = (rawWhatsApp && !rawWhatsApp.includes('1001234567')) ? rawWhatsApp : '01555791568';
+  const whatsappNum = safeWhatsApp.replace(/[^0-9]/g, '');
   let formattedWhatsapp = whatsappNum;
   if (formattedWhatsapp.startsWith('002')) {
     formattedWhatsapp = formattedWhatsapp.slice(2);
