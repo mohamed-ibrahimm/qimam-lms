@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
@@ -14,7 +14,8 @@ import {
   Lock,
   KeyRound,
   CheckCircle2,
-  Sparkles
+  Sparkles,
+  RefreshCw
 } from 'lucide-react';
 
 export default function RegisterPage() {
@@ -25,6 +26,9 @@ export default function RegisterPage() {
   const [role, setRole] = useState<'STUDENT' | 'INSTRUCTOR'>(
     initialRoleParam?.toUpperCase() === 'INSTRUCTOR' ? 'INSTRUCTOR' : 'STUDENT'
   );
+
+  // Authentication Mode: 'OTP' (Passwordless code like Udemy & Facebook) vs 'PASSWORD'
+  const [authMode, setAuthMode] = useState<'OTP' | 'PASSWORD'>('OTP');
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -39,10 +43,12 @@ export default function RegisterPage() {
   const [errorMessage, setErrorMessage] = useState('');
   
   // OTP Verification state
-  const [showOtpModal, setShowOtpModal] = useState(false);
-  const [otpCode, setOtpCode] = useState('');
+  const [otpStep, setOtpStep] = useState(false);
+  const [otpDigits, setOtpDigits] = useState(['', '', '', '', '', '']);
   const [otpSentMessage, setOtpSentMessage] = useState('');
-  const [otpLoading, setOtpLoading] = useState(false);
+  const [resendTimer, setResendTimer] = useState(60);
+  const [canResend, setCanResend] = useState(false);
+  const otpInputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   useEffect(() => {
     if (initialRoleParam?.toUpperCase() === 'INSTRUCTOR') {
@@ -50,11 +56,22 @@ export default function RegisterPage() {
     }
   }, [initialRoleParam]);
 
+  useEffect(() => {
+    let timer: any;
+    if (otpStep && resendTimer > 0) {
+      timer = setInterval(() => setResendTimer((prev) => prev - 1), 1000);
+    } else if (resendTimer === 0) {
+      setCanResend(true);
+    }
+    return () => clearInterval(timer);
+  }, [otpStep, resendTimer]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Social Auth Handler
   const handleSocialAuth = async (provider: 'google' | 'github' | 'facebook') => {
     setSocialLoading(provider);
     setErrorMessage('');
@@ -79,7 +96,105 @@ export default function RegisterPage() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // Send OTP Code to Email (Udemy & Facebook style)
+  const handleSendOtp = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    setErrorMessage('');
+
+    if (!formData.email.trim()) {
+      setErrorMessage('يرجى إدخال البريد الإلكتروني لإرسال كود التحقق');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await fetch('/api/auth/otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'send',
+          email: formData.email.trim(),
+          fullName: formData.fullName.trim(),
+          role,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        setErrorMessage(data.error || 'فشل إرسال كود التحقق');
+      } else {
+        setOtpSentMessage(data.demoCode ? `تم إرسال كود التحقق إلى ${formData.email} (الكود التجريبي: ${data.demoCode})` : `تم إرسال كود التحقق المكون من 6 أرقام إلى ${formData.email}`);
+        setOtpStep(true);
+        setResendTimer(60);
+        setCanResend(false);
+      }
+    } catch (err) {
+      setErrorMessage('حدث خطأ أثناء الاتصال، يرجى المحاولة مرة أخرى');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Handle OTP 6-Digit input typing and auto-advancing
+  const handleOtpDigitChange = (index: number, val: string) => {
+    if (!/^\d*$/.test(val)) return;
+    const newDigits = [...otpDigits];
+    newDigits[index] = val.slice(-1);
+    setOtpDigits(newDigits);
+
+    if (val && index < 5) {
+      otpInputRefs.current[index + 1]?.focus();
+    }
+
+    // Auto submit if all 6 digits entered
+    if (newDigits.every((d) => d !== '') && index === 5) {
+      verifyOtpCode(newDigits.join(''));
+    }
+  };
+
+  const handleOtpKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Backspace' && !otpDigits[index] && index > 0) {
+      otpInputRefs.current[index - 1]?.focus();
+    }
+  };
+
+  // Verify OTP Code
+  const verifyOtpCode = async (codeToVerify?: string) => {
+    const fullCode = codeToVerify || otpDigits.join('');
+    if (fullCode.length !== 6) {
+      setErrorMessage('يرجى إدخال جميع أرقام كود التحقق الـ 6');
+      return;
+    }
+
+    setLoading(true);
+    setErrorMessage('');
+    try {
+      const res = await fetch('/api/auth/otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'verify',
+          email: formData.email.trim(),
+          code: fullCode,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        setErrorMessage(data.error || 'كود التحقق غير صحيح، يرجى التأكد وإعادة المحاولة');
+      } else {
+        router.push(data.redirectTo || (role === 'INSTRUCTOR' ? '/instructor' : '/dashboard'));
+        router.refresh();
+      }
+    } catch (err) {
+      setErrorMessage('حدث خطأ أثناء التحقق، يرجى المحاولة مرة أخرى');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Standard Password Submit
+  const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage('');
 
@@ -116,62 +231,13 @@ export default function RegisterPage() {
       if (!res.ok) {
         setErrorMessage(data.error || 'فشل إنشاء الحساب');
       } else {
-        // Send OTP verification code
-        try {
-          const otpRes = await fetch('/api/auth/otp', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ action: 'send', email: formData.email.trim() }),
-          });
-          const otpData = await otpRes.json();
-          if (otpData.success) {
-            setOtpSentMessage(otpData.demoCode ? `تم إرسال كود التحقق إلى بريدك الإلكتروني (الكود التجريبي: ${otpData.demoCode})` : 'تم إرسال كود التحقق إلى بريدك الإلكتروني');
-            setShowOtpModal(true);
-            return;
-          }
-        } catch {
-          // Fallback direct redirect if OTP fails
-        }
-
-        const target = data.redirectTo || (role === 'INSTRUCTOR' ? '/instructor' : '/dashboard');
-        router.push(target);
+        router.push(data.redirectTo || (role === 'INSTRUCTOR' ? '/instructor' : '/dashboard'));
         router.refresh();
       }
     } catch (err) {
       setErrorMessage('حدث خطأ أثناء الاتصال بالخادم، يرجى المحاولة مرة أخرى');
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleVerifyOtp = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!otpCode.trim()) return;
-
-    setOtpLoading(true);
-    setErrorMessage('');
-    try {
-      const res = await fetch('/api/auth/otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: 'verify',
-          email: formData.email.trim(),
-          code: otpCode.trim(),
-        }),
-      });
-
-      const data = await res.json();
-      if (!res.ok) {
-        setErrorMessage(data.error || 'كود التحقق غير صحيح');
-      } else {
-        router.push(data.redirectTo || (role === 'INSTRUCTOR' ? '/instructor' : '/dashboard'));
-        router.refresh();
-      }
-    } catch (err) {
-      setErrorMessage('حدث خطأ أثناء التحقق من الكود');
-    } finally {
-      setOtpLoading(false);
     }
   };
 
@@ -284,6 +350,33 @@ export default function RegisterPage() {
             </div>
           </div>
 
+          {/* Mode Switcher: OTP Fast Code (Udemy/Facebook style) vs Password */}
+          <div className="flex items-center justify-center gap-4 text-xs font-bold pt-1">
+            <button
+              type="button"
+              onClick={() => { setAuthMode('OTP'); setOtpStep(false); }}
+              className={`pb-1 border-b-2 transition-all cursor-pointer ${
+                authMode === 'OTP'
+                  ? 'border-amber-500 text-amber-600 dark:text-amber-400'
+                  : 'border-transparent text-slate-400 dark:text-zinc-500 hover:text-slate-700 dark:hover:text-zinc-300'
+              }`}
+            >
+              الدخول السريع بكود التحقق (OTP)
+            </button>
+            <span className="text-slate-300 dark:text-zinc-700">|</span>
+            <button
+              type="button"
+              onClick={() => { setAuthMode('PASSWORD'); setOtpStep(false); }}
+              className={`pb-1 border-b-2 transition-all cursor-pointer ${
+                authMode === 'PASSWORD'
+                  ? 'border-amber-500 text-amber-600 dark:text-amber-400'
+                  : 'border-transparent text-slate-400 dark:text-zinc-500 hover:text-slate-700 dark:hover:text-zinc-300'
+              }`}
+            >
+              التسجيل بكلمة المرور
+            </button>
+          </div>
+
           {/* Instructor Notice */}
           {role === 'INSTRUCTOR' && (
             <div className="p-3 rounded-xl bg-purple-950/60 border border-purple-800/60 text-purple-200 text-xs flex items-center justify-between animate-in fade-in">
@@ -301,114 +394,229 @@ export default function RegisterPage() {
             </div>
           )}
 
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-3.5">
-            {/* Full Name */}
-            <div>
-              <label className="block text-xs font-bold text-slate-700 dark:text-zinc-200 mb-1.5">
-                الاسم بالكامل
-              </label>
-              <div className="relative group">
-                <input
-                  type="text"
-                  name="fullName"
-                  required
-                  value={formData.fullName}
-                  onChange={handleChange}
-                  placeholder="أدخل اسمك الثلاثي أو الرباعي"
-                  className="w-full h-11 pr-11 pl-4 rounded-xl bg-slate-50 dark:bg-[#181330] border border-slate-200 dark:border-purple-900/60 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-xs sm:text-sm focus:bg-white dark:focus:bg-[#1f193f] focus:outline-none focus:border-amber-500 dark:focus:border-amber-400 transition-all shadow-xs"
-                />
-                <User className="w-4 h-4 text-slate-400 dark:text-zinc-500 absolute right-3.5 top-1/2 -translate-y-1/2 group-focus-within:text-amber-500 dark:group-focus-within:text-amber-400 transition-colors pointer-events-none" />
-              </div>
-            </div>
+          {/* MODE 1: OTP FAST CODE FLOW (UDEMY & FACEBOOK STYLE) */}
+          {authMode === 'OTP' ? (
+            !otpStep ? (
+              /* Step 1: Enter Name & Email to receive OTP */
+              <form onSubmit={handleSendOtp} className="space-y-3.5">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-zinc-200 mb-1.5">
+                    الاسم بالكامل
+                  </label>
+                  <div className="relative group">
+                    <input
+                      type="text"
+                      name="fullName"
+                      required
+                      value={formData.fullName}
+                      onChange={handleChange}
+                      placeholder="أدخل اسمك الثلاثي أو الرباعي"
+                      className="w-full h-11 pr-11 pl-4 rounded-xl bg-slate-50 dark:bg-[#181330] border border-slate-200 dark:border-purple-900/60 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-xs sm:text-sm focus:bg-white dark:focus:bg-[#1f193f] focus:outline-none focus:border-amber-500 dark:focus:border-amber-400 transition-all shadow-xs"
+                    />
+                    <User className="w-4 h-4 text-slate-400 dark:text-zinc-500 absolute right-3.5 top-1/2 -translate-y-1/2 group-focus-within:text-amber-500 dark:group-focus-within:text-amber-400 transition-colors pointer-events-none" />
+                  </div>
+                </div>
 
-            {/* Email */}
-            <div>
-              <label className="block text-xs font-bold text-slate-700 dark:text-zinc-200 mb-1.5">
-                البريد الإلكتروني
-              </label>
-              <div className="relative group">
-                <input
-                  type="email"
-                  name="email"
-                  required
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="name@example.com"
-                  className="w-full h-11 pr-11 pl-4 rounded-xl bg-slate-50 dark:bg-[#181330] border border-slate-200 dark:border-purple-900/60 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-xs sm:text-sm focus:bg-white dark:focus:bg-[#1f193f] focus:outline-none focus:border-amber-500 dark:focus:border-amber-400 transition-all shadow-xs"
-                />
-                <Mail className="w-4 h-4 text-slate-400 dark:text-zinc-500 absolute right-3.5 top-1/2 -translate-y-1/2 group-focus-within:text-amber-500 dark:group-focus-within:text-amber-400 transition-colors pointer-events-none" />
-              </div>
-            </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-zinc-200 mb-1.5">
+                    البريد الإلكتروني
+                  </label>
+                  <div className="relative group">
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="name@example.com"
+                      className="w-full h-11 pr-11 pl-4 rounded-xl bg-slate-50 dark:bg-[#181330] border border-slate-200 dark:border-purple-900/60 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-xs sm:text-sm focus:bg-white dark:focus:bg-[#1f193f] focus:outline-none focus:border-amber-500 dark:focus:border-amber-400 transition-all shadow-xs"
+                    />
+                    <Mail className="w-4 h-4 text-slate-400 dark:text-zinc-500 absolute right-3.5 top-1/2 -translate-y-1/2 group-focus-within:text-amber-500 dark:group-focus-within:text-amber-400 transition-colors pointer-events-none" />
+                  </div>
+                </div>
 
-            {/* Phone */}
-            <div>
-              <label className="block text-xs font-bold text-slate-700 dark:text-zinc-200 mb-1.5">
-                رقم الهاتف أو الواتساب
-              </label>
-              <div className="relative group">
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  placeholder="01012345678"
-                  className="w-full h-11 pr-11 pl-4 rounded-xl bg-slate-50 dark:bg-[#181330] border border-slate-200 dark:border-purple-900/60 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-xs sm:text-sm focus:bg-white dark:focus:bg-[#1f193f] focus:outline-none focus:border-amber-500 dark:focus:border-amber-400 transition-all shadow-xs"
-                />
-                <Phone className="w-4 h-4 text-slate-400 dark:text-zinc-500 absolute right-3.5 top-1/2 -translate-y-1/2 group-focus-within:text-amber-500 dark:group-focus-within:text-amber-400 transition-colors pointer-events-none" />
-              </div>
-            </div>
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full h-13 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 hover:from-amber-600 hover:to-yellow-500 text-zinc-950 font-black text-base shadow-xl shadow-amber-500/25 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 cursor-pointer disabled:opacity-50"
+                  >
+                    <span>{loading ? 'جاري إرسال كود التحقق...' : 'إرسال كود الدخول والتحقق'}</span>
+                    <KeyRound className="w-5 h-5 text-zinc-950" />
+                  </button>
+                </div>
+              </form>
+            ) : (
+              /* Step 2: Enter 6-Digit OTP Code */
+              <div className="space-y-4 animate-in fade-in">
+                <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-700 dark:text-amber-300 text-xs text-center space-y-1">
+                  <p className="font-bold">{otpSentMessage}</p>
+                  <p className="text-[11px] opacity-80">أدخل الـ 6 أرقام التي تم إرسالها إليك لتسجيل الدخول فوراً</p>
+                </div>
 
-            {/* Password */}
-            <div>
-              <label className="block text-xs font-bold text-slate-700 dark:text-zinc-200 mb-1.5">
-                كلمة المرور
-              </label>
-              <div className="relative group">
-                <input
-                  type="password"
-                  name="password"
-                  required
-                  value={formData.password}
-                  onChange={handleChange}
-                  placeholder="6 أحرف على الأقل"
-                  className="w-full h-11 pr-11 pl-4 rounded-xl bg-slate-50 dark:bg-[#181330] border border-slate-200 dark:border-purple-900/60 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-xs sm:text-sm focus:bg-white dark:focus:bg-[#1f193f] focus:outline-none focus:border-amber-500 dark:focus:border-amber-400 transition-all shadow-xs"
-                />
-                <Lock className="w-4 h-4 text-slate-400 dark:text-zinc-500 absolute right-3.5 top-1/2 -translate-y-1/2 group-focus-within:text-amber-500 dark:group-focus-within:text-amber-400 transition-colors pointer-events-none" />
-              </div>
-            </div>
+                <div className="flex items-center justify-center gap-2 dir-ltr" dir="ltr">
+                  {otpDigits.map((digit, idx) => (
+                    <input
+                      key={idx}
+                      ref={(el) => { otpInputRefs.current[idx] = el; }}
+                      type="text"
+                      inputMode="numeric"
+                      maxLength={1}
+                      value={digit}
+                      onChange={(e) => handleOtpDigitChange(idx, e.target.value)}
+                      onKeyDown={(e) => handleOtpKeyDown(idx, e)}
+                      className="w-11 h-13 text-center font-mono text-xl font-black rounded-xl bg-slate-50 dark:bg-[#181330] border border-slate-300 dark:border-purple-900/80 text-slate-900 dark:text-white focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 transition-all"
+                    />
+                  ))}
+                </div>
 
-            {/* Confirm Password (Explicitly Requested by User) */}
-            <div>
-              <label className="block text-xs font-bold text-slate-700 dark:text-zinc-200 mb-1.5">
-                تأكيد كلمة المرور
-              </label>
-              <div className="relative group">
-                <input
-                  type="password"
-                  name="confirmPassword"
-                  required
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  placeholder="أعد إدخال كلمة المرور"
-                  className="w-full h-11 pr-11 pl-4 rounded-xl bg-slate-50 dark:bg-[#181330] border border-slate-200 dark:border-purple-900/60 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-xs sm:text-sm focus:bg-white dark:focus:bg-[#1f193f] focus:outline-none focus:border-amber-500 dark:focus:border-amber-400 transition-all shadow-xs"
-                />
-                <KeyRound className="w-4 h-4 text-slate-400 dark:text-zinc-500 absolute right-3.5 top-1/2 -translate-y-1/2 group-focus-within:text-amber-500 dark:group-focus-within:text-amber-400 transition-colors pointer-events-none" />
-              </div>
-            </div>
+                <div className="flex items-center justify-between text-xs text-slate-500 dark:text-zinc-400 pt-1">
+                  <button
+                    type="button"
+                    onClick={() => setOtpStep(false)}
+                    className="hover:underline text-slate-600 dark:text-zinc-300"
+                  >
+                    تغيير البريد الإلكتروني
+                  </button>
 
-            {/* Large Dynamic CTA Button */}
-            <div className="pt-2">
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full h-13 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 hover:from-amber-600 hover:to-yellow-500 text-zinc-950 font-black text-base shadow-xl shadow-amber-500/25 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 cursor-pointer disabled:opacity-50"
-              >
-                <span>{loading ? 'جاري إنشاء الحساب...' : 'إنشاء الحساب والبدء الآن'}</span>
-                <ArrowLeft className="w-5 h-5 text-zinc-950" />
-              </button>
-            </div>
-          </form>
+                  <button
+                    type="button"
+                    onClick={() => handleSendOtp()}
+                    disabled={!canResend || loading}
+                    className={`flex items-center gap-1 font-bold ${
+                      canResend
+                        ? 'text-amber-600 dark:text-amber-400 hover:underline cursor-pointer'
+                        : 'opacity-50 cursor-not-allowed'
+                    }`}
+                  >
+                    <RefreshCw className={`w-3 h-3 ${loading ? 'animate-spin' : ''}`} />
+                    <span>{canResend ? 'إعادة إرسال الكود' : `إعادة الإرسال خلال ${resendTimer} ث`}</span>
+                  </button>
+                </div>
+
+                <div className="pt-2">
+                  <button
+                    type="button"
+                    onClick={() => verifyOtpCode()}
+                    disabled={loading || otpDigits.some((d) => !d)}
+                    className="w-full h-13 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 hover:from-amber-600 hover:to-yellow-500 text-zinc-950 font-black text-base shadow-xl shadow-amber-500/25 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 cursor-pointer disabled:opacity-50"
+                  >
+                    <span>{loading ? 'جاري التحقق...' : 'تأكيد الحساب والدخول'}</span>
+                    <CheckCircle2 className="w-5 h-5 text-zinc-950" />
+                  </button>
+                </div>
+              </div>
+            )
+          ) : (
+            /* MODE 2: STANDARD REGISTRATION WITH PASSWORD & CONFIRM PASSWORD */
+            <form onSubmit={handlePasswordSubmit} className="space-y-3.5">
+              {/* Full Name */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 dark:text-zinc-200 mb-1.5">
+                  الاسم بالكامل
+                </label>
+                <div className="relative group">
+                  <input
+                    type="text"
+                    name="fullName"
+                    required
+                    value={formData.fullName}
+                    onChange={handleChange}
+                    placeholder="أدخل اسمك الثلاثي أو الرباعي"
+                    className="w-full h-11 pr-11 pl-4 rounded-xl bg-slate-50 dark:bg-[#181330] border border-slate-200 dark:border-purple-900/60 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-xs sm:text-sm focus:bg-white dark:focus:bg-[#1f193f] focus:outline-none focus:border-amber-500 dark:focus:border-amber-400 transition-all shadow-xs"
+                  />
+                  <User className="w-4 h-4 text-slate-400 dark:text-zinc-500 absolute right-3.5 top-1/2 -translate-y-1/2 group-focus-within:text-amber-500 dark:group-focus-within:text-amber-400 transition-colors pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Email */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 dark:text-zinc-200 mb-1.5">
+                  البريد الإلكتروني
+                </label>
+                <div className="relative group">
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="name@example.com"
+                    className="w-full h-11 pr-11 pl-4 rounded-xl bg-slate-50 dark:bg-[#181330] border border-slate-200 dark:border-purple-900/60 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-xs sm:text-sm focus:bg-white dark:focus:bg-[#1f193f] focus:outline-none focus:border-amber-500 dark:focus:border-amber-400 transition-all shadow-xs"
+                  />
+                  <Mail className="w-4 h-4 text-slate-400 dark:text-zinc-500 absolute right-3.5 top-1/2 -translate-y-1/2 group-focus-within:text-amber-500 dark:group-focus-within:text-amber-400 transition-colors pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Phone */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 dark:text-zinc-200 mb-1.5">
+                  رقم الهاتف أو الواتساب
+                </label>
+                <div className="relative group">
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    placeholder="01012345678"
+                    className="w-full h-11 pr-11 pl-4 rounded-xl bg-slate-50 dark:bg-[#181330] border border-slate-200 dark:border-purple-900/60 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-xs sm:text-sm focus:bg-white dark:focus:bg-[#1f193f] focus:outline-none focus:border-amber-500 dark:focus:border-amber-400 transition-all shadow-xs"
+                  />
+                  <Phone className="w-4 h-4 text-slate-400 dark:text-zinc-500 absolute right-3.5 top-1/2 -translate-y-1/2 group-focus-within:text-amber-500 dark:group-focus-within:text-amber-400 transition-colors pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Password */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 dark:text-zinc-200 mb-1.5">
+                  كلمة المرور
+                </label>
+                <div className="relative group">
+                  <input
+                    type="password"
+                    name="password"
+                    required
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="6 أحرف على الأقل"
+                    className="w-full h-11 pr-11 pl-4 rounded-xl bg-slate-50 dark:bg-[#181330] border border-slate-200 dark:border-purple-900/60 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-xs sm:text-sm focus:bg-white dark:focus:bg-[#1f193f] focus:outline-none focus:border-amber-500 dark:focus:border-amber-400 transition-all shadow-xs"
+                  />
+                  <Lock className="w-4 h-4 text-slate-400 dark:text-zinc-500 absolute right-3.5 top-1/2 -translate-y-1/2 group-focus-within:text-amber-500 dark:group-focus-within:text-amber-400 transition-colors pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Confirm Password (Explicitly Requested by User) */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 dark:text-zinc-200 mb-1.5">
+                  تأكيد كلمة المرور
+                </label>
+                <div className="relative group">
+                  <input
+                    type="password"
+                    name="confirmPassword"
+                    required
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    placeholder="أعد إدخال كلمة المرور"
+                    className="w-full h-11 pr-11 pl-4 rounded-xl bg-slate-50 dark:bg-[#181330] border border-slate-200 dark:border-purple-900/60 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-xs sm:text-sm focus:bg-white dark:focus:bg-[#1f193f] focus:outline-none focus:border-amber-500 dark:focus:border-amber-400 transition-all shadow-xs"
+                  />
+                  <KeyRound className="w-4 h-4 text-slate-400 dark:text-zinc-500 absolute right-3.5 top-1/2 -translate-y-1/2 group-focus-within:text-amber-500 dark:group-focus-within:text-amber-400 transition-colors pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Large Dynamic CTA Button */}
+              <div className="pt-2">
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full h-13 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 hover:from-amber-600 hover:to-yellow-500 text-zinc-950 font-black text-base shadow-xl shadow-amber-500/25 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 cursor-pointer disabled:opacity-50"
+                >
+                  <span>{loading ? 'جاري إنشاء الحساب...' : 'إنشاء الحساب والبدء الآن'}</span>
+                  <ArrowLeft className="w-5 h-5 text-zinc-950" />
+                </button>
+              </div>
+            </form>
+          )}
         </div>
 
         {/* Footer Link */}
@@ -419,43 +627,6 @@ export default function RegisterPage() {
           </Link>
         </p>
       </div>
-
-      {/* OTP Verification Modal */}
-      {showOtpModal && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="w-full max-w-sm rounded-3xl bg-white dark:bg-[#120e24] border border-slate-200 dark:border-amber-500/40 p-6 sm:p-7 shadow-2xl space-y-4 animate-in zoom-in-95">
-            <div className="text-center space-y-1.5">
-              <div className="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-500 flex items-center justify-center mx-auto mb-2">
-                <KeyRound className="w-6 h-6" />
-              </div>
-              <h2 className="text-lg font-black text-slate-900 dark:text-white">تأكيد البريد الإلكتروني</h2>
-              <p className="text-xs text-slate-500 dark:text-zinc-300">{otpSentMessage}</p>
-            </div>
-
-            <form onSubmit={handleVerifyOtp} className="space-y-4">
-              <div>
-                <input
-                  type="text"
-                  maxLength={6}
-                  value={otpCode}
-                  onChange={(e) => setOtpCode(e.target.value)}
-                  placeholder="أدخل الـ 6 أرقام"
-                  className="w-full h-12 text-center tracking-[0.3em] font-mono text-lg font-black rounded-xl bg-slate-50 dark:bg-[#181330] border border-slate-200 dark:border-purple-900/60 text-slate-900 dark:text-white focus:outline-none focus:border-amber-400"
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={otpLoading || !otpCode.trim()}
-                className="w-full h-12 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 text-zinc-950 font-black text-sm flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-amber-500/20 disabled:opacity-50"
-              >
-                <span>{otpLoading ? 'جاري التحقق...' : 'تأكيد الحساب والدخول'}</span>
-                <CheckCircle2 className="w-4 h-4 text-zinc-950" />
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
