@@ -33,9 +33,13 @@ export async function POST(req: Request) {
       where: { email: userEmail }
     });
 
+    // If requireOtp flag is set (for new social registration flow)
+    const { requireOtp } = body;
+
     if (!user) {
       const generatedUsername = `${provider}_${userEmail.split('@')[0].replace(/[^a-zA-Z0-9_]/g, '')}_${randomSuffix}`.slice(0, 30);
       const defaultPasswordHash = await hashPassword(`social_auth_secure_pwd_${Date.now()}`);
+      const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
 
       user = await prisma.user.create({
         data: {
@@ -47,7 +51,9 @@ export async function POST(req: Request) {
           passwordHash: defaultPasswordHash,
           role: requestedRole,
           avatarUrl: avatarUrl || null,
-          isEmailVerified: true,
+          isEmailVerified: !requireOtp,
+          emailVerificationToken: requireOtp ? otpCode : null,
+          passwordResetExpires: requireOtp ? new Date(Date.now() + 15 * 60 * 1000) : null,
           instructorStatus: isInstructor ? 'TRIAL' : 'TRIAL',
           trialEndsAt,
           subscriptionPlan: isInstructor ? 'FREE_TRIAL' : 'FREE_TRIAL',
@@ -62,6 +68,33 @@ export async function POST(req: Request) {
           entityId: user.id,
           detailsJson: JSON.stringify({ email: user.email, provider, role: user.role }),
         }
+      });
+
+      if (requireOtp) {
+        console.log(`[SOCIAL REGISTRATION OTP CODE FOR ${userEmail}]: ${otpCode}`);
+        return NextResponse.json({
+          success: true,
+          requiresOtp: true,
+          email: userEmail,
+          demoCode: otpCode,
+          message: `تم ربط حساب ${provider === 'google' ? 'جوجل' : provider === 'github' ? 'جيت هاب' : 'فيسبوك'}، تم إرسال كود التحقق (OTP) إلى ${userEmail}`
+        });
+      }
+    } else if (requireOtp && !user.isEmailVerified) {
+      const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+      await prisma.user.update({
+        where: { id: user.id },
+        data: {
+          emailVerificationToken: otpCode,
+          passwordResetExpires: new Date(Date.now() + 15 * 60 * 1000),
+        }
+      });
+      return NextResponse.json({
+        success: true,
+        requiresOtp: true,
+        email: userEmail,
+        demoCode: otpCode,
+        message: `تم إرسال كود التحقق (OTP) إلى ${userEmail}`
       });
     }
 
