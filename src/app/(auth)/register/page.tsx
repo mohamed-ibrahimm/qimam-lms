@@ -12,7 +12,9 @@ import {
   Mail,
   Phone,
   Lock,
-  CheckCircle2
+  KeyRound,
+  CheckCircle2,
+  Sparkles
 } from 'lucide-react';
 
 export default function RegisterPage() {
@@ -29,10 +31,18 @@ export default function RegisterPage() {
     email: '',
     phone: '',
     password: '',
+    confirmPassword: '',
   });
 
   const [loading, setLoading] = useState(false);
+  const [socialLoading, setSocialLoading] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState('');
+  
+  // OTP Verification state
+  const [showOtpModal, setShowOtpModal] = useState(false);
+  const [otpCode, setOtpCode] = useState('');
+  const [otpSentMessage, setOtpSentMessage] = useState('');
+  const [otpLoading, setOtpLoading] = useState(false);
 
   useEffect(() => {
     if (initialRoleParam?.toUpperCase() === 'INSTRUCTOR') {
@@ -45,12 +55,41 @@ export default function RegisterPage() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleSocialAuth = async (provider: 'google' | 'github' | 'facebook') => {
+    setSocialLoading(provider);
+    setErrorMessage('');
+    try {
+      const res = await fetch('/api/auth/social', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ provider, role }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        setErrorMessage(data.error || 'فشل تسجيل الدخول بالحساب الاجتماعي');
+      } else {
+        router.push(data.redirectTo || (role === 'INSTRUCTOR' ? '/instructor' : '/dashboard'));
+        router.refresh();
+      }
+    } catch (err) {
+      setErrorMessage('حدث خطأ في الاتصال، يرجى المحاولة لاحقاً');
+    } finally {
+      setSocialLoading(null);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage('');
 
-    if (!formData.fullName.trim() || !formData.email.trim() || !formData.password) {
+    if (!formData.fullName.trim() || !formData.email.trim() || !formData.password || !formData.confirmPassword) {
       setErrorMessage('يرجى ملء جميع الحقول المطلوبة');
+      return;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      setErrorMessage('كلمتا المرور غير متطابقتين');
       return;
     }
 
@@ -77,6 +116,23 @@ export default function RegisterPage() {
       if (!res.ok) {
         setErrorMessage(data.error || 'فشل إنشاء الحساب');
       } else {
+        // Send OTP verification code
+        try {
+          const otpRes = await fetch('/api/auth/otp', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'send', email: formData.email.trim() }),
+          });
+          const otpData = await otpRes.json();
+          if (otpData.success) {
+            setOtpSentMessage(otpData.demoCode ? `تم إرسال كود التحقق إلى بريدك الإلكتروني (الكود التجريبي: ${otpData.demoCode})` : 'تم إرسال كود التحقق إلى بريدك الإلكتروني');
+            setShowOtpModal(true);
+            return;
+          }
+        } catch {
+          // Fallback direct redirect if OTP fails
+        }
+
         const target = data.redirectTo || (role === 'INSTRUCTOR' ? '/instructor' : '/dashboard');
         router.push(target);
         router.refresh();
@@ -85,6 +141,37 @@ export default function RegisterPage() {
       setErrorMessage('حدث خطأ أثناء الاتصال بالخادم، يرجى المحاولة مرة أخرى');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleVerifyOtp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!otpCode.trim()) return;
+
+    setOtpLoading(true);
+    setErrorMessage('');
+    try {
+      const res = await fetch('/api/auth/otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'verify',
+          email: formData.email.trim(),
+          code: otpCode.trim(),
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        setErrorMessage(data.error || 'كود التحقق غير صحيح');
+      } else {
+        router.push(data.redirectTo || (role === 'INSTRUCTOR' ? '/instructor' : '/dashboard'));
+        router.refresh();
+      }
+    } catch (err) {
+      setErrorMessage('حدث خطأ أثناء التحقق من الكود');
+    } finally {
+      setOtpLoading(false);
     }
   };
 
@@ -139,7 +226,65 @@ export default function RegisterPage() {
             </button>
           </div>
 
-          {/* Instructor Notice - Pure typography, no emojis */}
+          {/* Social Sign-In Buttons (Google, GitHub, Facebook) */}
+          <div className="space-y-2 pt-1">
+            <div className="grid grid-cols-3 gap-2">
+              {/* Google Button */}
+              <button
+                type="button"
+                onClick={() => handleSocialAuth('google')}
+                disabled={!!socialLoading}
+                className="h-11 rounded-xl bg-slate-50 hover:bg-slate-100 dark:bg-[#181330] dark:hover:bg-[#1f193f] border border-slate-200 dark:border-purple-900/60 flex items-center justify-center gap-1.5 text-xs font-bold text-slate-800 dark:text-zinc-200 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer shadow-xs disabled:opacity-50"
+                title="التسجيل بواسطة حساب Google"
+              >
+                <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
+                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
+                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
+                </svg>
+                <span>جوجل</span>
+              </button>
+
+              {/* GitHub Button */}
+              <button
+                type="button"
+                onClick={() => handleSocialAuth('github')}
+                disabled={!!socialLoading}
+                className="h-11 rounded-xl bg-slate-50 hover:bg-slate-100 dark:bg-[#181330] dark:hover:bg-[#1f193f] border border-slate-200 dark:border-purple-900/60 flex items-center justify-center gap-1.5 text-xs font-bold text-slate-800 dark:text-zinc-200 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer shadow-xs disabled:opacity-50"
+                title="التسجيل بواسطة حساب GitHub"
+              >
+                <svg className="w-4 h-4 shrink-0 fill-current text-slate-800 dark:text-white" viewBox="0 0 24 24">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                </svg>
+                <span>جيت هاب</span>
+              </button>
+
+              {/* Facebook Button */}
+              <button
+                type="button"
+                onClick={() => handleSocialAuth('facebook')}
+                disabled={!!socialLoading}
+                className="h-11 rounded-xl bg-slate-50 hover:bg-slate-100 dark:bg-[#181330] dark:hover:bg-[#1f193f] border border-slate-200 dark:border-purple-900/60 flex items-center justify-center gap-1.5 text-xs font-bold text-slate-800 dark:text-zinc-200 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer shadow-xs disabled:opacity-50"
+                title="التسجيل بواسطة حساب Facebook"
+              >
+                <svg className="w-4 h-4 shrink-0 fill-[#1877F2]" viewBox="0 0 24 24">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                </svg>
+                <span>فيسبوك</span>
+              </button>
+            </div>
+
+            {/* Divider */}
+            <div className="relative flex items-center justify-center pt-2 pb-1">
+              <div className="border-t border-slate-200 dark:border-purple-900/50 w-full" />
+              <span className="bg-white dark:bg-[#120e24] px-3 text-[11px] font-semibold text-slate-400 dark:text-zinc-500 whitespace-nowrap absolute">
+                أو من خلال البريد الإلكتروني
+              </span>
+            </div>
+          </div>
+
+          {/* Instructor Notice */}
           {role === 'INSTRUCTOR' && (
             <div className="p-3 rounded-xl bg-purple-950/60 border border-purple-800/60 text-purple-200 text-xs flex items-center justify-between animate-in fade-in">
               <span className="font-semibold">فترة تجريبية 14 يوماً مجاناً مع 0% عمولة</span>
@@ -156,8 +301,8 @@ export default function RegisterPage() {
             </div>
           )}
 
-          {/* Streamlined Form (Just 4 High-Clarity Fields) */}
-          <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-3.5">
             {/* Full Name */}
             <div>
               <label className="block text-xs font-bold text-slate-700 dark:text-zinc-200 mb-1.5">
@@ -171,7 +316,7 @@ export default function RegisterPage() {
                   value={formData.fullName}
                   onChange={handleChange}
                   placeholder="أدخل اسمك الثلاثي أو الرباعي"
-                  className="w-full h-12 pr-11 pl-4 rounded-xl bg-slate-50 dark:bg-[#181330] border border-slate-200 dark:border-purple-900/60 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-xs sm:text-sm focus:bg-white dark:focus:bg-[#1f193f] focus:outline-none focus:border-amber-500 dark:focus:border-amber-400 transition-all shadow-xs"
+                  className="w-full h-11 pr-11 pl-4 rounded-xl bg-slate-50 dark:bg-[#181330] border border-slate-200 dark:border-purple-900/60 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-xs sm:text-sm focus:bg-white dark:focus:bg-[#1f193f] focus:outline-none focus:border-amber-500 dark:focus:border-amber-400 transition-all shadow-xs"
                 />
                 <User className="w-4 h-4 text-slate-400 dark:text-zinc-500 absolute right-3.5 top-1/2 -translate-y-1/2 group-focus-within:text-amber-500 dark:group-focus-within:text-amber-400 transition-colors pointer-events-none" />
               </div>
@@ -190,7 +335,7 @@ export default function RegisterPage() {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="name@example.com"
-                  className="w-full h-12 pr-11 pl-4 rounded-xl bg-slate-50 dark:bg-[#181330] border border-slate-200 dark:border-purple-900/60 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-xs sm:text-sm focus:bg-white dark:focus:bg-[#1f193f] focus:outline-none focus:border-amber-500 dark:focus:border-amber-400 transition-all shadow-xs"
+                  className="w-full h-11 pr-11 pl-4 rounded-xl bg-slate-50 dark:bg-[#181330] border border-slate-200 dark:border-purple-900/60 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-xs sm:text-sm focus:bg-white dark:focus:bg-[#1f193f] focus:outline-none focus:border-amber-500 dark:focus:border-amber-400 transition-all shadow-xs"
                 />
                 <Mail className="w-4 h-4 text-slate-400 dark:text-zinc-500 absolute right-3.5 top-1/2 -translate-y-1/2 group-focus-within:text-amber-500 dark:group-focus-within:text-amber-400 transition-colors pointer-events-none" />
               </div>
@@ -208,7 +353,7 @@ export default function RegisterPage() {
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder="01012345678"
-                  className="w-full h-12 pr-11 pl-4 rounded-xl bg-slate-50 dark:bg-[#181330] border border-slate-200 dark:border-purple-900/60 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-xs sm:text-sm focus:bg-white dark:focus:bg-[#1f193f] focus:outline-none focus:border-amber-500 dark:focus:border-amber-400 transition-all shadow-xs"
+                  className="w-full h-11 pr-11 pl-4 rounded-xl bg-slate-50 dark:bg-[#181330] border border-slate-200 dark:border-purple-900/60 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-xs sm:text-sm focus:bg-white dark:focus:bg-[#1f193f] focus:outline-none focus:border-amber-500 dark:focus:border-amber-400 transition-all shadow-xs"
                 />
                 <Phone className="w-4 h-4 text-slate-400 dark:text-zinc-500 absolute right-3.5 top-1/2 -translate-y-1/2 group-focus-within:text-amber-500 dark:group-focus-within:text-amber-400 transition-colors pointer-events-none" />
               </div>
@@ -227,9 +372,28 @@ export default function RegisterPage() {
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="6 أحرف على الأقل"
-                  className="w-full h-12 pr-11 pl-4 rounded-xl bg-slate-50 dark:bg-[#181330] border border-slate-200 dark:border-purple-900/60 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-xs sm:text-sm focus:bg-white dark:focus:bg-[#1f193f] focus:outline-none focus:border-amber-500 dark:focus:border-amber-400 transition-all shadow-xs"
+                  className="w-full h-11 pr-11 pl-4 rounded-xl bg-slate-50 dark:bg-[#181330] border border-slate-200 dark:border-purple-900/60 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-xs sm:text-sm focus:bg-white dark:focus:bg-[#1f193f] focus:outline-none focus:border-amber-500 dark:focus:border-amber-400 transition-all shadow-xs"
                 />
                 <Lock className="w-4 h-4 text-slate-400 dark:text-zinc-500 absolute right-3.5 top-1/2 -translate-y-1/2 group-focus-within:text-amber-500 dark:group-focus-within:text-amber-400 transition-colors pointer-events-none" />
+              </div>
+            </div>
+
+            {/* Confirm Password (Explicitly Requested by User) */}
+            <div>
+              <label className="block text-xs font-bold text-slate-700 dark:text-zinc-200 mb-1.5">
+                تأكيد كلمة المرور
+              </label>
+              <div className="relative group">
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  required
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  placeholder="أعد إدخال كلمة المرور"
+                  className="w-full h-11 pr-11 pl-4 rounded-xl bg-slate-50 dark:bg-[#181330] border border-slate-200 dark:border-purple-900/60 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-xs sm:text-sm focus:bg-white dark:focus:bg-[#1f193f] focus:outline-none focus:border-amber-500 dark:focus:border-amber-400 transition-all shadow-xs"
+                />
+                <KeyRound className="w-4 h-4 text-slate-400 dark:text-zinc-500 absolute right-3.5 top-1/2 -translate-y-1/2 group-focus-within:text-amber-500 dark:group-focus-within:text-amber-400 transition-colors pointer-events-none" />
               </div>
             </div>
 
@@ -238,7 +402,7 @@ export default function RegisterPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full h-14 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 hover:from-amber-600 hover:to-yellow-500 text-zinc-950 font-black text-base shadow-xl shadow-amber-500/25 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 cursor-pointer disabled:opacity-50"
+                className="w-full h-13 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 hover:from-amber-600 hover:to-yellow-500 text-zinc-950 font-black text-base shadow-xl shadow-amber-500/25 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 cursor-pointer disabled:opacity-50"
               >
                 <span>{loading ? 'جاري إنشاء الحساب...' : 'إنشاء الحساب والبدء الآن'}</span>
                 <ArrowLeft className="w-5 h-5 text-zinc-950" />
@@ -255,6 +419,43 @@ export default function RegisterPage() {
           </Link>
         </p>
       </div>
+
+      {/* OTP Verification Modal */}
+      {showOtpModal && (
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="w-full max-w-sm rounded-3xl bg-white dark:bg-[#120e24] border border-slate-200 dark:border-amber-500/40 p-6 sm:p-7 shadow-2xl space-y-4 animate-in zoom-in-95">
+            <div className="text-center space-y-1.5">
+              <div className="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-500 flex items-center justify-center mx-auto mb-2">
+                <KeyRound className="w-6 h-6" />
+              </div>
+              <h2 className="text-lg font-black text-slate-900 dark:text-white">تأكيد البريد الإلكتروني</h2>
+              <p className="text-xs text-slate-500 dark:text-zinc-300">{otpSentMessage}</p>
+            </div>
+
+            <form onSubmit={handleVerifyOtp} className="space-y-4">
+              <div>
+                <input
+                  type="text"
+                  maxLength={6}
+                  value={otpCode}
+                  onChange={(e) => setOtpCode(e.target.value)}
+                  placeholder="أدخل الـ 6 أرقام"
+                  className="w-full h-12 text-center tracking-[0.3em] font-mono text-lg font-black rounded-xl bg-slate-50 dark:bg-[#181330] border border-slate-200 dark:border-purple-900/60 text-slate-900 dark:text-white focus:outline-none focus:border-amber-400"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={otpLoading || !otpCode.trim()}
+                className="w-full h-12 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 text-zinc-950 font-black text-sm flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-amber-500/20 disabled:opacity-50"
+              >
+                <span>{otpLoading ? 'جاري التحقق...' : 'تأكيد الحساب والدخول'}</span>
+                <CheckCircle2 className="w-4 h-4 text-zinc-950" />
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
