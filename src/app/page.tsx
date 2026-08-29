@@ -135,7 +135,7 @@ export default async function HomePage() {
         <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-[radial-gradient(circle,_rgba(20,184,166,0.08),_transparent_70%)] dark:bg-[radial-gradient(circle,_rgba(217,119,6,0.03),_transparent_70%)] blur-[110px]" />
       </div>
 
-      <div className="relative z-10 space-y-16 sm:space-y-20 md:space-y-28">
+      <div className="relative z-10 flex flex-col">
 
         {/* 1. Desktop Hero (100% untouched computer design) */}
         <DesktopHero
@@ -210,7 +210,7 @@ export default async function HomePage() {
         </section>
 
         {trendingDiploma && (
-          <section id="trending-diploma" className="px-4 sm:px-6 py-8 relative overflow-hidden scroll-mt-24">
+          <section id="trending-diploma" className="px-4 sm:px-6 py-20 sm:py-24 relative overflow-hidden scroll-mt-24">
             <div className="absolute inset-0 pointer-events-none">
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-gradient-to-r from-blue-500/15 via-indigo-500/15 to-purple-500/10 dark:from-amber-500/10 dark:to-transparent rounded-full blur-[140px]" />
             </div>
@@ -315,7 +315,7 @@ export default async function HomePage() {
         {/* =========================================================================
             7. TESTIMONIALS (قصص نجاح وإشادات حقيقية)
            ========================================================================= */}
-        <section className="px-4 sm:px-6 py-12 bg-zinc-900/20 border-y border-zinc-800/40">
+        <section className="px-4 sm:px-6 py-20 sm:py-24 bg-slate-100/40 dark:bg-zinc-900/20 border-y border-slate-200/80 dark:border-zinc-800/40">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-10">
               <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">آراء الطلاب</p>
