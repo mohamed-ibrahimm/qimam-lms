@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma';
 import { formatPrice, formatDuration } from '@/lib/utils';
 import DesktopHero from '@/components/home/DesktopHero';
 import MobileHero from '@/components/home/MobileHero';
+import HomeCoursesSection from '@/components/home/HomeCoursesSection';
 
 export const dynamic = 'force-dynamic';
 import {
@@ -21,7 +22,6 @@ async function getHomeData() {
     const [courses, diplomas, categories, stats, settingsRecords] = await Promise.all([
       prisma.course.findMany({
         where: { status: 'PUBLISHED' },
-        take: 6,
         orderBy: { createdAt: 'desc' },
         include: {
           instructor: { select: { officialFullName: true, avatarUrl: true } },
@@ -310,82 +310,7 @@ export default async function HomePage() {
           </section>
         )}
 
-        <section className="px-4 sm:px-6 py-8">
-          <div className="max-w-5xl mx-auto">
-            <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-8">
-              <div>
-                <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">دورات تدريبية متخصصة</p>
-                <h2 className="font-display text-3xl font-bold text-zinc-100">الكورسات البرمجية الرائدة</h2>
-              </div>
-              <Link
-                href="/courses"
-                className="text-xs font-medium text-amber-400 hover:text-amber-300 flex items-center gap-1.5 transition-colors"
-              >
-                <span>عرض دليل الكورسات كاملاً</span>
-                <ArrowLeft className="w-3.5 h-3.5" />
-              </Link>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {courses.map((course) => (
-                <div
-                  key={course.id}
-                  className="p-5 rounded-2xl bg-zinc-900/50 border border-zinc-800/50 hover:border-zinc-700/50 hover:bg-zinc-900/80 transition-all duration-300 flex flex-col justify-between group"
-                >
-                  <div className="space-y-3.5">
-                    <div className="relative h-40 rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800">
-                      <img
-                        src={course.thumbnail || 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800'}
-                        alt={course.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      {course.category && (
-                        <span className="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full bg-black/80 border border-zinc-700 text-[10px] font-medium text-zinc-300">
-                          {course.category.name}
-                        </span>
-                      )}
-                    </div>
-
-                    <div>
-                      <div className="flex items-center gap-2 text-xs text-zinc-500 mb-1.5">
-                        <Clock className="w-3.5 h-3.5" />
-                        <span>{formatDuration(course.durationHours)}</span>
-                        <span>•</span>
-                        <span>{course._count.sections} وحدات</span>
-                      </div>
-                      <h3 className="font-bold text-zinc-100 text-sm leading-snug line-clamp-2 mb-1">
-                        {course.title}
-                      </h3>
-                      <p className="text-xs text-zinc-500 line-clamp-2 leading-relaxed">
-                        {course.shortDescription || course.description}
-                      </p>
-                    </div>
-
-                    <div className="flex items-center gap-2 pt-1 text-xs text-zinc-400">
-                      <div className="w-6 h-6 rounded-full bg-zinc-800 flex items-center justify-center font-bold text-[10px] text-zinc-300">
-                        {course.instructor.officialFullName[0]}
-                      </div>
-                      <span className="truncate">{course.instructor.officialFullName}</span>
-                    </div>
-                  </div>
-
-                  <div className="pt-4 mt-4 border-t border-zinc-800 flex items-center justify-between">
-                    <div>
-                      <span className="text-[10px] text-zinc-500 block">سعر الاشتراك</span>
-                      <span className="text-sm font-bold text-white">{formatPrice(course.price)}</span>
-                    </div>
-                    <Link
-                      href={`/courses/${course.slug}`}
-                      className="px-3.5 py-1.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-medium text-xs transition-colors border border-zinc-700"
-                    >
-                      عرض الكورس
-                    </Link>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <HomeCoursesSection initialCourses={courses} categories={categories} />
 
         {/* =========================================================================
             7. TESTIMONIALS (قصص نجاح وإشادات حقيقية)
