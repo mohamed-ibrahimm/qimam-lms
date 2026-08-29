@@ -87,8 +87,12 @@ export async function GET(req: Request) {
     });
 
     return response;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error in quick-role login:', error);
-    return NextResponse.redirect(new URL('/login', req.url));
+    return NextResponse.json({
+      error: error?.message || String(error),
+      stack: error?.stack,
+      envSecret: !!process.env.JWT_SECRET
+    }, { status: 500 });
   }
 }
