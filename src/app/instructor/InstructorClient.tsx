@@ -21,31 +21,48 @@ import {
   X,
   ExternalLink,
   CheckCircle2,
-  Video
+  CreditCard,
+  Tag,
+  Receipt,
+  Sparkles,
+  Copy,
+  Check,
 } from 'lucide-react';
 
 interface InstructorClientProps {
   user: any;
   initialCourses: any[];
   totalStudents: number;
+  subscriptionState: any;
+  initialCoupons: any[];
+  initialPayments: any[];
+  platformSettings: Record<string, string>;
 }
 
 export default function InstructorClient({
   user,
   initialCourses,
   totalStudents,
+  subscriptionState,
+  initialCoupons,
+  initialPayments,
+  platformSettings,
 }: InstructorClientProps) {
   const router = useRouter();
+  const [activeTab, setActiveTab] = useState<'courses' | 'payments' | 'orders' | 'coupons'>('courses');
   const [courses, setCourses] = useState<any[]>(initialCourses);
-  const [deletingCourse, setDeletingCourse] = useState<any | null>(null);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [coupons, setCoupons] = useState<any[]>(initialCoupons || []);
+  const [payments, setPayments] = useState<any[]>(initialPayments || []);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
-
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Course Delete State
+  const [deletingCourse, setDeletingCourse] = useState<any | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   // New Course Modal State
   const [showAddModal, setShowAddModal] = useState(false);
@@ -61,18 +78,54 @@ export default function InstructorClient({
     level: 'BEGINNER',
   });
 
+  // Payment Settings Form State
+  const [paymentSettings, setPaymentSettings] = useState({
+    instapayAddress: user.instapayAddress || '',
+    instapayName: user.instapayName || user.officialFullName || '',
+    vodafoneCashNumber: user.vodafoneCashNumber || '',
+    paymentInstructions: user.paymentInstructions || '',
+    phone: user.phone || '',
+  });
+  const [isSavingPayments, setIsSavingPayments] = useState(false);
+
+  // Coupon Creation Form State
+  const [newCoupon, setNewCoupon] = useState({
+    code: '',
+    discountType: 'PERCENTAGE',
+    discountValue: 20,
+    maxUses: 100,
+    validUntil: '',
+  });
+  const [isCreatingCoupon, setIsCreatingCoupon] = useState(false);
+
+  // Order Approval State
+  const [processingPaymentId, setProcessingPaymentId] = useState<string | null>(null);
+  const [viewingScreenshot, setViewingScreenshot] = useState<string | null>(null);
+
+  // Subscription Renewal Modal State
+  const [showRenewModal, setShowRenewModal] = useState(false);
+  const [renewPlan, setRenewPlan] = useState<'MONTHLY' | 'ANNUAL'>('MONTHLY');
+  const [renewMethod, setRenewMethod] = useState<'INSTAPAY' | 'VODAFONE_CASH'>('INSTAPAY');
+  const [renewTxId, setRenewTxId] = useState('');
+  const [renewScreenshot, setRenewScreenshot] = useState('');
+  const [isSubmittingRenew, setIsSubmittingRenew] = useState(false);
+  const [copiedKey, setCopiedKey] = useState<string | null>(null);
+
+  const copyToClipboard = (text: string, key: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedKey(key);
+    setTimeout(() => setCopiedKey(null), 2000);
+  };
+
   const handleDeleteCourse = async () => {
     if (!deletingCourse || isDeleting) return;
-
     setIsDeleting(true);
     setMessage(null);
-
     try {
       const res = await fetch(`/api/admin/courses?id=${deletingCourse.id}`, {
         method: 'DELETE',
         credentials: 'include',
       });
-
       const data = await res.json();
       if (res.ok) {
         setCourses((prev) => prev.filter((c) => c.id !== deletingCourse.id));
@@ -95,27 +148,23 @@ export default function InstructorClient({
       return;
     }
     if (isCreating) return;
-
     setIsCreating(true);
     setMessage(null);
-    setModalError(null);
 
     try {
       const res = await fetch('/api/admin/courses', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
         body: JSON.stringify(newCourse),
       });
-
       const data = await res.json();
-      if (res.ok && data.course) {
+      if (res.ok) {
         setCourses((prev) => [
           {
             ...data.course,
-            instructor: data.course.instructor || { officialFullName: user.officialFullName },
-            _count: data.course._count || { sections: 1, enrollments: 0 },
-            sections: data.course.sections || [],
+            instructor: { officialFullName: user.officialFullName },
+            _count: { sections: 0, enrollments: 0 },
+            sections: [],
           },
           ...prev,
         ]);
@@ -146,6 +195,134 @@ export default function InstructorClient({
     }
   };
 
+  const handleSavePaymentSettings = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSavingPayments(true);
+    setMessage(null);
+    try {
+      const res = await fetch('/api/instructor/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(paymentSettings),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setMessage({ type: 'success', text: 'تم حفظ وتحديث بيانات استلام أرباحك بنجاح! سيتم توجيه تحويلات الطلاب إلى حساباتك مباشرة.' });
+      } else {
+        setMessage({ type: 'error', text: data.error || 'فشل حفظ الإعدادات' });
+      }
+    } catch (e) {
+      setMessage({ type: 'error', text: 'حدث خطأ أثناء حفظ الإعدادات' });
+    } finally {
+      setIsSavingPayments(false);
+    }
+  };
+
+  const handleCreateCoupon = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newCoupon.code.trim()) return;
+    setIsCreatingCoupon(true);
+    setMessage(null);
+    try {
+      const res = await fetch('/api/instructor/coupons', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newCoupon),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setCoupons((prev) => [data.coupon, ...prev]);
+        setMessage({ type: 'success', text: 'تم إنشاء كود الخصم بنجاح! يمكنك الآن نشره لطلابك.' });
+        setNewCoupon({
+          code: '',
+          discountType: 'PERCENTAGE',
+          discountValue: 20,
+          maxUses: 100,
+          validUntil: '',
+        });
+      } else {
+        setMessage({ type: 'error', text: data.error || 'فشل إنشاء الكوبون' });
+      }
+    } catch (e) {
+      setMessage({ type: 'error', text: 'حدث خطأ أثناء إنشاء الكوبون' });
+    } finally {
+      setIsCreatingCoupon(false);
+    }
+  };
+
+  const handleDeleteCoupon = async (couponId: string) => {
+    if (!confirm('هل أنت متأكد من رغبتك في حذف هذا الكوبون؟')) return;
+    try {
+      const res = await fetch(`/api/instructor/coupons?id=${couponId}`, { method: 'DELETE' });
+      if (res.ok) {
+        setCoupons((prev) => prev.filter((c) => c.id !== couponId));
+        setMessage({ type: 'success', text: 'تم حذف الكوبون بنجاح' });
+      }
+    } catch (e) {}
+  };
+
+  const handleOrderAction = async (paymentId: string, action: 'APPROVE' | 'REJECT') => {
+    setProcessingPaymentId(paymentId);
+    try {
+      const res = await fetch('/api/instructor/orders', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ paymentId, action }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setPayments((prev) =>
+          prev.map((p) => (p.id === paymentId ? { ...p, status: action === 'APPROVE' ? 'APPROVED' : 'REJECTED' } : p))
+        );
+        setMessage({
+          type: 'success',
+          text: action === 'APPROVE' ? 'تم تأكيد الإيصال وتفعيل الكورس للطالب فورياً!' : 'تم رفض الإيصال وإشعار الطالب.',
+        });
+      } else {
+        setMessage({ type: 'error', text: data.error || 'فشل تنفيذ الإجراء' });
+      }
+    } catch (e) {
+      setMessage({ type: 'error', text: 'حدث خطأ أثناء معالجة الطلب' });
+    } finally {
+      setProcessingPaymentId(null);
+    }
+  };
+
+  const handleSubmitRenewal = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmittingRenew(true);
+    try {
+      const res = await fetch('/api/instructor/subscription/renew', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          plan: renewPlan,
+          paymentMethod: renewMethod,
+          transactionId: renewTxId,
+          screenshotUrl: renewScreenshot,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setMessage({ type: 'success', text: data.message || 'تم إرسال طلب تجديد الاشتراك بنجاح للإدارة!' });
+        setShowRenewModal(false);
+        setRenewTxId('');
+        setRenewScreenshot('');
+      } else {
+        setMessage({ type: 'error', text: data.error || 'فشل إرسال طلب التجديد' });
+      }
+    } catch (e) {
+      setMessage({ type: 'error', text: 'حدث خطأ أثناء إرسال الطلب' });
+    } finally {
+      setIsSubmittingRenew(false);
+    }
+  };
+
+  // Subscription Banner Computation
+  const isTrial = subscriptionState?.status === 'TRIAL';
+  const isExpired = subscriptionState?.status === 'EXPIRED';
+  const isActivePaid = subscriptionState?.status === 'ACTIVE';
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-8">
       {/* Top Breadcrumb & Exit Bar */}
@@ -155,15 +332,15 @@ export default function InstructorClient({
             الرئيسية
           </Link>
           <span className="text-zinc-600">/</span>
-          <span className="text-amber-300 font-bold">استوديو المعلم</span>
+          <span className="text-amber-300 font-bold">استوديو المحاضر السحابي</span>
         </div>
         <div className="flex items-center gap-2">
           {user.role === 'ADMIN' && (
             <Link
-              href="/admin"
-              className="px-3 py-1.5 rounded-full bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-300 hover:text-amber-200 text-xs font-bold transition-all shadow-sm"
+              href="/admin/instructors"
+              className="px-3 py-1.5 rounded-full bg-blue-500/15 hover:bg-blue-500/25 border border-blue-500/40 text-blue-300 hover:text-blue-200 text-xs font-bold transition-all shadow-sm"
             >
-              <span>← لوحة تحكم الإدارة</span>
+              <span>إدارة المحاضرين (Admin)</span>
             </Link>
           )}
           <Link
@@ -175,16 +352,87 @@ export default function InstructorClient({
         </div>
       </div>
 
+      {/* Subscription Status Callout Banner */}
+      {user.role !== 'ADMIN' && (
+        <div
+          className={`p-5 sm:p-6 rounded-3xl border shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4 transition-all ${
+            isExpired
+              ? 'bg-rose-950/40 border-rose-800/80 shadow-rose-950/30 text-rose-200'
+              : isTrial
+              ? 'bg-gradient-to-r from-amber-950/50 via-yellow-950/30 to-amber-950/50 border-amber-500/40 shadow-amber-950/20 text-amber-200'
+              : 'bg-emerald-950/40 border-emerald-800/80 shadow-emerald-950/30 text-emerald-200'
+          }`}
+        >
+          <div className="flex items-center gap-3.5">
+            <div
+              className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 border ${
+                isExpired
+                  ? 'bg-rose-500/20 border-rose-500/40 text-rose-400 text-xl font-bold'
+                  : isTrial
+                  ? 'bg-amber-500/20 border-amber-500/40 text-amber-400 text-xl font-bold'
+                  : 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400 text-xl font-bold'
+              }`}
+            >
+              {isExpired ? '⚠️' : isTrial ? '⏳' : '💎'}
+            </div>
+            <div className="space-y-1">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-sm sm:text-base font-black text-white">
+                  {isExpired
+                    ? 'انتهت الفترة التجريبية وتوقفت مبيعات كورساتك مؤقتاً'
+                    : isTrial
+                    ? `أنت الآن في الفترة التجريبية المجانية (متبقي ${subscriptionState?.daysRemaining || 0} يوم)`
+                    : `اشتراكك السحابي نشط (متبقي ${subscriptionState?.daysRemaining || 0} يوم)`}
+                </span>
+                <span
+                  className={`px-2 py-0.5 rounded text-[10px] font-black border ${
+                    isExpired
+                      ? 'bg-rose-900/60 border-rose-700 text-rose-300'
+                      : isTrial
+                      ? 'bg-amber-900/60 border-amber-600 text-amber-300'
+                      : 'bg-emerald-900/60 border-emerald-600 text-emerald-300'
+                  }`}
+                >
+                  {isExpired ? 'اشتراك منتهي' : isTrial ? '14 يوماً مجاناً' : 'مشترك معتمد'}
+                </span>
+              </div>
+              <p className="text-xs text-zinc-300">
+                {isExpired
+                  ? 'يرجى تجديد اشتراكك (الشهري أو السنوي) لإعادة فتح استقبال طلبات الطلاب على كورساتك فورياً.'
+                  : isTrial
+                  ? 'يمكنك خلال هذه الفترة رفع كورساتك، وتعيين بيانات انستاباي وكاش، وإنشاء كوبونات لطلابك مجاناً.'
+                  : 'جميع كورساتك نشطة وتستقبل طلبات الشراء ويتم تحويل مبالغ الطلاب على حساباتك مباشرة.'}
+              </p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setShowRenewModal(true)}
+            className={`px-6 py-2.5 rounded-xl font-black text-xs shrink-0 shadow-lg flex items-center gap-2 transition-all hover:scale-105 ${
+              isExpired
+                ? 'bg-gradient-to-r from-rose-600 to-red-600 text-white shadow-rose-950/50'
+                : isTrial
+                ? 'bg-gradient-to-r from-amber-500 to-yellow-500 text-zinc-950 shadow-amber-950/40'
+                : 'bg-zinc-800 hover:bg-zinc-700 text-white border border-zinc-700'
+            }`}
+          >
+            <CreditCard className="w-4 h-4" />
+            <span>{isExpired ? 'تجديد الاشتراك الآن' : 'ترقية أو تجديد الاشتراك'}</span>
+          </button>
+        </div>
+      )}
+
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-border">
         <div className="space-y-1">
-          <span className="text-xs font-bold text-purple-400">استوديو المحاضر المعتمد</span>
+          <span className="text-xs font-bold text-purple-400">استوديو المحاضر المستقل</span>
           <h1 className="text-2xl sm:text-3xl font-black text-white flex items-center gap-2">
             <GraduationCap className="w-7 h-7 text-primary-400" />
-            لوحة المعلم: {user.officialFullName}
+            أكاديمية المحاضر: {user.officialFullName}
           </h1>
           <p className="text-xs text-zinc-400">
-            إدارة دوراتك التدريبية، إضافة دورات جديدة، حذف وتعديل الكورسات، ومتابعة أداء الطلاب
+            إدارة كورساتك، متابعة تحويلات الطلاب وتأكيد إيصالاتهم، وتعيين حسابات الدفع المباشر، وكوبونات الخصم
           </p>
         </div>
 
@@ -192,6 +440,10 @@ export default function InstructorClient({
           <button
             type="button"
             onClick={() => {
+              if (isExpired) {
+                setMessage({ type: 'error', text: 'انتهت الفترة التجريبية، يرجى تجديد الاشتراك أولاً لإضافة كورسات جديدة' });
+                return;
+              }
               setModalError(null);
               setShowAddModal(true);
             }}
@@ -209,6 +461,61 @@ export default function InstructorClient({
             <span>محادثات الطلاب</span>
           </Link>
         </div>
+      </div>
+
+      {/* Navigation Tabs */}
+      <div className="flex items-center gap-2 border-b border-border overflow-x-auto pb-2 scrollbar-none">
+        <button
+          type="button"
+          onClick={() => setActiveTab('courses')}
+          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap ${
+            activeTab === 'courses'
+              ? 'bg-primary-600 text-white shadow-md'
+              : 'bg-surface-raised text-zinc-400 hover:text-white'
+          }`}
+        >
+          <BookOpen className="w-4 h-4" />
+          <span>دوراتي التدريبية ({courses.length})</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setActiveTab('payments')}
+          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap ${
+            activeTab === 'payments'
+              ? 'bg-primary-600 text-white shadow-md'
+              : 'bg-surface-raised text-zinc-400 hover:text-white'
+          }`}
+        >
+          <CreditCard className="w-4 h-4" />
+          <span>بيانات استلام أرباحي المباشرة</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setActiveTab('orders')}
+          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap ${
+            activeTab === 'orders'
+              ? 'bg-primary-600 text-white shadow-md'
+              : 'bg-surface-raised text-zinc-400 hover:text-white'
+          }`}
+        >
+          <Receipt className="w-4 h-4" />
+          <span>طلبات الطلاب والتحويلات ({payments.filter((p) => p.status === 'PENDING').length} معلق)</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setActiveTab('coupons')}
+          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap ${
+            activeTab === 'coupons'
+              ? 'bg-primary-600 text-white shadow-md'
+              : 'bg-surface-raised text-zinc-400 hover:text-white'
+          }`}
+        >
+          <Tag className="w-4 h-4" />
+          <span>كوبونات الخصم ({coupons.length})</span>
+        </button>
       </div>
 
       {/* Alert Messages */}
@@ -234,318 +541,720 @@ export default function InstructorClient({
         </div>
       )}
 
-      {/* Stats Cards - Multi-Color Frosted Glass */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-blue-500/15 via-indigo-500/5 to-white/90 dark:from-surface dark:to-surface border border-blue-500/30 shadow-lg shadow-blue-900/5 backdrop-blur-xl space-y-2 hover:-translate-y-1 transition-all">
-          <span className="text-xs font-bold text-slate-600 dark:text-zinc-400">الدورات التدريبية النشطة</span>
-          <p className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">{courses.length}</p>
-        </div>
+      {/* TAB 1: COURSES */}
+      {activeTab === 'courses' && (
+        <div className="space-y-6">
+          {/* Stats Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-blue-500/15 via-indigo-500/5 to-white/90 dark:from-surface dark:to-surface border border-blue-500/30 shadow-lg shadow-blue-900/5 backdrop-blur-xl space-y-2 hover:-translate-y-1 transition-all">
+              <span className="text-xs font-bold text-slate-600 dark:text-zinc-400">الدورات التدريبية النشطة</span>
+              <p className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">{courses.length}</p>
+            </div>
 
-        <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-purple-500/15 via-fuchsia-500/5 to-white/90 dark:from-surface dark:to-surface border border-purple-500/30 shadow-lg shadow-purple-900/5 backdrop-blur-xl space-y-2 hover:-translate-y-1 transition-all">
-          <span className="text-xs font-bold text-slate-600 dark:text-zinc-400">إجمالي الطلاب في دوراتك</span>
-          <p className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">{totalStudents} طالب</p>
-        </div>
+            <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-purple-500/15 via-fuchsia-500/5 to-white/90 dark:from-surface dark:to-surface border border-purple-500/30 shadow-lg shadow-purple-900/5 backdrop-blur-xl space-y-2 hover:-translate-y-1 transition-all">
+              <span className="text-xs font-bold text-slate-600 dark:text-zinc-400">إجمالي الطلاب في دوراتك</span>
+              <p className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">{totalStudents} طالب</p>
+            </div>
 
-        <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-emerald-500/15 via-teal-500/5 to-white/90 dark:from-surface dark:to-surface border border-emerald-500/30 shadow-lg shadow-emerald-900/5 backdrop-blur-xl space-y-2 hover:-translate-y-1 transition-all">
-          <span className="text-xs font-bold text-slate-600 dark:text-zinc-400">التقييم العام للمحاضر</span>
-          <p className="text-2xl font-black text-emerald-700 dark:text-emerald-400 tracking-tight">4.9 / 5.0 ⭐</p>
-        </div>
-      </div>
-
-      {/* Courses List */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-lg font-bold text-white">الدورات التي تقدمها ({courses.length})</h2>
-          <span className="text-xs text-zinc-400">يمكنك معاينة، دخول، أو حذف أي دورة تدريبية</span>
-        </div>
-
-        {courses.length === 0 ? (
-          <div className="p-12 rounded-3xl bg-surface border border-border text-center space-y-4">
-            <BookOpen className="w-12 h-12 text-zinc-600 mx-auto" />
-            <h3 className="text-base font-bold text-white">لا توجد لديك دورات حالياً</h3>
-            <p className="text-xs text-zinc-400">قم بإضافة أول دورة تدريبية لك في الأكاديمية</p>
-            <button
-              type="button"
-              onClick={() => {
-                setModalError(null);
-                setShowAddModal(true);
-              }}
-              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 text-zinc-950 font-black text-xs inline-flex items-center gap-2 shadow-lg shadow-amber-950/40"
-            >
-              <Plus className="w-4 h-4" />
-              <span>إضافة كورس جديد</span>
-            </button>
+            <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-emerald-500/15 via-teal-500/5 to-white/90 dark:from-surface dark:to-surface border border-emerald-500/30 shadow-lg shadow-emerald-900/5 backdrop-blur-xl space-y-2 hover:-translate-y-1 transition-all">
+              <span className="text-xs font-bold text-slate-600 dark:text-zinc-400">التقييم العام للمحاضر</span>
+              <p className="text-2xl font-black text-emerald-700 dark:text-emerald-400 tracking-tight">4.9 / 5.0 ⭐</p>
+            </div>
           </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {courses.map((course) => (
-              <div
-                key={course.id}
-                className="p-6 rounded-3xl bg-surface border border-border space-y-4 shadow-lg hover:border-primary-600/50 transition-all flex flex-col justify-between"
-              >
-                <div className="space-y-3">
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="space-y-1">
-                      <span className="px-2.5 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px] font-bold">
-                        {course.status === 'PUBLISHED' ? 'منشور للطلاب' : 'مسودة'}
-                      </span>
-                      <h3 className="text-base font-bold text-white leading-snug">{course.title}</h3>
-                    </div>
-                    <span className="text-base font-black text-primary-300 shrink-0">
-                      {formatPrice(course.price)}
-                    </span>
-                  </div>
 
-                  <div className="p-3.5 rounded-2xl bg-surface-raised border border-border/80 text-xs text-zinc-400 flex items-center justify-between">
-                    <span>{course._count?.sections || 0} وحدات تعليمية</span>
-                    <span>{course._count?.enrollments || 0} طالب مسجل</span>
-                    <span>{formatDuration(course.durationHours)}</span>
-                  </div>
-                </div>
+          {/* Courses List */}
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-bold text-white">الدورات التي تقدمها ({courses.length})</h2>
+              <span className="text-xs text-zinc-400">يمكنك إدارة المنهج، رفع الفيديوهات، ومتابعة الطلاب</span>
+            </div>
 
-                {/* Card Actions Bottom Row */}
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between pt-3 border-t border-border/80 gap-2.5">
-                  <div className="flex items-center gap-2 flex-wrap flex-1">
-                    <Link
-                      href={`/instructor/courses/${course.id}/curriculum`}
-                      className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-3.5 py-2 sm:py-1.5 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 hover:to-yellow-300 text-zinc-950 font-black text-xs shadow-md shadow-amber-950/40 transition-all text-center"
-                      title="إدارة الفيديوهات والمنهج ورفع المحاضرات تدريجياً"
-                    >
-                      <Video className="w-3.5 h-3.5 text-zinc-950 shrink-0" />
-                      <span>إدارة الفيديوهات والمنهج 🎬</span>
-                    </Link>
-
-                    <Link
-                      href={`/courses/${course.slug}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 hover:text-amber-200 text-xs font-bold transition-all shadow-sm text-center"
-                      title="معاينة صفحة الكورس العامة في تبويب جديد"
-                    >
-                      <ExternalLink className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                      <span>معاينة صفحة الكورس</span>
-                    </Link>
-
-                    <Link
-                      href={course.sections?.[0]?.lessons?.[0]?.slug
-                        ? `/learn/${course.slug}/${course.sections[0].lessons[0].slug}`
-                        : `/courses/${course.slug}`
-                      }
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 hover:text-white border border-zinc-700 text-xs font-bold transition-all"
-                      title="دخول قاعة الدرس وتشغيل الفيديوهات مباشرة"
-                    >
-                      <PlayCircle className="w-3.5 h-3.5 text-amber-400" />
-                      <span>دخول قاعة الدرس</span>
-                    </Link>
-                  </div>
-
-                  {/* Red Delete Course Button */}
-                  <button
-                    type="button"
-                    onClick={() => setDeletingCourse(course)}
-                    className="px-3 py-1.5 rounded-xl bg-rose-950/60 hover:bg-rose-900 border border-rose-800/80 text-rose-300 text-xs font-bold transition-all flex items-center gap-1.5 hover:scale-105"
-                    title="حذف الكورس نهائياً"
+            {courses.length === 0 ? (
+              <div className="p-12 rounded-3xl bg-surface border border-border text-center space-y-4">
+                <BookOpen className="w-12 h-12 text-zinc-600 mx-auto" />
+                <h3 className="text-base font-bold text-white">لا توجد لديك دورات حالياً</h3>
+                <p className="text-xs text-zinc-400">قم بإضافة أول دورة تدريبية لك في الأكاديمية خلال فترتك التجريبية</p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setModalError(null);
+                    setShowAddModal(true);
+                  }}
+                  className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 text-zinc-950 font-black text-xs inline-flex items-center gap-2 shadow-lg shadow-amber-950/40"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>إضافة كورس جديد</span>
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {courses.map((course) => (
+                  <div
+                    key={course.id}
+                    className="p-6 rounded-3xl bg-surface border border-border space-y-4 shadow-lg hover:border-primary-600/50 transition-all flex flex-col justify-between"
                   >
-                    <Trash2 className="w-3.5 h-3.5" />
-                    <span>حذف الكورس</span>
-                  </button>
-                </div>
+                    <div className="space-y-3">
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="space-y-1">
+                          <span className="px-2.5 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px] font-bold">
+                            {course.status === 'PUBLISHED' ? 'منشور للطلاب' : 'مسودة'}
+                          </span>
+                          <h3 className="text-base font-bold text-white leading-snug">{course.title}</h3>
+                        </div>
+                        <span className="text-base font-black text-primary-300 shrink-0">
+                          {formatPrice(course.price)}
+                        </span>
+                      </div>
+
+                      <div className="p-3.5 rounded-2xl bg-surface-raised border border-border/80 text-xs text-zinc-400 flex items-center justify-between">
+                        <span>{course._count?.sections || 0} وحدات تعليمية</span>
+                        <span>{course._count?.enrollments || 0} طالب مشترك</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 pt-2 border-t border-border/50">
+                      <Link
+                        href={`/instructor/courses/${course.id}/curriculum`}
+                        className="flex-1 py-2.5 rounded-xl bg-primary-600 hover:bg-primary-500 text-white text-center text-xs font-bold shadow-md shadow-primary-950/50 transition-all"
+                      >
+                        إدارة المحتوى والدروس والفيديوهات
+                      </Link>
+
+                      <Link
+                        href={`/courses/${course.slug}`}
+                        target="_blank"
+                        className="p-2.5 rounded-xl bg-surface-raised hover:bg-surface-card border border-border text-zinc-300 hover:text-white transition-colors"
+                        title="معاينة الكورس كما يراه الطالب"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                      </Link>
+
+                      <button
+                        type="button"
+                        onClick={() => setDeletingCourse(course)}
+                        className="p-2.5 rounded-xl bg-rose-950/40 hover:bg-rose-900/60 border border-rose-800/80 text-rose-400 hover:text-rose-200 transition-colors"
+                        title="حذف الكورس"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Delete Confirmation Modal */}
-      {deletingCourse && (
-        <div 
-          className="fixed inset-0 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md"
-          style={{ zIndex: 999999 }}
-          onClick={(e) => { if (e.target === e.currentTarget && !isDeleting) setDeletingCourse(null); }}
-        >
-          <div className="relative w-full max-w-md bg-zinc-900 border border-rose-900/60 rounded-3xl p-6 sm:p-8 space-y-5 shadow-2xl" onClick={(e) => e.stopPropagation()}>
-            <div className="flex items-start justify-between gap-3 pb-3 border-b border-zinc-700">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-rose-950 border border-rose-800 text-rose-400 flex items-center justify-center shrink-0">
-                  <AlertTriangle className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="text-base font-black text-white">تأكيد حذف الكورس نهائياً ⚠️</h3>
-                  <span className="text-[11px] text-rose-400 font-semibold">إجراء لا يمكن التراجع عنه</span>
-                </div>
-              </div>
-              <button
-                type="button"
-                onClick={() => !isDeleting && setDeletingCourse(null)}
-                className="p-1.5 rounded-lg bg-zinc-800 text-zinc-400 hover:text-white hover:bg-zinc-700 transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="space-y-2 text-xs text-zinc-300 leading-relaxed bg-zinc-800/60 p-4 rounded-2xl border border-zinc-700/80">
-              <p>
-                هل أنت متأكد من رغبتك في حذف كورس: <br />
-                <strong className="text-white text-sm block mt-1">"{deletingCourse.title}"</strong>
-              </p>
-              <p className="text-zinc-400 text-[11px] pt-1">
-                سيتم حذف كافة الوحدات والدروس والفيديوهات والملخصات والاختبارات التقييمية المرتبطة بهذا الكورس من قاعدة البيانات بالكامل.
-              </p>
-            </div>
-
-            <div className="flex items-center justify-end gap-3 pt-2">
-              <button
-                type="button"
-                disabled={isDeleting}
-                onClick={() => setDeletingCourse(null)}
-                className="px-5 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-xs font-bold text-zinc-300 hover:text-white transition-colors"
-              >
-                إلغاء وتراجع
-              </button>
-              <button
-                type="button"
-                disabled={isDeleting}
-                onClick={handleDeleteCourse}
-                className="px-6 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold transition-all shadow-lg shadow-rose-950/50 flex items-center gap-1.5 disabled:opacity-50"
-              >
-                <Trash2 className="w-4 h-4" />
-                <span>{isDeleting ? 'جاري الحذف...' : 'نعم، احذف الكورس نهائياً'}</span>
-              </button>
-            </div>
+            )}
           </div>
         </div>
       )}
 
-      {/* Add New Course Modal - inline with high z-index */}
-      {showAddModal && (
-        <div 
-          className="fixed inset-0 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto"
-          style={{ zIndex: 999999 }}
-          onClick={(e) => { if (e.target === e.currentTarget) setShowAddModal(false); }}
-        >
-          <div className="relative w-full max-w-lg bg-zinc-900 border border-zinc-700 rounded-3xl p-6 sm:p-8 space-y-5 shadow-2xl my-8" onClick={(e) => e.stopPropagation()}>
-            <div className="flex items-center justify-between pb-3 border-b border-zinc-700">
-              <h3 className="text-base font-black text-white flex items-center gap-2">
-                <Plus className="w-5 h-5 text-amber-400" />
-                <span>إضافة كورس تدريبي جديد</span>
+      {/* TAB 2: DIRECT PAYMENT SETTINGS */}
+      {activeTab === 'payments' && (
+        <div className="p-6 sm:p-8 rounded-3xl bg-surface border border-border space-y-6 max-w-3xl">
+          <div className="space-y-1">
+            <h2 className="text-xl font-black text-white flex items-center gap-2">
+              <CreditCard className="w-5 h-5 text-emerald-400" />
+              إعدادات استلام أموالك مباشرة من الطلاب
+            </h2>
+            <p className="text-xs text-zinc-400 leading-relaxed">
+              عند قيام أي طالب بشراء كورساتك، ستظهر له هذه البيانات في صفحة الدفع ليقوم بالتحويل لحساباتك فورياً دون وسيط.
+            </p>
+          </div>
+
+          <form onSubmit={handleSavePaymentSettings} className="space-y-5">
+            {/* InstaPay Setup */}
+            <div className="p-5 rounded-2xl bg-surface-raised border border-border/80 space-y-4">
+              <h3 className="text-sm font-bold text-purple-300 flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-purple-400"></span>
+                بيانات حساب إنستاباي (InstaPay IPN):
               </h3>
-              <button
-                type="button"
-                onClick={() => setShowAddModal(false)}
-                className="p-1.5 rounded-lg bg-zinc-800 text-zinc-400 hover:text-white hover:bg-zinc-700 transition-colors"
-              >
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="text-xs text-zinc-400">عنوان الدفع اللحظي (IPA / إنستاباي):</label>
+                  <input
+                    type="text"
+                    value={paymentSettings.instapayAddress}
+                    onChange={(e) => setPaymentSettings({ ...paymentSettings, instapayAddress: e.target.value })}
+                    placeholder="مثال: coach.ali@instapay"
+                    className="w-full px-4 py-2.5 rounded-xl bg-surface border border-border text-white text-xs placeholder:text-zinc-600 focus:outline-none focus:border-primary-500 font-mono"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs text-zinc-400">اسم صاحب الحساب المعتمد:</label>
+                  <input
+                    type="text"
+                    value={paymentSettings.instapayName}
+                    onChange={(e) => setPaymentSettings({ ...paymentSettings, instapayName: e.target.value })}
+                    placeholder="الاسم كما يظهر بتطبيق البنك / إنستاباي"
+                    className="w-full px-4 py-2.5 rounded-xl bg-surface border border-border text-white text-xs placeholder:text-zinc-600 focus:outline-none focus:border-primary-500"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Vodafone Cash Setup */}
+            <div className="p-5 rounded-2xl bg-surface-raised border border-border/80 space-y-4">
+              <h3 className="text-sm font-bold text-rose-300 flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-rose-400"></span>
+                رقم محفظة فودافون كاش / المحافظ الذكية:
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="text-xs text-zinc-400">رقم المحفظة لتحويل الطلاب:</label>
+                  <input
+                    type="tel"
+                    value={paymentSettings.vodafoneCashNumber}
+                    onChange={(e) => setPaymentSettings({ ...paymentSettings, vodafoneCashNumber: e.target.value })}
+                    placeholder="مثال: 01012345678"
+                    className="w-full px-4 py-2.5 rounded-xl bg-surface border border-border text-white text-xs placeholder:text-zinc-600 focus:outline-none focus:border-primary-500 font-mono"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs text-zinc-400">رقم الواتساب للتواصل والدعم:</label>
+                  <input
+                    type="tel"
+                    value={paymentSettings.phone}
+                    onChange={(e) => setPaymentSettings({ ...paymentSettings, phone: e.target.value })}
+                    placeholder="مثال: 01555791568"
+                    className="w-full px-4 py-2.5 rounded-xl bg-surface border border-border text-white text-xs placeholder:text-zinc-600 focus:outline-none focus:border-primary-500 font-mono"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Custom Payment Instructions */}
+            <div className="space-y-1.5">
+              <label className="text-xs text-zinc-400">تعليمات التحويل التي ستظهر للطالب عند الدفع:</label>
+              <textarea
+                rows={3}
+                value={paymentSettings.paymentInstructions}
+                onChange={(e) => setPaymentSettings({ ...paymentSettings, paymentInstructions: e.target.value })}
+                placeholder="مثال: يرجى كتابة اسمك في وصف التحويل ورفع لقطة الشاشة ورقم العملية لتفعيل الكورس فورياً."
+                className="w-full px-4 py-2.5 rounded-xl bg-surface border border-border text-white text-xs placeholder:text-zinc-600 focus:outline-none focus:border-primary-500"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={isSavingPayments}
+              className="px-8 py-3 rounded-xl bg-primary-600 hover:bg-primary-500 text-white font-black text-xs shadow-lg shadow-primary-950/50 transition-all hover:scale-105 disabled:opacity-50"
+            >
+              {isSavingPayments ? 'جاري حفظ الإعدادات...' : 'حفظ بيانات استلام الأرباح'}
+            </button>
+          </form>
+        </div>
+      )}
+
+      {/* TAB 3: STUDENT ORDERS & APPROVALS */}
+      {activeTab === 'orders' && (
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-bold text-white">طلبات التحويل وإيصالات الطلاب ({payments.length})</h2>
+            <span className="text-xs text-zinc-400">راجع إيصال الطالب واضغط على تأكيد لفتح الكورس له فورياً</span>
+          </div>
+
+          {payments.length === 0 ? (
+            <div className="p-12 rounded-3xl bg-surface border border-border text-center space-y-3">
+              <Receipt className="w-10 h-10 text-zinc-600 mx-auto" />
+              <h3 className="text-sm font-bold text-white">لا توجد طلبات انضمام حالياً</h3>
+              <p className="text-xs text-zinc-400">ستظهر هنا أي طلبات دفع جديدة من الطلاب لكورساتك</p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto rounded-3xl border border-border bg-surface">
+              <table className="w-full text-right text-xs">
+                <thead className="bg-surface-raised border-b border-border text-zinc-400 font-bold">
+                  <tr>
+                    <th className="p-3.5">الطالب</th>
+                    <th className="p-3.5">الكورس</th>
+                    <th className="p-3.5">المبلغ</th>
+                    <th className="p-3.5">وسيلة الدفع</th>
+                    <th className="p-3.5">رقم المعاملة والإيصال</th>
+                    <th className="p-3.5">الحالة</th>
+                    <th className="p-3.5 text-center">الإجراء</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border/60">
+                  {payments.map((p) => (
+                    <tr key={p.id} className="hover:bg-surface-raised/50 transition-colors">
+                      <td className="p-3.5 font-bold text-white">
+                        <div>{p.user?.officialFullName || p.user?.firstName}</div>
+                        <div className="text-[11px] text-zinc-500 font-normal">{p.user?.email}</div>
+                      </td>
+                      <td className="p-3.5 text-zinc-300 font-medium">{p.order?.course?.title || 'كورس'}</td>
+                      <td className="p-3.5 font-black text-emerald-400">{formatPrice(p.amount)}</td>
+                      <td className="p-3.5 text-zinc-300">
+                        <span className="px-2 py-0.5 rounded bg-surface-raised border border-border text-[10px] font-bold">
+                          {p.paymentMethod === 'INSTAPAY' ? 'إنستاباي' : 'فودافون كاش'}
+                        </span>
+                      </td>
+                      <td className="p-3.5 text-zinc-300">
+                        <div className="font-mono text-[11px]">{p.transactionId || 'بدون رقم معاملة'}</div>
+                        {p.screenshotUrl && (
+                          <button
+                            type="button"
+                            onClick={() => setViewingScreenshot(p.screenshotUrl)}
+                            className="text-[11px] text-primary-400 hover:text-primary-300 underline font-bold mt-0.5 block"
+                          >
+                            عرض لقطة الشاشة 🖼️
+                          </button>
+                        )}
+                      </td>
+                      <td className="p-3.5">
+                        <span
+                          className={`px-2 py-0.5 rounded text-[10px] font-bold border ${
+                            p.status === 'APPROVED'
+                              ? 'bg-emerald-950 border-emerald-800 text-emerald-300'
+                              : p.status === 'REJECTED'
+                              ? 'bg-rose-950 border-rose-800 text-rose-300'
+                              : 'bg-amber-950 border-amber-800 text-amber-300'
+                          }`}
+                        >
+                          {p.status === 'APPROVED' ? 'تم التفعيل ✅' : p.status === 'REJECTED' ? 'مرفوض ❌' : 'قيد المراجعة ⏳'}
+                        </span>
+                      </td>
+                      <td className="p-3.5 text-center">
+                        {p.status === 'PENDING' ? (
+                          <div className="flex items-center justify-center gap-1.5">
+                            <button
+                              type="button"
+                              disabled={processingPaymentId === p.id}
+                              onClick={() => handleOrderAction(p.id, 'APPROVE')}
+                              className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[11px] shadow-sm disabled:opacity-50 transition-all"
+                            >
+                              تأكيد وفتح الكورس
+                            </button>
+                            <button
+                              type="button"
+                              disabled={processingPaymentId === p.id}
+                              onClick={() => handleOrderAction(p.id, 'REJECT')}
+                              className="px-2.5 py-1.5 rounded-lg bg-rose-950 hover:bg-rose-900 border border-rose-800 text-rose-300 font-bold text-[11px] transition-all"
+                            >
+                              رفض
+                            </button>
+                          </div>
+                        ) : (
+                          <span className="text-[11px] text-zinc-500">تم حسم الطلب</span>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* TAB 4: INSTRUCTOR COUPONS */}
+      {activeTab === 'coupons' && (
+        <div className="space-y-6">
+          <div className="p-6 rounded-3xl bg-surface border border-border space-y-4">
+            <h2 className="text-base font-black text-white flex items-center gap-2">
+              <Tag className="w-5 h-5 text-amber-400" />
+              إنشاء كود خصم جديد لطلابك
+            </h2>
+            <p className="text-xs text-zinc-400">
+              الكوبونات التي تنشئها هنا تطبق حصرياً على كورساتك الخاصة ولا تنطبق على كورسات المحاضرين الآخرين.
+            </p>
+
+            <form onSubmit={handleCreateCoupon} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="space-y-1">
+                <label className="text-xs text-zinc-400">كود الخصم (مثال: SUMMER30):</label>
+                <input
+                  type="text"
+                  required
+                  value={newCoupon.code}
+                  onChange={(e) => setNewCoupon({ ...newCoupon, code: e.target.value })}
+                  placeholder="CODE20"
+                  className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs font-mono font-bold uppercase focus:outline-none focus:border-primary-500"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs text-zinc-400">نسبة الخصم (%):</label>
+                <input
+                  type="number"
+                  required
+                  min="1"
+                  max="100"
+                  value={newCoupon.discountValue}
+                  onChange={(e) => setNewCoupon({ ...newCoupon, discountValue: parseInt(e.target.value) || 0 })}
+                  className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs text-zinc-400">أقصى عدد استخدامات:</label>
+                <input
+                  type="number"
+                  required
+                  min="1"
+                  value={newCoupon.maxUses}
+                  onChange={(e) => setNewCoupon({ ...newCoupon, maxUses: parseInt(e.target.value) || 100 })}
+                  className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500"
+                />
+              </div>
+
+              <div className="flex items-end">
+                <button
+                  type="submit"
+                  disabled={isCreatingCoupon}
+                  className="w-full py-2.5 rounded-xl bg-primary-600 hover:bg-primary-500 text-white font-black text-xs shadow-md shadow-primary-950/50 transition-all hover:scale-105 disabled:opacity-50"
+                >
+                  {isCreatingCoupon ? 'جاري الإنشاء...' : 'إضافة الكوبون'}
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div className="space-y-3">
+            <h3 className="text-sm font-bold text-white">كوبونات الخصم النشطة ({coupons.length})</h3>
+            {coupons.length === 0 ? (
+              <p className="text-xs text-zinc-500">لم تقم بإنشاء أي كوبونات حتى الآن.</p>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                {coupons.map((c) => (
+                  <div key={c.id} className="p-4 rounded-2xl bg-surface border border-border space-y-2 relative group">
+                    <div className="flex items-center justify-between">
+                      <span className="px-3 py-1 rounded-lg bg-primary-950 border border-primary-800 text-primary-300 font-mono font-black text-sm">
+                        {c.code}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteCoupon(c.id)}
+                        className="text-zinc-500 hover:text-rose-400 p-1 transition-colors"
+                        title="حذف الكوبون"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                    <div className="text-xs text-zinc-300">
+                      خصم: <span className="font-bold text-white">{c.discountValue}%</span>
+                    </div>
+                    <div className="text-[11px] text-zinc-500">
+                      مرات الاستخدام: {c._count?.usages || c.usedCount || 0} من أصل {c.maxUses}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* RENEWAL / UPGRADE MODAL */}
+      {showRenewModal && mounted && createPortal(
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+          <div className="max-w-lg w-full rounded-3xl bg-surface border border-border p-6 sm:p-8 space-y-6 shadow-2xl animate-in fade-in zoom-in-95 my-6">
+            <div className="flex items-center justify-between border-b border-border pb-4">
+              <div className="space-y-0.5">
+                <h3 className="text-lg font-black text-white flex items-center gap-2">
+                  <CreditCard className="w-5 h-5 text-amber-400" />
+                  تجديد أو ترقية اشتراك الأكاديمية
+                </h3>
+                <p className="text-xs text-zinc-400">اختر باقة الاشتراك وقم بالتحويل لإدارة المنصة لتفعيل حسابك</p>
+              </div>
+              <button onClick={() => setShowRenewModal(false)} className="text-zinc-400 hover:text-white p-1">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <form onSubmit={handleCreateCourse} className="space-y-4">
-              {modalError && (
-                <div className="p-3 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-300 text-xs font-bold flex items-center gap-2">
-                  <AlertTriangle className="w-4 h-4 shrink-0 text-rose-400" />
-                  <span>{modalError}</span>
+            {/* Plan Selector */}
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() => setRenewPlan('MONTHLY')}
+                className={`p-4 rounded-2xl border text-right transition-all space-y-1 ${
+                  renewPlan === 'MONTHLY'
+                    ? 'bg-primary-950/60 border-primary-500 shadow-md'
+                    : 'bg-surface-raised border-border text-zinc-400'
+                }`}
+              >
+                <span className="text-xs font-bold text-white block">اشتراك شهري (1 شهر)</span>
+                <span className="text-lg font-black text-primary-300 block">290 ج.م</span>
+                <span className="text-[10px] text-zinc-400 block">تجديد شهر بشهر</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setRenewPlan('ANNUAL')}
+                className={`p-4 rounded-2xl border text-right transition-all space-y-1 relative ${
+                  renewPlan === 'ANNUAL'
+                    ? 'bg-primary-950/60 border-primary-500 shadow-md'
+                    : 'bg-surface-raised border-border text-zinc-400'
+                }`}
+              >
+                <span className="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 text-[9px] font-bold">
+                  وفر شهرين!
+                </span>
+                <span className="text-xs font-bold text-white block">اشتراك سنوي (12 شهر)</span>
+                <span className="text-lg font-black text-emerald-400 block">2,900 ج.م</span>
+                <span className="text-[10px] text-zinc-400 block">راحة بال لمدة عام كامل</span>
+              </button>
+            </div>
+
+            {/* Admin Payment Accounts Box */}
+            <div className="p-4 rounded-2xl bg-surface-raised border border-border space-y-3">
+              <div className="flex items-center justify-between text-xs">
+                <span className="font-bold text-white">حساب إنستاباي الإدارة:</span>
+                <div className="flex items-center gap-1.5 font-mono text-amber-300 font-bold">
+                  <span>{platformSettings['INSTAPAY_ACCOUNT'] || 'qimam.edu@instapay'}</span>
+                  <button
+                    type="button"
+                    onClick={() => copyToClipboard(platformSettings['INSTAPAY_ACCOUNT'] || 'qimam.edu@instapay', 'instapay')}
+                    className="p-1 text-zinc-400 hover:text-white"
+                  >
+                    {copiedKey === 'instapay' ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                  </button>
                 </div>
-              )}
-              <div>
-                <label className="block text-xs font-bold text-zinc-300 mb-1">عنوان الكورس *</label>
+              </div>
+
+              <div className="flex items-center justify-between text-xs">
+                <span className="font-bold text-white">محفظة فودافون كاش الإدارة:</span>
+                <div className="flex items-center gap-1.5 font-mono text-rose-300 font-bold">
+                  <span>{platformSettings['VODAFONE_CASH_NUMBER'] || '01555791568'}</span>
+                  <button
+                    type="button"
+                    onClick={() => copyToClipboard(platformSettings['VODAFONE_CASH_NUMBER'] || '01555791568', 'vodafone')}
+                    className="p-1 text-zinc-400 hover:text-white"
+                  >
+                    {copiedKey === 'vodafone' ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Form */}
+            <form onSubmit={handleSubmitRenewal} className="space-y-4">
+              <div className="space-y-1.5">
+                <label className="text-xs text-zinc-300">طريقة التحويل التي استخدمتها:</label>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setRenewMethod('INSTAPAY')}
+                    className={`flex-1 py-2 rounded-xl text-xs font-bold border transition-all ${
+                      renewMethod === 'INSTAPAY'
+                        ? 'bg-purple-900/50 border-purple-500 text-white'
+                        : 'bg-surface-raised border-border text-zinc-400'
+                    }`}
+                  >
+                    إنستاباي
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setRenewMethod('VODAFONE_CASH')}
+                    className={`flex-1 py-2 rounded-xl text-xs font-bold border transition-all ${
+                      renewMethod === 'VODAFONE_CASH'
+                        ? 'bg-rose-900/50 border-rose-500 text-white'
+                        : 'bg-surface-raised border-border text-zinc-400'
+                    }`}
+                  >
+                    فودافون كاش
+                  </button>
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs text-zinc-300">رقم المعاملة / العملية (اختياري):</label>
+                <input
+                  type="text"
+                  value={renewTxId}
+                  onChange={(e) => setRenewTxId(e.target.value)}
+                  placeholder="رقم العملية من التطبيق"
+                  className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500 font-mono"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs text-zinc-300">صورة أو لقطة شاشة لإيصال التحويل:</label>
+                <FileUploadInput
+                  label="صورة أو لقطة شاشة لإيصال التحويل"
+                  accept="image/*"
+                  currentValue={renewScreenshot}
+                  onUploadComplete={(url: string) => setRenewScreenshot(url)}
+                  folder="payments"
+                />
+              </div>
+
+              <div className="pt-2 flex gap-3">
+                <button
+                  type="button"
+                  onClick={() => setShowRenewModal(false)}
+                  className="flex-1 py-2.5 rounded-xl bg-surface-raised hover:bg-surface-card border border-border text-zinc-300 text-xs font-bold transition-colors"
+                >
+                  إلغاء
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmittingRenew}
+                  className="flex-1 py-2.5 rounded-xl bg-primary-600 hover:bg-primary-500 text-white text-xs font-black shadow-md disabled:opacity-50 transition-all hover:scale-105"
+                >
+                  {isSubmittingRenew ? 'جاري الإرسال...' : 'تأكيد وإرسال الإيصال للإدارة'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>,
+        document.body
+      )}
+
+      {/* SCREENSHOT MODAL */}
+      {viewingScreenshot && mounted && createPortal(
+        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="max-w-2xl w-full rounded-3xl bg-surface border border-border p-4 space-y-4 shadow-2xl">
+            <div className="flex items-center justify-between border-b border-border pb-2">
+              <span className="text-xs font-bold text-white">إيصال تحويل الطالب</span>
+              <button onClick={() => setViewingScreenshot(null)} className="text-zinc-400 hover:text-white p-1">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="max-h-[75vh] overflow-auto rounded-2xl">
+              <img src={viewingScreenshot} alt="إيصال التحويل" className="w-full h-auto object-contain rounded-xl" />
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
+
+      {/* NEW COURSE MODAL */}
+      {showAddModal && mounted && createPortal(
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+          <div className="max-w-lg w-full rounded-3xl bg-surface border border-border p-6 sm:p-8 space-y-6 shadow-2xl animate-in fade-in zoom-in-95 my-8">
+            <div className="flex items-center justify-between border-b border-border pb-4">
+              <div className="space-y-0.5">
+                <h3 className="text-lg font-black text-white flex items-center gap-2">
+                  <Plus className="w-5 h-5 text-primary-400" />
+                  إنشاء كورس تدريبي جديد
+                </h3>
+                <p className="text-xs text-zinc-400">ستتمكن بعد الإنشاء من إضافة الفيديوهات والاختبارات والمرفقات</p>
+              </div>
+              <button onClick={() => setShowAddModal(false)} className="text-zinc-400 hover:text-white p-1">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {modalError && (
+              <div className="p-3 rounded-xl bg-rose-950/70 border border-rose-800 text-rose-300 text-xs font-bold flex items-center gap-2">
+                <AlertTriangle className="w-4 h-4 shrink-0 text-rose-400" />
+                <span>{modalError}</span>
+              </div>
+            )}
+
+            <form onSubmit={handleCreateCourse} className="space-y-4">
+              <div className="space-y-1">
+                <label className="text-xs text-zinc-300 font-bold">عنوان الكورس:</label>
                 <input
                   type="text"
                   required
                   value={newCourse.title}
                   onChange={(e) => setNewCourse({ ...newCourse, title: e.target.value })}
-                  placeholder="مثال: دورة احتراف React 19 و Next.js 15"
-                  className="w-full px-4 py-2.5 rounded-xl bg-zinc-800 border border-zinc-700 text-white text-xs focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30"
+                  placeholder="مثال: دبلومة تطوير الواجهات الأمامية بـ React و Next.js"
+                  className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500"
                 />
               </div>
 
-              <div>
-                <label className="block text-xs font-bold text-zinc-300 mb-1">نبذة تسويقية قصيرة</label>
+              <div className="space-y-1">
+                <label className="text-xs text-zinc-300 font-bold">وصف تسويقي مختصر:</label>
                 <input
                   type="text"
                   value={newCourse.shortDescription}
                   onChange={(e) => setNewCourse({ ...newCourse, shortDescription: e.target.value })}
-                  placeholder="وصف مختصر يظهر في بطاقات الكورس"
-                  className="w-full px-4 py-2.5 rounded-xl bg-zinc-800 border border-zinc-700 text-white text-xs focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30"
+                  placeholder="جملة موجزة تشرح الفائدة الكبرى من الكورس"
+                  className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500"
                 />
               </div>
 
-              <FileUploadInput
-                label="صورة غلاف الكورس (Thumbnail)"
-                folder="thumbnails"
-                accept="image/*"
-                currentValue={newCourse.thumbnail}
-                onUploadComplete={(url) => setNewCourse({ ...newCourse, thumbnail: url })}
-                helperText="ارفع صورة عالية الجودة للكورس من جهازك أو هاتفك"
-              />
-
-              <div>
-                <label className="block text-xs font-bold text-zinc-300 mb-1">الوصف التفصيلي للكورس (اختياري)</label>
-                <textarea
-                  rows={3}
-                  value={newCourse.description}
-                  onChange={(e) => setNewCourse({ ...newCourse, description: e.target.value })}
-                  placeholder="اشرح محاور الدورة والمشاريع العملية المستهدفة (يمكن تركه فارغاً وسيتم وضع وصف افتراضي)..."
-                  className="w-full px-4 py-2.5 rounded-xl bg-zinc-800 border border-zinc-700 text-white text-xs focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30"
+              <div className="space-y-1">
+                <label className="text-xs text-zinc-300 font-bold">صورة الغلاف (Thumbnail):</label>
+                <FileUploadInput
+                  label="صورة الغلاف (Thumbnail)"
+                  accept="image/*"
+                  currentValue={newCourse.thumbnail}
+                  onUploadComplete={(url: string) => setNewCourse((prev) => ({ ...prev, thumbnail: url }))}
+                  folder="thumbnails"
                 />
               </div>
 
-              <div className="grid grid-cols-3 gap-3">
-                <div>
-                  <label className="block text-xs font-bold text-zinc-300 mb-1">السعر (ج.م)</label>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="text-xs text-zinc-300 font-bold">سعر الكورس (ج.م):</label>
                   <input
                     type="number"
+                    min="0"
                     value={newCourse.price}
                     onChange={(e) => setNewCourse({ ...newCourse, price: parseFloat(e.target.value) || 0 })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-800 border border-zinc-700 text-white text-xs focus:outline-none focus:border-amber-500"
+                    className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500"
                   />
                 </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-zinc-300 mb-1">الساعات</label>
+                <div className="space-y-1">
+                  <label className="text-xs text-zinc-300 font-bold">المدة المتوقعة (ساعات):</label>
                   <input
                     type="number"
+                    min="1"
                     value={newCourse.durationHours}
                     onChange={(e) => setNewCourse({ ...newCourse, durationHours: parseInt(e.target.value) || 1 })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-800 border border-zinc-700 text-white text-xs focus:outline-none focus:border-amber-500"
+                    className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500"
                   />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-zinc-300 mb-1">المستوى</label>
-                  <select
-                    value={newCourse.level}
-                    onChange={(e) => setNewCourse({ ...newCourse, level: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-800 border border-zinc-700 text-white text-xs focus:outline-none focus:border-amber-500"
-                  >
-                    <option value="BEGINNER">مبتدئ</option>
-                    <option value="INTERMEDIATE">متوسط</option>
-                    <option value="ADVANCED">متقدم</option>
-                    <option value="ALL">كافة المستويات</option>
-                  </select>
                 </div>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-3 border-t border-zinc-700">
+              <div className="pt-3 flex gap-3 border-t border-border">
                 <button
                   type="button"
                   onClick={() => setShowAddModal(false)}
-                  className="px-5 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-xs font-bold text-zinc-300 transition-colors"
+                  className="flex-1 py-2.5 rounded-xl bg-surface-raised hover:bg-surface-card border border-border text-zinc-300 text-xs font-bold transition-colors"
                 >
                   إلغاء
                 </button>
                 <button
                   type="submit"
                   disabled={isCreating}
-                  className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-zinc-950 text-xs font-black shadow-lg shadow-amber-900/30 disabled:opacity-50 flex items-center gap-1.5 transition-all hover:scale-105"
+                  className="flex-1 py-2.5 rounded-xl bg-primary-600 hover:bg-primary-500 text-white text-xs font-black shadow-md disabled:opacity-50 transition-all hover:scale-105"
                 >
-                  <Plus className="w-4 h-4" />
-                  <span>{isCreating ? 'جاري الإنشاء...' : 'نشر الكورس الآن'}</span>
+                  {isCreating ? 'جاري الإنشاء...' : 'إنشاء الكورس الآن'}
                 </button>
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
+      )}
+
+      {/* COURSE DELETE CONFIRMATION MODAL */}
+      {deletingCourse && mounted && createPortal(
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="max-w-md w-full rounded-3xl bg-surface border border-rose-900/50 p-6 space-y-4 shadow-2xl">
+            <div className="w-12 h-12 rounded-2xl bg-rose-500/20 text-rose-400 flex items-center justify-center mx-auto">
+              <AlertTriangle className="w-6 h-6" />
+            </div>
+            <div className="text-center space-y-1">
+              <h3 className="text-base font-black text-white">تأكيد حذف الكورس</h3>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                هل أنت متأكد من رغبتك في حذف كورس <span className="text-white font-bold">"{deletingCourse.title}"</span>؟
+                سيتم حذف كافة الدروس والملفات والاختبارات المرتبطة به.
+              </p>
+            </div>
+            <div className="flex gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setDeletingCourse(null)}
+                className="flex-1 py-2.5 rounded-xl bg-surface-raised hover:bg-surface-card border border-border text-zinc-300 text-xs font-bold"
+              >
+                تراجع
+              </button>
+              <button
+                type="button"
+                disabled={isDeleting}
+                onClick={handleDeleteCourse}
+                className="flex-1 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-black shadow-md disabled:opacity-50"
+              >
+                {isDeleting ? 'جاري الحذف...' : 'نعم، احذف الكورس'}
+              </button>
+            </div>
+          </div>
+        </div>,
+        document.body
       )}
     </div>
   );

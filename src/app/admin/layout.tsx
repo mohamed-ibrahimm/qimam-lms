@@ -50,6 +50,7 @@ export default async function AdminLayout({
   const navItems = [
     { name: 'نظرة عامة والتحليلات', href: '/admin', icon: LayoutDashboard },
     { name: 'المستخدمين والصلاحيات', href: '/admin/users', icon: Users },
+    { name: 'المحاضرون والاشتراكات (SaaS)', href: '/admin/instructors', icon: GraduationCap, highlight: true },
     { name: 'المدفوعات والتحويلات', href: '/admin/payments', icon: CreditCard, highlight: true },
     { name: 'محرر الموقع السحري', href: '/admin/content-editor', icon: Sparkles, highlight: true },
     { name: 'إدارة الكورسات والمحتوى', href: '/admin/courses', icon: BookOpen },

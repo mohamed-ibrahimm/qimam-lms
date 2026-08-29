@@ -30,6 +30,17 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'تم استنفاد الحد الأقصى لاستخدام هذا الكوبون' }, { status: 400 });
     }
 
+    // Check instructor restriction if coupon is created by a specific instructor
+    if (coupon.instructorId) {
+      if (!courseId) {
+        return NextResponse.json({ error: 'هذا الكوبون مخصص لكورسات محاضر محدد ولا ينطبق على الدبلومات العامة' }, { status: 400 });
+      }
+      const course = await prisma.course.findUnique({ where: { id: courseId }, select: { instructorId: true } });
+      if (!course || course.instructorId !== coupon.instructorId) {
+        return NextResponse.json({ error: 'هذا الكوبون خاص بكورسات محاضر آخر ولا ينطبق على هذا الكورس' }, { status: 400 });
+      }
+    }
+
     // Check user usage limit
     const userUsageCount = await prisma.couponUsage.count({
       where: { couponId: coupon.id, userId: user.id }
