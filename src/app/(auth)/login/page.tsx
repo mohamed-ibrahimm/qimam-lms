@@ -171,10 +171,10 @@ function LoginForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full h-13 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 hover:from-amber-600 hover:to-yellow-500 text-zinc-950 font-black text-sm transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 cursor-pointer flex items-center justify-center gap-2 shadow-xl shadow-amber-500/25"
+            className="w-full h-14 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 hover:from-amber-600 hover:to-yellow-500 text-zinc-950 font-black text-base shadow-xl shadow-amber-500/25 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 cursor-pointer disabled:opacity-50"
           >
             <span>{loading ? 'جاري التحقق...' : 'دخول المنصة'}</span>
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="w-5 h-5 text-zinc-950" />
           </button>
         </form>
 

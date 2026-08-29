@@ -5,7 +5,7 @@ import { hashPassword, createSessionToken, AUTH_COOKIE_NAME } from '@/lib/auth';
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const {
+    let {
       firstName,
       fatherName,
       lastName,
@@ -16,8 +16,21 @@ export async function POST(req: Request) {
       password,
     } = body;
 
-    if (!firstName || !lastName || !username || !email || !password) {
-      return NextResponse.json({ error: 'يرجى ملء جميع الحقول الإلزامية' }, { status: 400 });
+    // Support single full name field if sent from streamlined form
+    if (body.fullName && !firstName) {
+      const parts = body.fullName.trim().split(/\s+/);
+      firstName = parts[0] || 'مستخدم';
+      lastName = parts.length > 1 ? parts.slice(1).join(' ') : parts[0] || 'جديد';
+      officialFullName = body.fullName.trim();
+    }
+
+    if (!username && email) {
+      const prefix = email.split('@')[0].replace(/[^a-zA-Z0-9_]/g, '') || 'user';
+      username = `${prefix}_${Math.floor(100 + Math.random() * 900)}`;
+    }
+
+    if (!firstName || !lastName || !email || !password) {
+      return NextResponse.json({ error: 'يرجى ملء جميع الحقول المطلوبة' }, { status: 400 });
     }
 
     // Check duplicate email or username
@@ -25,19 +38,19 @@ export async function POST(req: Request) {
       where: {
         OR: [
           { email: email.toLowerCase().trim() },
-          { username: username.toLowerCase().trim() }
+          { username: (username || '').toLowerCase().trim() }
         ]
       }
     });
 
     if (existingUser) {
       if (existingUser.email.toLowerCase() === email.toLowerCase().trim()) {
-        return NextResponse.json({ error: 'البريد الإلكتروني مسجل بالفعل' }, { status: 400 });
+        return NextResponse.json({ error: 'البريد الإلكتروني مسجل بالفعل، يرجى تسجيل الدخول' }, { status: 400 });
       }
       return NextResponse.json({ error: 'اسم المستخدم محجوز بالفعل' }, { status: 400 });
     }
 
-    const calculatedOfficialName = officialFullName?.trim() || `${firstName.trim()} ${fatherName ? fatherName.trim() + ' ' : ''}${lastName.trim()}`;
+    const calculatedOfficialName = officialFullName?.trim() || `${firstName.trim()} ${fatherName ? fatherName.trim() + ' ' : ''}${lastName.trim()}`.trim();
     const passwordHash = await hashPassword(password);
 
     const requestedRole = body.role === 'INSTRUCTOR' ? 'INSTRUCTOR' : 'STUDENT';
