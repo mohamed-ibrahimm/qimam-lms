@@ -154,8 +154,8 @@ export default function Header({
 
   const navLinks = [
     { name: 'الرئيسية', href: '/', icon: Home },
-    { name: 'المسارات التدريبية', href: '/courses', icon: BookOpen },
-    { name: 'الدبلومات الشاملة', href: '/diplomas', icon: Award, isDiploma: true },
+    { name: 'الكورسات', href: '/courses', icon: BookOpen, isFeatured: true, badge: 'الأكثر طلباً 🔥' },
+    { name: 'الدبلومات الشاملة', href: '/diplomas', icon: Award },
   ];
 
   return (
@@ -186,14 +186,15 @@ export default function Header({
         <div className="hidden lg:flex items-center gap-2 bg-slate-100/90 dark:bg-zinc-950/60 px-3 py-1.5 rounded-full border border-slate-200/90 dark:border-zinc-800/80 shadow-inner shrink-0">
           {navLinks.map((link) => {
             const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
-            const isDiploma = (link as any).isDiploma;
+            const isFeatured = (link as any).isFeatured;
+            const badge = (link as any).badge;
             return (
               <Link
                 key={link.href}
                 href={link.href}
                 prefetch={true}
                 className={`px-3.5 py-1.5 text-xs font-bold rounded-full transition-all inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
-                  isDiploma
+                  isFeatured
                     ? 'diploma-luxury-pill'
                     : isActive
                     ? 'bg-white dark:bg-zinc-800 text-blue-700 dark:text-white border border-slate-200 dark:border-zinc-700 shadow-xs'
@@ -203,7 +204,7 @@ export default function Header({
                 {link.icon && (
                   <link.icon
                     className={`w-3.5 h-3.5 ${
-                      isDiploma
+                      isFeatured
                         ? 'text-amber-400'
                         : isActive
                         ? 'text-blue-600 dark:text-amber-400'
@@ -212,6 +213,11 @@ export default function Header({
                   />
                 )}
                 <span>{link.name}</span>
+                {badge && (
+                  <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-gradient-to-r from-amber-500 to-yellow-400 text-zinc-950 font-black mr-0.5 shadow-xs animate-pulse">
+                    {badge}
+                  </span>
+                )}
               </Link>
             );
           })}
@@ -248,78 +254,186 @@ export default function Header({
               </button>
 
               {dropdownOpen && (
-                <div className="absolute left-0 mt-2 w-64 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 shadow-2xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                  <div className="px-4 py-3 border-b border-slate-100 dark:border-zinc-800">
-                    <p className="text-xs text-slate-400 dark:text-zinc-400">مرحباً بك،</p>
-                    <p className="text-sm font-bold text-slate-900 dark:text-white truncate">{currentUser.officialFullName || currentUser.email}</p>
-                    <p className="text-[11px] text-slate-500 dark:text-zinc-500 truncate">{currentUser.email}</p>
+                <div className="absolute left-0 mt-2.5 w-72 rounded-3xl bg-white/95 dark:bg-[#120e24]/95 border border-slate-200/90 dark:border-amber-500/25 shadow-2xl backdrop-blur-2xl p-2.5 space-y-1.5 z-50 text-right animate-in fade-in slide-in-from-top-2 duration-150">
+                  {/* User Profile Header Card */}
+                  <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-zinc-900/80 border border-slate-200/80 dark:border-white/5 space-y-1">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-[10px] font-medium text-slate-400 dark:text-zinc-400">الحساب الشخصي:</span>
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-black border ${
+                        currentUser.role === 'ADMIN'
+                          ? 'bg-amber-500/15 border-amber-500/30 text-amber-600 dark:text-amber-300'
+                          : currentUser.role === 'INSTRUCTOR'
+                          ? 'bg-purple-500/15 border-purple-500/30 text-purple-600 dark:text-purple-300'
+                          : 'bg-blue-500/15 border-blue-500/30 text-blue-600 dark:text-blue-300'
+                      }`}>
+                        {currentUser.role === 'ADMIN'
+                          ? '👑 المشرف العام'
+                          : currentUser.role === 'INSTRUCTOR'
+                          ? '👨‍🏫 محاضر معتمد'
+                          : '🎓 طالب بالأكاديمية'}
+                      </span>
+                    </div>
+                    <p className="text-sm font-black text-slate-900 dark:text-white truncate">
+                      {currentUser.officialFullName || `${currentUser.firstName} ${currentUser.lastName || ''}`.trim()}
+                    </p>
+                    <p className="text-[11px] text-slate-500 dark:text-zinc-500 font-mono truncate">{currentUser.email}</p>
                   </div>
 
+                  {/* ROLE: ADMIN LINKS */}
                   {currentUser.role === 'ADMIN' && (
-                    <Link
-                      href="/admin"
-                      onClick={() => setDropdownOpen(false)}
-                      className="flex items-center gap-2 px-4 py-2.5 text-xs text-blue-600 dark:text-amber-300 hover:bg-blue-50 dark:hover:bg-amber-950/40 hover:text-blue-800 dark:hover:text-white transition-colors"
-                    >
-                      <LayoutDashboard className="w-4 h-4 text-blue-600 dark:text-amber-400" />
-                      لوحة تحكم الإدارة (Admin)
-                    </Link>
+                    <div className="space-y-0.5">
+                      <Link
+                        href="/admin"
+                        onClick={() => setDropdownOpen(false)}
+                        className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-zinc-200 hover:text-white hover:bg-primary-600 dark:hover:bg-primary-600/80 transition-colors group"
+                      >
+                        <div className="flex items-center gap-2">
+                          <LayoutDashboard className="w-4 h-4 text-amber-500 group-hover:text-white" />
+                          <span>لوحة التحكم العامة</span>
+                        </div>
+                        <span className="text-[10px] text-zinc-400 group-hover:text-zinc-200">Admin</span>
+                      </Link>
+
+                      <Link
+                        href="/admin/instructors"
+                        onClick={() => setDropdownOpen(false)}
+                        className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-zinc-200 hover:text-white hover:bg-primary-600 dark:hover:bg-primary-600/80 transition-colors group"
+                      >
+                        <div className="flex items-center gap-2">
+                          <GraduationCap className="w-4 h-4 text-purple-400 group-hover:text-white" />
+                          <span>إدارة المحاضرين والاشتراكات</span>
+                        </div>
+                        <span className="text-[10px] text-zinc-400 group-hover:text-zinc-200">SaaS</span>
+                      </Link>
+
+                      <Link
+                        href="/admin/courses"
+                        onClick={() => setDropdownOpen(false)}
+                        className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-zinc-200 hover:text-white hover:bg-primary-600 dark:hover:bg-primary-600/80 transition-colors group"
+                      >
+                        <BookOpen className="w-4 h-4 text-blue-400 group-hover:text-white" />
+                        <span>إدارة الكورسات والمحتوى</span>
+                      </Link>
+
+                      <Link
+                        href="/chat"
+                        onClick={() => setDropdownOpen(false)}
+                        className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-zinc-200 hover:text-white hover:bg-primary-600 dark:hover:bg-primary-600/80 transition-colors group"
+                      >
+                        <MessageSquare className="w-4 h-4 text-emerald-400 group-hover:text-white" />
+                        <span>المحادثات المباشرة</span>
+                      </Link>
+
+                      <Link
+                        href="/profile"
+                        onClick={() => setDropdownOpen(false)}
+                        className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-zinc-200 hover:text-white hover:bg-primary-600 dark:hover:bg-primary-600/80 transition-colors group"
+                      >
+                        <User className="w-4 h-4 text-indigo-400 group-hover:text-white" />
+                        <span>الملف الشخصي</span>
+                      </Link>
+                    </div>
                   )}
 
-                  {(currentUser.role === 'INSTRUCTOR' || currentUser.role === 'ADMIN') && (
-                    <Link
-                      href="/instructor"
-                      onClick={() => setDropdownOpen(false)}
-                      className="flex items-center gap-2 px-4 py-2.5 text-xs text-slate-700 dark:text-zinc-200 hover:bg-slate-100 dark:hover:bg-zinc-800 hover:text-slate-900 dark:hover:text-white transition-colors"
-                    >
-                      <GraduationCap className="w-4 h-4 text-indigo-600 dark:text-purple-400" />
-                      استوديو المعلم (Instructor)
-                    </Link>
+                  {/* ROLE: INSTRUCTOR LINKS */}
+                  {currentUser.role === 'INSTRUCTOR' && (
+                    <div className="space-y-0.5">
+                      <Link
+                        href="/instructor"
+                        onClick={() => setDropdownOpen(false)}
+                        className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-black text-purple-700 dark:text-purple-300 hover:text-white hover:bg-purple-600 dark:hover:bg-purple-600/80 transition-colors group"
+                      >
+                        <div className="flex items-center gap-2">
+                          <GraduationCap className="w-4 h-4 text-purple-500 dark:text-purple-400 group-hover:text-white" />
+                          <span>استوديو المحاضر السحابي</span>
+                        </div>
+                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/60 font-mono">Studio</span>
+                      </Link>
+
+                      <Link
+                        href="/instructor"
+                        onClick={() => setDropdownOpen(false)}
+                        className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-zinc-200 hover:text-white hover:bg-primary-600 dark:hover:bg-primary-600/80 transition-colors group"
+                      >
+                        <BookOpen className="w-4 h-4 text-amber-400 group-hover:text-white" />
+                        <span>دوراتي التدريبية والمنهج</span>
+                      </Link>
+
+                      <Link
+                        href="/chat"
+                        onClick={() => setDropdownOpen(false)}
+                        className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-zinc-200 hover:text-white hover:bg-primary-600 dark:hover:bg-primary-600/80 transition-colors group"
+                      >
+                        <MessageSquare className="w-4 h-4 text-emerald-400 group-hover:text-white" />
+                        <span>محادثات الطلاب المباشرة</span>
+                      </Link>
+
+                      <Link
+                        href="/profile"
+                        onClick={() => setDropdownOpen(false)}
+                        className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-zinc-200 hover:text-white hover:bg-primary-600 dark:hover:bg-primary-600/80 transition-colors group"
+                      >
+                        <User className="w-4 h-4 text-indigo-400 group-hover:text-white" />
+                        <span>الملف المهني والشخصي</span>
+                      </Link>
+                    </div>
                   )}
 
-                  <Link
-                    href="/dashboard/my-courses"
-                    onClick={() => setDropdownOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2.5 text-xs text-blue-700 dark:text-amber-300 hover:bg-blue-50 dark:hover:bg-zinc-800 transition-colors font-bold"
-                  >
-                    <BookOpen className="w-4 h-4 text-blue-600 dark:text-amber-400" />
-                    الكورسات المشترك فيها
-                  </Link>
+                  {/* ROLE: STUDENT LINKS */}
+                  {currentUser.role === 'STUDENT' && (
+                    <div className="space-y-0.5">
+                      <Link
+                        href="/dashboard/my-courses"
+                        onClick={() => setDropdownOpen(false)}
+                        className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-blue-700 dark:text-amber-300 hover:text-white hover:bg-primary-600 dark:hover:bg-primary-600/80 transition-colors group"
+                      >
+                        <div className="flex items-center gap-2">
+                          <BookOpen className="w-4 h-4 text-blue-500 dark:text-amber-400 group-hover:text-white" />
+                          <span>الكورسات المشترك فيها</span>
+                        </div>
+                        <span className="text-[10px] text-zinc-400 group-hover:text-zinc-200">دروسي</span>
+                      </Link>
 
-                  <Link
-                    href="/dashboard"
-                    onClick={() => setDropdownOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2 text-xs text-slate-700 dark:text-zinc-200 hover:bg-slate-100 dark:hover:bg-zinc-800 hover:text-slate-900 dark:hover:text-white transition-colors"
-                  >
-                    <LayoutDashboard className="w-4 h-4 text-slate-400 dark:text-zinc-400" />
-                    لوحة المتابعة الأكاديمية
-                  </Link>
+                      <Link
+                        href="/dashboard"
+                        onClick={() => setDropdownOpen(false)}
+                        className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-zinc-200 hover:text-white hover:bg-primary-600 dark:hover:bg-primary-600/80 transition-colors group"
+                      >
+                        <LayoutDashboard className="w-4 h-4 text-slate-400 group-hover:text-white" />
+                        <span>لوحة المتابعة الأكاديمية</span>
+                      </Link>
 
-                  <Link
-                    href="/chat"
-                    onClick={() => setDropdownOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2.5 text-xs text-slate-700 dark:text-zinc-200 hover:bg-slate-100 dark:hover:bg-zinc-800 hover:text-slate-900 dark:hover:text-white transition-colors"
-                  >
-                    <MessageSquare className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                    المحادثات المباشرة
-                  </Link>
+                      <Link
+                        href="/profile"
+                        onClick={() => setDropdownOpen(false)}
+                        className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-zinc-200 hover:text-white hover:bg-primary-600 dark:hover:bg-primary-600/80 transition-colors group"
+                      >
+                        <Award className="w-4 h-4 text-amber-400 group-hover:text-white" />
+                        <span>الملف الشخصي والشهادات</span>
+                      </Link>
 
-                  <Link
-                    href="/profile"
-                    onClick={() => setDropdownOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2.5 text-xs text-slate-700 dark:text-zinc-200 hover:bg-slate-100 dark:hover:bg-zinc-800 hover:text-slate-900 dark:hover:text-white transition-colors"
-                  >
-                    <User className="w-4 h-4 text-indigo-600 dark:text-amber-400" />
-                    الملف الشخصي والشهادات
-                  </Link>
+                      <Link
+                        href="/chat"
+                        onClick={() => setDropdownOpen(false)}
+                        className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-zinc-200 hover:text-white hover:bg-primary-600 dark:hover:bg-primary-600/80 transition-colors group"
+                      >
+                        <MessageSquare className="w-4 h-4 text-emerald-400 group-hover:text-white" />
+                        <span>محادثات المدربين</span>
+                      </Link>
+                    </div>
+                  )}
 
-                  <div className="border-t border-slate-100 dark:border-zinc-800 mt-1 pt-1">
+                  {/* Divider & Logout */}
+                  <div className="border-t border-slate-100 dark:border-zinc-800/80 mt-1 pt-1">
                     <button
                       onClick={handleLogout}
-                      className="w-full flex items-center gap-2 px-4 py-2 text-xs text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors"
+                      className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors"
                     >
-                      <LogOut className="w-4 h-4" />
-                      تسجيل الخروج
+                      <div className="flex items-center gap-2">
+                        <LogOut className="w-4 h-4" />
+                        <span>تسجيل الخروج</span>
+                      </div>
+                      <span className="text-[10px] opacity-70">خروج آمن</span>
                     </button>
                   </div>
                 </div>
@@ -327,20 +441,28 @@ export default function Header({
             </div>
           ) : (
             /* Auth Buttons - ONLY ON DESKTOP (hidden on mobile, managed in mobile menu drawer) */
-            <div className="hidden lg:flex items-center gap-2 shrink-0">
+            <div className="hidden lg:flex items-center gap-1.5 sm:gap-2 shrink-0">
               <Link
                 href="/login"
-                className="px-3.5 py-1.5 rounded-full text-xs font-bold text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-100 dark:text-zinc-200 dark:hover:text-white dark:bg-zinc-800/80 dark:hover:bg-zinc-700 border border-slate-200 dark:border-zinc-700/80 transition-all shadow-xs flex items-center gap-1.5 shrink-0"
+                className="px-3 py-1.5 rounded-full text-xs font-bold text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-100 dark:text-zinc-200 dark:hover:text-white dark:bg-zinc-800/80 dark:hover:bg-zinc-700 border border-slate-200 dark:border-zinc-700/80 transition-all shadow-xs flex items-center gap-1 shrink-0"
               >
                 <LogIn className="w-3.5 h-3.5 text-slate-600 dark:text-amber-400" />
                 <span>دخول</span>
               </Link>
               <Link
                 href="/register"
-                className="px-4 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white transition-all shadow-md shadow-blue-600/20 whitespace-nowrap flex items-center gap-1.5 shrink-0"
+                className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white transition-all shadow-md shadow-blue-600/20 whitespace-nowrap flex items-center gap-1 shrink-0"
               >
                 <UserPlus className="w-3.5 h-3.5 text-white" />
                 <span>إنشاء حساب</span>
+              </Link>
+              <Link
+                href="/register?role=instructor"
+                className="px-3 py-1.5 rounded-full text-xs font-bold bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/30 text-purple-700 dark:text-purple-300 transition-all flex items-center gap-1 shrink-0"
+                title="سجل كمحاضر مستقل - 14 يوماً مجاناً"
+              >
+                <Video className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
+                <span>انضم كمحاضر</span>
               </Link>
             </div>
           )}

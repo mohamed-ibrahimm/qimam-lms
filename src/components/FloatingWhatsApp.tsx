@@ -3,6 +3,9 @@
 import React from 'react';
 import { usePathname } from 'next/navigation';
 
+import Link from 'next/link';
+import { Headphones } from 'lucide-react';
+
 interface FloatingWhatsAppProps {
   settings?: Record<string, string>;
 }
@@ -29,15 +32,30 @@ export default function FloatingWhatsApp({ settings = {} }: FloatingWhatsAppProp
   const whatsappUrl = `https://wa.me/${formattedWhatsapp}?text=${encodeURIComponent('السلام عليكم، أود الاستفسار عن تفاصيل الكورسات والدبلومات')}`;
 
   return (
-    <aside aria-label="تواصل واتساب">
+    <aside aria-label="أدوات المساعدة والتواصل" className="fixed bottom-5 left-4 sm:left-6 z-50 flex items-center gap-2.5 pointer-events-auto">
+      {/* Floating Support Button */}
+      <Link
+        href="/support"
+        className="flex items-center gap-2 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-full bg-slate-900/95 hover:bg-slate-800 dark:bg-zinc-900/95 dark:hover:bg-zinc-800 text-white shadow-xl shadow-slate-900/40 border border-slate-700/80 dark:border-zinc-700/80 backdrop-blur-md hover:scale-105 active:scale-95 transition-all group cursor-pointer"
+        title="تذاكر الدعم الفني والمساعدة"
+      >
+        <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-blue-600/20 dark:bg-amber-500/20 text-blue-400 dark:text-amber-400 flex items-center justify-center shrink-0">
+          <Headphones className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+        </div>
+        <div className="hidden sm:flex flex-col text-right">
+          <span className="text-[10px] text-zinc-400 font-medium leading-none">مساعدة فورية</span>
+          <span className="text-xs font-black leading-tight mt-0.5 whitespace-nowrap text-white">الدعم الفني</span>
+        </div>
+      </Link>
+
+      {/* Floating WhatsApp Button */}
       <a
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-5 left-4 sm:left-6 z-50 flex items-center gap-2.5 p-2.5 sm:px-4 sm:py-2.5 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-xl shadow-emerald-600/35 hover:shadow-2xl hover:shadow-emerald-600/50 hover:scale-105 active:scale-95 transition-all group border border-white/40 backdrop-blur-sm cursor-pointer"
+        className="flex items-center gap-2 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-xl shadow-emerald-600/35 hover:shadow-2xl hover:scale-105 active:scale-95 transition-all group border border-white/30 backdrop-blur-md cursor-pointer"
         title="تحدث مباشرة مع إدارة الأكاديمية عبر الواتساب"
       >
-        {/* Pulsing Green Halo Beacon */}
         <div className="relative flex items-center justify-center shrink-0">
           <span className="absolute -inset-1 rounded-full bg-white/40 animate-ping pointer-events-none" />
           <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white text-[#25D366] flex items-center justify-center shadow-xs">
@@ -46,18 +64,12 @@ export default function FloatingWhatsApp({ settings = {} }: FloatingWhatsAppProp
             </svg>
           </div>
         </div>
-
-        {/* Text Container (Visible on tablets and desktops) */}
         <div className="hidden sm:flex flex-col text-right">
           <div className="flex items-center gap-1 leading-none">
             <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-            <span className="text-[10px] text-emerald-100 font-bold leading-none">
-              متاح أونلاين الآن
-            </span>
+            <span className="text-[10px] text-emerald-100 font-bold leading-none">متاح أونلاين</span>
           </div>
-          <span className="text-xs font-black leading-tight mt-0.5 whitespace-nowrap">
-            تواصل واتساب
-          </span>
+          <span className="text-xs font-black leading-tight mt-0.5 whitespace-nowrap">واتساب</span>
         </div>
       </a>
     </aside>
