@@ -194,7 +194,84 @@ export default function Footer({ initialSettings }: FooterProps) {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-6 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
+      {/* =========================================================================
+          ACCEPTED PAYMENT METHODS SHOWCASE (طرق الدفع المعتمدة بالكامل)
+         ========================================================================= */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-white/[0.08]">
+        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-6 text-center space-y-4 backdrop-blur-xl shadow-lg">
+          <div className="flex items-center justify-center gap-2">
+            <ShieldCheck className="w-5 h-5 text-emerald-400" />
+            <h4 className="text-sm font-black text-white tracking-wide">
+              طرق الدفع والتحويل المعتمدة والآمنة 100%
+            </h4>
+            <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 font-bold border border-emerald-500/30">
+              تفعيل فوري ومباشر
+            </span>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+            {/* InstaPay */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-purple-950/60 to-indigo-950/60 border border-purple-500/30 text-purple-200 text-xs font-black shadow-xs hover:scale-105 transition-transform">
+              <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
+              <span>InstaPay (إنستاباي)</span>
+            </div>
+
+            {/* Vodafone Cash */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-red-950/50 border border-red-500/30 text-red-200 text-xs font-black shadow-xs hover:scale-105 transition-transform">
+              <span className="w-2 h-2 rounded-full bg-red-500" />
+              <span>فودافون كاش</span>
+            </div>
+
+            {/* Orange Cash */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-orange-950/50 border border-orange-500/30 text-orange-200 text-xs font-black shadow-xs hover:scale-105 transition-transform">
+              <span className="w-2 h-2 rounded-full bg-orange-500" />
+              <span>أورنج كاش</span>
+            </div>
+
+            {/* Etisalat Cash */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-950/50 border border-emerald-500/30 text-emerald-200 text-xs font-black shadow-xs hover:scale-105 transition-transform">
+              <span className="w-2 h-2 rounded-full bg-emerald-500" />
+              <span>اتصالات كاش</span>
+            </div>
+
+            {/* WE Pay */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-indigo-950/50 border border-indigo-500/30 text-indigo-200 text-xs font-black shadow-xs hover:scale-105 transition-transform">
+              <span className="w-2 h-2 rounded-full bg-indigo-400" />
+              <span>WE Pay (وي باي)</span>
+            </div>
+
+            {/* Fawry */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-amber-950/50 border border-amber-500/30 text-amber-200 text-xs font-black shadow-xs hover:scale-105 transition-transform">
+              <span className="w-2 h-2 rounded-full bg-amber-400" />
+              <span>فوري Pay</span>
+            </div>
+
+            {/* Visa & Mastercard */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-blue-950/50 border border-blue-500/30 text-blue-200 text-xs font-black shadow-xs hover:scale-105 transition-transform">
+              <span className="w-2 h-2 rounded-full bg-blue-400" />
+              <span>Visa & Mastercard</span>
+            </div>
+
+            {/* Meeza */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-teal-950/50 border border-teal-500/30 text-teal-200 text-xs font-black shadow-xs hover:scale-105 transition-transform">
+              <span className="w-2 h-2 rounded-full bg-teal-400" />
+              <span>كارت ميزة المحلي</span>
+            </div>
+
+            {/* Bank Transfer */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-zinc-800/60 border border-zinc-700 text-zinc-300 text-xs font-black shadow-xs hover:scale-105 transition-transform">
+              <span className="w-2 h-2 rounded-full bg-zinc-400" />
+              <span>تحويل بنكي مباشر</span>
+            </div>
+          </div>
+
+          <p className="text-[11px] text-slate-500">
+            تشفير SSL آمن بنسبة 100% • يتم تفعيل حسابك والاشتراك فوراً عند تأكيد العملية تلقائياً.
+          </p>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 pt-6 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
         <p>جميع الحقوق محفوظة © {new Date().getFullYear()} {platformName}. صُممت المنصة بأحدث معايير الأمان وتطوير البرمجيات الحديثة.</p>
         <p className="flex items-center gap-1 text-slate-400">
           <span>بإشراف وقيادة</span>

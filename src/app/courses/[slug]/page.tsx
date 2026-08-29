@@ -541,9 +541,31 @@ export default async function CourseDetailPage({ params }: Props) {
                       <span>طلب الكورس والتفعيل الفوري عبر واتساب</span>
                     </a>
 
-                    <p className="text-center text-xs text-slate-500 dark:text-zinc-400 font-medium">
-                      🔒 دفع مباشر آمن عبر InstaPay • فودافون كاش • البطاقات البنكية
-                    </p>
+                    <div className="pt-1 text-center space-y-2">
+                      <p className="text-center text-xs text-slate-500 dark:text-zinc-400 font-medium">
+                        🔒 دفع مباشر ومشفر وتفعيل فوري عبر الوسائل المعتمدة:
+                      </p>
+                      <div className="flex flex-wrap items-center justify-center gap-1.5">
+                        <span className="px-2.5 py-1 rounded-lg bg-purple-500/10 text-purple-700 dark:text-purple-300 border border-purple-500/25 text-[11px] font-black shadow-xs">
+                          ⚡ إنستاباي InstaPay
+                        </span>
+                        <span className="px-2.5 py-1 rounded-lg bg-red-500/10 text-red-700 dark:text-red-300 border border-red-500/25 text-[11px] font-black shadow-xs">
+                          🔴 فودافون كاش
+                        </span>
+                        <span className="px-2.5 py-1 rounded-lg bg-orange-500/10 text-orange-700 dark:text-orange-300 border border-orange-500/25 text-[11px] font-black shadow-xs">
+                          🟠 أورنج كاش
+                        </span>
+                        <span className="px-2.5 py-1 rounded-lg bg-blue-500/10 text-blue-700 dark:text-blue-300 border border-blue-500/25 text-[11px] font-black shadow-xs">
+                          💳 Visa & Mastercard
+                        </span>
+                        <span className="px-2.5 py-1 rounded-lg bg-teal-500/10 text-teal-700 dark:text-teal-400 border border-teal-500/25 text-[11px] font-black shadow-xs">
+                          🛡️ كارت ميزة
+                        </span>
+                        <span className="px-2.5 py-1 rounded-lg bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/25 text-[11px] font-black shadow-xs">
+                          🟡 فوري Pay
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 )}
 
