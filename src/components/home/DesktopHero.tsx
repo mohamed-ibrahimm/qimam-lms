@@ -5,6 +5,7 @@ import {
   Flame,
   ArrowLeft,
   BookOpen,
+  GraduationCap,
   MessageCircle,
   Headphones,
   Mail,
@@ -97,12 +98,12 @@ export default function DesktopHero({
           </a>
 
           <Link
-            href="/courses"
+            href="/instructors/join"
             prefetch={true}
-            className="group flex items-center justify-center gap-2.5 px-8 py-4 text-base font-black text-slate-800 hover:text-blue-700 dark:text-zinc-200 dark:hover:text-white transition-all rounded-full border border-slate-300/90 hover:border-blue-500 bg-white/95 hover:bg-white dark:border-zinc-800/80 dark:bg-zinc-900/60 dark:hover:border-zinc-700 dark:hover:bg-zinc-900 shadow-sm hover:shadow-md backdrop-blur-md"
+            className="group flex items-center justify-center gap-2.5 px-8 py-4 text-base font-black text-slate-800 hover:text-purple-700 dark:text-zinc-200 dark:hover:text-white transition-all rounded-full border border-purple-300/90 hover:border-purple-500 bg-white/95 hover:bg-white dark:border-purple-800/80 dark:bg-[#16122d]/80 dark:hover:border-purple-600 dark:hover:bg-[#1c163b] shadow-sm hover:shadow-md backdrop-blur-md"
           >
-            <BookOpen className="w-5 h-5 text-blue-600 dark:text-amber-400 group-hover:scale-110 transition-transform shrink-0" />
-            <span className="whitespace-nowrap">{settings.HERO_CTA_PRIMARY || 'تصفح دليل الكورسات'}</span>
+            <GraduationCap className="w-5 h-5 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform shrink-0" />
+            <span className="whitespace-nowrap">انضم كـ محاضر (0% عمولة)</span>
             <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-300 shrink-0" />
           </Link>
         </div>
