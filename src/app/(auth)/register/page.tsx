@@ -264,30 +264,27 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          <div className="p-4 rounded-2xl bg-blue-50/80 dark:bg-purple-950/30 border border-blue-200 dark:border-purple-800/40 space-y-2">
-            <div className="flex items-center gap-1.5 text-xs font-bold text-blue-800 dark:text-purple-300">
-              <Award className="w-4 h-4 text-blue-600 dark:text-purple-400" />
-              <span>
-                {role === 'INSTRUCTOR'
-                  ? 'الاسم الرسمي والمهني الكامل للمحاضر (يظهر للطلاب وعلى الكورسات):'
-                  : 'الاسم الرسمي الكامل (الذي سيظهر على الشهادات المعتمدة):'}
-              </span>
+          {/* Official Full Name for Certificates (Students Only) */}
+          {role === 'STUDENT' && (
+            <div className="p-4 rounded-2xl bg-blue-50/80 dark:bg-purple-950/30 border border-blue-200 dark:border-purple-800/40 space-y-2 animate-in fade-in">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-blue-800 dark:text-purple-300">
+                <Award className="w-4 h-4 text-blue-600 dark:text-purple-400" />
+                <span>الاسم الرسمي الكامل (الذي سيظهر على الشهادات المعتمدة):</span>
+              </div>
+              <input
+                type="text"
+                name="officialFullName"
+                required={role === 'STUDENT'}
+                value={formData.officialFullName}
+                onChange={handleChange}
+                placeholder="الاسم الرباعي الرسمي للشهادات"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-surface-card border border-blue-200 dark:border-purple-900 text-slate-900 dark:text-purple-100 placeholder:text-slate-400 text-sm font-semibold focus:outline-none focus:border-blue-600 dark:focus:border-primary-400 shadow-xs"
+              />
+              <p className="text-[11px] text-slate-500 dark:text-zinc-400">
+                يرجى كتابة اسمك بدقة كما ترغب أن يظهر في وثيقة التخرج والشهادة الرسمية.
+              </p>
             </div>
-            <input
-              type="text"
-              name="officialFullName"
-              required
-              value={formData.officialFullName}
-              onChange={handleChange}
-              placeholder={role === 'INSTRUCTOR' ? 'مثال: م / أحمد مصطفى إبراهيم' : 'الاسم الرباعي الرسمي للشهادات'}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-surface-card border border-blue-200 dark:border-purple-900 text-slate-900 dark:text-purple-100 placeholder:text-slate-400 text-sm font-semibold focus:outline-none focus:border-blue-600 dark:focus:border-primary-400 shadow-xs"
-            />
-            <p className="text-[11px] text-slate-500 dark:text-zinc-400">
-              {role === 'INSTRUCTOR'
-                ? 'هذا الاسم سيعرفه طلابك كمدرب للكورسات وفي صفحة الكورس واستوديو التعليم.'
-                : 'يرجى كتابة اسمك بدقة كما ترغب أن يظهر في وثيقة التخرج والشهادة الرسمية.'}
-            </p>
-          </div>
+          )}
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>

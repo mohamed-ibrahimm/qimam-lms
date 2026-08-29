@@ -156,8 +156,6 @@ export default function Header({
     { name: 'الرئيسية', href: '/', icon: Home },
     { name: 'المسارات التدريبية', href: '/courses', icon: BookOpen },
     { name: 'الدبلومات الشاملة', href: '/diplomas', icon: Award, isDiploma: true },
-    { name: 'التحقق من الشهادات', href: '/verify', icon: ShieldCheck, xlOnly: true },
-    { name: 'الدعم الفني', href: '/support', icon: Headphones, xlOnly: true },
   ];
 
   return (
@@ -185,19 +183,16 @@ export default function Header({
         </Link>
 
         {/* Desktop Nav (Center) */}
-        <div className="hidden lg:flex items-center gap-1 xl:gap-1.5 bg-slate-100/90 dark:bg-zinc-950/60 px-2 xl:px-3 py-1.5 rounded-full border border-slate-200/90 dark:border-zinc-800/80 shadow-inner shrink-0">
+        <div className="hidden lg:flex items-center gap-2 bg-slate-100/90 dark:bg-zinc-950/60 px-3 py-1.5 rounded-full border border-slate-200/90 dark:border-zinc-800/80 shadow-inner shrink-0">
           {navLinks.map((link) => {
             const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
             const isDiploma = (link as any).isDiploma;
-            const xlOnly = (link as any).xlOnly;
             return (
               <Link
                 key={link.href}
                 href={link.href}
                 prefetch={true}
-                className={`px-2.5 xl:px-3.5 py-1.5 text-xs font-bold rounded-full transition-all items-center gap-1.5 whitespace-nowrap shrink-0 ${
-                  xlOnly ? 'hidden xl:inline-flex' : 'inline-flex'
-                } ${
+                className={`px-3.5 py-1.5 text-xs font-bold rounded-full transition-all inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
                   isDiploma
                     ? 'diploma-luxury-pill'
                     : isActive
@@ -332,28 +327,20 @@ export default function Header({
             </div>
           ) : (
             /* Auth Buttons - ONLY ON DESKTOP (hidden on mobile, managed in mobile menu drawer) */
-            <div className="hidden lg:flex items-center gap-1.5 xl:gap-2 shrink-0">
+            <div className="hidden lg:flex items-center gap-2 shrink-0">
               <Link
                 href="/login"
-                className="px-3 py-1.5 rounded-full text-xs font-bold text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-100 dark:text-zinc-200 dark:hover:text-white dark:bg-transparent dark:hover:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700/80 transition-all shadow-xs flex items-center gap-1 shrink-0"
+                className="px-3.5 py-1.5 rounded-full text-xs font-bold text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-100 dark:text-zinc-200 dark:hover:text-white dark:bg-zinc-800/80 dark:hover:bg-zinc-700 border border-slate-200 dark:border-zinc-700/80 transition-all shadow-xs flex items-center gap-1.5 shrink-0"
               >
                 <LogIn className="w-3.5 h-3.5 text-slate-600 dark:text-amber-400" />
                 <span>دخول</span>
               </Link>
               <Link
                 href="/register"
-                className="px-3 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white transition-all shadow-md shadow-blue-600/20 whitespace-nowrap flex items-center gap-1 shrink-0"
+                className="px-4 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white transition-all shadow-md shadow-blue-600/20 whitespace-nowrap flex items-center gap-1.5 shrink-0"
               >
                 <UserPlus className="w-3.5 h-3.5 text-white" />
                 <span>إنشاء حساب</span>
-              </Link>
-              <Link
-                href="/register?role=instructor"
-                className="hidden xl:inline-flex px-3 py-1.5 rounded-full text-xs font-bold bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/40 text-purple-700 dark:text-purple-300 transition-all whitespace-nowrap items-center gap-1 shrink-0"
-                title="سجل كمحاضر مستقل واحصل على 14 يوماً تجربة مجانية"
-              >
-                <Video className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
-                <span>انضم كمحاضر</span>
               </Link>
             </div>
           )}
@@ -366,7 +353,7 @@ export default function Header({
               e.stopPropagation();
               toggleTheme();
             }}
-            className="p-2 sm:p-2.5 rounded-full border border-slate-200 dark:border-zinc-800 bg-white/90 dark:bg-zinc-900/90 text-slate-700 dark:text-amber-400 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-all flex items-center justify-center shrink-0 shadow-xs cursor-pointer"
+            className="w-9 h-9 rounded-full border border-slate-200 dark:border-zinc-700 bg-white/90 dark:bg-zinc-800/90 text-slate-700 dark:text-amber-400 hover:bg-slate-100 dark:hover:bg-zinc-700 transition-all flex items-center justify-center shrink-0 shadow-xs cursor-pointer"
             title={theme === 'DARK' ? 'التحويل إلى الوضع النهاري' : 'التحويل إلى الوضع الليلي'}
             aria-label="تبديل المظهر"
           >
