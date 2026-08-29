@@ -25,6 +25,7 @@ import {
   Sun,
   Moon,
   Headphones,
+  Video,
 } from 'lucide-react';
 import { useTheme } from '@/components/ThemeProvider';
 
@@ -331,17 +332,25 @@ export default function Header({
             <div className="hidden lg:flex items-center gap-2">
               <Link
                 href="/login"
-                className="px-3.5 py-1.5 rounded-full text-xs font-bold text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-100 dark:text-zinc-200 dark:hover:text-white dark:bg-transparent dark:hover:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700/80 transition-all shadow-xs flex items-center gap-1"
+                className="px-3.5 py-1.5 rounded-full text-xs font-bold text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-100 dark:text-zinc-200 dark:hover:text-white dark:bg-transparent dark:hover:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700/80 transition-all shadow-xs flex items-center gap-1.5"
               >
                 <LogIn className="w-3.5 h-3.5 text-slate-600 dark:text-amber-400" />
                 <span>دخول</span>
               </Link>
               <Link
                 href="/register"
-                className="px-4 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white transition-all shadow-md shadow-blue-600/20 whitespace-nowrap flex items-center gap-1"
+                className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white transition-all shadow-md shadow-blue-600/20 whitespace-nowrap flex items-center gap-1.5"
               >
                 <UserPlus className="w-3.5 h-3.5 text-white" />
-                <span>انضم الآن</span>
+                <span>إنشاء حساب</span>
+              </Link>
+              <Link
+                href="/register?role=instructor"
+                className="px-3 py-1.5 rounded-full text-xs font-bold bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/40 text-purple-700 dark:text-purple-300 transition-all whitespace-nowrap flex items-center gap-1.5"
+                title="سجل كمحاضر مستقل واحصل على 14 يوماً تجربة مجانية"
+              >
+                <Video className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
+                <span>انضم كمحاضر</span>
               </Link>
             </div>
           )}
@@ -511,9 +520,17 @@ export default function Header({
                     className="py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-purple-600 dark:via-indigo-600 dark:to-purple-500 text-white font-bold text-xs text-center shadow-md flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform"
                   >
                     <UserPlus className="w-4 h-4" />
-                    <span>إنشاء حساب جديد</span>
+                    <span>إنشاء حساب</span>
                   </Link>
                 </div>
+                <Link
+                  href="/register?role=instructor"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full py-2.5 px-3 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/40 text-purple-700 dark:text-purple-300 font-bold text-xs flex items-center justify-center gap-2 transition-colors"
+                >
+                  <Video className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                  <span>انضم كمحاضر مستقل (14 يوماً مجاناً 🚀)</span>
+                </Link>
               </div>
             )}
 

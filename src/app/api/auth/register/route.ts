@@ -40,6 +40,11 @@ export async function POST(req: Request) {
     const calculatedOfficialName = officialFullName?.trim() || `${firstName.trim()} ${fatherName ? fatherName.trim() + ' ' : ''}${lastName.trim()}`;
     const passwordHash = await hashPassword(password);
 
+    const requestedRole = body.role === 'INSTRUCTOR' ? 'INSTRUCTOR' : 'STUDENT';
+    const isInstructor = requestedRole === 'INSTRUCTOR';
+    const now = new Date();
+    const trialEndsAt = isInstructor ? new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000) : null;
+
     const user = await prisma.user.create({
       data: {
         firstName: firstName.trim(),
@@ -50,7 +55,10 @@ export async function POST(req: Request) {
         email: email.toLowerCase().trim(),
         phone: phone?.trim() || null,
         passwordHash,
-        role: 'STUDENT',
+        role: requestedRole,
+        instructorStatus: isInstructor ? 'TRIAL' : 'TRIAL',
+        trialEndsAt: trialEndsAt,
+        subscriptionPlan: isInstructor ? 'FREE_TRIAL' : 'FREE_TRIAL',
         isEmailVerified: true,
       }
     });
@@ -83,7 +91,8 @@ export async function POST(req: Request) {
         role: user.role,
         username: user.username,
         officialFullName: user.officialFullName,
-      }
+      },
+      redirectTo: isInstructor ? '/instructor' : '/dashboard',
     });
 
     response.cookies.set(AUTH_COOKIE_NAME, token, {
