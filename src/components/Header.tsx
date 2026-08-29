@@ -110,6 +110,7 @@ export default function Header({
     }
   };
 
+  // Fetch user and settings once on mount
   useEffect(() => {
     setMounted(true);
     fetchUser();
@@ -134,6 +135,12 @@ export default function Header({
       window.removeEventListener('platform-settings-updated', handleSettingsUpdated);
       window.removeEventListener('storage', handleStorage);
     };
+  }, []);
+
+  // Instant auto-close menus on navigation (0ms lag)
+  useEffect(() => {
+    setMobileMenuOpen(false);
+    setDropdownOpen(false);
   }, [pathname]);
 
   const handleLogout = async () => {
@@ -184,6 +191,7 @@ export default function Header({
               <Link
                 key={link.href}
                 href={link.href}
+                prefetch={true}
                 className={`px-4 py-1.5 text-xs font-bold rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
                   isDiploma
                     ? 'diploma-luxury-pill'
@@ -517,6 +525,7 @@ export default function Header({
                   <Link
                     key={link.href}
                     href={link.href}
+                    prefetch={true}
                     onClick={() => setMobileMenuOpen(false)}
                     className={`flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-semibold transition-all ${
                       isActive

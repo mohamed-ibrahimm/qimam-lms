@@ -4,6 +4,7 @@ import React from 'react';
 import { usePathname } from 'next/navigation';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import TopProgressBar from '@/components/layout/TopProgressBar';
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -28,6 +29,7 @@ export default function AppShell({
   if (isClassroom) {
     return (
       <div className="w-full min-h-screen flex flex-col antialiased">
+        <TopProgressBar />
         {children}
       </div>
     );
@@ -38,13 +40,16 @@ export default function AppShell({
   // Shell with Header at the top across all pages (Public, Admin, Instructor, Student)
   return (
     <div className="min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-black relative">
+      <TopProgressBar />
       <Header
         initialPlatformName={initialPlatformName}
         initialPlatformTagline={initialPlatformTagline}
         initialUser={initialUser}
       />
       <main className={`flex-1 w-full ${isAdmin ? 'pt-16 sm:pt-20 md:pt-24' : 'pt-14 sm:pt-20 md:pt-24 pb-8'}`}>
-        {children}
+        <div key={pathname} className="animate-page-enter">
+          {children}
+        </div>
       </main>
       {!isAdmin && <Footer initialSettings={initialSettings} />}
     </div>

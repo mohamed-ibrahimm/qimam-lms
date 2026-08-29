@@ -119,6 +119,7 @@ export default function MobileHero({
           {/* Button 2: Course Guide */}
           <Link
             href="/courses"
+            prefetch={true}
             className="group flex items-center justify-center gap-2.5 w-full py-3 px-5 text-sm xs:text-base font-black text-slate-800 hover:text-blue-700 dark:text-zinc-200 dark:hover:text-white transition-all rounded-full border border-slate-300 hover:border-blue-500 bg-white hover:bg-slate-50 dark:border-zinc-800 dark:bg-zinc-900/80 dark:hover:border-zinc-700 dark:hover:bg-zinc-900 shadow-sm hover:shadow-md backdrop-blur-md active:scale-[0.98]"
           >
             <BookOpen className="w-4.5 h-4.5 text-blue-600 dark:text-amber-400 group-hover:scale-110 transition-transform shrink-0" />

@@ -1006,6 +1006,27 @@ html.dark .shimmer-border-wrapper:hover .shimmer-button-content,
   background: linear-gradient(180deg, #27272a 0%, #121215 100%);
 }
 
+@keyframes pageEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-page-enter {
+  animation: pageEnter 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 /* =========================================================================
    Dynamic Multi-Color Systems (Requested by User)
    ========================================================================= */

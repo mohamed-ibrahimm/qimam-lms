@@ -101,6 +101,7 @@ export default function DesktopHero({
 
           <Link
             href="/courses"
+            prefetch={true}
             className="group flex items-center justify-center gap-2.5 px-8 py-4 text-base font-black text-slate-800 hover:text-blue-700 dark:text-zinc-200 dark:hover:text-white transition-all rounded-full border border-slate-300/90 hover:border-blue-500 bg-white/95 hover:bg-white dark:border-zinc-800/80 dark:bg-zinc-900/60 dark:hover:border-zinc-700 dark:hover:bg-zinc-900 shadow-sm hover:shadow-md backdrop-blur-md"
           >
             <BookOpen className="w-5 h-5 text-blue-600 dark:text-amber-400 group-hover:scale-110 transition-transform shrink-0" />
