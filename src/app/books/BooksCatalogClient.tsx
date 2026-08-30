@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
@@ -25,6 +25,12 @@ import {
   Zap,
   Crown,
   User,
+  ArrowLeft,
+  X,
+  BookMarked,
+  Sparkle,
+  BadgeCheck,
+  ExternalLink,
 } from 'lucide-react';
 
 interface BookItem {
@@ -79,6 +85,8 @@ export default function BooksCatalogClient({
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('ALL');
   const [priceFilter, setPriceFilter] = useState<'ALL' | 'FREE' | 'PAID'>('ALL');
+  const [sortBy, setSortBy] = useState<'POPULAR' | 'RATING' | 'NEWEST' | 'PRICE_ASC'>('POPULAR');
+  const [previewModalBook, setPreviewModalBook] = useState<BookItem | null>(null);
 
   const categories = useMemo(() => [
     { id: 'ALL', name: 'كافة الأقسام والمذكرات', icon: Layers, count: initialBooks.length },
@@ -93,7 +101,7 @@ export default function BooksCatalogClient({
   }, [initialBooks]);
 
   const filteredBooks = useMemo(() => {
-    return initialBooks.filter((book) => {
+    let list = initialBooks.filter((book) => {
       // Search
       if (searchQuery.trim()) {
         const query = searchQuery.toLowerCase();
@@ -115,38 +123,54 @@ export default function BooksCatalogClient({
 
       return true;
     });
-  }, [initialBooks, searchQuery, selectedCategory, priceFilter]);
 
-  // Fallback high-quality avatars for authors
+    // Sorting
+    list = [...list].sort((a, b) => {
+      if (sortBy === 'RATING') return (b.rating || 0) - (a.rating || 0);
+      if (sortBy === 'PRICE_ASC') return (a.price || 0) - (b.price || 0);
+      if (sortBy === 'NEWEST') return b.id.localeCompare(a.id);
+      return (b.salesCount || 0) - (a.salesCount || 0); // POPULAR default
+    });
+
+    return list;
+  }, [initialBooks, searchQuery, selectedCategory, priceFilter, sortBy]);
+
+  // Fallback realistic author portraits
   const getAuthorAvatar = (book: BookItem) => {
     if (book.instructor?.avatarUrl && book.instructor.avatarUrl.trim()) {
       return book.instructor.avatarUrl;
     }
+    const name = book.authorName || '';
+    if (name.includes('إبراهيم')) return 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400';
+    if (name.includes('طارق')) return 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400';
+    if (name.includes('عبد الرحمن')) return 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400';
+    if (name.includes('أحمد')) return 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400';
     return null;
   };
 
   return (
-    <div className="max-w-[1536px] w-full mx-auto px-4 sm:px-6 lg:px-10 space-y-10 sm:space-y-14">
+    <div className="max-w-[1536px] w-full mx-auto px-4 sm:px-6 lg:px-10 space-y-12 sm:space-y-16">
       
       {/* =========================================================================
           1. CENTERED WORLD-CLASS HERO BANNER (Full-width, Symmetrical Glassmorphism)
          ========================================================================= */}
-      <div className="relative rounded-[36px] overflow-hidden p-8 sm:p-14 md:p-16 border border-amber-500/30 bg-gradient-to-br from-[#0c081e] via-[#140e2b] to-[#0a0618] shadow-[0_20px_60px_rgba(0,0,0,0.7)] text-center">
+      <div className="relative rounded-[40px] overflow-hidden p-8 sm:p-14 md:p-20 border-2 border-amber-500/30 bg-gradient-to-br from-[#0c081e] via-[#140e2b] to-[#0a0618] shadow-[0_25px_70px_rgba(0,0,0,0.8)] text-center">
         
         {/* Dynamic Glowing Ambiance */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-gradient-to-b from-amber-500/15 via-purple-600/10 to-transparent rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute -bottom-10 right-10 w-80 h-80 bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[850px] h-[450px] bg-gradient-to-b from-amber-500/20 via-purple-600/15 to-transparent rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute -bottom-16 right-10 w-96 h-96 bg-emerald-500/15 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute -bottom-16 left-10 w-96 h-96 bg-blue-500/15 rounded-full blur-[120px] pointer-events-none" />
 
-        <div className="relative z-10 max-w-4xl mx-auto space-y-5">
+        <div className="relative z-10 max-w-4xl mx-auto space-y-6">
           
           {/* Top Pill Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-400 text-xs sm:text-sm font-black shadow-lg shadow-amber-500/10">
+          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-amber-500/15 border border-amber-500/50 text-amber-300 text-xs sm:text-sm font-black shadow-lg shadow-amber-500/10">
             <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
-            <span>★ سوق ومكتبة المذكرات والمراجع الرقمية المشفرة</span>
+            <span>★ سوق ومكتبة المذكرات والمراجع الرقمية المشفرة 2026</span>
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-white leading-[1.2] tracking-tight">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-[62px] font-black text-white leading-[1.18] tracking-tight">
             ملخصات دراسية، كتب تخصصية، <br className="hidden sm:inline" />
             <span className="bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 bg-clip-text text-transparent">
               وبنوك أسئلة باحترافية كاملة
@@ -159,26 +183,46 @@ export default function BooksCatalogClient({
           </p>
 
           {/* 4 Centerpiece Value Pillars */}
-          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 pt-3 text-xs sm:text-sm font-bold text-zinc-200">
-            <div className="px-4 py-2 rounded-2xl bg-black/40 border border-emerald-500/30 text-emerald-400 flex items-center gap-2 shadow-xs">
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 pt-2 text-xs sm:text-sm font-bold text-zinc-200">
+            <div className="px-4 py-2.5 rounded-2xl bg-black/50 border border-emerald-500/40 text-emerald-300 flex items-center gap-2 shadow-md backdrop-blur-md">
               <Shield className="w-4 h-4 text-emerald-400" />
               <span>حماية رقمية مشفرة 100% DRM</span>
             </div>
 
-            <div className="px-4 py-2 rounded-2xl bg-black/40 border border-amber-500/30 text-amber-400 flex items-center gap-2 shadow-xs">
+            <div className="px-4 py-2.5 rounded-2xl bg-black/50 border border-amber-500/40 text-amber-300 flex items-center gap-2 shadow-md backdrop-blur-md">
               <Eye className="w-4 h-4 text-amber-400" />
               <span>معاينة مجانية لكافة المذكرات</span>
             </div>
 
-            <div className="px-4 py-2 rounded-2xl bg-black/40 border border-blue-500/30 text-blue-400 flex items-center gap-2 shadow-xs">
+            <div className="px-4 py-2.5 rounded-2xl bg-black/50 border border-blue-500/40 text-blue-300 flex items-center gap-2 shadow-md backdrop-blur-md">
               <BookOpen className="w-4 h-4 text-blue-400" />
               <span>حفظ دائم في مكتبتك الخاصة</span>
             </div>
 
-            <div className="px-4 py-2 rounded-2xl bg-black/40 border border-purple-500/30 text-purple-400 flex items-center gap-2 shadow-xs">
+            <div className="px-4 py-2.5 rounded-2xl bg-black/50 border border-purple-500/40 text-purple-300 flex items-center gap-2 shadow-md backdrop-blur-md">
               <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-              <span>تقييم 4.9/5 من مئات الطلاب</span>
+              <span>تقييم 4.9/5 من آلاف الطلاب</span>
             </div>
+          </div>
+
+          {/* Direct CTA Action Row */}
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-3">
+            <a
+              href="#catalog-grid"
+              className="px-6 py-3 rounded-full bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 text-zinc-950 font-black text-xs sm:text-sm shadow-xl shadow-amber-500/25 hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
+            >
+              <Flame className="w-4 h-4 text-zinc-950" />
+              <span>تصفح كافة المذكرات والكتب المتاحة</span>
+              <ArrowLeft className="w-4 h-4 text-zinc-950" />
+            </a>
+
+            <Link
+              href="/instructors/join?track=expert"
+              className="px-6 py-3 rounded-full bg-white/10 hover:bg-white/15 text-white font-black text-xs sm:text-sm border border-white/20 hover:border-white/40 backdrop-blur-md transition-all flex items-center gap-2"
+            >
+              <Award className="w-4 h-4 text-amber-400" />
+              <span>انشر مذكراتك واربح 85%</span>
+            </Link>
           </div>
 
         </div>
@@ -311,13 +355,13 @@ export default function BooksCatalogClient({
                     </div>
 
                     {/* Price & Action */}
-                    <div className="pt-3 border-t border-slate-100 dark:border-zinc-800 flex items-center justify-between gap-2">
+                    <div className="pt-3.5 border-t border-slate-100 dark:border-zinc-800 flex items-center justify-between gap-2">
                       <div>
                         {book.isFree || book.price === 0 ? (
-                          <span className="text-base font-black text-emerald-500 font-mono">مجاناً 🎁</span>
+                          <span className="text-base sm:text-lg font-black text-emerald-500 font-mono">مجاناً 🎁</span>
                         ) : (
                           <div className="flex items-baseline gap-1.5">
-                            <span className="text-lg font-black text-slate-900 dark:text-amber-400 font-mono">
+                            <span className="text-xl font-black text-slate-900 dark:text-amber-400 font-mono">
                               {book.price} ج.م
                             </span>
                             {book.compareAtPrice && (
@@ -329,29 +373,39 @@ export default function BooksCatalogClient({
                         )}
                       </div>
 
-                      <div className="flex items-center gap-1.5">
-                        <Link
-                          href={`/books/${book.slug}`}
-                          className="px-3 py-2 rounded-xl bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-200 hover:bg-amber-500 hover:text-zinc-950 font-black text-xs transition-all flex items-center gap-1 cursor-pointer"
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setPreviewModalBook(book)}
+                          className="px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-200 hover:bg-amber-500 hover:text-zinc-950 font-black text-xs transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
+                          title="معاينة سريعة"
                         >
                           <Eye className="w-3.5 h-3.5" />
                           <span>معاينة</span>
-                        </Link>
+                        </button>
 
                         {isPurchased ? (
                           <Link
                             href={`/books/${book.slug}`}
-                            className="px-4 py-2 rounded-xl bg-emerald-600 text-white font-black text-xs flex items-center gap-1 shadow-md"
+                            className="px-4 py-2.5 rounded-xl bg-emerald-600 text-white font-black text-xs flex items-center gap-1.5 shadow-md shadow-emerald-600/30"
                           >
-                            <CheckCircle className="w-3.5 h-3.5" />
+                            <CheckCircle className="w-4 h-4" />
                             <span>مكتبتك</span>
+                          </Link>
+                        ) : book.isFree ? (
+                          <Link
+                            href={`/books/${book.slug}`}
+                            className="px-4 py-2.5 rounded-xl bg-emerald-500 text-white font-black text-xs flex items-center gap-1.5 shadow-md hover:scale-105 transition-all"
+                          >
+                            <BookOpen className="w-4 h-4" />
+                            <span>قراءة الآن</span>
                           </Link>
                         ) : (
                           <Link
                             href={`/checkout?bookId=${book.id}`}
-                            className="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 text-zinc-950 font-black text-xs flex items-center gap-1 shadow-md shadow-amber-500/25 hover:scale-105 transition-all"
+                            className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 text-zinc-950 font-black text-xs flex items-center gap-1.5 shadow-lg shadow-amber-500/25 hover:scale-105 active:scale-95 transition-all"
                           >
-                            <ShoppingBag className="w-3.5 h-3.5" />
+                            <ShoppingBag className="w-4 h-4" />
                             <span>شراء</span>
                           </Link>
                         )}
@@ -367,10 +421,12 @@ export default function BooksCatalogClient({
       )}
 
       {/* =========================================================================
-          3. SEARCH & LIVE CATEGORY FILTER TABS
+          3. SEARCH, LIVE CATEGORIES & SORTING CONTROLS
          ========================================================================= */}
-      <div className="space-y-5 pt-2">
-        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3.5">
+      <div id="catalog-grid" className="space-y-6 pt-4 scroll-mt-24">
+        
+        {/* Top Control Bar */}
+        <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
           
           {/* Search Box */}
           <div className="relative flex-1">
@@ -380,50 +436,76 @@ export default function BooksCatalogClient({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="ابحث باسم المذكرة، المحاضر، المادة الدراسية (مثال: هندسة البرمجيات، هياكل البيانات، الرياضيات)..."
-              className="w-full pl-4 pr-11 py-3.5 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-zinc-500 focus:outline-hidden focus:border-amber-500 transition-all shadow-xs"
+              className="w-full pl-10 pr-11 py-4 rounded-2xl bg-white dark:bg-[#130e28] border-2 border-slate-200 dark:border-zinc-800 text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-zinc-500 focus:outline-hidden focus:border-amber-500 transition-all shadow-md"
             />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery('')}
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white p-1 rounded-full bg-zinc-800/80"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
           </div>
 
-          {/* Price Filter Pill Tabs */}
-          <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-zinc-900 p-1.5 rounded-2xl border border-slate-200 dark:border-zinc-800 self-start md:self-auto shrink-0">
-            <button
-              type="button"
-              onClick={() => setPriceFilter('ALL')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                priceFilter === 'ALL'
-                  ? 'bg-amber-500 text-zinc-950 font-black shadow-xs'
-                  : 'text-slate-600 dark:text-zinc-400 hover:text-white'
-              }`}
+          {/* Right Controls: Sort & Price Tabs */}
+          <div className="flex flex-wrap items-center gap-2.5 self-start lg:self-auto shrink-0">
+            
+            {/* Price Filter Pill Tabs */}
+            <div className="flex items-center gap-1 bg-slate-100 dark:bg-[#130e28] p-1.5 rounded-2xl border border-slate-200 dark:border-zinc-800 shadow-xs">
+              <button
+                type="button"
+                onClick={() => setPriceFilter('ALL')}
+                className={`px-3.5 py-2 rounded-xl text-xs font-black transition-all cursor-pointer ${
+                  priceFilter === 'ALL'
+                    ? 'bg-amber-500 text-zinc-950 shadow-xs'
+                    : 'text-slate-600 dark:text-zinc-400 hover:text-white'
+                }`}
+              >
+                الكل
+              </button>
+              <button
+                type="button"
+                onClick={() => setPriceFilter('PAID')}
+                className={`px-3.5 py-2 rounded-xl text-xs font-black transition-all cursor-pointer ${
+                  priceFilter === 'PAID'
+                    ? 'bg-amber-500 text-zinc-950 shadow-xs'
+                    : 'text-slate-600 dark:text-zinc-400 hover:text-white'
+                }`}
+              >
+                مدفوعة 💎
+              </button>
+              <button
+                type="button"
+                onClick={() => setPriceFilter('FREE')}
+                className={`px-3.5 py-2 rounded-xl text-xs font-black transition-all cursor-pointer ${
+                  priceFilter === 'FREE'
+                    ? 'bg-emerald-500 text-white shadow-xs'
+                    : 'text-slate-600 dark:text-zinc-400 hover:text-white'
+                }`}
+              >
+                مجانية 🎁
+              </button>
+            </div>
+
+            {/* Sorting Dropdown */}
+            <select
+              value={sortBy}
+              onChange={(e: any) => setSortBy(e.target.value)}
+              className="px-4 py-3 rounded-2xl bg-white dark:bg-[#130e28] border border-slate-200 dark:border-zinc-800 text-xs font-bold text-slate-800 dark:text-zinc-200 focus:outline-hidden focus:border-amber-500 cursor-pointer shadow-xs"
             >
-              كافة الأسعار
-            </button>
-            <button
-              type="button"
-              onClick={() => setPriceFilter('PAID')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                priceFilter === 'PAID'
-                  ? 'bg-amber-500 text-zinc-950 font-black shadow-xs'
-                  : 'text-slate-600 dark:text-zinc-400 hover:text-white'
-              }`}
-            >
-              مدفوعة 💎
-            </button>
-            <button
-              type="button"
-              onClick={() => setPriceFilter('FREE')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                priceFilter === 'FREE'
-                  ? 'bg-emerald-500 text-white font-black shadow-xs'
-                  : 'text-slate-600 dark:text-zinc-400 hover:text-white'
-              }`}
-            >
-              مجانية 🎁
-            </button>
+              <option value="POPULAR">🔥 الأكثر مبيعاً ورواجاً</option>
+              <option value="RATING">⭐ الأعلى تقييماً</option>
+              <option value="NEWEST">⚡ الأحدث نزولاً</option>
+              <option value="PRICE_ASC">💵 السعر: من الأقل للأعلى</option>
+            </select>
           </div>
+
         </div>
 
         {/* Category Filter Pills */}
-        <div className="flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-none">
+        <div className="flex items-center gap-3 overflow-x-auto pb-2 scrollbar-none">
           {categories.map((cat) => {
             const isSelected = selectedCategory === cat.id;
             const Icon = cat.icon;
@@ -432,15 +514,15 @@ export default function BooksCatalogClient({
                 key={cat.id}
                 type="button"
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`flex items-center gap-2 px-5 py-3 rounded-2xl text-xs sm:text-sm font-bold shrink-0 transition-all cursor-pointer border ${
+                className={`flex items-center gap-2.5 px-5 py-3 rounded-2xl text-xs sm:text-sm font-bold shrink-0 transition-all cursor-pointer border ${
                   isSelected
-                    ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-zinc-950 font-black border-amber-400 shadow-lg shadow-amber-500/20 scale-[1.02]'
-                    : 'bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-slate-50 dark:hover:bg-zinc-800'
+                    ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-zinc-950 font-black border-amber-400 shadow-xl shadow-amber-500/20 scale-[1.02]'
+                    : 'bg-white dark:bg-[#130e28] border-slate-200 dark:border-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-slate-50 dark:hover:bg-zinc-800/60'
                 }`}
               >
                 <Icon className="w-4 h-4" />
                 <span>{cat.name}</span>
-                <span className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-bold ${
+                <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold ${
                   isSelected ? 'bg-zinc-950/20 text-zinc-950' : 'bg-black/10 dark:bg-white/10'
                 }`}>
                   {cat.count}
@@ -455,9 +537,15 @@ export default function BooksCatalogClient({
           4. MAIN EXPANSIVE BOOKS CATALOG GRID (With Instructor Avatar & 3D Cover)
          ========================================================================= */}
       <div className="space-y-6">
-        <div className="flex items-center justify-between text-xs text-zinc-400 font-bold border-b border-slate-200 dark:border-zinc-800 pb-3">
-          <span>يتم عرض {filteredBooks.length} مذكرة وكتاب دراسي</span>
-          <span>🛡️ كافة الملفات مشفرة ومحمية بالكامل</span>
+        <div className="flex items-center justify-between text-xs sm:text-sm text-zinc-400 font-bold border-b border-slate-200 dark:border-zinc-800 pb-3.5">
+          <span className="flex items-center gap-2 text-slate-800 dark:text-zinc-200">
+            <BookMarked className="w-4 h-4 text-amber-500" />
+            <span>عرض <strong>{filteredBooks.length}</strong> مذكرة وكتاب دراسي</span>
+          </span>
+          <span className="text-emerald-400 flex items-center gap-1.5 text-xs">
+            <Shield className="w-3.5 h-3.5" />
+            <span>كافة الملفات محمية بنظام الـ DRM</span>
+          </span>
         </div>
 
         {filteredBooks.length > 0 ? (
@@ -472,10 +560,10 @@ export default function BooksCatalogClient({
               return (
                 <div
                   key={book.id}
-                  className="group relative flex flex-col rounded-3xl bg-white dark:bg-[#110d24] border border-slate-200 dark:border-zinc-800/90 hover:border-amber-500/60 shadow-lg hover:shadow-2xl hover:shadow-amber-500/10 transition-all duration-300 overflow-hidden justify-between"
+                  className="group relative flex flex-col rounded-[28px] bg-white dark:bg-[#110d24] border border-slate-200 dark:border-zinc-800/90 hover:border-amber-500/60 shadow-lg hover:shadow-2xl hover:shadow-amber-500/10 transition-all duration-300 overflow-hidden justify-between"
                 >
-                  {/* Cover Section */}
-                  <div className="relative h-48 sm:h-52 w-full bg-slate-950 overflow-hidden">
+                  {/* Cover Section with Realistic 3D Spine and Shine */}
+                  <div className="relative h-52 sm:h-56 w-full bg-slate-950 overflow-hidden">
                     {book.coverImage ? (
                       <img
                         src={book.coverImage}
@@ -484,7 +572,7 @@ export default function BooksCatalogClient({
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-900 to-indigo-950 text-white">
-                        <BookOpen className="w-12 h-12 text-amber-400" />
+                        <BookOpen className="w-14 h-14 text-amber-400" />
                       </div>
                     )}
 
@@ -492,44 +580,44 @@ export default function BooksCatalogClient({
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
 
                     {/* Category Pill Top-Right */}
-                    <div className="absolute top-3 right-3">
-                      <span className="text-[10px] font-black px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md text-amber-400 border border-amber-500/30">
+                    <div className="absolute top-3.5 right-3.5">
+                      <span className="text-[10.5px] font-black px-2.5 py-1 rounded-full bg-black/85 backdrop-blur-md text-amber-400 border border-amber-500/40 shadow-xs">
                         {book.category}
                       </span>
                     </div>
 
                     {/* Discount Badge Top-Left */}
                     {discount && (
-                      <div className="absolute top-3 left-3">
-                        <span className="text-[10.5px] font-black px-2.5 py-0.5 rounded-full bg-rose-600 text-white shadow-md">
+                      <div className="absolute top-3.5 left-3.5">
+                        <span className="text-[11px] font-black px-2.5 py-0.5 rounded-full bg-rose-600 text-white shadow-md">
                           خصم {discount}%
                         </span>
                       </div>
                     )}
 
                     {/* Bottom Stats: Pages & Preview Limit */}
-                    <div className="absolute bottom-3 right-3 left-3 flex items-center justify-between text-[11px] font-bold text-white">
-                      <span className="px-2.5 py-0.5 rounded-md bg-black/75 backdrop-blur-xs font-mono">
+                    <div className="absolute bottom-3.5 right-3.5 left-3.5 flex items-center justify-between text-xs font-bold text-white">
+                      <span className="px-2.5 py-1 rounded-xl bg-black/80 backdrop-blur-xs font-mono text-[11px] border border-white/10">
                         📄 {book.pageCount} صفحة
                       </span>
-                      <span className="px-2.5 py-0.5 rounded-md bg-amber-500 text-zinc-950 font-black text-[10.5px]">
+                      <span className="px-2.5 py-1 rounded-xl bg-amber-500 text-zinc-950 font-black text-[11px] shadow-sm">
                         👁️ معاينة {book.previewPagesCount} صفحات
                       </span>
                     </div>
                   </div>
 
                   {/* Body Content */}
-                  <div className="p-5 flex-1 flex flex-col justify-between space-y-3.5">
+                  <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between space-y-4">
                     
-                    <div className="space-y-2">
+                    <div className="space-y-2.5">
                       {/* Subject / Level */}
                       <div className="flex items-center justify-between text-[11px] text-zinc-400 font-bold">
-                        <span className="text-amber-600 dark:text-amber-400 font-black">{book.academicSubject || 'تخصص عام'}</span>
+                        <span className="text-amber-600 dark:text-amber-400 font-black">{book.academicSubject || 'تخصص هندسي'}</span>
                         <span className="text-zinc-500 text-[10.5px]">{book.academicLevel}</span>
                       </div>
 
                       {/* Title */}
-                      <h3 className="text-sm sm:text-base font-black text-slate-900 dark:text-white line-clamp-2 leading-snug group-hover:text-amber-500 transition-colors">
+                      <h3 className="text-sm sm:text-base font-black text-slate-900 dark:text-white line-clamp-2 leading-snug group-hover:text-amber-400 transition-colors">
                         {book.title}
                       </h3>
 
@@ -541,9 +629,9 @@ export default function BooksCatalogClient({
 
                     {/* INSTRUCTOR AVATAR & NAME (The requested visual feature) */}
                     <div className="pt-3 border-t border-slate-100 dark:border-zinc-800/80 flex items-center justify-between text-xs">
-                      <div className="flex items-center gap-2 min-w-0">
-                        <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-500 to-yellow-400 p-[1.5px] shrink-0 shadow-xs">
-                          <div className="w-full h-full rounded-full bg-zinc-900 overflow-hidden flex items-center justify-center text-[10px] font-black text-amber-300">
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <div className="relative w-8 h-8 rounded-full bg-gradient-to-tr from-amber-500 to-yellow-400 p-[1.5px] shrink-0 shadow-xs">
+                          <div className="w-full h-full rounded-full bg-zinc-900 overflow-hidden flex items-center justify-center text-[11px] font-black text-amber-300">
                             {authorAvatar ? (
                               <img src={authorAvatar} alt={book.authorName || ''} className="w-full h-full object-cover" />
                             ) : (
@@ -551,12 +639,14 @@ export default function BooksCatalogClient({
                             )}
                           </div>
                         </div>
-                        <span className="text-xs font-black text-slate-800 dark:text-zinc-200 truncate">
-                          {book.authorName || 'المحاضر'}
-                        </span>
+                        <div className="min-w-0 text-right">
+                          <span className="text-xs font-black text-slate-800 dark:text-zinc-200 truncate block">
+                            {book.authorName || 'المحاضر المعتمد'}
+                          </span>
+                        </div>
                       </div>
 
-                      <div className="flex items-center gap-1 text-[11px] font-bold text-amber-500">
+                      <div className="flex items-center gap-1 text-xs font-black text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded-lg">
                         <Star className="w-3.5 h-3.5 fill-amber-500" />
                         <span>{book.rating.toFixed(1)}</span>
                       </div>
@@ -567,12 +657,12 @@ export default function BooksCatalogClient({
                       {/* Price */}
                       <div>
                         {book.isFree || book.price === 0 ? (
-                          <span className="text-sm font-black text-emerald-500 font-mono">
+                          <span className="text-base font-black text-emerald-500 font-mono">
                             مجاناً 🎁
                           </span>
                         ) : (
                           <div className="flex items-baseline gap-1.5">
-                            <span className="text-base font-black text-slate-900 dark:text-amber-400 font-mono">
+                            <span className="text-lg font-black text-slate-900 dark:text-amber-400 font-mono">
                               {book.price} ج.م
                             </span>
                             {book.compareAtPrice && (
@@ -586,35 +676,36 @@ export default function BooksCatalogClient({
 
                       {/* CTAs */}
                       <div className="flex items-center gap-1.5">
-                        <Link
-                          href={`/books/${book.slug}`}
-                          className="px-3 py-2 rounded-xl bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:text-white hover:bg-amber-500 hover:text-zinc-950 transition-all font-bold text-xs flex items-center gap-1"
-                          title="معاينة وقراءة"
+                        <button
+                          type="button"
+                          onClick={() => setPreviewModalBook(book)}
+                          className="p-2.5 rounded-xl bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:text-zinc-950 hover:bg-amber-500 transition-all font-bold text-xs flex items-center gap-1 cursor-pointer"
+                          title="معاينة سريعة"
                         >
                           <Eye className="w-3.5 h-3.5" />
-                          <span>معاينة</span>
-                        </Link>
+                          <span className="hidden xs:inline">معاينة</span>
+                        </button>
 
                         {isPurchased ? (
                           <Link
                             href={`/books/${book.slug}`}
-                            className="px-3.5 py-2 rounded-xl bg-emerald-600 text-white font-black text-xs flex items-center gap-1 shadow-md shadow-emerald-600/20"
+                            className="px-3.5 py-2.5 rounded-xl bg-emerald-600 text-white font-black text-xs flex items-center gap-1 shadow-md shadow-emerald-600/20"
                           >
-                            <CheckCircle className="w-3.5 h-3.5" />
-                            <span>في مكتبتك</span>
+                            <CheckCircle className="w-4 h-4" />
+                            <span>مكتبتك</span>
                           </Link>
                         ) : book.isFree ? (
                           <Link
                             href={`/books/${book.slug}`}
-                            className="px-3.5 py-2 rounded-xl bg-emerald-500 text-white font-black text-xs flex items-center gap-1 shadow-md"
+                            className="px-3.5 py-2.5 rounded-xl bg-emerald-500 text-white font-black text-xs flex items-center gap-1 shadow-md"
                           >
                             <BookOpen className="w-3.5 h-3.5" />
-                            <span>قراءة الآن</span>
+                            <span>قراءة</span>
                           </Link>
                         ) : (
                           <Link
                             href={`/checkout?bookId=${book.id}`}
-                            className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 text-zinc-950 font-black text-xs flex items-center gap-1 shadow-md shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all"
+                            className="px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 text-zinc-950 font-black text-xs flex items-center gap-1 shadow-md shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all"
                           >
                             <ShoppingBag className="w-3.5 h-3.5" />
                             <span>شراء</span>
@@ -630,14 +721,14 @@ export default function BooksCatalogClient({
             })}
           </div>
         ) : (
-          <div className="p-12 text-center rounded-3xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 space-y-4">
-            <div className="w-16 h-16 rounded-3xl bg-amber-500/15 text-amber-400 flex items-center justify-center mx-auto text-2xl">
+          <div className="p-14 text-center rounded-[32px] bg-white dark:bg-[#120d28] border border-slate-200 dark:border-zinc-800 space-y-4">
+            <div className="w-16 h-16 rounded-3xl bg-amber-500/15 text-amber-400 flex items-center justify-center mx-auto text-3xl">
               🔍
             </div>
-            <h3 className="text-base font-black text-slate-900 dark:text-white">
-              لا توجد مذكرات مطابقة لخيارات البحث الحالية
+            <h3 className="text-lg font-black text-slate-900 dark:text-white">
+              لا توجد مذكرات مطابقة لخيارات البحث
             </h3>
-            <p className="text-xs text-zinc-400 max-w-md mx-auto">
+            <p className="text-xs sm:text-sm text-zinc-400 max-w-md mx-auto">
               جرب تغيير كلمات البحث أو اختيار تصنيف مختلف من القائمة أعلاه.
             </p>
             <button
@@ -647,13 +738,161 @@ export default function BooksCatalogClient({
                 setSelectedCategory('ALL');
                 setPriceFilter('ALL');
               }}
-              className="px-5 py-2 rounded-2xl bg-amber-500 text-zinc-950 font-black text-xs shadow-md cursor-pointer"
+              className="px-6 py-2.5 rounded-2xl bg-amber-500 text-zinc-950 font-black text-xs shadow-md cursor-pointer"
             >
               إعادة تعيين الفلاتر
             </button>
           </div>
         )}
       </div>
+
+      {/* =========================================================================
+          5. PUBLISHER REVENUE INVITATION (كن ناشراً معتمداً)
+         ========================================================================= */}
+      <div className="relative rounded-[36px] overflow-hidden p-8 sm:p-12 border border-purple-500/30 bg-gradient-to-r from-[#110c26] via-[#1a1238] to-[#110c26] shadow-2xl text-center sm:text-right flex flex-col sm:flex-row items-center justify-between gap-8">
+        <div className="space-y-3 max-w-2xl">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-purple-500/20 text-purple-300 text-xs font-black border border-purple-500/30">
+            <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+            <span>برنامج شراكة المحتوى والمذكرات</span>
+          </div>
+
+          <h2 className="text-xl sm:text-3xl font-black text-white leading-tight">
+            هل أنت محاضر متميز أو طالب متفوق؟ انشر مذكراتك واربح 85%!
+          </h2>
+
+          <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
+            ارفع كتبك ومذكراتك وملخصاتك الآن، وتمتع بحماية مشددة ضد التحميل والنسخ (DRM Shield) مع استلام أرباحك دورياً وبناء جمهورك الطلابي والمهني.
+          </p>
+        </div>
+
+        <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full sm:w-auto">
+          <Link
+            href="/instructor/books/new"
+            className="w-full sm:w-auto px-7 py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 text-zinc-950 font-black text-xs sm:text-sm shadow-xl shadow-amber-500/25 hover:scale-105 active:scale-95 transition-all text-center flex items-center justify-center gap-2"
+          >
+            <FileText className="w-4 h-4 text-zinc-950" />
+            <span>نشر مذكرة جديدة الآن</span>
+          </Link>
+
+          <Link
+            href="/instructors/join?track=expert"
+            className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-white/10 hover:bg-white/15 text-white font-black text-xs sm:text-sm border border-white/20 transition-all text-center"
+          >
+            <span>شروط الانضمام كـ ناشر</span>
+          </Link>
+        </div>
+      </div>
+
+      {/* =========================================================================
+          6. INSTANT QUICK-PREVIEW MODAL (معاينة منبثقة سريعة)
+         ========================================================================= */}
+      {previewModalBook && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
+          <div className="relative w-full max-w-2xl rounded-[32px] bg-[#120d28] border-2 border-amber-500/50 shadow-2xl p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto text-right">
+            
+            {/* Close Button */}
+            <button
+              type="button"
+              onClick={() => setPreviewModalBook(null)}
+              className="absolute top-5 left-5 p-2 rounded-full bg-white/10 hover:bg-white/20 text-zinc-300 hover:text-white transition-all cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* Modal Header */}
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 pt-2">
+              <div className="w-28 h-36 rounded-2xl bg-slate-950 overflow-hidden shrink-0 border border-amber-500/40 shadow-lg">
+                {previewModalBook.coverImage ? (
+                  <img src={previewModalBook.coverImage} alt={previewModalBook.title} className="w-full h-full object-cover" />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-amber-400">
+                    <BookOpen className="w-10 h-10" />
+                  </div>
+                )}
+              </div>
+
+              <div className="space-y-2 text-center sm:text-right flex-1">
+                <div className="inline-block px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-300 text-[11px] font-black">
+                  {previewModalBook.category} • {previewModalBook.academicSubject}
+                </div>
+
+                <h2 className="text-lg sm:text-xl font-black text-white leading-snug">
+                  {previewModalBook.title}
+                </h2>
+
+                <div className="flex items-center justify-center sm:justify-start gap-3 text-xs text-zinc-400">
+                  <span>المؤلف: <strong className="text-white">{previewModalBook.authorName}</strong></span>
+                  <span>•</span>
+                  <span>{previewModalBook.pageCount} صفحة</span>
+                  <span>•</span>
+                  <span className="text-amber-400 font-bold">⭐ {previewModalBook.rating.toFixed(1)}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Description */}
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-2">
+              <h4 className="text-xs font-black text-amber-400">نبذة ومحتويات المذكرة:</h4>
+              <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
+                {previewModalBook.description}
+              </p>
+            </div>
+
+            {/* DRM & Security Guarantee */}
+            <div className="grid grid-cols-2 gap-3 text-xs text-zinc-300">
+              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center gap-2">
+                <Shield className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>حماية مشددة بنظام DRM</span>
+              </div>
+              <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center gap-2">
+                <Eye className="w-4 h-4 text-blue-400 shrink-0" />
+                <span>معاينة مجانية {previewModalBook.previewPagesCount} صفحات</span>
+              </div>
+            </div>
+
+            {/* Modal Actions */}
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2 border-t border-zinc-800">
+              <div className="text-center sm:text-right">
+                <span className="text-xs text-zinc-400 block">السعر المطلوب:</span>
+                <span className="text-xl font-black text-amber-400 font-mono">
+                  {previewModalBook.isFree || previewModalBook.price === 0 ? 'مجاناً 🎁' : `${previewModalBook.price} ج.م`}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2 w-full sm:w-auto">
+                <Link
+                  href={`/books/${previewModalBook.slug}`}
+                  onClick={() => setPreviewModalBook(null)}
+                  className="flex-1 sm:flex-none px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 text-center"
+                >
+                  <Eye className="w-4 h-4 text-amber-400" />
+                  <span>فتح القارئ ومعاينة الصفحات</span>
+                </Link>
+
+                {previewModalBook.isFree || previewModalBook.price === 0 ? (
+                  <Link
+                    href={`/books/${previewModalBook.slug}`}
+                    onClick={() => setPreviewModalBook(null)}
+                    className="flex-1 sm:flex-none px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs text-center"
+                  >
+                    قراءة كاملة مجاناً
+                  </Link>
+                ) : (
+                  <Link
+                    href={`/checkout?bookId=${previewModalBook.id}`}
+                    onClick={() => setPreviewModalBook(null)}
+                    className="flex-1 sm:flex-none px-7 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 text-zinc-950 font-black text-xs shadow-lg shadow-amber-500/25 hover:scale-105 active:scale-95 transition-all text-center flex items-center justify-center gap-1.5"
+                  >
+                    <ShoppingBag className="w-4 h-4" />
+                    <span>شراء الآن</span>
+                  </Link>
+                )}
+              </div>
+            </div>
+
+          </div>
+        </div>
+      )}
 
     </div>
   );
