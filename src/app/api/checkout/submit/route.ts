@@ -12,6 +12,7 @@ export async function POST(req: Request) {
     const {
       courseId,
       diplomaId,
+      bookId,
       couponId,
       paymentMethod,
       senderPhone,
@@ -23,32 +24,60 @@ export async function POST(req: Request) {
     let totalAmount = 0;
     let title = '';
 
-    if (courseId) {
+    if (bookId) {
+      const b = await prisma.digitalBook.findUnique({ where: { id: bookId } });
+      if (!b) return NextResponse.json({ error: 'المذكرة غير موجودة' }, { status: 404 });
+      totalAmount = b.price;
+      title = b.title;
+
+      // Check if already purchased
+      const existingBook = await prisma.bookPurchase.findUnique({
+        where: {
+          userId_bookId: {
+            userId: user.id,
+            bookId,
+          }
+        }
+      });
+      if (existingBook) {
+        return NextResponse.json({ error: 'أنت تمتلك هذه المذكرة بالفعل في مكتبتك!' }, { status: 400 });
+      }
+    } else if (courseId) {
       const c = await prisma.course.findUnique({ where: { id: courseId } });
       if (!c) return NextResponse.json({ error: 'الكورس غير موجود' }, { status: 404 });
       totalAmount = c.price;
       title = c.title;
+
+      // Check if already enrolled
+      const existing = await prisma.enrollment.findFirst({
+        where: {
+          userId: user.id,
+          courseId,
+          status: 'ACTIVE',
+        }
+      });
+      if (existing) {
+        return NextResponse.json({ error: 'أنت مسجل بالفعل في هذا الكورس!' }, { status: 400 });
+      }
     } else if (diplomaId) {
       const d = await prisma.diploma.findUnique({ where: { id: diplomaId } });
       if (!d) return NextResponse.json({ error: 'الدبلومة غير موجودة' }, { status: 404 });
       totalAmount = d.price;
       title = d.title;
+
+      // Check if already enrolled
+      const existing = await prisma.enrollment.findFirst({
+        where: {
+          userId: user.id,
+          diplomaId,
+          status: 'ACTIVE',
+        }
+      });
+      if (existing) {
+        return NextResponse.json({ error: 'أنت مسجل بالفعل في هذه الدبلومة!' }, { status: 400 });
+      }
     } else {
       return NextResponse.json({ error: 'يرجى تحديد المنتج المطلوب' }, { status: 400 });
-    }
-
-    // Check if already enrolled
-    const existing = await prisma.enrollment.findFirst({
-      where: {
-        userId: user.id,
-        courseId: courseId || undefined,
-        diplomaId: diplomaId || undefined,
-        status: 'ACTIVE',
-      }
-    });
-
-    if (existing) {
-      return NextResponse.json({ error: 'أنت مسجل بالفعل في هذا المحتوى!' }, { status: 400 });
     }
 
     // Handle Coupon discount calculation
@@ -78,6 +107,7 @@ export async function POST(req: Request) {
         userId: user.id,
         courseId: courseId || null,
         diplomaId: diplomaId || null,
+        bookId: bookId || null,
         totalAmount,
         discountAmount,
         finalAmount,
@@ -101,7 +131,7 @@ export async function POST(req: Request) {
       });
     }
 
-    // 100% Free Coupon Case -> Instant Enrollment & Access
+    // 100% Free Coupon Case or Free Book -> Instant Enrollment & Access
     if (finalAmount === 0) {
       await prisma.payment.create({
         data: {
@@ -110,31 +140,45 @@ export async function POST(req: Request) {
           amount: 0,
           paymentMethod: 'COUPON_100',
           status: 'APPROVED',
-          adminNotes: `تم التفعيل التلقائي بواسطة كوبون الخصم الكلي (${appliedCoupon?.code || 'مجاني'})`,
+          adminNotes: `تم التفعيل التلقائي (${appliedCoupon?.code || 'مجاني'})`,
         }
       });
 
-      // Create Enrollment
-      await prisma.enrollment.create({
-        data: {
-          userId: user.id,
-          courseId: courseId || null,
-          diplomaId: diplomaId || null,
-          type: courseId ? 'COURSE' : 'DIPLOMA',
-          status: 'ACTIVE',
-          accessType: 'LIFETIME',
-          progressPercent: 0,
-        }
-      });
+      if (bookId) {
+        await prisma.bookPurchase.create({
+          data: {
+            userId: user.id,
+            bookId,
+            amountPaid: 0,
+          }
+        });
+        await prisma.digitalBook.update({
+          where: { id: bookId },
+          data: { salesCount: { increment: 1 } }
+        });
+      } else {
+        // Create Course / Diploma Enrollment
+        await prisma.enrollment.create({
+          data: {
+            userId: user.id,
+            courseId: courseId || null,
+            diplomaId: diplomaId || null,
+            type: courseId ? 'COURSE' : 'DIPLOMA',
+            status: 'ACTIVE',
+            accessType: 'LIFETIME',
+            progressPercent: 0,
+          }
+        });
+      }
 
       // Notification
       await prisma.notification.create({
         data: {
           userId: user.id,
           title: '🎉 تم تفعيل اشتراكك بنجاح!',
-          message: `تم فتح ${title} لك فوراً بدون أي رسوم. يمكنك بدء التعلم الآن.`,
-          link: '/dashboard',
-          type: 'COURSE',
+          message: `تم فتح ${title} لك فوراً في حسابك. يمكنك الوصول إليها الآن.`,
+          link: bookId ? '/dashboard/library' : '/dashboard',
+          type: bookId ? 'SYSTEM' : 'COURSE',
         }
       });
 
@@ -143,7 +187,7 @@ export async function POST(req: Request) {
         isFree: true,
         orderId: order.id,
         orderNumber: order.orderNumber,
-        redirectUrl: '/dashboard',
+        redirectUrl: bookId ? '/dashboard/library' : '/dashboard',
       });
     }
 

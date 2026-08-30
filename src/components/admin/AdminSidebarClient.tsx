@@ -22,6 +22,7 @@ import {
   Command,
   LayoutGrid,
   ChevronLeft,
+  FileText,
 } from 'lucide-react';
 
 interface Props {
@@ -86,6 +87,15 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
       href: '/admin/courses',
       icon: BookOpen,
       accent: 'from-cyan-500 to-blue-600',
+    },
+    {
+      name: 'إدارة المذكرات والكتب الرقمية',
+      description: 'متابعة ونشر المذكرات المحمية بنظام الـ DRM وبنوك الأسئلة',
+      href: '/instructor/books',
+      icon: FileText,
+      badge: 'DRM',
+      badgeColor: 'bg-gradient-to-r from-amber-500 to-yellow-400 text-zinc-950 font-black shadow-amber-500/20',
+      accent: 'from-amber-500 to-orange-600',
     },
     {
       name: 'إدارة الطلاب والمستخدمين',

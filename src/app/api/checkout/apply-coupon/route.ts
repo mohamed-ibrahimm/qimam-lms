@@ -9,7 +9,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'يرجى تسجيل الدخول أولاً' }, { status: 401 });
     }
 
-    const { code, courseId, diplomaId } = await req.json();
+    const { code, courseId, diplomaId, bookId } = await req.json();
     if (!code) {
       return NextResponse.json({ error: 'يرجى إدخال كود الكوبون' }, { status: 400 });
     }
@@ -32,12 +32,16 @@ export async function POST(req: Request) {
 
     // Check instructor restriction if coupon is created by a specific instructor
     if (coupon.instructorId) {
-      if (!courseId) {
-        return NextResponse.json({ error: 'هذا الكوبون مخصص لكورسات محاضر محدد ولا ينطبق على الدبلومات العامة' }, { status: 400 });
-      }
-      const course = await prisma.course.findUnique({ where: { id: courseId }, select: { instructorId: true } });
-      if (!course || course.instructorId !== coupon.instructorId) {
-        return NextResponse.json({ error: 'هذا الكوبون خاص بكورسات محاضر آخر ولا ينطبق على هذا الكورس' }, { status: 400 });
+      if (courseId) {
+        const course = await prisma.course.findUnique({ where: { id: courseId }, select: { instructorId: true } });
+        if (!course || course.instructorId !== coupon.instructorId) {
+          return NextResponse.json({ error: 'هذا الكوبون خاص بكورسات محاضر آخر ولا ينطبق على هذا الكورس' }, { status: 400 });
+        }
+      } else if (bookId) {
+        const book = await prisma.digitalBook.findUnique({ where: { id: bookId }, select: { instructorId: true } });
+        if (!book || book.instructorId !== coupon.instructorId) {
+          return NextResponse.json({ error: 'هذا الكوبون خاص بمذكرات محاضر آخر ولا ينطبق على هذه المذكرة' }, { status: 400 });
+        }
       }
     }
 
@@ -52,7 +56,10 @@ export async function POST(req: Request) {
 
     // Get item price
     let itemPrice = 0;
-    if (courseId) {
+    if (bookId) {
+      const book = await prisma.digitalBook.findUnique({ where: { id: bookId } });
+      if (book) itemPrice = book.price;
+    } else if (courseId) {
       const course = await prisma.course.findUnique({ where: { id: courseId } });
       if (course) itemPrice = course.price;
     } else if (diplomaId) {

@@ -26,6 +26,7 @@ import {
   Video,
   ArrowLeft,
   Flame,
+  FileText,
 } from 'lucide-react';
 import { useTheme } from '@/components/ThemeProvider';
 
@@ -161,6 +162,7 @@ export default function Header({
   const navLinks = [
     { name: 'الرئيسية', href: '/', icon: Home },
     { name: 'جميع الكورسات', href: '/courses', icon: BookOpen, isCenterpiece: true },
+    { name: 'المكتبة والمذكرات', href: '/books', icon: FileText },
     { name: 'الدبلومات الشاملة', href: '/diplomas', icon: Award },
     { name: 'كورسات الطلاب', href: '/courses?type=students', icon: GraduationCap, isStudent: true },
     { name: 'كورسات المحاضرين', href: '/courses?type=instructors', icon: Video, isExpert: true },
@@ -292,6 +294,20 @@ export default function Header({
               </div>
             </div>
           </div>
+
+          {/* Link: المكتبة والمذكرات */}
+          <Link
+            href="/books"
+            prefetch={true}
+            className={`px-4 py-2 text-xs font-bold rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
+              pathname.startsWith('/books')
+                ? 'bg-amber-500 text-zinc-950 font-black shadow-md shadow-amber-500/20'
+                : 'text-slate-600 dark:text-zinc-300 hover:text-amber-500 dark:hover:text-white hover:bg-white/70 dark:hover:bg-zinc-800/60'
+            }`}
+          >
+            <FileText className="w-3.5 h-3.5 text-amber-500" />
+            <span>المكتبة والمذكرات</span>
+          </Link>
 
           {/* Link: الدبلومات الشاملة */}
           <Link
@@ -425,7 +441,15 @@ export default function Header({
                         className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-zinc-200 hover:text-white hover:bg-purple-600 transition-colors group"
                       >
                         <Video className="w-4 h-4 text-purple-400 group-hover:text-white" />
-                        <span>استوديو المحاضر وإدارة الكورسات</span>
+                        <span>استوديو تدريس المحاضر</span>
+                      </Link>
+                      <Link
+                        href="/instructor/books"
+                        onClick={() => setDropdownOpen(false)}
+                        className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-zinc-200 hover:text-white hover:bg-amber-600 transition-colors group"
+                      >
+                        <FileText className="w-4 h-4 text-amber-400 group-hover:text-white" />
+                        <span>إدارة ونشر المذكرات</span>
                       </Link>
                     </div>
                   )}
@@ -439,6 +463,14 @@ export default function Header({
                     >
                       <BookOpen className="w-4 h-4 text-blue-400 group-hover:text-white" />
                       <span>كورساتي ودوراتي المسجلة</span>
+                    </Link>
+                    <Link
+                      href="/dashboard/library"
+                      onClick={() => setDropdownOpen(false)}
+                      className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-zinc-200 hover:text-white hover:bg-amber-600 transition-colors group"
+                    >
+                      <FileText className="w-4 h-4 text-amber-400 group-hover:text-white" />
+                      <span>مكتبتي الرقمية (المذكرات)</span>
                     </Link>
                   </div>
 

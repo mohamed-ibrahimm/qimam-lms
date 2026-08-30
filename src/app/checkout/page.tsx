@@ -8,6 +8,7 @@ interface Props {
   searchParams: {
     courseId?: string;
     diplomaId?: string;
+    bookId?: string;
   };
 }
 
@@ -16,14 +17,44 @@ export const dynamic = 'force-dynamic';
 export default async function CheckoutPage({ searchParams }: Props) {
   const user = await getCurrentUser();
   if (!user) {
-    const returnUrl = `/checkout?${searchParams.courseId ? `courseId=${searchParams.courseId}` : `diplomaId=${searchParams.diplomaId}`}`;
+    const returnUrl = `/checkout?${
+      searchParams.bookId
+        ? `bookId=${searchParams.bookId}`
+        : searchParams.courseId
+        ? `courseId=${searchParams.courseId}`
+        : `diplomaId=${searchParams.diplomaId}`
+    }`;
     redirect(`/login?callbackUrl=${encodeURIComponent(returnUrl)}`);
   }
 
   let item: any = null;
-  let itemType: 'COURSE' | 'DIPLOMA' = 'COURSE';
+  let itemType: 'COURSE' | 'DIPLOMA' | 'BOOK' = 'COURSE';
 
-  if (searchParams.courseId) {
+  if (searchParams.bookId) {
+    item = await prisma.digitalBook.findUnique({
+      where: { id: searchParams.bookId },
+      include: {
+        instructor: {
+          select: {
+            id: true,
+            officialFullName: true,
+            firstName: true,
+            instapayAddress: true,
+            instapayName: true,
+            vodafoneCashNumber: true,
+            paymentInstructions: true,
+            role: true,
+            instructorStatus: true,
+            trialEndsAt: true,
+            subscriptionEndsAt: true,
+            subscriptionPlan: true,
+            createdAt: true,
+          }
+        }
+      }
+    });
+    itemType = 'BOOK';
+  } else if (searchParams.courseId) {
     item = await prisma.course.findUnique({
       where: { id: searchParams.courseId },
       include: {
@@ -56,7 +87,22 @@ export default async function CheckoutPage({ searchParams }: Props) {
   }
 
   if (!item) {
-    redirect('/courses');
+    redirect(itemType === 'BOOK' ? '/books' : '/courses');
+  }
+
+  // Check if book is already purchased
+  if (itemType === 'BOOK') {
+    const existingBookPurchase = await prisma.bookPurchase.findUnique({
+      where: {
+        userId_bookId: {
+          userId: user.id,
+          bookId: item.id,
+        }
+      }
+    });
+    if (existingBookPurchase) {
+      redirect(`/books/${item.slug}`);
+    }
   }
 
   // Check if course instructor's subscription or 14-day trial is paused or expired
@@ -88,18 +134,20 @@ export default async function CheckoutPage({ searchParams }: Props) {
     }
   }
 
-  // Check if already enrolled
-  const existing = await prisma.enrollment.findFirst({
-    where: {
-      userId: user.id,
-      courseId: searchParams.courseId || undefined,
-      diplomaId: searchParams.diplomaId || undefined,
-      status: 'ACTIVE',
-    }
-  });
+  // Check if already enrolled in course/diploma
+  if (itemType !== 'BOOK') {
+    const existing = await prisma.enrollment.findFirst({
+      where: {
+        userId: user.id,
+        courseId: searchParams.courseId || undefined,
+        diplomaId: searchParams.diplomaId || undefined,
+        status: 'ACTIVE',
+      }
+    });
 
-  if (existing) {
-    redirect('/dashboard');
+    if (existing) {
+      redirect('/dashboard');
+    }
   }
 
   // Fetch Payment settings

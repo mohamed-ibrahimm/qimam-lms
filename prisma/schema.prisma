@@ -75,6 +75,8 @@ model User {
   instructorSubscriptionPayments InstructorSubscriptionPayment[] @relation("InstructorSubscription")
   reviewedInstructorPayments     InstructorSubscriptionPayment[] @relation("AdminReviewedSubscription")
   createdCoupons                 Coupon[]                        @relation("InstructorCoupons")
+  instructedBooks                DigitalBook[]                   @relation("InstructorBooks")
+  bookPurchases                  BookPurchase[]
 }
 
 model ParentContact {
@@ -389,6 +391,7 @@ model Order {
   userId         String
   courseId       String?
   diplomaId      String?
+  bookId         String?
   totalAmount    Float
   discountAmount Float     @default(0)
   finalAmount    Float
@@ -399,6 +402,7 @@ model Order {
   user           User      @relation(fields: [userId], references: [id])
   course         Course?   @relation(fields: [courseId], references: [id])
   diploma        Diploma?  @relation(fields: [diplomaId], references: [id])
+  book           DigitalBook? @relation(fields: [bookId], references: [id])
   coupon         Coupon?   @relation(fields: [couponId], references: [id])
   payment        Payment?
   couponUsages   CouponUsage[]
@@ -670,5 +674,48 @@ model InstructorSubscriptionPayment {
 
   instructor     User      @relation("InstructorSubscription", fields: [instructorId], references: [id], onDelete: Cascade)
   reviewedBy     User?     @relation("AdminReviewedSubscription", fields: [reviewedById], references: [id])
+}
+
+model DigitalBook {
+  id                String            @id @default(cuid())
+  title             String
+  slug              String            @unique
+  coverImage        String?
+  fileUrl           String            // File path or data URL
+  description       String
+  shortDescription  String?
+  pageCount         Int               @default(0)
+  previewPagesCount Int               @default(3) // First N pages readable for free
+  price             Float             @default(0)
+  compareAtPrice    Float?
+  isFree            Boolean           @default(false)
+  authorName        String?           // e.g., "م / محمد إبراهيم"
+  academicSubject   String?           // e.g., "هندسة البرمجيات", "رياضيات 2", "قواعد بيانات"
+  academicLevel     String?           // e.g., "الفرقة الأولى", "الفرقة الثانية", "عام"
+  category          String            @default("ملخصات") // ملخصات, كتب ومراجع, بنك أسئلة
+  instructorId      String
+  status            String            @default("PUBLISHED") // DRAFT, PUBLISHED, ARCHIVED
+  salesCount        Int               @default(0)
+  viewsCount        Int               @default(0)
+  rating            Float             @default(5.0)
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  instructor        User              @relation("InstructorBooks", fields: [instructorId], references: [id])
+  purchases         BookPurchase[]
+  orders            Order[]
+}
+
+model BookPurchase {
+  id                String            @id @default(cuid())
+  userId            String
+  bookId            String
+  amountPaid        Float             @default(0)
+  createdAt         DateTime          @default(now())
+
+  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  book              DigitalBook       @relation(fields: [bookId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, bookId])
 }
 

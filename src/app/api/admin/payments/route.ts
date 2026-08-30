@@ -49,6 +49,7 @@ export async function PUT(req: Request) {
             orderNumber: true,
             courseId: true,
             diplomaId: true,
+            bookId: true,
             totalAmount: true,
             finalAmount: true,
           }
@@ -97,9 +98,30 @@ export async function PUT(req: Request) {
         }).catch(() => {});
       }
 
-      // 3. Create Enrollment & Unlock Course/Diploma cleanly
+      // 3. Create Enrollment or Book Purchase & Unlock Content cleanly
       try {
-        if (payment.order?.courseId) {
+        if (payment.order?.bookId) {
+          await prisma.bookPurchase.upsert({
+            where: {
+              userId_bookId: {
+                userId: payment.userId,
+                bookId: payment.order.bookId,
+              }
+            },
+            create: {
+              userId: payment.userId,
+              bookId: payment.order.bookId,
+              amountPaid: payment.amount,
+            },
+            update: {
+              amountPaid: payment.amount,
+            }
+          });
+          await prisma.digitalBook.update({
+            where: { id: payment.order.bookId },
+            data: { salesCount: { increment: 1 } }
+          }).catch(() => {});
+        } else if (payment.order?.courseId) {
           await prisma.enrollment.upsert({
             where: {
               userId_courseId: {
@@ -144,14 +166,14 @@ export async function PUT(req: Request) {
         console.warn('Enrollment upsert warning:', enrollErr);
       }
 
-      // 4. Send In-App Notification (Zero Emojis)
+      // 4. Send In-App Notification
       try {
         await prisma.notification.create({
           data: {
             userId: payment.userId,
-            title: 'تم تأكيد دفعتك وتفعيل المحتوى بنجاح',
-            message: `تم اعتماد عملية الدفع رقم (${payment.transactionId || payment.order?.orderNumber || payment.id}) وتفعيل اشتراكك فورياً.`,
-            link: '/dashboard',
+            title: 'تم تأكيد دفعتك وتفعيل المحتوى بنجاح 🎉',
+            message: `تم اعتماد عملية الدفع رقم (${payment.transactionId || payment.order?.orderNumber || payment.id}) وتفعيل طلبك فورياً.`,
+            link: payment.order?.bookId ? '/dashboard/library' : '/dashboard',
             type: 'PAYMENT',
           }
         });

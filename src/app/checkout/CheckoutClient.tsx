@@ -20,7 +20,7 @@ import {
 
 interface CheckoutClientProps {
   item: any;
-  itemType: 'COURSE' | 'DIPLOMA';
+  itemType: 'COURSE' | 'DIPLOMA' | 'BOOK';
   user: any;
   settings: Record<string, string>;
 }
@@ -58,24 +58,26 @@ export default function CheckoutClient({
     setCouponSuccess('');
 
     try {
-      const res = await fetch('/api/checkout/apply-coupon', {
+      const res = await fetch('/api/coupons/apply', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           code: couponCode.trim(),
+          amount: item.price,
           courseId: itemType === 'COURSE' ? item.id : undefined,
           diplomaId: itemType === 'DIPLOMA' ? item.id : undefined,
+          bookId: itemType === 'BOOK' ? item.id : undefined,
         })
       });
 
       const data = await res.json();
       if (!res.ok) {
-        setCouponError(data.error || 'الكوبون غير صالح');
+        setCouponError(data.error || 'كوبون الخصم غير صالح أو منتهي الصلاحية');
       } else {
         setAppliedCoupon(data.coupon);
         setDiscountAmount(data.discountAmount);
         setFinalAmount(data.finalAmount);
-        setCouponSuccess(`تم تطبيق الخصم بنجاح! تم خصم ${formatPrice(data.discountAmount)}`);
+        setCouponSuccess(`تم تطبيق خصم بقيمة ${data.discountAmount} ج.م بنجاح! 🎉`);
       }
     } catch (e) {
       setCouponError('حدث خطأ أثناء فحص الكوبون');
@@ -101,6 +103,7 @@ export default function CheckoutClient({
         body: JSON.stringify({
           courseId: itemType === 'COURSE' ? item.id : undefined,
           diplomaId: itemType === 'DIPLOMA' ? item.id : undefined,
+          bookId: itemType === 'BOOK' ? item.id : undefined,
           couponId: appliedCoupon?.id,
           paymentMethod: finalAmount === 0 ? 'COUPON_100' : paymentMethod,
           senderPhone,
@@ -130,11 +133,19 @@ export default function CheckoutClient({
 
   const isFree = finalAmount === 0;
 
+  const backLink = itemType === 'BOOK'
+    ? `/books/${item.slug}`
+    : itemType === 'COURSE'
+    ? `/courses/${item.slug}`
+    : `/diplomas/${item.slug}`;
+
+  const itemTypeName = itemType === 'BOOK' ? 'المذكرة' : itemType === 'COURSE' ? 'الكورس' : 'الدبلومة';
+
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       <div>
-        <Link href={`/${itemType === 'COURSE' ? 'courses' : 'diplomas'}/${item.slug}`} className="text-xs font-bold text-zinc-400 hover:text-white flex items-center gap-1 mb-2">
-          ← العودة لتفاصيل {itemType === 'COURSE' ? 'الكورس' : 'الدبلومة'}
+        <Link href={backLink} className="text-xs font-bold text-zinc-400 hover:text-white flex items-center gap-1 mb-2">
+          ← العودة لتفاصيل {itemTypeName}
         </Link>
         <h1 className="text-2xl sm:text-3xl font-black text-white">إتمام الاشتراك والطلب</h1>
         <p className="text-xs text-zinc-400 mt-1">
