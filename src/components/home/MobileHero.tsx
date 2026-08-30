@@ -51,7 +51,7 @@ export default function MobileHero({
         Dedicated 100% Full-Screen Showcase. Contains exclusively Headline + CTAs.
         ========================================================================
       */}
-      <section className="h-[100dvh] min-h-[560px] flex flex-col justify-between pt-20 xs:pt-22 pb-1 px-3 relative overflow-hidden">
+      <section className="h-[100svh] min-h-[500px] max-h-[100svh] flex flex-col justify-between pt-16 xs:pt-18 pb-2 px-3 relative overflow-hidden shrink-0">
         
         {/* Soft, Subdued Multi-Colored Radiant Blooms (Leaning Deep Sleek Black) */}
         {/* 1. Top central imperial gold & violet dome */}
@@ -68,7 +68,7 @@ export default function MobileHero({
 
         {/* 1. TOP: Dynamic Promotional Shimmer Announcement (Lowered comfortably below header) */}
         {settings.BANNER_ENABLED !== 'false' && (
-          <div className="pt-2.5 xs:pt-3 px-1 w-full shrink-0 max-w-sm mx-auto">
+          <div className="pt-2 px-1 w-full shrink-0 max-w-sm mx-auto">
             <a href="#trending-diploma" className="shimmer-border-wrapper group w-full block">
               <div className="shimmer-beam-gold dark:block hidden" />
               <div className="shimmer-beam-blue dark:hidden block" />
@@ -87,13 +87,13 @@ export default function MobileHero({
         )}
 
         {/* 2. CENTER: Large, Broad, Spacious Headline & Subtitle */}
-        <div className="flex-1 flex flex-col justify-center items-center text-center my-auto px-2 py-1.5 space-y-3 shrink-0 relative">
+        <div className="flex-1 flex flex-col justify-center items-center text-center my-auto px-2 py-1.5 space-y-2.5 xs:space-y-3 shrink-0 relative">
 
           <h1 className="font-black tracking-tight w-full mb-1 text-center space-y-1.5">
-            <span className="text-slate-950 dark:text-white block font-black text-[28px] xs:text-[34px] sm:text-4xl leading-[1.22] tracking-tight">
+            <span className="text-slate-950 dark:text-white block font-black text-[27px] xs:text-[33px] sm:text-4xl leading-[1.22] tracking-tight">
               {settings.HERO_TITLE || 'بوابتك الذكية لاحتراف'}
             </span>
-            <span className="block font-black text-[20px] xs:text-[24px] sm:text-2xl leading-snug bg-gradient-to-r from-blue-700 via-indigo-600 to-purple-600 dark:from-amber-400 dark:via-yellow-300 dark:to-amber-500 bg-clip-text text-transparent">
+            <span className="block font-black text-[19px] xs:text-[23px] sm:text-2xl leading-snug bg-gradient-to-r from-blue-700 via-indigo-600 to-purple-600 dark:from-amber-400 dark:via-yellow-300 dark:to-amber-500 bg-clip-text text-transparent">
               {settings.HERO_TITLE_HIGHLIGHT || 'البرمجة وهندسة النظم والذكاء الاصطناعي'}
             </span>
           </h1>
@@ -104,7 +104,7 @@ export default function MobileHero({
         </div>
 
         {/* 3. BOTTOM: 4 Action Buttons pushed down directly to the very bottom */}
-        <div className="w-full max-w-[360px] xs:max-w-md mx-auto flex flex-col gap-2 pb-1 px-1 shrink-0 mt-auto">
+        <div className="w-full max-w-[360px] xs:max-w-md mx-auto flex flex-col gap-1.5 xs:gap-2 pb-1 px-1 shrink-0 mt-auto">
           
           {/* Button 1: Diploma */}
           <a href="#trending-diploma" className="shimmer-border-wrapper group w-full">
