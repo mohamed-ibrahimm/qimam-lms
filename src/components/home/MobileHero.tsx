@@ -51,13 +51,7 @@ export default function MobileHero({
         Dedicated full-screen showcase. Contains exclusively Headline + CTAs.
         ========================================================================
       */}
-      <section className="h-[100dvh] min-h-[580px] flex flex-col justify-between pt-16 px-4 relative overflow-hidden">
-        
-        {/* Dynamic Light/Dark Mesh Blobs in Background */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10">
-          <div className="absolute top-[10%] right-[-10%] w-72 h-72 bg-blue-500/15 dark:bg-amber-500/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-[20%] left-[-10%] w-72 h-72 bg-indigo-500/15 dark:bg-purple-600/10 rounded-full blur-3xl" />
-        </div>
+      <section className="h-[100dvh] min-h-[580px] flex flex-col justify-between pt-16 px-4 relative">
 
         {/* 1. TOP: Dynamic Promotional Shimmer Announcement */}
         {settings.BANNER_ENABLED !== 'false' && (

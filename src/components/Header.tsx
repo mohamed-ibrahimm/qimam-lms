@@ -170,8 +170,8 @@ export default function Header({
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 p-2 sm:p-3.5 md:p-4 transition-all">
-      {/* Dynamic Radiant Aura that casts smooth gold & purple glow onto the background */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-6xl h-24 bg-gradient-to-r from-amber-500/25 via-yellow-400/30 to-purple-600/25 dark:from-amber-500/35 dark:via-yellow-300/25 dark:to-purple-600/35 blur-[50px] pointer-events-none -z-10 rounded-full" />
+      {/* Seamless Atmospheric Ambient Glow (Smoothly blending with background, zero lines or cutoffs) */}
+      <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-full max-w-6xl h-56 bg-[radial-gradient(ellipse_at_top,_rgba(245,158,11,0.24),_rgba(147,51,234,0.16)_45%,_transparent_75%)] blur-[60px] pointer-events-none -z-10" />
 
       <nav className="dynamic-navbar-aura max-w-[1536px] w-full sm:w-[98%] mx-auto flex items-center justify-between min-h-[3.75rem] sm:min-h-[4.75rem] px-4 sm:px-6 md:px-8 rounded-full bg-white/95 dark:bg-[#0c0918]/95 border border-slate-200/90 dark:border-amber-500/30 backdrop-blur-2xl shadow-xl shadow-slate-900/5 dark:shadow-[0_15px_50px_-10px_rgba(245,158,11,0.25)] relative gap-3 sm:gap-6">
         
