@@ -126,7 +126,7 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
   return (
     <>
       {/* Desktop Docked Right Sidebar (Solid Full-Height Dashboard Column) */}
-      <aside className="hidden md:flex flex-col w-64 lg:w-72 shrink-0 sticky top-[4.25rem] sm:top-[4.75rem] h-[calc(100vh-4.75rem)] z-20">
+      <aside className="hidden md:flex flex-col w-64 lg:w-72 shrink-0 sticky top-[4.25rem] sm:top-[4.5rem] h-[calc(100vh-4.5rem)] z-20">
         {renderContent(false)}
       </aside>
 

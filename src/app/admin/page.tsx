@@ -83,16 +83,16 @@ export default async function AdminOverviewPage() {
       </div>
 
       {/* KPI Stats Grid - Multi-Color Frosted Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {/* Revenue Card */}
-        <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-emerald-500/15 via-teal-500/5 to-white/90 dark:from-emerald-950/40 dark:to-surface border border-emerald-500/30 shadow-lg shadow-emerald-900/5 backdrop-blur-xl space-y-2 hover:-translate-y-1 transition-all">
+        <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-emerald-500/15 via-teal-500/5 to-white/90 dark:from-emerald-950/40 dark:to-surface border border-emerald-500/30 shadow-md shadow-emerald-900/5 space-y-1.5 hover:-translate-y-0.5 transition-all">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-600 dark:text-zinc-400">إجمالي الإيرادات</span>
-            <div className="w-8 h-8 rounded-xl bg-emerald-500 text-white flex items-center justify-center shadow-md shadow-emerald-500/20">
-              <TrendingUp className="w-4 h-4" />
+            <div className="w-7 h-7 rounded-lg bg-emerald-500 text-white flex items-center justify-center shadow-md shadow-emerald-500/20">
+              <TrendingUp className="w-3.5 h-3.5" />
             </div>
           </div>
-          <p className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">{formatPrice(totalRevenue)}</p>
+          <p className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">{formatPrice(totalRevenue)}</p>
           <span className="text-[11px] text-emerald-700 dark:text-emerald-400 font-bold flex items-center gap-1">
             <CheckCircle2 className="w-3 h-3" />
             مدفوعات مؤكدة ومعتمدة
@@ -100,38 +100,38 @@ export default async function AdminOverviewPage() {
         </div>
 
         {/* Students Card */}
-        <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-blue-500/15 via-indigo-500/5 to-white/90 dark:from-indigo-950/40 dark:to-surface border border-blue-500/30 shadow-lg shadow-blue-900/5 backdrop-blur-xl space-y-2 hover:-translate-y-1 transition-all">
+        <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-blue-500/15 via-indigo-500/5 to-white/90 dark:from-indigo-950/40 dark:to-surface border border-blue-500/30 shadow-md shadow-blue-900/5 space-y-1.5 hover:-translate-y-0.5 transition-all">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-600 dark:text-zinc-400">الطلاب المسجلين</span>
-            <div className="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-md shadow-blue-500/20">
-              <Users className="w-4 h-4" />
+            <div className="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center shadow-md shadow-blue-500/20">
+              <Users className="w-3.5 h-3.5" />
             </div>
           </div>
-          <p className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">{studentsCount}</p>
+          <p className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">{studentsCount}</p>
           <span className="text-[11px] text-blue-700 dark:text-zinc-400 font-bold">حسابات نشطة بالمنصة</span>
         </div>
 
         {/* Courses & Diplomas Card */}
-        <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-purple-500/15 via-fuchsia-500/5 to-white/90 dark:from-purple-950/40 dark:to-surface border border-purple-500/30 shadow-lg shadow-purple-900/5 backdrop-blur-xl space-y-2 hover:-translate-y-1 transition-all">
+        <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-purple-500/15 via-fuchsia-500/5 to-white/90 dark:from-purple-950/40 dark:to-surface border border-purple-500/30 shadow-md shadow-purple-900/5 space-y-1.5 hover:-translate-y-0.5 transition-all">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-600 dark:text-zinc-400">الكورسات والدبلومات</span>
-            <div className="w-8 h-8 rounded-xl bg-purple-600 text-white flex items-center justify-center shadow-md shadow-purple-500/20">
-              <BookOpen className="w-4 h-4" />
+            <div className="w-7 h-7 rounded-lg bg-purple-600 text-white flex items-center justify-center shadow-md shadow-purple-500/20">
+              <BookOpen className="w-3.5 h-3.5" />
             </div>
           </div>
-          <p className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">{coursesCount + diplomasCount}</p>
+          <p className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">{coursesCount + diplomasCount}</p>
           <span className="text-[11px] text-purple-700 dark:text-purple-300 font-bold">{coursesCount} كورس • {diplomasCount} دبلومة</span>
         </div>
 
         {/* Pending Review Card */}
-        <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-amber-500/15 via-rose-500/5 to-white/90 dark:from-amber-950/40 dark:to-surface border border-amber-500/30 shadow-lg shadow-amber-900/5 backdrop-blur-xl space-y-2 hover:-translate-y-1 transition-all">
+        <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-amber-500/15 via-rose-500/5 to-white/90 dark:from-amber-950/40 dark:to-surface border border-amber-500/30 shadow-md shadow-amber-900/5 space-y-1.5 hover:-translate-y-0.5 transition-all">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-600 dark:text-zinc-400">بانتظار المراجعة</span>
-            <div className="w-8 h-8 rounded-xl bg-amber-500 text-zinc-950 flex items-center justify-center shadow-md shadow-amber-500/20">
-              <Clock className="w-4 h-4" />
+            <div className="w-7 h-7 rounded-lg bg-amber-500 text-zinc-950 flex items-center justify-center shadow-md shadow-amber-500/20">
+              <Clock className="w-3.5 h-3.5" />
             </div>
           </div>
-          <p className="text-2xl font-black text-amber-600 dark:text-amber-400 tracking-tight">{pendingPaymentsCount}</p>
+          <p className="text-xl sm:text-2xl font-black text-amber-600 dark:text-amber-400 tracking-tight">{pendingPaymentsCount}</p>
           {pendingPaymentsCount > 0 ? (
             <Link href="/admin/payments" className="text-[11px] text-amber-700 dark:text-amber-400 font-black hover:underline block">
               الانتقال للمراجعة ←
@@ -143,11 +143,11 @@ export default async function AdminOverviewPage() {
       </div>
 
       {/* Recent Orders Table */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-white/90 dark:bg-surface border border-slate-200/90 dark:border-border backdrop-blur-xl shadow-xl shadow-slate-900/5 space-y-5">
+      <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-[#0c0818] border border-slate-200 dark:border-zinc-800 shadow-md space-y-3">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-bold text-white">أحدث طلبات الاشتراك والمدفوعات</h3>
-          <Link href="/admin/payments" className="text-xs text-primary-400 hover:underline">
-            عرض كافة العمليات
+          <h3 className="text-xs sm:text-sm font-black text-slate-900 dark:text-white">أحدث طلبات الاشتراك والمدفوعات</h3>
+          <Link href="/admin/payments" className="text-xs font-bold text-amber-600 dark:text-amber-400 hover:underline">
+            عرض كافة العمليات ←
           </Link>
         </div>
 
