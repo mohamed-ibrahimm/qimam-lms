@@ -157,7 +157,7 @@ export default function InstructorJoinPage() {
   ];
 
   return (
-    <div className="min-h-screen pt-10 sm:pt-12 pb-14 px-3.5 sm:px-6 lg:px-8 relative text-slate-900 dark:text-slate-100 selection:bg-amber-500 selection:text-zinc-950 transition-colors duration-300">
+    <div className="min-h-screen pt-24 sm:pt-28 pb-14 px-3.5 sm:px-6 lg:px-8 relative text-slate-900 dark:text-slate-100 selection:bg-amber-500 selection:text-zinc-950 transition-colors duration-300">
       
       {/* =========================================================================
           1. HERO & TRACK NAVIGATION (EXACTLY MATCHING DESKTOPHERO ON HOMEPAGE)

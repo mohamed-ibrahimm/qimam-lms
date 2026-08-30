@@ -50,10 +50,10 @@ export default function MobileHero({
         - Bottom: Anchored action buttons at the bottom of the fold.
         ========================================================================
       */}
-      <section className="min-h-[calc(100svh-4.5rem)] flex flex-col justify-center items-center gap-6 sm:gap-8 pt-10 sm:pt-12 pb-16 px-4 text-center relative overflow-hidden">
+      <section className="min-h-[calc(100svh-4.5rem)] flex flex-col justify-center items-center gap-6 sm:gap-8 pt-20 sm:pt-24 pb-16 px-4 text-center relative overflow-hidden">
         
-        {/* 1. TOP: Dynamic Shimmer Banner (نزل للأسفل براحة عن الهيدر) */}
-        <div className="w-full flex justify-center pt-2 px-1 shrink-0">
+        {/* 1. TOP: Dynamic Shimmer Banner */}
+        <div className="w-full flex justify-center pt-1 px-1 shrink-0">
           {settings.BANNER_ENABLED !== 'false' && (
             <a href="#trending-diploma" className="shimmer-border-wrapper group inline-block max-w-full">
               <div className="shimmer-beam-gold dark:block hidden" />
