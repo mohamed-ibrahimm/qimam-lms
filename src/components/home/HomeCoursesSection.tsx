@@ -387,39 +387,39 @@ export default function HomeCoursesSection({
                           <Zap className="w-2.5 h-2.5" />
                           <span>{theme.badgeText}</span>
                         </span>
-                        <span className="text-[10.5px] text-slate-500 dark:text-zinc-400 font-semibold">
+                        <span className="text-[10.5px] text-slate-600 dark:text-zinc-400 font-bold">
                           مشاريع واقعية لسوق العمل
                         </span>
                       </div>
 
-                      {/* Centered Title */}
-                      <h3 className={`font-black text-lg sm:text-xl text-slate-900 dark:text-white ${theme.titleHover} transition-colors line-clamp-1 leading-snug text-center`}>
+                      {/* Centered Title with high contrast */}
+                      <h3 className="font-black text-lg sm:text-xl text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-amber-400 transition-colors line-clamp-1 leading-snug text-center">
                         {course.title}
                       </h3>
                       
                       {/* Centered Concise Description */}
-                      <p className="text-xs text-slate-600 dark:text-zinc-400 line-clamp-1 leading-relaxed text-center max-w-sm mx-auto">
+                      <p className="text-xs text-slate-600 dark:text-zinc-300 line-clamp-1 leading-relaxed text-center max-w-sm mx-auto font-medium">
                         {cleanDescription}
                       </p>
 
                       {/* Centered Sleek Instructor Pill */}
                       <div className="pt-1 flex justify-center">
-                        <div className="inline-flex items-center gap-2 py-1 px-3 rounded-full bg-slate-100/90 dark:bg-zinc-800/60 border border-slate-200/80 dark:border-zinc-700/60 shadow-xs">
+                        <div className="inline-flex items-center gap-2 py-1 px-3 rounded-full bg-slate-100/90 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700 shadow-xs">
                           <div className={`w-5 h-5 rounded-full bg-gradient-to-tr ${isStudentCourse ? 'from-amber-400 to-yellow-300' : theme.avatarRing} p-[1px] shrink-0`}>
                             <div className="w-full h-full rounded-full bg-slate-900 dark:bg-zinc-950 flex items-center justify-center text-[9px] font-black text-white">
                               {course.instructor?.officialFullName?.[0] || 'م'}
                             </div>
                           </div>
-                          <span className="text-xs font-bold text-slate-800 dark:text-zinc-200">
+                          <span className="text-xs font-bold text-slate-900 dark:text-zinc-100">
                             {course.instructor?.officialFullName || 'م / محمد إبراهيم'}
                           </span>
                           {isStudentCourse ? (
-                            <span className="text-[9.5px] px-1.5 py-0.2 rounded bg-amber-500/15 text-amber-700 dark:text-amber-300 font-black border border-amber-500/30 flex items-center gap-0.5">
+                            <span className="text-[9.5px] px-1.5 py-0.2 rounded bg-amber-500/15 text-amber-800 dark:text-amber-300 font-black border border-amber-500/30 flex items-center gap-0.5">
                               <GraduationCap className="w-2.5 h-2.5" />
                               طالب محاضر
                             </span>
                           ) : (
-                            <span className="text-[9.5px] px-1.5 py-0.2 rounded bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 font-black border border-indigo-500/20 flex items-center gap-0.5">
+                            <span className="text-[9.5px] px-1.5 py-0.2 rounded bg-indigo-500/15 text-indigo-800 dark:text-indigo-300 font-black border border-indigo-500/25 flex items-center gap-0.5">
                               <Video className="w-2.5 h-2.5" />
                               مدرس / دكتور معتمد
                             </span>
@@ -431,7 +431,7 @@ export default function HomeCoursesSection({
                   </div>
 
                   {/* 4. Pricing & Full-Width Button Base */}
-                  <div className="p-3.5 sm:p-4 bg-slate-50/95 dark:bg-zinc-950/85 border-t border-slate-100 dark:border-zinc-800/80 flex flex-col items-center gap-2.5 rounded-b-2xl text-center">
+                  <div className="p-3.5 sm:p-4 bg-slate-50/95 dark:bg-zinc-950/85 border-t border-slate-200/80 dark:border-zinc-800/80 flex flex-col items-center gap-2.5 rounded-b-2xl text-center">
                     
                     {/* Price Display */}
                     <div className="flex items-center justify-center gap-3">
@@ -439,7 +439,7 @@ export default function HomeCoursesSection({
                         <span className="text-xs text-slate-400 dark:text-zinc-500 line-through font-bold">
                           {formatPrice(originalPrice)}
                         </span>
-                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-black border border-emerald-500/25">
+                        <span className="text-[10.5px] px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400 font-black border border-emerald-200 dark:border-emerald-500/25">
                           وفر 35% 🔥
                         </span>
                       </div>
@@ -447,7 +447,7 @@ export default function HomeCoursesSection({
                       <div className="h-4 w-px bg-slate-200 dark:bg-zinc-800" />
 
                       <div className="flex items-baseline gap-1">
-                        <span className={`text-2xl sm:text-3xl font-black ${theme.priceColor} tracking-tight drop-shadow-sm`}>
+                        <span className="text-2xl sm:text-3xl font-black text-blue-700 dark:text-amber-400 tracking-tight drop-shadow-sm">
                           {formatPrice(course.price)}
                         </span>
                       </div>
