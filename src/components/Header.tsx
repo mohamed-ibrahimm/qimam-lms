@@ -180,13 +180,13 @@ export default function Header({
             </div>
           </div>
           <div className="flex flex-col text-right justify-center min-w-0">
-            <span className="text-[8.5px] sm:text-[10px] font-black text-amber-400 flex items-center gap-1 leading-none mb-0.5 whitespace-nowrap">
+            <span className="text-[8.5px] sm:text-[10px] font-black text-amber-600 dark:text-amber-400 flex items-center gap-1 leading-none mb-0.5 whitespace-nowrap">
               ★ منصة تعليمية معتمدة
             </span>
-            <span className="text-sm sm:text-base md:text-lg font-black text-white group-hover:text-amber-300 transition-colors tracking-tight whitespace-nowrap leading-tight drop-shadow-xs">
+            <span className="text-sm sm:text-base md:text-lg font-black text-slate-900 dark:text-white dark:bg-gradient-to-r dark:from-white dark:via-amber-100 dark:to-amber-300 dark:bg-clip-text dark:text-transparent group-hover:text-blue-600 dark:group-hover:text-amber-300 transition-colors tracking-tight whitespace-nowrap leading-tight drop-shadow-xs">
               {platformName}
             </span>
-            <span className="text-[8px] sm:text-[9.5px] text-amber-200/80 font-medium whitespace-nowrap leading-none mt-0.5 block">
+            <span className="text-[8px] sm:text-[9.5px] text-slate-600 dark:text-amber-200/80 font-medium whitespace-nowrap leading-none mt-0.5 block">
               {platformTagline}
             </span>
           </div>
