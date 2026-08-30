@@ -398,7 +398,7 @@ export default function HomeCoursesSection({
                       </h3>
                       
                       {/* Centered Concise Description */}
-                      <p className="text-xs text-slate-600 dark:text-zinc-300 line-clamp-1 leading-relaxed text-center max-w-sm mx-auto font-medium">
+                      <p className="text-xs text-slate-600 dark:text-zinc-300 line-clamp-2 leading-relaxed text-center max-w-sm mx-auto font-medium">
                         {cleanDescription}
                       </p>
 
