@@ -40,7 +40,7 @@ export default function AppShell({
 
   // Shell with Header at the top across all pages (Public, Admin, Instructor, Student)
   return (
-    <div className="min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-black relative">
+    <div className="min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-black relative w-full max-w-[100vw] overflow-x-hidden">
       <TopProgressBar />
       <Header
         initialPlatformName={initialPlatformName}

@@ -67,7 +67,7 @@ export default function DesktopHero({
         {/* Glowing Dynamic Moving Orbs & Hero Headline */}
         <div className="relative px-2">
           {/* Dynamic Animated Floating Glowing Orbs behind the Headline */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-[360px] pointer-events-none -z-10 overflow-visible">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-[360px] pointer-events-none -z-10 overflow-hidden">
             <div className="dynamic-drift-1 absolute -top-10 right-1/4 w-[420px] h-[300px] bg-amber-400/25 dark:bg-amber-500/15 rounded-full blur-[110px]" />
             <div className="dynamic-drift-2 absolute -bottom-10 left-1/4 w-[460px] h-[320px] bg-blue-500/25 dark:bg-purple-600/15 rounded-full blur-[120px]" />
             <div className="dynamic-drift-3 absolute top-1/4 left-1/2 -translate-x-1/2 w-[380px] h-[280px] bg-indigo-400/20 dark:bg-yellow-500/10 rounded-full blur-[100px]" />

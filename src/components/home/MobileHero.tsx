@@ -77,7 +77,7 @@ export default function MobileHero({
         <div className="w-full max-w-lg mx-auto flex flex-col items-center px-2 py-2 relative shrink-0">
           
           {/* Background Atmospheric Halo: Soft Sky Blue & Violet in Light Mode, Warm Amber Gold in Dark Mode */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] xs:w-[360px] h-[260px] pointer-events-none -z-10 overflow-visible">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] xs:w-[360px] h-[260px] pointer-events-none -z-10 overflow-hidden">
             <div className="dynamic-drift-1 absolute -top-4 right-1/4 w-[220px] h-[160px] bg-blue-500/15 dark:bg-amber-400/20 rounded-full blur-[80px]" />
             <div className="dynamic-drift-2 absolute -bottom-4 left-1/4 w-[240px] h-[170px] bg-indigo-500/12 dark:bg-yellow-400/18 rounded-full blur-[85px]" />
             <div className="dynamic-drift-3 absolute top-1/4 left-1/2 -translate-x-1/2 w-[200px] h-[150px] bg-sky-400/14 dark:bg-amber-500/16 rounded-full blur-[75px]" />

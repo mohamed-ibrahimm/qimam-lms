@@ -157,16 +157,16 @@ export default function InstructorJoinPage() {
   ];
 
   return (
-    <div className="min-h-screen pt-24 sm:pt-28 pb-14 px-3.5 sm:px-6 lg:px-8 relative text-slate-900 dark:text-slate-100 selection:bg-amber-500 selection:text-zinc-950 transition-colors duration-300">
+    <div className="min-h-screen pt-14 sm:pt-20 pb-14 px-3 sm:px-6 lg:px-8 relative text-slate-900 dark:text-slate-100 selection:bg-amber-500 selection:text-zinc-950 transition-colors duration-300 w-full max-w-full overflow-x-hidden">
       
       {/* =========================================================================
           1. HERO & TRACK NAVIGATION (EXACTLY MATCHING DESKTOPHERO ON HOMEPAGE)
          ========================================================================= */}
-      <section className="max-w-5xl mx-auto text-center relative">
+      <section className="max-w-5xl mx-auto text-center relative w-full overflow-hidden">
         
         {/* Dynamic Rotating Shimmer Badge Switcher */}
-        <div className="mb-3 inline-block max-w-full px-2">
-          <div className="inline-flex p-1 rounded-2xl sm:rounded-full bg-white/90 dark:bg-[#16122d]/90 border border-slate-200 dark:border-purple-800/80 shadow-md backdrop-blur-md gap-1 flex-col sm:flex-row justify-center w-full sm:w-auto">
+        <div className="mb-2.5 inline-block max-w-full px-1">
+          <div className="inline-flex p-1 rounded-2xl sm:rounded-full bg-white/90 dark:bg-[#16122d]/90 border border-slate-200 dark:border-purple-800/80 shadow-md backdrop-blur-md gap-1 flex-col sm:flex-row justify-center w-full sm:w-auto max-w-full">
             <button
               type="button"
               onClick={() => setActiveTrack('all')}
@@ -209,15 +209,15 @@ export default function InstructorJoinPage() {
         </div>
 
         {/* Glowing Dynamic Moving Orbs & Headline (Exactly matching Homepage DesktopHero) */}
-        <div className="relative px-2">
+        <div className="relative px-2 overflow-hidden">
           {/* Dynamic Animated Floating Glowing Orbs centered right behind the Headline */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-[320px] pointer-events-none -z-10 overflow-visible">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-[320px] pointer-events-none -z-10 overflow-hidden">
             <div className="dynamic-drift-1 absolute -top-8 right-1/4 w-[380px] h-[260px] bg-amber-400/25 dark:bg-amber-500/15 rounded-full blur-[110px]" />
             <div className="dynamic-drift-2 absolute -bottom-8 left-1/4 w-[420px] h-[280px] bg-blue-500/25 dark:bg-purple-600/15 rounded-full blur-[120px]" />
             <div className="dynamic-drift-3 absolute top-1/4 left-1/2 -translate-x-1/2 w-[340px] h-[240px] bg-indigo-400/20 dark:bg-yellow-500/10 rounded-full blur-[100px]" />
           </div>
 
-          <h1 className="font-black tracking-tight mb-2.5 max-w-4xl mx-auto">
+          <h1 className="font-black tracking-tight mb-2 max-w-4xl mx-auto">
             <span className="text-slate-900 dark:text-white block font-black text-2xl sm:text-3xl lg:text-[2.6rem] leading-[1.25] mb-2">
               {platformSettings.joinPageTitle ? (
                 platformSettings.joinPageTitle
