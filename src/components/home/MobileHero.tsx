@@ -163,7 +163,7 @@ export default function MobileHero({
         Dedicated, spacious section for Quick Contacts and Official Badges.
         ========================================================================
       */}
-      <section className="pt-16 pb-20 px-4 bg-slate-100/40 dark:bg-zinc-950/40 space-y-7 text-center">
+      <section className="mt-8 pt-32 sm:pt-40 pb-24 px-4 bg-slate-100/40 dark:bg-zinc-950/40 space-y-8 text-center shrink-0">
         
         {/* Quick Contacts */}
         {hasAnySocial && (
