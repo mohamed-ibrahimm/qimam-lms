@@ -532,9 +532,9 @@ html.light-theme .inline-block > .shimmer-border-wrapper .shimmer-button-content
   color: #1e293b !important;
 }
 
-/* Secondary Button in Light Mode */
-html.light-theme a[href="/courses"].rounded-full,
-[data-theme="light"] a[href="/courses"].rounded-full {
+/* Secondary Button in Light Mode (Not luxury pill) */
+html.light-theme a[href="/courses"].rounded-full:not(.diploma-luxury-pill),
+[data-theme="light"] a[href="/courses"].rounded-full:not(.diploma-luxury-pill) {
   background: rgba(255, 255, 255, 0.9) !important;
   backdrop-filter: blur(16px) !important;
   border: 1.5px solid #cbd5e1 !important;
@@ -543,8 +543,8 @@ html.light-theme a[href="/courses"].rounded-full,
   box-shadow: 0 4px 15px -2px rgba(15, 23, 42, 0.06) !important;
 }
 
-html.light-theme a[href="/courses"].rounded-full:hover,
-[data-theme="light"] a[href="/courses"].rounded-full:hover {
+html.light-theme a[href="/courses"].rounded-full:not(.diploma-luxury-pill):hover,
+[data-theme="light"] a[href="/courses"].rounded-full:not(.diploma-luxury-pill):hover {
   border-color: #3b82f6 !important;
   color: #2563eb !important;
   background: #ffffff !important;

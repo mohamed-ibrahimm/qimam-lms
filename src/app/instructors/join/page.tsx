@@ -111,9 +111,8 @@ export default function InstructorJoinPage() {
       title: `نموذج ${platformSettings.commissionPercent}% عمولة على المبيعات`,
       description: `تحتفظ بكامل عوائد دوراتك التدريبية بنسبة 100%. لا نقتطع أي نسبة مئوية من مبيعاتك نهائياً، فالجهد جهدك والعائد بالكامل لك.`,
       icon: Percent,
-      gradient: 'from-amber-500/20 via-yellow-500/10 to-transparent',
       borderCol: 'border-amber-500/30 hover:border-amber-500/60',
-      iconCol: 'text-amber-400 bg-amber-500/10 border-amber-500/20',
+      iconCol: 'text-amber-500 bg-amber-500/10 border-amber-500/20',
       accentGlow: 'group-hover:shadow-amber-500/20',
     },
     {
@@ -121,9 +120,8 @@ export default function InstructorJoinPage() {
       title: 'تحصيل فوري ومباشر عبر InstaPay والمحافظ',
       description: 'يقوم الطلاب بتحويل قيمة الكورس مباشرة إلى حسابك الشخصي في إنستاباي أو فودافون كاش دون وسيط، وتتحكم بالقبول بضغطة زر واحدة.',
       icon: Smartphone,
-      gradient: 'from-purple-500/20 via-indigo-500/10 to-transparent',
       borderCol: 'border-purple-500/30 hover:border-purple-500/60',
-      iconCol: 'text-purple-400 bg-purple-500/10 border-purple-500/20',
+      iconCol: 'text-purple-500 bg-purple-500/10 border-purple-500/20',
       accentGlow: 'group-hover:shadow-purple-500/20',
     },
     {
@@ -131,9 +129,8 @@ export default function InstructorJoinPage() {
       title: 'حماية متطورة بعلامة مائية ديناميكية',
       description: 'نظام حماية يمنع تسجيل الشاشة ويقوم بطباعة بيانات الطالب (الاسم والبريد ورقم الهاتف) كعلامة مائية متحركة ومضيئة لحماية محتواك الفكري.',
       icon: ShieldCheck,
-      gradient: 'from-amber-500/20 via-amber-600/10 to-transparent',
       borderCol: 'border-amber-500/30 hover:border-amber-500/60',
-      iconCol: 'text-amber-400 bg-amber-500/10 border-amber-500/20',
+      iconCol: 'text-amber-500 bg-amber-500/10 border-amber-500/20',
       accentGlow: 'group-hover:shadow-amber-500/20',
     },
     {
@@ -141,9 +138,8 @@ export default function InstructorJoinPage() {
       title: 'شهادات إتمام ذكية موثقة برمز QR',
       description: 'إمكانية تفعيل وإصدار شهادات إتمام رقمية معتمدة لكل طالب يجتاز كورسـك، مع كود استعلام وتحقق رقمي فوري يرفع من مصداقية دوراتك.',
       icon: Award,
-      gradient: 'from-indigo-500/20 via-purple-500/10 to-transparent',
       borderCol: 'border-indigo-500/30 hover:border-indigo-500/60',
-      iconCol: 'text-indigo-400 bg-indigo-500/10 border-indigo-500/20',
+      iconCol: 'text-indigo-500 bg-indigo-500/10 border-indigo-500/20',
       accentGlow: 'group-hover:shadow-indigo-500/20',
     },
     {
@@ -151,9 +147,8 @@ export default function InstructorJoinPage() {
       title: 'إدارة كوبونات الخصم والعروض الترويجية',
       description: 'لوحة متكاملة لإنشاء وتوليد أكواد الخصم الترويجية لطلابك، مع تحديد نسب الخصم وعدد مرات الاستخدام وتواريخ الصلاحية لزيادة سرعة الالتحاق.',
       icon: Zap,
-      gradient: 'from-amber-500/20 via-yellow-500/10 to-transparent',
       borderCol: 'border-amber-500/30 hover:border-amber-500/60',
-      iconCol: 'text-amber-400 bg-amber-500/10 border-amber-500/20',
+      iconCol: 'text-amber-500 bg-amber-500/10 border-amber-500/20',
       accentGlow: 'group-hover:shadow-amber-500/20',
     },
     {
@@ -161,40 +156,39 @@ export default function InstructorJoinPage() {
       title: 'استوديو تدريس سحابي وإحصائيات متقدمة',
       description: 'لوحة تحكم ذكية تتيح لك متابعة تفاعل طلابك، نسب الإكمال، وتقييمات الدروس، مع إمكانية التواصل والرد على استفسارات الطلاب مباشرة.',
       icon: Layers,
-      gradient: 'from-purple-500/20 via-indigo-500/10 to-transparent',
       borderCol: 'border-purple-500/30 hover:border-purple-500/60',
-      iconCol: 'text-purple-400 bg-purple-500/10 border-purple-500/20',
+      iconCol: 'text-purple-500 bg-purple-500/10 border-purple-500/20',
       accentGlow: 'group-hover:shadow-purple-500/20',
     },
   ];
 
   return (
-    <div className="min-h-screen pt-32 sm:pt-40 pb-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-[#06040d] text-slate-100 selection:bg-amber-500 selection:text-zinc-950 transition-colors duration-300">
+    <div className="min-h-screen pt-28 sm:pt-36 pb-20 px-3.5 sm:px-6 lg:px-8 relative overflow-hidden bg-slate-50 dark:bg-[#06040d] text-slate-900 dark:text-slate-100 selection:bg-amber-500 selection:text-zinc-950 transition-colors duration-300">
       
       {/* =========================================================================
-          DYNAMIC OBSIDIAN & GOLD RADIANT AMBIENT LIGHTING
+          DYNAMIC AMBIENT AURA (WORKS IN BOTH LIGHT & DARK THEMES)
          ========================================================================= */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10">
-        <div className="dynamic-drift-1 absolute -top-[10%] right-[10%] w-[700px] h-[700px] bg-gradient-to-br from-amber-500/18 via-yellow-500/8 to-transparent rounded-full blur-[150px]" />
-        <div className="dynamic-drift-2 absolute top-[25%] -left-[5%] w-[750px] h-[750px] bg-gradient-to-tr from-purple-600/14 via-indigo-600/8 to-transparent rounded-full blur-[170px]" />
-        <div className="dynamic-drift-3 absolute bottom-[10%] right-[20%] w-[650px] h-[650px] bg-gradient-to-br from-amber-400/15 via-yellow-600/6 to-transparent rounded-full blur-[160px]" />
-        <div className="absolute inset-0 bg-[radial-gradient(#f59e0b12_1px,transparent_1px)] [background-size:28px_28px] opacity-30 pointer-events-none" />
+        <div className="dynamic-drift-1 absolute -top-[10%] right-[10%] w-[600px] sm:w-[700px] h-[600px] sm:h-[700px] bg-gradient-to-br from-amber-500/10 dark:from-amber-500/18 via-yellow-500/5 to-transparent rounded-full blur-[140px]" />
+        <div className="dynamic-drift-2 absolute top-[25%] -left-[5%] w-[650px] sm:w-[750px] h-[650px] sm:h-[750px] bg-gradient-to-tr from-purple-600/8 dark:from-purple-600/14 via-indigo-600/5 to-transparent rounded-full blur-[160px]" />
+        <div className="dynamic-drift-3 absolute bottom-[10%] right-[20%] w-[550px] sm:w-[650px] h-[550px] sm:h-[650px] bg-gradient-to-br from-amber-400/10 dark:from-amber-400/15 via-yellow-600/5 to-transparent rounded-full blur-[150px]" />
+        <div className="absolute inset-0 bg-[radial-gradient(#94a3b818_1px,transparent_1px)] dark:bg-[radial-gradient(#f59e0b12_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none" />
       </div>
 
       {/* =========================================================================
-          1. HERO & TRACK NAVIGATION (COMFORTABLE SPACING UNDER HEADER)
+          1. HERO & TRACK NAVIGATION (PERFECTLY PROPORTIONED FOR MOBILE & DESKTOP)
          ========================================================================= */}
-      <section className="max-w-5xl mx-auto text-center space-y-7">
+      <section className="max-w-5xl mx-auto text-center space-y-6 sm:space-y-7">
         
-        {/* Track Segmented Switcher (Luxury Obsidian & Gold) */}
-        <div className="inline-flex p-1.5 rounded-full bg-[#120e24]/95 border border-amber-500/30 shadow-2xl backdrop-blur-2xl gap-1.5 flex-wrap justify-center ring-1 ring-amber-500/20">
+        {/* Track Segmented Switcher (Responsive, Sleek & Dynamic) */}
+        <div className="inline-flex p-1.5 rounded-2xl sm:rounded-full bg-white/90 dark:bg-[#120e24]/95 border border-slate-200 dark:border-amber-500/30 shadow-lg shadow-slate-900/5 dark:shadow-2xl backdrop-blur-2xl gap-1.5 flex-col sm:flex-row justify-center w-full sm:w-auto">
           <button
             type="button"
             onClick={() => setActiveTrack('all')}
-            className={`px-5 py-2.5 rounded-full text-xs font-black transition-all flex items-center gap-2 cursor-pointer ${
+            className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl sm:rounded-full text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
               activeTrack === 'all'
-                ? 'bg-white text-zinc-950 shadow-md'
-                : 'text-zinc-400 hover:text-white hover:bg-white/10'
+                ? 'bg-slate-900 text-white dark:bg-white dark:text-zinc-950 shadow-md'
+                : 'text-slate-600 dark:text-zinc-400 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10'
             }`}
           >
             <Sparkles className="w-3.5 h-3.5 text-amber-500" />
@@ -204,34 +198,34 @@ export default function InstructorJoinPage() {
           <button
             type="button"
             onClick={() => setActiveTrack('expert')}
-            className={`px-5 py-2.5 rounded-full text-xs font-black transition-all flex items-center gap-2 cursor-pointer ${
+            className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl sm:rounded-full text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
               activeTrack === 'expert'
-                ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-900/40 border border-purple-400/50'
-                : 'text-zinc-400 hover:text-purple-300 hover:bg-white/10'
+                ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-600/30'
+                : 'text-slate-600 dark:text-zinc-400 hover:text-purple-600 dark:hover:text-purple-300 hover:bg-purple-50 dark:hover:bg-white/10'
             }`}
           >
-            <Building className="w-3.5 h-3.5 text-purple-400" />
+            <Building className="w-3.5 h-3.5 text-purple-500 dark:text-purple-400" />
             <span>مسار المدرسين والدكاترة ({platformSettings.instructorTrialDays} يوماً مجاناً)</span>
           </button>
 
           <button
             type="button"
             onClick={() => setActiveTrack('student')}
-            className={`px-5 py-2.5 rounded-full text-xs font-black transition-all flex items-center gap-2 cursor-pointer ${
+            className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl sm:rounded-full text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
               activeTrack === 'student'
-                ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-zinc-950 font-black shadow-lg shadow-amber-500/30 border border-amber-300'
-                : 'text-zinc-400 hover:text-amber-300 hover:bg-white/10'
+                ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-zinc-950 shadow-md shadow-amber-500/30'
+                : 'text-slate-600 dark:text-zinc-400 hover:text-amber-600 dark:hover:text-amber-300 hover:bg-amber-50 dark:hover:bg-white/10'
             }`}
           >
-            <GraduationCap className="w-4 h-4 text-amber-400" />
+            <GraduationCap className="w-4 h-4 text-amber-500" />
             <span>مسار المحاضر الطالب ({platformSettings.studentTrialDays} يوماً مجاناً)</span>
           </button>
         </div>
 
         {/* Dynamic Tag */}
         <div className="flex justify-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-bold backdrop-blur-md shadow-xs">
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+          <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-amber-500/10 dark:bg-amber-500/15 border border-amber-500/30 text-amber-700 dark:text-amber-300 text-[11px] sm:text-xs font-bold backdrop-blur-md shadow-xs">
+            <Sparkles className="w-3.5 h-3.5 text-amber-500" />
             <span>
               {activeTrack === 'student'
                 ? 'منحة تمكين وإطلاق طلبة الكليات والمدارس والمعاهد'
@@ -243,20 +237,20 @@ export default function InstructorJoinPage() {
         </div>
 
         {/* Main Headline */}
-        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.2]">
+        <h1 className="text-2xl xs:text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.25] max-w-4xl mx-auto">
           {platformSettings.joinPageTitle ? (
             platformSettings.joinPageTitle
           ) : activeTrack === 'student' ? (
             <>
               اشرح لزملائك وأطلق أول كورس لك مع{' '}
-              <span className="bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-300 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 dark:from-amber-400 dark:via-yellow-300 dark:to-amber-300 bg-clip-text text-transparent">
                 {platformSettings.studentTrialDays} يوماً مجاناً
               </span>
             </>
           ) : (
             <>
               درّس لطلابك واحتفظ بـ{' '}
-              <span className="bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-300 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 dark:from-amber-400 dark:via-yellow-300 dark:to-amber-300 bg-clip-text text-transparent">
                 كامل عوائد مبيعاتك ({100 - Number(platformSettings.commissionPercent)}%)
               </span>{' '}
               مباشرة
@@ -265,7 +259,7 @@ export default function InstructorJoinPage() {
         </h1>
 
         {/* Subtitle */}
-        <p className="text-sm sm:text-base lg:text-lg text-zinc-300 max-w-3xl mx-auto leading-relaxed">
+        <p className="text-xs sm:text-base lg:text-lg text-slate-600 dark:text-zinc-300 max-w-3xl mx-auto leading-relaxed px-2">
           {platformSettings.joinPageSubtitle ? (
             platformSettings.joinPageSubtitle
           ) : activeTrack === 'student'
@@ -274,62 +268,62 @@ export default function InstructorJoinPage() {
         </p>
 
         {/* =========================================================================
-            DUAL TRACK HERO CARDS (OBSIDIAN + DYNAMIC GOLD MASTER CARDS)
+            DUAL TRACK HERO CARDS (WORKS PERFECTLY IN BOTH LIGHT & DARK THEMES)
            ========================================================================= */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 text-right">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 pt-4 sm:pt-6 text-right">
           
           {/* Card 1: Teachers & University Professors */}
           <div
-            className={`p-6 sm:p-8 rounded-3xl border transition-all duration-300 flex flex-col justify-between space-y-6 relative overflow-hidden group ${
+            className={`p-5 sm:p-8 rounded-3xl border transition-all duration-300 flex flex-col justify-between space-y-6 relative overflow-hidden group ${
               activeTrack === 'expert' || activeTrack === 'all'
-                ? 'bg-gradient-to-b from-[#151028]/95 via-[#0e0a1f]/95 to-[#080612]/95 border-purple-500/40 shadow-2xl shadow-purple-950/40 ring-1 ring-purple-500/30'
-                : 'bg-[#100c1e]/50 border-zinc-800/70 opacity-60'
+                ? 'bg-white dark:bg-gradient-to-b dark:from-[#151028]/95 dark:via-[#0e0a1f]/95 dark:to-[#080612]/95 border-purple-200 dark:border-purple-500/40 shadow-xl shadow-purple-500/5 dark:shadow-2xl dark:shadow-purple-950/40 ring-1 ring-purple-500/20'
+                : 'bg-slate-50/50 dark:bg-[#100c1e]/50 border-slate-200 dark:border-zinc-800/70 opacity-70'
             }`}
           >
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="px-3 py-1 rounded-full bg-purple-500/15 text-purple-300 border border-purple-500/30 text-xs font-bold inline-flex items-center gap-1.5">
-                  <Building className="w-3.5 h-3.5 text-purple-400" />
+                <span className="px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/15 text-purple-700 dark:text-purple-300 border border-purple-500/20 dark:border-purple-500/30 text-xs font-bold inline-flex items-center gap-1.5">
+                  <Building className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
                   للمدرسين والدكاترة الجامعيين
                 </span>
-                <span className="text-[11px] font-medium text-emerald-400 flex items-center gap-1">
-                  <CheckCircle2 className="w-3 h-3" />
+                <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
                   تفعيل فوري بدون مستندات
                 </span>
               </div>
 
               <div className="space-y-1.5">
-                <h3 className="text-xl font-black text-white">
+                <h3 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white">
                   {platformSettings.expertCardTitle}
                 </h3>
-                <p className="text-xs text-zinc-300 leading-relaxed">
+                <p className="text-xs text-slate-600 dark:text-zinc-300 leading-relaxed">
                   {platformSettings.expertCardDesc}
                 </p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-[#0c0818] border border-purple-900/40 space-y-2.5">
-                <div className="flex items-center justify-between text-xs font-bold text-zinc-300">
+              <div className="p-4 rounded-2xl bg-purple-50/60 dark:bg-[#0c0818] border border-purple-100 dark:border-purple-900/40 space-y-2.5">
+                <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-zinc-300">
                   <span>الفترة التجريبية:</span>
-                  <span className="text-purple-300 font-black">{platformSettings.instructorTrialDays} يوماً مجاناً بالكامل</span>
+                  <span className="text-purple-700 dark:text-purple-300 font-black">{platformSettings.instructorTrialDays} يوماً مجاناً بالكامل</span>
                 </div>
-                <div className="flex items-center justify-between text-xs font-bold text-zinc-300">
+                <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-zinc-300">
                   <span>عمولة المبيعات:</span>
-                  <span className="text-emerald-400 font-black">{platformSettings.commissionPercent}% (الأرباح لك 100%)</span>
+                  <span className="text-emerald-600 dark:text-emerald-400 font-black">{platformSettings.commissionPercent}% (الأرباح لك 100%)</span>
                 </div>
-                <div className="flex items-center justify-between text-xs font-bold text-zinc-300">
+                <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-zinc-300">
                   <span>التحصيل المالي:</span>
-                  <span className="text-white">InstaPay وفودافون كاش مباشرة</span>
+                  <span className="text-slate-900 dark:text-white">InstaPay وفودافون كاش مباشرة</span>
                 </div>
-                <div className="flex items-center justify-between text-xs font-bold text-zinc-300">
+                <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-zinc-300">
                   <span>المستندات المطلوبة:</span>
-                  <span className="text-emerald-400 font-bold">لا يُطلب أي مستند (بدء مباشر)</span>
+                  <span className="text-emerald-600 dark:text-emerald-400 font-bold">لا يُطلب أي مستند (بدء مباشر)</span>
                 </div>
               </div>
             </div>
 
             <Link
               href="/register?role=instructor&track=expert"
-              className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs text-center shadow-lg shadow-purple-900/30 transition-all hover:scale-[1.01] flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 hover:from-purple-500 hover:to-indigo-500 text-white font-black text-xs text-center shadow-lg shadow-purple-600/20 transition-all hover:scale-[1.01] flex items-center justify-center gap-2 cursor-pointer"
             >
               <span>بدء تجربة المدرس أو الدكتور ({platformSettings.instructorTrialDays} يوماً مجاناً)</span>
               <ArrowLeft className="w-4 h-4" />
@@ -338,49 +332,49 @@ export default function InstructorJoinPage() {
 
           {/* Card 2: Student Instructors (GOLD SHINE VIP) */}
           <div
-            className={`p-6 sm:p-8 rounded-3xl border-2 transition-all duration-300 flex flex-col justify-between space-y-6 relative overflow-hidden group ${
+            className={`p-5 sm:p-8 rounded-3xl border-2 transition-all duration-300 flex flex-col justify-between space-y-6 relative overflow-hidden group ${
               activeTrack === 'student' || activeTrack === 'all'
-                ? 'bg-gradient-to-b from-[#22180c]/95 via-[#15101a]/95 to-[#0b0814]/95 border-amber-500/60 shadow-2xl shadow-amber-500/10 ring-1 ring-amber-500/40'
-                : 'bg-[#100c1e]/50 border-zinc-800/70 opacity-60'
+                ? 'bg-gradient-to-b from-amber-50/80 via-white to-amber-50/40 dark:from-[#22180c]/95 dark:via-[#15101a]/95 dark:to-[#0b0814]/95 border-amber-400 dark:border-amber-500/60 shadow-xl shadow-amber-500/10 dark:shadow-2xl dark:shadow-amber-500/10 ring-1 ring-amber-400/30'
+                : 'bg-slate-50/50 dark:bg-[#100c1e]/50 border-slate-200 dark:border-zinc-800/70 opacity-70'
             }`}
           >
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="px-3 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30 text-xs font-black inline-flex items-center gap-1.5">
-                  <GraduationCap className="w-4 h-4 text-amber-400" />
+                <span className="px-3 py-1 rounded-full bg-amber-500/15 text-amber-800 dark:text-amber-300 border border-amber-500/30 text-xs font-black inline-flex items-center gap-1.5">
+                  <GraduationCap className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                   لطلبة الكليات والمدارس
                 </span>
-                <span className="text-[11px] font-bold text-amber-400 flex items-center gap-1">
-                  <FileText className="w-3 h-3" />
+                <span className="text-[11px] font-bold text-amber-700 dark:text-amber-400 flex items-center gap-1">
+                  <FileText className="w-3.5 h-3.5" />
                   إثبات دراسي ميسر
                 </span>
               </div>
 
               <div className="space-y-1.5">
-                <h3 className="text-xl font-black text-white">
+                <h3 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white">
                   {platformSettings.studentCardTitle}
                 </h3>
-                <p className="text-xs text-zinc-300 leading-relaxed">
+                <p className="text-xs text-slate-600 dark:text-zinc-300 leading-relaxed">
                   {platformSettings.studentCardDesc}
                 </p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-[#110d18] border border-amber-500/30 space-y-2.5">
-                <div className="flex items-center justify-between text-xs font-bold text-zinc-300">
+              <div className="p-4 rounded-2xl bg-amber-500/10 dark:bg-[#110d18] border border-amber-200 dark:border-amber-500/30 space-y-2.5">
+                <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-zinc-300">
                   <span>المنحة التجريبية:</span>
-                  <span className="text-amber-400 font-black">{platformSettings.studentTrialDays} يوماً مجاناً بالكامل</span>
+                  <span className="text-amber-700 dark:text-amber-400 font-black">{platformSettings.studentTrialDays} يوماً مجاناً بالكامل</span>
                 </div>
-                <div className="flex items-center justify-between text-xs font-bold text-zinc-300">
+                <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-zinc-300">
                   <span>سعر الباقة بعد التجربة:</span>
-                  <span className="text-emerald-400 font-black">{platformSettings.studentPrice} ج.م شهرياً</span>
+                  <span className="text-emerald-600 dark:text-emerald-400 font-black">{platformSettings.studentPrice} ج.م شهرياً</span>
                 </div>
-                <div className="flex items-center justify-between text-xs font-bold text-zinc-300">
+                <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-zinc-300">
                   <span>إثبات الدراسة المطلوب:</span>
-                  <span className="text-white">{platformSettings.studentProofText}</span>
+                  <span className="text-slate-900 dark:text-white">{platformSettings.studentProofText}</span>
                 </div>
-                <div className="flex items-center justify-between text-xs font-bold text-zinc-300">
+                <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-zinc-300">
                   <span>البطاقة الشخصية:</span>
-                  <span className="text-emerald-400 font-bold">لا يُطلب بطاقة شخصية نهائياً</span>
+                  <span className="text-emerald-600 dark:text-emerald-400 font-bold">لا يُطلب بطاقة شخصية نهائياً</span>
                 </div>
               </div>
             </div>
@@ -398,16 +392,16 @@ export default function InstructorJoinPage() {
       </section>
 
       {/* =========================================================================
-          2. DYNAMIC LIVE REVENUE CALCULATOR (OBSIDIAN + GOLD)
+          2. DYNAMIC LIVE REVENUE CALCULATOR
          ========================================================================= */}
-      <section className="max-w-4xl mx-auto py-12">
-        <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-b from-[#140f28]/95 via-[#0e0a1f]/95 to-[#080612]/95 border border-amber-500/30 shadow-2xl space-y-6">
+      <section className="max-w-4xl mx-auto py-10 sm:py-12">
+        <div className="p-5 sm:p-8 rounded-3xl bg-white dark:bg-gradient-to-b dark:from-[#140f28]/95 dark:via-[#0e0a1f]/95 dark:to-[#080612]/95 border border-slate-200 dark:border-amber-500/30 shadow-xl dark:shadow-2xl space-y-6">
           <div className="text-center space-y-1">
-            <span className="text-xs font-bold text-amber-400">حاسبة العوائد التفاعلية</span>
-            <h2 className="text-xl sm:text-2xl font-black text-white">
+            <span className="text-xs font-bold text-amber-600 dark:text-amber-400">حاسبة العوائد التفاعلية</span>
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
               كم ستحقق من أرباح مع نموذج {platformSettings.commissionPercent}% عمولة؟
             </h2>
-            <p className="text-xs text-zinc-400">
+            <p className="text-xs text-slate-500 dark:text-zinc-400">
               حرك المؤشرات لتكتشف الفارق بين منصتنا والمنصات التقليدية التي تقتطع 30% إلى 50% من أرباحك.
             </p>
           </div>
@@ -415,9 +409,9 @@ export default function InstructorJoinPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
             <div className="space-y-4">
               <div className="space-y-2">
-                <div className="flex justify-between text-xs font-bold">
+                <div className="flex justify-between text-xs font-bold text-slate-700 dark:text-zinc-200">
                   <span>عدد الطلاب المتوقع:</span>
-                  <span className="text-amber-400 font-mono text-sm">{studentCount} طالب</span>
+                  <span className="text-amber-600 dark:text-amber-400 font-mono text-sm">{studentCount} طالب</span>
                 </div>
                 <input
                   type="range"
@@ -431,9 +425,9 @@ export default function InstructorJoinPage() {
               </div>
 
               <div className="space-y-2">
-                <div className="flex justify-between text-xs font-bold">
+                <div className="flex justify-between text-xs font-bold text-slate-700 dark:text-zinc-200">
                   <span>متوسط سعر الكورس:</span>
-                  <span className="text-amber-400 font-mono text-sm">{coursePrice} ج.م</span>
+                  <span className="text-amber-600 dark:text-amber-400 font-mono text-sm">{coursePrice} ج.م</span>
                 </div>
                 <input
                   type="range"
@@ -447,20 +441,20 @@ export default function InstructorJoinPage() {
               </div>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#090614] border border-amber-500/20 flex flex-col justify-between space-y-4">
+            <div className="p-5 rounded-2xl bg-slate-50 dark:bg-[#090614] border border-slate-200 dark:border-amber-500/20 flex flex-col justify-between space-y-4">
               <div className="space-y-1">
-                <span className="text-xs font-medium text-zinc-400">صافي أرباحك في منصتنا (100% لك):</span>
-                <p className="text-3xl font-black text-amber-400 font-mono">
+                <span className="text-xs font-medium text-slate-500 dark:text-zinc-400">صافي أرباحك في منصتنا (100% لك):</span>
+                <p className="text-2xl sm:text-3xl font-black text-amber-600 dark:text-amber-400 font-mono">
                   {netEarnings.toLocaleString('ar-EG')} ج.م
                 </p>
               </div>
 
-              <div className="pt-3 border-t border-zinc-800 space-y-1">
-                <div className="flex items-center justify-between text-xs text-rose-400">
+              <div className="pt-3 border-t border-slate-200 dark:border-zinc-800 space-y-1">
+                <div className="flex items-center justify-between text-xs text-rose-600 dark:text-rose-400">
                   <span>ما تخصمه المنصات الأخرى (40%):</span>
                   <span className="font-mono">-{traditionalCut.toLocaleString('ar-EG')} ج.م</span>
                 </div>
-                <div className="flex items-center justify-between text-xs font-bold text-emerald-400">
+                <div className="flex items-center justify-between text-xs font-bold text-emerald-600 dark:text-emerald-400">
                   <span>المبلغ الذي وفرته معنا:</span>
                   <span className="font-mono">+{traditionalCut.toLocaleString('ar-EG')} ج.م 🔥</span>
                 </div>
@@ -473,39 +467,39 @@ export default function InstructorJoinPage() {
       {/* =========================================================================
           3. VALUE PROPOSITIONS & CORE SAAS FEATURES
          ========================================================================= */}
-      <section className="max-w-6xl mx-auto py-12 space-y-10">
+      <section className="max-w-6xl mx-auto py-10 sm:py-12 space-y-8 sm:space-y-10">
         <div className="text-center space-y-2">
-          <span className="text-xs font-bold text-amber-400">المزايا التقنية للاستوديو</span>
-          <h2 className="text-2xl sm:text-3xl font-black text-white">
+          <span className="text-xs font-bold text-amber-600 dark:text-amber-400">المزايا التقنية للاستوديو</span>
+          <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
             كل ما تحتاجه للتدريس والربح في منصة واحدة
           </h2>
-          <p className="text-xs sm:text-sm text-zinc-400 max-w-xl mx-auto">
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-zinc-400 max-w-xl mx-auto">
             بنية تحتية سحابية متقدمة مصممة خصيصاً للمحاضرين والمعلمين والدكاترة لإدارة دوراتهم بسهولة وأمان.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {features.map((f) => {
             const Icon = f.icon;
             return (
               <div
                 key={f.number}
-                className={`p-6 rounded-3xl bg-[#0e0a1e]/90 border ${f.borderCol} transition-all duration-300 hover:-translate-y-1 shadow-lg space-y-4 group`}
+                className={`p-5 sm:p-6 rounded-3xl bg-white dark:bg-[#0e0a1e]/90 border border-slate-200 dark:border-zinc-800 transition-all duration-300 hover:-translate-y-1 shadow-sm hover:shadow-md space-y-4 group`}
               >
                 <div className="flex items-center justify-between">
                   <div className={`w-10 h-10 rounded-2xl border flex items-center justify-center ${f.iconCol}`}>
                     <Icon className="w-5 h-5" />
                   </div>
-                  <span className="text-xs font-black font-mono text-zinc-600 group-hover:text-amber-400 transition-colors">
+                  <span className="text-xs font-black font-mono text-slate-400 dark:text-zinc-600 group-hover:text-amber-500 transition-colors">
                     {f.number}
                   </span>
                 </div>
 
-                <h3 className="text-base font-black text-white group-hover:text-amber-300 transition-colors">
+                <h3 className="text-sm sm:text-base font-black text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-300 transition-colors">
                   {f.title}
                 </h3>
 
-                <p className="text-xs text-zinc-400 leading-relaxed">
+                <p className="text-xs text-slate-500 dark:text-zinc-400 leading-relaxed">
                   {f.description}
                 </p>
               </div>
@@ -517,13 +511,13 @@ export default function InstructorJoinPage() {
       {/* =========================================================================
           4. COMPARISON: OUR PLATFORM VS TRADITIONAL PLATFORMS
          ========================================================================= */}
-      <section className="max-w-4xl mx-auto py-12">
-        <div className="p-6 sm:p-8 rounded-3xl bg-[#0c0818]/90 border border-amber-500/30 space-y-6">
+      <section className="max-w-4xl mx-auto py-10 sm:py-12">
+        <div className="p-5 sm:p-8 rounded-3xl bg-white dark:bg-[#0c0818]/90 border border-slate-200 dark:border-amber-500/30 shadow-xl space-y-6">
           <div className="text-center space-y-1">
-            <h2 className="text-xl sm:text-2xl font-black text-white">
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
               مقارنة بين منصتنا والمنصات التعليمية الأخرى
             </h2>
-            <p className="text-xs text-zinc-400">
+            <p className="text-xs text-slate-500 dark:text-zinc-400">
               لماذا يفضل الأساتذة والطلاب التدريس عبر منصتنا السحابية المستقلة؟
             </p>
           </div>
@@ -531,37 +525,37 @@ export default function InstructorJoinPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-right text-xs">
               <thead>
-                <tr className="border-b border-zinc-800 text-zinc-400">
+                <tr className="border-b border-slate-200 dark:border-zinc-800 text-slate-500 dark:text-zinc-400">
                   <th className="py-3 px-4 font-bold">الميزة</th>
-                  <th className="py-3 px-4 font-black text-amber-400">منصتنا التعليمية</th>
-                  <th className="py-3 px-4 font-bold text-zinc-500">المنصات التقليدية الأخرى</th>
+                  <th className="py-3 px-4 font-black text-amber-600 dark:text-amber-400">منصتنا التعليمية</th>
+                  <th className="py-3 px-4 font-bold text-slate-400 dark:text-zinc-500">المنصات التقليدية الأخرى</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-zinc-800/60 font-medium">
+              <tbody className="divide-y divide-slate-100 dark:divide-zinc-800/60 font-medium">
                 <tr>
-                  <td className="py-3 px-4 text-white font-bold">نسبة عمولة المبيعات</td>
-                  <td className="py-3 px-4 text-emerald-400 font-bold">0% (كامل الأرباح لك)</td>
-                  <td className="py-3 px-4 text-rose-400">30% إلى 50% من كل عملية بيع</td>
+                  <td className="py-3 px-4 text-slate-900 dark:text-white font-bold">نسبة عمولة المبيعات</td>
+                  <td className="py-3 px-4 text-emerald-600 dark:text-emerald-400 font-bold">0% (كامل الأرباح لك)</td>
+                  <td className="py-3 px-4 text-rose-500">30% إلى 50% من كل عملية بيع</td>
                 </tr>
                 <tr>
-                  <td className="py-3 px-4 text-white font-bold">استلام الأموال</td>
-                  <td className="py-3 px-4 text-emerald-400 font-bold">لحظي ومباشر على InstaPay والمحافظ</td>
-                  <td className="py-3 px-4 text-zinc-400">شهرياً مع رسوم تحويل إضافية</td>
+                  <td className="py-3 px-4 text-slate-900 dark:text-white font-bold">استلام الأموال</td>
+                  <td className="py-3 px-4 text-emerald-600 dark:text-emerald-400 font-bold">لحظي ومباشر على InstaPay والمحافظ</td>
+                  <td className="py-3 px-4 text-slate-500 dark:text-zinc-400">شهرياً مع رسوم تحويل إضافية</td>
                 </tr>
                 <tr>
-                  <td className="py-3 px-4 text-white font-bold">حماية الفيديوهات</td>
-                  <td className="py-3 px-4 text-emerald-400 font-bold">علامة مائية ديناميكية ببيانات الطالب</td>
-                  <td className="py-3 px-4 text-zinc-400">حماية تقليدية سهلة التسجيل</td>
+                  <td className="py-3 px-4 text-slate-900 dark:text-white font-bold">حماية الفيديوهات</td>
+                  <td className="py-3 px-4 text-emerald-600 dark:text-emerald-400 font-bold">علامة مائية ديناميكية ببيانات الطالب</td>
+                  <td className="py-3 px-4 text-slate-500 dark:text-zinc-400">حماية تقليدية سهلة التسجيل</td>
                 </tr>
                 <tr>
-                  <td className="py-3 px-4 text-white font-bold">دعم الطلبة المحاضرين</td>
-                  <td className="py-3 px-4 text-emerald-400 font-bold">منحة شهر كامل مجاناً وباقة مدعومة</td>
-                  <td className="py-3 px-4 text-rose-400">لا يوجد باقات خاصة للطلاب</td>
+                  <td className="py-3 px-4 text-slate-900 dark:text-white font-bold">دعم الطلبة المحاضرين</td>
+                  <td className="py-3 px-4 text-emerald-600 dark:text-emerald-400 font-bold">منحة شهر كامل مجاناً وباقة مدعومة</td>
+                  <td className="py-3 px-4 text-rose-500">لا يوجد باقات خاصة للطلاب</td>
                 </tr>
                 <tr>
-                  <td className="py-3 px-4 text-white font-bold">الشهادات المعتمدة</td>
-                  <td className="py-3 px-4 text-emerald-400 font-bold">شهادات ذكية برمز QR للتحقق</td>
-                  <td className="py-3 px-4 text-zinc-400">شهادات صور غير قابلة للتحقق</td>
+                  <td className="py-3 px-4 text-slate-900 dark:text-white font-bold">الشهادات المعتمدة</td>
+                  <td className="py-3 px-4 text-emerald-600 dark:text-emerald-400 font-bold">شهادات ذكية برمز QR للتحقق</td>
+                  <td className="py-3 px-4 text-slate-500 dark:text-zinc-400">شهادات صور غير قابلة للتحقق</td>
                 </tr>
               </tbody>
             </table>
@@ -570,27 +564,27 @@ export default function InstructorJoinPage() {
       </section>
 
       {/* =========================================================================
-          5. FINAL CALL TO ACTION (LUXURY GOLD CTA)
+          5. FINAL CALL TO ACTION
          ========================================================================= */}
-      <section className="max-w-4xl mx-auto text-center py-12">
-        <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-amber-500/20 via-purple-600/20 to-amber-500/20 border-2 border-amber-500/40 shadow-2xl backdrop-blur-xl space-y-6">
-          <div className="w-14 h-14 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center mx-auto text-amber-400 shadow-lg shadow-amber-500/20">
-            <GraduationCap className="w-7 h-7" />
+      <section className="max-w-4xl mx-auto text-center py-10 sm:py-12">
+        <div className="p-6 sm:p-12 rounded-3xl bg-gradient-to-r from-amber-500/10 via-purple-600/10 to-amber-500/10 dark:from-amber-500/20 dark:via-purple-600/20 dark:to-amber-500/20 border-2 border-amber-400/40 dark:border-amber-500/40 shadow-xl backdrop-blur-xl space-y-6">
+          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center mx-auto text-amber-600 dark:text-amber-400 shadow-md">
+            <GraduationCap className="w-6 h-6 sm:w-7 sm:h-7" />
           </div>
 
           <div className="space-y-2">
-            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+            <h2 className="text-xl sm:text-3xl lg:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
               جاهز لإطلاق أول كورس تعليمي باسمك؟
             </h2>
-            <p className="text-xs sm:text-sm text-zinc-300 max-w-lg mx-auto leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-300 max-w-lg mx-auto leading-relaxed px-2">
               سجل حسابك الآن في أقل من دقيقة وابدأ فترة التجربة المجانية، وشارك خبراتك وعلمك مع آلاف الطلاب.
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-2">
             <Link
               href="/register?role=instructor&track=expert"
-              className="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 hover:from-purple-500 hover:to-indigo-500 text-white font-black text-xs sm:text-sm shadow-xl shadow-purple-950/50 transition-all hover:scale-105 flex items-center gap-2 cursor-pointer"
+              className="w-full sm:w-auto px-6 sm:px-8 py-3.5 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 hover:from-purple-500 hover:to-indigo-500 text-white font-black text-xs sm:text-sm shadow-md shadow-purple-600/30 transition-all hover:scale-105 flex items-center justify-center gap-2 cursor-pointer"
             >
               <Video className="w-4 h-4" />
               <span>تسجيل مدرس أو دكتور ({platformSettings.instructorTrialDays} يوماً مجاناً)</span>
@@ -598,7 +592,7 @@ export default function InstructorJoinPage() {
 
             <Link
               href="/register?role=instructor&track=student"
-              className="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 hover:to-yellow-300 text-zinc-950 font-black text-xs sm:text-sm shadow-xl shadow-amber-500/25 transition-all hover:scale-105 flex items-center gap-2 cursor-pointer"
+              className="w-full sm:w-auto px-6 sm:px-8 py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 hover:to-yellow-300 text-zinc-950 font-black text-xs sm:text-sm shadow-md shadow-amber-500/25 transition-all hover:scale-105 flex items-center justify-center gap-2 cursor-pointer"
             >
               <GraduationCap className="w-4 h-4 text-zinc-950" />
               <span>اشتراك محاضر طالب ({platformSettings.studentTrialDays} يوماً مجاناً)</span>
