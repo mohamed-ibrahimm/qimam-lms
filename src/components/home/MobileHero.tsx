@@ -98,12 +98,12 @@ export default function MobileHero({
         </div>
 
         {/* 3. BOTTOM: Action Buttons with clearance above floating icons */}
-        <div className="w-full max-w-[340px] xs:max-w-sm mx-auto flex flex-col gap-2 pb-[78px] sm:pb-6 px-1.5 shrink-0 mt-auto">
+        <div className="w-full max-w-[340px] xs:max-w-sm mx-auto flex flex-col gap-2.5 pb-24 sm:pb-8 px-1.5 shrink-0 mt-auto">
           {/* Button 1: Diploma (Royal Indigo in Light Mode, Molten Gold in Dark Mode) */}
           <a href="#trending-diploma" className="shimmer-border-wrapper group w-full">
             <div className="shimmer-beam-gold dark:block hidden" />
             <div className="shimmer-beam-blue dark:hidden block" />
-            <div className="shimmer-button-content w-full px-4 py-2.5 text-xs xs:text-sm font-black text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 dark:bg-none dark:text-amber-300 group-hover:opacity-95 flex items-center justify-center gap-2 rounded-xl shadow-lg">
+            <div className="shimmer-button-content w-full px-4 py-3 text-xs xs:text-sm font-black text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 dark:bg-none dark:text-amber-300 group-hover:opacity-95 flex items-center justify-center gap-2 rounded-2xl shadow-lg">
               <Flame className="w-4 h-4 text-amber-300 dark:text-amber-400 animate-bounce shrink-0" />
               <span className="whitespace-nowrap">{settings.FEATURED_DIPLOMA_BADGE || 'الدبلومة الأكثر طلباً (خصم 51%)'}</span>
               <ArrowLeft className="w-4 h-4 text-white dark:text-amber-400 group-hover:-translate-x-1.5 transition-transform duration-300 shrink-0" />
@@ -114,7 +114,7 @@ export default function MobileHero({
           <Link
             href="/instructors/join?track=expert"
             prefetch={true}
-            className="group flex items-center justify-center gap-2 w-full py-2.5 px-3.5 text-xs font-black text-slate-800 hover:text-purple-700 dark:text-zinc-200 dark:hover:text-white transition-all rounded-xl border border-purple-300/90 hover:border-purple-500 bg-white hover:bg-slate-50 dark:border-purple-800/80 dark:bg-[#16122d]/90 dark:hover:border-purple-600 dark:hover:bg-[#1c163b] shadow-sm hover:shadow-md backdrop-blur-md active:scale-[0.98]"
+            className="group flex items-center justify-center gap-2 w-full py-2.5 px-3.5 text-xs font-black text-slate-800 hover:text-purple-700 dark:text-zinc-200 dark:hover:text-white transition-all rounded-2xl border border-purple-300/90 hover:border-purple-500 bg-white hover:bg-slate-50 dark:border-purple-800/80 dark:bg-[#16122d]/90 dark:hover:border-purple-600 dark:hover:bg-[#1c163b] shadow-sm hover:shadow-md backdrop-blur-md active:scale-[0.98]"
           >
             <Video className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform shrink-0" />
             <span className="whitespace-nowrap">{settings.HERO_BTN_EXPERT || 'انضم كـ مدرس أو دكتور جامعي (0% عمولة)'}</span>
@@ -124,7 +124,7 @@ export default function MobileHero({
           <Link
             href="/instructors/join?track=student"
             prefetch={true}
-            className="group flex items-center justify-center gap-2 w-full py-2.5 px-3.5 text-xs font-black text-amber-950 dark:text-amber-300 transition-all rounded-xl border-2 border-amber-500/70 hover:border-amber-400 bg-amber-500/15 hover:bg-amber-500/25 dark:bg-amber-500/15 dark:hover:bg-amber-500/25 shadow-md backdrop-blur-md active:scale-[0.98]"
+            className="group flex items-center justify-center gap-2 w-full py-2.5 px-3.5 text-xs font-black text-amber-950 dark:text-amber-300 transition-all rounded-2xl border-2 border-amber-500/70 hover:border-amber-400 bg-amber-500/15 hover:bg-amber-500/25 dark:bg-amber-500/15 dark:hover:bg-amber-500/25 shadow-md backdrop-blur-md active:scale-[0.98]"
           >
             <GraduationCap className="w-3.5 h-3.5 text-amber-500 group-hover:scale-110 transition-transform shrink-0" />
             <span className="whitespace-nowrap">{settings.HERO_BTN_STUDENT || 'اشترك كمحاضر طالب (شهر كامل مجاناً)'}</span>
