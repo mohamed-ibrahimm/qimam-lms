@@ -45,6 +45,7 @@ export default function Header({
   const [currentUser, setCurrentUser] = useState<any>(initialUser);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [coursesMenuOpen, setCoursesMenuOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
   const { theme, toggleTheme } = useTheme();
@@ -52,6 +53,8 @@ export default function Header({
   const cleanInitialName = (initialPlatformName || 'أكاديمية م / محمد إبراهيم').replace(/سنجر/g, '').trim();
   const [platformName, setPlatformName] = useState(cleanInitialName || 'أكاديمية م / محمد إبراهيم');
   const [platformTagline, setPlatformTagline] = useState(initialPlatformTagline || 'بوابتك الاحترافية لاحتراف البرمجة والذكاء الاصطناعي والتصميم');
+  const [navExpertBtnText, setNavExpertBtnText] = useState('مدرس أو دكتور');
+  const [navStudentBtnText, setNavStudentBtnText] = useState('محاضر طالب');
 
   // Sync if prop updates from server
   useEffect(() => {
@@ -81,6 +84,8 @@ export default function Header({
           setPlatformName(data.platformName.replace(/سنجر/g, '').trim());
         }
         if (data.platformTagline && !data.platformTagline.includes('?')) setPlatformTagline(data.platformTagline);
+        if (data.settings?.NAV_EXPERT_BTN_TEXT) setNavExpertBtnText(data.settings.NAV_EXPERT_BTN_TEXT);
+        if (data.settings?.NAV_STUDENT_BTN_TEXT) setNavStudentBtnText(data.settings.NAV_STUDENT_BTN_TEXT);
       }
     } catch (e) {}
   };
@@ -142,6 +147,7 @@ export default function Header({
   useEffect(() => {
     setMobileMenuOpen(false);
     setDropdownOpen(false);
+    setCoursesMenuOpen(false);
   }, [pathname]);
 
   const handleLogout = async () => {
@@ -187,15 +193,15 @@ export default function Header({
         </Link>
 
         {/* =========================================================================
-            2. CENTER: CLASSIC, CLEAN & DYNAMIC NAVIGATION (HARMONIOUS WITH PLATFORM COLORS)
+            2. CENTER: CLASSIC NAVIGATION WITH "جميع الكورسات" & SEAMLESS DROPDOWN
            ========================================================================= */}
-        <div className="hidden lg:flex items-center gap-1.5 bg-slate-100/90 dark:bg-black/50 p-1.5 rounded-full border border-slate-200/90 dark:border-white/10 shadow-inner shrink-0">
+        <div className="hidden lg:flex items-center gap-2 bg-slate-100/90 dark:bg-black/50 p-1.5 rounded-full border border-slate-200/90 dark:border-white/10 shadow-inner shrink-0">
           
           {/* Link: الرئيسية */}
           <Link
             href="/"
             prefetch={true}
-            className={`px-3.5 py-1.5 text-xs font-bold rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
+            className={`px-4 py-2 text-xs font-bold rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
               pathname === '/'
                 ? 'bg-white dark:bg-zinc-800 text-blue-700 dark:text-white border border-slate-200 dark:border-zinc-700 shadow-xs'
                 : 'text-slate-600 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-white hover:bg-white/70 dark:hover:bg-zinc-800/60'
@@ -205,25 +211,93 @@ export default function Header({
             <span>الرئيسية</span>
           </Link>
 
-          {/* THE FEATURED CENTERPIECE: جميع الكورسات (دينامك وفخم ومميز بالألوان) */}
-          <Link
-            href="/courses"
-            prefetch={true}
-            className={`px-4 py-1.5 text-xs font-black rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 cursor-pointer ${
-              pathname === '/courses'
-                ? 'diploma-luxury-pill scale-105 ring-2 ring-amber-400/50 shadow-md shadow-amber-500/20'
-                : 'diploma-luxury-pill hover:scale-105'
-            }`}
+          {/* THE FEATURED CENTERPIECE: جميع الكورسات مع القائمة المنسدلة الانسيابية بدون انقطاع */}
+          <div
+            className="relative group"
+            onMouseEnter={() => setCoursesMenuOpen(true)}
+            onMouseLeave={() => setCoursesMenuOpen(false)}
           >
-            <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-            <span className="whitespace-nowrap">جميع الكورسات</span>
-          </Link>
+            <Link
+              href="/courses"
+              prefetch={true}
+              onClick={() => setCoursesMenuOpen(false)}
+              className={`px-4 py-2 text-xs sm:text-sm font-black rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 cursor-pointer ${
+                pathname.startsWith('/courses')
+                  ? 'diploma-luxury-pill scale-105 ring-2 ring-amber-400/50 shadow-md shadow-amber-500/20'
+                  : 'diploma-luxury-pill hover:scale-105'
+              }`}
+            >
+              <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+              <span className="whitespace-nowrap">جميع الكورسات</span>
+              <ChevronDown className={`w-3.5 h-3.5 text-amber-400 transition-transform duration-200 shrink-0 ${coursesMenuOpen ? 'rotate-180' : ''}`} />
+            </Link>
+
+            {/* Seamless Dropdown Bridge (no gap so mouse never loses focus) */}
+            <div
+              className={`absolute top-full left-1/2 -translate-x-1/2 pt-2 w-72 z-50 text-right transition-all duration-200 ${
+                coursesMenuOpen ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none -translate-y-1'
+              }`}
+            >
+              <div className="rounded-3xl bg-white/95 dark:bg-[#120e24]/98 border border-slate-200/90 dark:border-amber-500/30 shadow-2xl backdrop-blur-2xl p-2 space-y-1.5">
+                <Link
+                  href="/courses"
+                  onClick={() => setCoursesMenuOpen(false)}
+                  className="flex items-center justify-between p-2.5 rounded-2xl bg-amber-500/10 hover:bg-amber-500/20 text-slate-900 dark:text-white transition-all group/item"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-500 flex items-center justify-center">
+                      <BookOpen className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="text-xs font-black block">دليل جميع الكورسات</span>
+                      <span className="text-[10px] text-slate-500 dark:text-zinc-400">كافة التخصصات والمسارات</span>
+                    </div>
+                  </div>
+                  <ArrowLeft className="w-3.5 h-3.5 text-amber-500 group-hover/item:-translate-x-1 transition-transform" />
+                </Link>
+
+                <Link
+                  href="/courses?type=students"
+                  onClick={() => setCoursesMenuOpen(false)}
+                  className="flex items-center justify-between p-2.5 rounded-2xl hover:bg-amber-500/15 text-slate-900 dark:text-white transition-all group/item"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-500 flex items-center justify-center">
+                      <GraduationCap className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="text-xs font-black block text-amber-700 dark:text-amber-300">كورسات الطلاب</span>
+                      <span className="text-[10px] text-slate-500 dark:text-zinc-400">شروحات ومناهج الطلبة</span>
+                    </div>
+                  </div>
+                  <span className="text-[9px] px-1.5 py-0.5 rounded-md bg-amber-500/20 text-amber-600 dark:text-amber-300 font-bold">طالب</span>
+                </Link>
+
+                <Link
+                  href="/courses?type=instructors"
+                  onClick={() => setCoursesMenuOpen(false)}
+                  className="flex items-center justify-between p-2.5 rounded-2xl hover:bg-indigo-500/15 text-slate-900 dark:text-white transition-all group/item"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center">
+                      <Video className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="text-xs font-black block text-indigo-700 dark:text-indigo-300">كورسات المحاضرين</span>
+                      <span className="text-[10px] text-slate-500 dark:text-zinc-400">مدرسين ودكاترة معتمدين</span>
+                    </div>
+                  </div>
+                  <span className="text-[9px] px-1.5 py-0.5 rounded-md bg-indigo-500/20 text-indigo-600 dark:text-indigo-300 font-bold">دكتور</span>
+                </Link>
+              </div>
+            </div>
+          </div>
 
           {/* Link: الدبلومات الشاملة */}
           <Link
             href="/diplomas"
             prefetch={true}
-            className={`px-3.5 py-1.5 text-xs font-bold rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
+            className={`px-4 py-2 text-xs font-bold rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
               pathname.startsWith('/diplomas')
                 ? 'bg-purple-600 text-white shadow-md shadow-purple-600/20'
                 : 'text-slate-600 dark:text-zinc-300 hover:text-purple-600 dark:hover:text-white hover:bg-white/70 dark:hover:bg-zinc-800/60'
@@ -232,40 +306,12 @@ export default function Header({
             <Award className="w-3.5 h-3.5 text-purple-400" />
             <span>الدبلومات الشاملة</span>
           </Link>
-
-          {/* Link: كورسات الطلاب */}
-          <Link
-            href="/courses?type=students"
-            prefetch={true}
-            className={`px-3 py-1.5 text-xs font-bold rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
-              pathname.includes('type=students')
-                ? 'bg-amber-500 text-zinc-950 font-black shadow-xs'
-                : 'text-amber-700 dark:text-amber-300 hover:bg-amber-500/15'
-            }`}
-          >
-            <GraduationCap className="w-3.5 h-3.5 text-amber-500" />
-            <span>كورسات الطلاب</span>
-          </Link>
-
-          {/* Link: كورسات المحاضرين */}
-          <Link
-            href="/courses?type=instructors"
-            prefetch={true}
-            className={`px-3 py-1.5 text-xs font-bold rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
-              pathname.includes('type=instructors')
-                ? 'bg-indigo-600 text-white font-black shadow-xs'
-                : 'text-indigo-700 dark:text-indigo-300 hover:bg-indigo-500/15'
-            }`}
-          >
-            <Video className="w-3.5 h-3.5 text-indigo-400" />
-            <span>كورسات المحاضرين</span>
-          </Link>
         </div>
 
         {/* =========================================================================
-            3. LEFT: ACTIONS & AUTH BUTTONS (Clean, Fast & Balanced)
+            3. LEFT: INSTRUCTOR JOIN PILLS + AUTH & THEME BUTTONS
            ========================================================================= */}
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           
           {/* User Profile Dropdown (If Logged In) */}
           {currentUser ? (
@@ -413,8 +459,29 @@ export default function Header({
               )}
             </div>
           ) : (
-            /* Auth Buttons */
-            <div className="hidden lg:flex items-center gap-2 shrink-0">
+            /* Auth + Dual Instructor Join Pills */
+            <div className="hidden lg:flex items-center gap-1.5 sm:gap-2 shrink-0">
+              
+              {/* Join: مدرس أو دكتور */}
+              <Link
+                href="/instructors/join?track=expert"
+                className="px-3 py-1.5 rounded-full text-xs font-bold bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 text-purple-700 dark:text-purple-300 hover:border-purple-400 transition-all flex items-center gap-1 shrink-0 shadow-xs"
+                title="سجل كمدرس أو دكتور جامعي (0% عمولة - 14 يوماً مجاناً)"
+              >
+                <Video className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
+                <span>{navExpertBtnText}</span>
+              </Link>
+
+              {/* Join: محاضر طالب */}
+              <Link
+                href="/instructors/join?track=student"
+                className="px-3 py-1.5 rounded-full text-xs font-black bg-gradient-to-r from-amber-500/15 via-yellow-500/20 to-amber-500/15 hover:from-amber-500/25 hover:to-yellow-500/30 border border-amber-500/40 hover:border-amber-400 text-amber-800 dark:text-amber-300 transition-all flex items-center gap-1 shrink-0 shadow-sm shadow-amber-500/10"
+                title="منحة المحاضر الطالب لطلبة الجامعات والمدارس (شهر كامل مجاناً)"
+              >
+                <GraduationCap className="w-3.5 h-3.5 text-amber-500" />
+                <span>{navStudentBtnText}</span>
+              </Link>
+
               {/* Login Button */}
               <Link
                 href="/login"
