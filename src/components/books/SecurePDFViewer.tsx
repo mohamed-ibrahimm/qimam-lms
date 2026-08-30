@@ -134,10 +134,8 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
     };
 
     const handleWindowBlur = () => {
-      // When window loses focus (e.g. Snipping tool, Alt-Tab), obscure if not in active native fullscreen
-      if (!document.fullscreenElement) {
-        setIsWindowBlurred(true);
-      }
+      // Obscure immediately when focus leaves window (e.g. Snipping tool, Alt-Tab, external capture software)
+      setIsWindowBlurred(true);
     };
 
     const handleWindowFocus = () => {
@@ -145,10 +143,19 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
       setIsCapturingShield(false);
     };
 
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        setIsWindowBlurred(true);
+      } else {
+        setIsWindowBlurred(false);
+      }
+    };
+
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
     window.addEventListener('blur', handleWindowBlur);
     window.addEventListener('focus', handleWindowFocus);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
     document.addEventListener('fullscreenchange', handleFullscreenChange);
 
     return () => {
@@ -156,6 +163,7 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
       window.removeEventListener('keyup', handleKeyUp);
       window.removeEventListener('blur', handleWindowBlur);
       window.removeEventListener('focus', handleWindowFocus);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       document.removeEventListener('fullscreenchange', handleFullscreenChange);
     };
   }, [currentPage, totalPages, isAccessible, watermarkText]);
@@ -493,18 +501,18 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
             </div>
 
             {/* =========================================================================
-                DRM WATERMARK GRID (Diagonal repeating subtle security overlay)
+                DRM WATERMARK GRID (Ultra-subtle, featherweight, non-intrusive)
                ========================================================================= */}
-            <div className="absolute inset-0 pointer-events-none select-none z-10 flex flex-col justify-around items-center overflow-hidden py-8">
-              {[0, 1, 2, 3].map((rowIdx) => (
+            <div className="absolute inset-0 pointer-events-none select-none z-10 flex flex-col justify-around items-center overflow-hidden py-10">
+              {[0, 1, 2].map((rowIdx) => (
                 <div
                   key={rowIdx}
-                  className="w-[140%] text-center transform -rotate-[22deg] my-4 space-y-1"
+                  className="w-[140%] text-center transform -rotate-[22deg] my-6 space-y-0.5"
                 >
-                  <div className="text-xs sm:text-sm font-black tracking-wider text-slate-900/15 dark:text-amber-300/20 select-none font-mono">
+                  <div className="text-[11px] sm:text-xs font-semibold tracking-widest text-slate-900/[0.05] dark:text-amber-300/[0.06] select-none font-mono">
                     🔒 أكاديمية قِمَم التعليمية • {watermarkText}
                   </div>
-                  <div className="text-[10px] sm:text-[11px] font-bold text-slate-700/12 dark:text-zinc-400/15 select-none font-mono">
+                  <div className="text-[9px] sm:text-[10px] font-normal text-slate-700/[0.03] dark:text-zinc-400/[0.04] select-none font-mono">
                     DRM-PROTECTED • BOOK: {book.slug.toUpperCase()} • PAGE {currentPage}
                   </div>
                 </div>
@@ -512,13 +520,16 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
             </div>
 
             {/* Subtle Security Footprint Badge */}
-            <div className="absolute bottom-3 left-4 pointer-events-none z-20 px-3 py-1 rounded-full bg-black/40 dark:bg-white/10 backdrop-blur-md text-[10px] font-mono text-slate-700 dark:text-amber-300 opacity-80 border border-black/10 dark:border-white/10 font-bold shadow-xs">
+            <div className="absolute bottom-3 left-4 pointer-events-none z-20 px-2.5 py-0.5 rounded-full bg-black/30 dark:bg-white/5 backdrop-blur-md text-[9px] font-mono text-slate-500 dark:text-zinc-400 opacity-60 border border-black/5 dark:border-white/5 font-bold shadow-xs">
               🛡️ DRM-SECURE • {currentUser?.username || 'STUDENT'} • ID: {book.id.substring(0, 8).toUpperCase()}
             </div>
 
             {/* Anti-Screen Capture Shield (Flashes when PrintScreen / Snipping Tool / Loss of Focus detected) */}
             {(isCapturingShield || isWindowBlurred) && (
-              <div className="absolute inset-0 z-50 bg-black/95 backdrop-blur-3xl flex flex-col items-center justify-center p-6 text-center space-y-3 animate-in fade-in duration-100">
+              <div
+                onClick={() => { setIsWindowBlurred(false); setIsCapturingShield(false); }}
+                className="absolute inset-0 z-50 bg-black/95 backdrop-blur-3xl flex flex-col items-center justify-center p-6 text-center space-y-3 animate-in fade-in duration-100 cursor-pointer"
+              >
                 <div className="w-14 h-14 rounded-2xl bg-amber-500/20 border-2 border-amber-500/40 text-amber-400 flex items-center justify-center shadow-lg shadow-amber-500/20">
                   <Shield className="w-7 h-7" />
                 </div>
