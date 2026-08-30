@@ -22,6 +22,7 @@ export default function FileUploadInput({
 }: FileUploadInputProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
   const [previewUrl, setPreviewUrl] = useState<string>(currentValue);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -33,29 +34,54 @@ export default function FileUploadInput({
     setError('');
     setSuccess(false);
     setUploading(true);
+    setUploadProgress(0);
 
     const formData = new FormData();
     formData.append('file', file);
     formData.append('folder', folder);
 
     try {
-      const res = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
+      const xhr = new XMLHttpRequest();
+
+      xhr.upload.addEventListener('progress', (evt) => {
+        if (evt.lengthComputable) {
+          const percentComplete = Math.round((evt.loaded / evt.total) * 100);
+          setUploadProgress(percentComplete);
+        }
       });
 
-      const data = await res.json();
-      if (!res.ok) {
-        setError(data.error || 'فشل رفع الملف');
-      } else {
-        setPreviewUrl(data.url);
-        setSuccess(true);
-        onUploadComplete(data.url);
-      }
+      xhr.addEventListener('load', () => {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          try {
+            const data = JSON.parse(xhr.responseText);
+            setPreviewUrl(data.url);
+            setSuccess(true);
+            onUploadComplete(data.url);
+          } catch {
+            setError('حدث خطأ في قراءة استجابة الخادم');
+          }
+        } else {
+          try {
+            const data = JSON.parse(xhr.responseText);
+            setError(data.error || 'فشل رفع الملف');
+          } catch {
+            setError('فشل رفع الملف إلى السيرفر');
+          }
+        }
+        setUploading(false);
+      });
+
+      xhr.addEventListener('error', () => {
+        setError('حدث انقطاع في الاتصال أثناء الرفع');
+        setUploading(false);
+      });
+
+      xhr.open('POST', '/api/upload');
+      xhr.send(formData);
     } catch (err) {
-      setError('حدث خطأ أثناء رفع الملف');
-    } finally {
+      setError('حدث خطأ أثناء بدء الرفع');
       setUploading(false);
+    } finally {
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
       }
@@ -135,10 +161,22 @@ export default function FileUploadInput({
           }`}
         >
           {uploading ? (
-            <>
-              <Loader2 className="w-6 h-6 text-amber-400 animate-spin" />
-              <span className="text-xs font-bold text-amber-300">جاري رفع الملف وحفظه...</span>
-            </>
+            <div className="w-full max-w-sm mx-auto space-y-2 py-2">
+              <div className="flex items-center justify-between text-xs font-bold text-amber-300">
+                <span className="flex items-center gap-1.5">
+                  <Loader2 className="w-4 h-4 animate-spin text-amber-400" />
+                  جاري رفع وحفظ الملف...
+                </span>
+                <span className="font-mono text-amber-400 font-black">{uploadProgress}%</span>
+              </div>
+              <div className="w-full h-2.5 rounded-full bg-zinc-800 overflow-hidden border border-zinc-700">
+                <div
+                  className="h-full bg-gradient-to-r from-amber-500 to-yellow-400 transition-all duration-200 rounded-full"
+                  style={{ width: `${uploadProgress}%` }}
+                />
+              </div>
+              <span className="text-[10px] text-zinc-400 block text-center">يرجى الانتظار حتى اكتمال معالجة الملف</span>
+            </div>
           ) : (
             <>
               <div className="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 group-hover:text-amber-400">

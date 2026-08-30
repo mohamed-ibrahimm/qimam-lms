@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import FileUploadInput from '@/components/FileUploadInput';
 import { formatPrice, formatDuration } from '@/lib/utils';
 import InstructorSidebarClient, { InstructorTabType } from '@/components/instructor/InstructorSidebarClient';
+import StudentVerificationModal from '@/components/instructor/StudentVerificationModal';
 import {
   GraduationCap,
   BookOpen,
@@ -86,6 +87,9 @@ export default function InstructorClient({
   // Course Delete State
   const [deletingCourse, setDeletingCourse] = useState<any | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  // Student Verification Modal State
+  const [showStudentVerifModal, setShowStudentVerifModal] = useState(false);
 
   // New Course Modal State
   const [showAddModal, setShowAddModal] = useState(false);
@@ -515,6 +519,34 @@ export default function InstructorClient({
             >
               <CreditCard className="w-4 h-4" />
               <span>{isExpired ? 'تجديد الاشتراك الآن' : 'ترقية أو تجديد الباقة'}</span>
+            </button>
+          </div>
+        )}
+
+        {/* Student Special Grant Callout (30 days free for students aged <= 23) */}
+        {!user.isStudentInstructor && user.role !== 'ADMIN' && (
+          <div className="p-4 sm:p-5 rounded-3xl bg-gradient-to-r from-purple-950/70 via-indigo-950/40 to-zinc-900 border-2 border-purple-500/50 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3.5">
+              <div className="w-11 h-11 rounded-2xl bg-purple-500/20 border border-purple-500/40 text-purple-300 flex items-center justify-center shrink-0">
+                <GraduationCap className="w-6 h-6" />
+              </div>
+              <div className="space-y-0.5">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-black text-white">هل أنت طالب جامعي وتريد الشرح لزملائك؟ (سن 23 سنة فأقل) 🎓</span>
+                  <span className="px-2 py-0.5 rounded-full bg-amber-500 text-zinc-950 font-black text-[10px]">منحة حصرية</span>
+                </div>
+                <p className="text-xs text-zinc-300">
+                  ارفع كارنيه كليتك واحصل فورياً على <strong>شهر كامل مجاناً (30 يوماً تجريبية)</strong> وباقة اشتراك مدعومة بعد انتهاء الشهر.
+                </p>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setShowStudentVerifModal(true)}
+              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 text-zinc-950 font-black text-xs shadow-lg shadow-amber-950/40 transition-all hover:scale-105 shrink-0 cursor-pointer"
+            >
+              توثيق الكارنيه وتفعيل شهر مجاناً 🚀
             </button>
           </div>
         )}
@@ -1658,6 +1690,20 @@ export default function InstructorClient({
         </div>,
         document.body
       )}
+
+      {/* STUDENT INSTRUCTOR VERIFICATION MODAL */}
+      <StudentVerificationModal
+        isOpen={showStudentVerifModal}
+        onClose={() => setShowStudentVerifModal(false)}
+        currentUser={user}
+        onSuccess={() => {
+          setMessage({
+            type: 'success',
+            text: 'تم إرسال طلب التوثيق وتفعيل شهر مجاناً (30 يوماً) في استوديو الأكاديمية بنجاح!',
+          });
+          router.refresh();
+        }}
+      />
     </div>
   );
 }

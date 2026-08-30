@@ -36,6 +36,17 @@ model User {
   vodafoneCashNumber      String?
   paymentInstructions     String?
 
+  // Student Instructor Verification Details (سن 23 فأقل + منحة 30 يوم مجاناً)
+  isStudentInstructor       Boolean           @default(false)
+  studentVerificationStatus String?           // PENDING, APPROVED, REJECTED
+  studentUniversity         String?
+  studentFaculty            String?
+  studentStudyYear          String?
+  studentBirthDate          DateTime?
+  studentIdCardUrl          String?
+  studentNationalIdUrl      String?
+  studentVerificationNote   String?
+
   createdAt               DateTime          @default(now())
   updatedAt               DateTime          @updatedAt
 

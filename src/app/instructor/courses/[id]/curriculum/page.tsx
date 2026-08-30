@@ -24,6 +24,11 @@ export default async function CourseCurriculumPage({ params }: Props) {
       instructor: {
         select: { id: true, officialFullName: true, email: true }
       },
+      finalExam: {
+        include: {
+          questions: { orderBy: { orderIndex: 'asc' } }
+        }
+      },
       sections: {
         orderBy: { orderIndex: 'asc' },
         include: {
@@ -31,7 +36,11 @@ export default async function CourseCurriculumPage({ params }: Props) {
             orderBy: { orderIndex: 'asc' },
             include: {
               summary: true,
-              quiz: { select: { id: true, title: true } }
+              quiz: {
+                include: {
+                  questions: { orderBy: { orderIndex: 'asc' } }
+                }
+              }
             }
           }
         }

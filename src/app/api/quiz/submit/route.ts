@@ -121,6 +121,41 @@ export async function POST(req: Request) {
       });
     }
 
+    // If passed and this is a course final exam, issue accredited certificate!
+    let certificate: any = null;
+    if (isPassed && quiz.courseFinalExam) {
+      const course = await prisma.course.findUnique({
+        where: { id: quiz.courseFinalExam.id },
+        include: { instructor: true }
+      });
+
+      if (course) {
+        const existingCert = await prisma.certificate.findFirst({
+          where: { userId: user.id, courseId: course.id }
+        });
+
+        if (existingCert) {
+          certificate = existingCert;
+        } else {
+          const certNumber = `QIMAM-CERT-${new Date().getFullYear()}-${Math.floor(100000 + Math.random() * 900000)}`;
+          certificate = await prisma.certificate.create({
+            data: {
+              certificateNumber: certNumber,
+              userId: user.id,
+              courseId: course.id,
+              studentOfficialName: user.officialFullName || `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'الطالب',
+              title: course.title,
+              instructorName: course.instructor?.officialFullName || 'أكاديمية قمم',
+              grade: `${percentage}% (${percentage >= 90 ? 'ممتاز' : percentage >= 80 ? 'جيد جداً' : 'جيد'})`,
+              totalHours: course.durationHours || 20,
+              verificationUrl: `/verify-certificate?number=${certNumber}`,
+              isValid: true,
+            }
+          });
+        }
+      }
+    }
+
     // Check Parent Notification
     if (user.parentNotificationEnabled) {
       const parentContact = await prisma.parentContact.findFirst({
@@ -172,6 +207,7 @@ export async function POST(req: Request) {
       attemptId: attempt.id,
       questionResults,
       motivationalMessage,
+      certificate,
     });
   } catch (error: any) {
     console.error('Quiz submission error:', error);

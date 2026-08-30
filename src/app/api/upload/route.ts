@@ -22,12 +22,12 @@ export async function POST(req: Request) {
     }
 
     const isVideo = file.type.startsWith('video/');
-    const MAX_SIZE = isVideo ? 250 * 1024 * 1024 : 25 * 1024 * 1024;
+    const MAX_SIZE = isVideo ? 1024 * 1024 * 1024 : 50 * 1024 * 1024; // 1 GB for videos, 50 MB for docs/images
     if (file.size > MAX_SIZE) {
       return NextResponse.json({
         error: isVideo
-          ? 'حجم الفيديو يتجاوز الحد الأقصى المسموح (250 ميجابايت)'
-          : 'حجم الملف يتجاوز الحد الأقصى المسموح (25 ميجابايت)',
+          ? 'حجم الفيديو يتجاوز الحد الأقصى المسموح (1024 ميجابايت / 1 جيجا)'
+          : 'حجم الملف يتجاوز الحد الأقصى المسموح (50 ميجابايت)',
       }, { status: 400 });
     }
 

@@ -74,6 +74,7 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
       groupName: 'المحاضرون والاشتراكات',
       items: [
         { name: 'المحاضرون واشتراكات SaaS', href: '/admin/instructors', icon: GraduationCap, badge: 'SaaS' },
+        { name: 'توثيق الطلاب المحاضرين (سن 23)', href: '/admin/student-verifications', icon: Award, badge: 'منحة 30 يوم' },
         { name: 'صفحة انضم كمحاضر والباقات', href: '/instructors/join', icon: Star, isExternal: true },
         { name: 'استوديو تدريس المحاضر', href: '/instructor', icon: SlidersHorizontal, isExternal: true },
       ],

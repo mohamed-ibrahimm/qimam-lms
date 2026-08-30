@@ -74,6 +74,7 @@ export default function ClassroomClient({
   // Quiz Modal State
   const [isQuizOpen, setIsQuizOpen] = useState(false);
   const [activeQuiz, setActiveQuiz] = useState<any>(null);
+  const [issuedCertificate, setIssuedCertificate] = useState<any>(null);
 
   // Lesson Progress State
   const [completedLessonIds, setCompletedLessonIds] = useState<string[]>(() => {
@@ -152,9 +153,12 @@ export default function ClassroomClient({
     }
   };
 
-  const handleLessonPassed = () => {
+  const handleLessonPassed = (result?: any) => {
     if (!completedLessonIds.includes(activeLesson.id)) {
       setCompletedLessonIds((prev) => [...prev, activeLesson.id]);
+    }
+    if (result?.certificate) {
+      setIssuedCertificate(result.certificate);
     }
     router.refresh();
   };
@@ -274,14 +278,97 @@ export default function ClassroomClient({
                     setActiveQuiz(activeLesson.quiz);
                     setIsQuizOpen(true);
                   }}
-                  className="px-4 py-2.5 rounded-xl bg-purple-950 hover:bg-purple-900 border border-purple-700 text-purple-200 text-xs font-bold transition-colors flex items-center gap-1.5 shadow-md"
+                  className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-md cursor-pointer ${
+                    completedLessonIds.includes(activeLesson.id)
+                      ? 'bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700'
+                      : 'bg-purple-600 hover:bg-purple-500 text-white shadow-purple-900/40'
+                  }`}
                 >
-                  <HelpCircle className="w-4 h-4 text-purple-400" />
-                  <span>بدء اختبار الدرس</span>
+                  <HelpCircle className="w-4 h-4 text-purple-200" />
+                  <span>{completedLessonIds.includes(activeLesson.id) ? 'إعادة حل الاختبار' : 'بدء اختبار الدرس'}</span>
                 </button>
               )}
             </div>
           </div>
+
+          {/* Mandatory Quiz Status Banner */}
+          {activeLesson.quiz && (
+            <div
+              className={`p-4 sm:p-5 rounded-2xl border transition-all ${
+                completedLessonIds.includes(activeLesson.id)
+                  ? 'bg-emerald-950/40 border-emerald-800/80 text-emerald-300'
+                  : 'bg-gradient-to-r from-purple-950 via-purple-900/40 to-zinc-900 border-2 border-purple-500 shadow-xl'
+              }`}
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border ${
+                      completedLessonIds.includes(activeLesson.id)
+                        ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400'
+                        : 'bg-purple-500/20 border-purple-500/40 text-purple-300'
+                    }`}
+                  >
+                    {completedLessonIds.includes(activeLesson.id) ? (
+                      <CheckCircle2 className="w-5 h-5" />
+                    ) : (
+                      <Lock className="w-5 h-5" />
+                    )}
+                  </div>
+                  <div>
+                    <h3 className="text-xs sm:text-sm font-black text-white">
+                      {completedLessonIds.includes(activeLesson.id)
+                        ? 'تم اجتياز اختبار هذا الدرس بنجاح! تم فتح الدرس التالي ✅'
+                        : 'اختبار الدرس إجباري لفتح المحاضرة التالية 🔒'}
+                    </h3>
+                    <p className="text-[11px] text-zinc-300 mt-0.5">
+                      {completedLessonIds.includes(activeLesson.id)
+                        ? 'أحسنت! يمكنك الآن الانتقال للدرس التالي، أو إعادة الاختبار للمراجعة.'
+                        : `يجب الحصول على ${activeLesson.quiz.passingScorePercent}% كحد أدنى لاجتياز الدرس والانتقال للمحاضرة التالية.`}
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setActiveQuiz(activeLesson.quiz);
+                    setIsQuizOpen(true);
+                  }}
+                  className={`px-6 py-2.5 rounded-xl text-xs font-black shadow-md transition-all hover:scale-105 shrink-0 cursor-pointer ${
+                    completedLessonIds.includes(activeLesson.id)
+                      ? 'bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700'
+                      : 'bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-400 text-white shadow-purple-950/50'
+                  }`}
+                >
+                  {completedLessonIds.includes(activeLesson.id) ? 'إعادة حل الاختبار' : 'بدء اختبار الدرس الآن 📝'}
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Certificate Awarded Top Banner */}
+          {issuedCertificate && (
+            <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-500/20 via-yellow-500/15 to-amber-500/20 border border-amber-500/50 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <Sparkles className="w-6 h-6 text-amber-400 shrink-0" />
+                <div>
+                  <h4 className="text-sm font-black text-white">🎉 مبارك! تم إصدار شهادتك المعتمدة للكورس!</h4>
+                  <p className="text-xs text-zinc-300">
+                    رقم الشهادة: <span className="font-mono text-amber-300 font-bold">{issuedCertificate.certificateNumber}</span>
+                  </p>
+                </div>
+              </div>
+              <a
+                href={issuedCertificate.verificationUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 font-black text-xs shadow-md shrink-0"
+              >
+                معاينة وتحميل الشهادة PDF 🎓
+              </a>
+            </div>
+          )}
 
           {/* Navigation Tabs */}
           <div className="border-b border-border flex items-center gap-2 overflow-x-auto pb-1">
@@ -605,6 +692,26 @@ export default function ClassroomClient({
                     {sec.lessons.map((lesson: any) => {
                       const isActive = lesson.id === activeLesson.id;
                       const isCompleted = completedLessonIds.includes(lesson.id);
+                      const lessonGlobalIndex = allLessons.findIndex((l: any) => l.id === lesson.id);
+                      const isLocked = !isEnrolled
+                        ? !lesson.isFreePreview
+                        : lessonGlobalIndex > 0 && !completedLessonIds.includes(allLessons[lessonGlobalIndex - 1].id);
+
+                      if (isLocked) {
+                        return (
+                          <div
+                            key={lesson.id}
+                            className="p-2.5 px-3 rounded-xl text-xs flex items-center justify-between bg-surface-raised/40 text-zinc-600 border border-border/40 cursor-not-allowed select-none opacity-60"
+                            title="يجب اجتياز الدرس السابق واختباره لفتح هذا الدرس"
+                          >
+                            <div className="flex items-center gap-2 truncate">
+                              <Lock className="w-3.5 h-3.5 text-zinc-600 shrink-0" />
+                              <span className="truncate">{lesson.title}</span>
+                            </div>
+                            <span className="text-[10px] text-amber-500/80 font-bold">مقفل 🔒</span>
+                          </div>
+                        );
+                      }
 
                       return (
                         <Link
@@ -637,18 +744,30 @@ export default function ClassroomClient({
 
             {/* Final Exam Launcher */}
             {course.finalExam && (
-              <div className="pt-4 border-t border-border">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setActiveQuiz(course.finalExam);
-                    setIsQuizOpen(true);
-                  }}
-                  className="w-full py-3 rounded-xl bg-purple-950/80 hover:bg-purple-900 border border-purple-700 text-purple-200 text-xs font-bold flex items-center justify-center gap-2 shadow-md transition-all"
-                >
-                  <Award className="w-4 h-4 text-purple-400" />
-                  <span>بدء الاختبار النهائي الشامل للكورس</span>
-                </button>
+              <div className="pt-4 border-t border-border space-y-2">
+                {completedLessonIds.length < allLessons.length ? (
+                  <div className="p-3 rounded-xl bg-purple-950/20 border border-purple-900/40 text-center space-y-1">
+                    <div className="text-xs text-zinc-400 flex items-center justify-center gap-1.5 font-bold">
+                      <Lock className="w-3.5 h-3.5 text-amber-400" />
+                      <span>الامتحان النهائي مقفل</span>
+                    </div>
+                    <p className="text-[10px] text-zinc-500">
+                      يجب اجتياز جميع دروس الكورس ({completedLessonIds.length}/{allLessons.length}) لفتح الامتحان والشهادة.
+                    </p>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setActiveQuiz(course.finalExam);
+                      setIsQuizOpen(true);
+                    }}
+                    className="w-full py-3 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 text-white text-xs font-black flex items-center justify-center gap-2 shadow-lg shadow-purple-950/50 transition-all hover:scale-105 cursor-pointer"
+                  >
+                    <Award className="w-4 h-4 text-yellow-300" />
+                    <span>بدء الامتحان النهائي وإصدار الشهادة 🎓</span>
+                  </button>
+                )}
               </div>
             )}
           </div>

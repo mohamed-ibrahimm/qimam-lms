@@ -32,7 +32,7 @@ interface QuizModalProps {
   };
   isOpen: boolean;
   onClose: () => void;
-  onPassed?: () => void;
+  onPassed?: (result?: any) => void;
 }
 
 export default function QuizModal({ quiz, isOpen, onClose, onPassed }: QuizModalProps) {
@@ -100,7 +100,7 @@ export default function QuizModal({ quiz, isOpen, onClose, onPassed }: QuizModal
       } else {
         setResult(data);
         if (data.isPassed && onPassed) {
-          onPassed();
+          onPassed(data);
         }
       }
     } catch (e) {
@@ -265,6 +265,25 @@ export default function QuizModal({ quiz, isOpen, onClose, onPassed }: QuizModal
             );
           })}
         </div>
+
+        {/* Certificate Award Banner if final exam passed */}
+        {result?.certificate && (
+          <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-500/20 via-yellow-500/15 to-amber-500/20 border border-amber-500/40 text-center space-y-2.5 shadow-xl">
+            <Sparkles className="w-7 h-7 text-amber-400 mx-auto" />
+            <h4 className="text-base font-black text-white">🎉 تهانينا! لقد اجتزت الامتحان النهائي وحصلت على الشهادة المعتمدة!</h4>
+            <p className="text-xs text-zinc-300">
+              تم إصدار شهادتك الرسمية المعتمدة برقم: <span className="font-mono text-amber-300 font-black">{result.certificate.certificateNumber}</span>
+            </p>
+            <a
+              href={result.certificate.verificationUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 font-black text-xs shadow-lg shadow-amber-950/40 transition-all hover:scale-105"
+            >
+              <span>معاينة وتحميل الشهادة المعتمدة PDF 🎓</span>
+            </a>
+          </div>
+        )}
 
         {/* Modal Footer Actions */}
         <div className="pt-4 border-t border-border flex items-center justify-between">
