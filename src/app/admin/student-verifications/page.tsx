@@ -220,14 +220,14 @@ export default function AdminStudentVerificationsPage() {
                             type="button"
                             onClick={() =>
                               setSelectedImage({
-                                title: `كارنيه كلية: ${s.officialFullName || s.firstName}`,
+                                title: `مستند إثبات الدراسة: ${s.officialFullName || s.firstName}`,
                                 url: s.studentIdCardUrl,
                               })
                             }
                             className="px-2.5 py-1 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 text-[11px] font-bold inline-flex items-center gap-1 transition-colors"
                           >
                             <Eye className="w-3 h-3" />
-                            <span>معاينة الكارنيه</span>
+                            <span>معاينة إثبات الدراسة</span>
                           </button>
                         )}
                         {s.studentNationalIdUrl && (

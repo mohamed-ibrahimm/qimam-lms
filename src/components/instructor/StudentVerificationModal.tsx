@@ -40,7 +40,6 @@ export default function StudentVerificationModal({
       : '2003-05-15'
   );
   const [studentIdCardUrl, setStudentIdCardUrl] = useState(currentUser?.studentIdCardUrl || '');
-  const [nationalIdUrl, setNationalIdUrl] = useState(currentUser?.studentNationalIdUrl || '');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -79,7 +78,7 @@ export default function StudentVerificationModal({
     }
 
     if (!studentIdCardUrl) {
-      setError('يرجى رفع صورة كارنيه الكلية للعام الدراسي الحالي لإثبات القيد.');
+      setError('يرجى رفع صورة تثبت قيدك الدراسي حالياً (كارنيه الكلية أو المدرسة، جدول المحاضرات أو الحصص، أو إثبات قيد).');
       return;
     }
 
@@ -96,7 +95,7 @@ export default function StudentVerificationModal({
           studyYear,
           birthDate,
           studentIdCardUrl,
-          nationalIdUrl,
+          nationalIdUrl: null,
         }),
       });
 
@@ -181,48 +180,51 @@ export default function StudentVerificationModal({
               </div>
             )}
 
-            {/* University & Faculty */}
+            {/* University / School & Faculty / Stage */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-bold text-zinc-300 mb-1">اسم الجامعة *</label>
+                <label className="block text-xs font-bold text-zinc-300 mb-1">الجامعة أو المدرسة *</label>
                 <input
                   type="text"
                   required
                   value={university}
                   onChange={(e) => setUniversity(e.target.value)}
-                  placeholder="مثال: جامعة القاهرة / عين شمس"
+                  placeholder="مثال: جامعة القاهرة / مدرسة المتفوقين أو الثانوية"
                   className="w-full px-4 py-2.5 rounded-xl bg-zinc-800 border border-zinc-700 text-white text-xs focus:outline-none focus:border-amber-500"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-zinc-300 mb-1">الكلية والتخصص *</label>
+                <label className="block text-xs font-bold text-zinc-300 mb-1">الكلية أو المرحلة والتخصص *</label>
                 <input
                   type="text"
                   required
                   value={faculty}
                   onChange={(e) => setFaculty(e.target.value)}
-                  placeholder="مثال: حاسبات ومعلومات / هندسة / تجارة"
+                  placeholder="مثال: حاسبات ومعلومات / ثانوية عامة / لغات"
                   className="w-full px-4 py-2.5 rounded-xl bg-zinc-800 border border-zinc-700 text-white text-xs focus:outline-none focus:border-amber-500"
                 />
               </div>
             </div>
 
-            {/* Study Year & Date of Birth */}
+            {/* Study Year / Grade & Date of Birth */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-bold text-zinc-300 mb-1">الفرقة الدراسية الحالية *</label>
+                <label className="block text-xs font-bold text-zinc-300 mb-1">الفرقة أو الصف الدراسي الحالي *</label>
                 <select
                   value={studyYear}
                   onChange={(e) => setStudyYear(e.target.value)}
                   className="w-full px-4 py-2.5 rounded-xl bg-zinc-800 border border-zinc-700 text-white text-xs focus:outline-none focus:border-amber-500"
                 >
-                  <option value="الفرقة الأولى">الفرقة الأولى</option>
-                  <option value="الفرقة الثانية">الفرقة الثانية</option>
-                  <option value="الفرقة الثالثة">الفرقة الثالثة</option>
-                  <option value="الفرقة الرابعة">الفرقة الرابعة</option>
+                  <option value="الفرقة الأولى (جامعة)">الفرقة الأولى (جامعة)</option>
+                  <option value="الفرقة الثانية (جامعة)">الفرقة الثانية (جامعة)</option>
+                  <option value="الفرقة الثالثة (جامعة)">الفرقة الثالثة (جامعة)</option>
+                  <option value="الفرقة الرابعة (جامعة)">الفرقة الرابعة (جامعة)</option>
                   <option value="الفرقة الخامسة أو امتياز">الفرقة الخامسة أو امتياز</option>
-                  <option value="خريج دفعة العام الحالي">خريج دفعة العام الحالي</option>
+                  <option value="المرحلة الثانوية - الصف الثالث">المرحلة الثانوية - الصف الثالث</option>
+                  <option value="المرحلة الثانوية - الصف الثاني">المرحلة الثانوية - الصف الثاني</option>
+                  <option value="المرحلة الثانوية - الصف الأول">المرحلة الثانوية - الصف الأول</option>
+                  <option value="طالب بمعهد فني أو تكنولوجي">طالب بمعهد فني أو تكنولوجي</option>
                 </select>
               </div>
 
@@ -249,27 +251,15 @@ export default function StudentVerificationModal({
               </div>
             </div>
 
-            {/* Student ID Card Upload */}
+            {/* Student Proof Document Upload (Card, Schedule, or Enrollment Proof) */}
             <div>
               <FileUploadInput
-                label="صورة كارنيه الكلية للعام الدراسي الحالي (أو إثبات قيد جامعي) *"
-                folder="student_ids"
+                label="مستند إثبات الدراسة الحالي (كارنيه، جدول المحاضرات/الحصص، أو إثبات قيد) *"
+                folder="student_proofs"
                 accept="image/*,application/pdf"
                 currentValue={studentIdCardUrl}
                 onUploadComplete={(url) => setStudentIdCardUrl(url)}
-                helperText="صورة واضحة لكارنيه كليتك تُظهر اسمك والفرقة للتحقق من هوية الطالب"
-              />
-            </div>
-
-            {/* National ID Card Upload */}
-            <div>
-              <FileUploadInput
-                label="صورة بطاقة الرقم القومي (لتأكيد السن وتاريخ الميلاد) *"
-                folder="national_ids"
-                accept="image/*,application/pdf"
-                currentValue={nationalIdUrl}
-                onUploadComplete={(url) => setNationalIdUrl(url)}
-                helperText="صورة واضحة للبطاقة الشخصية للتحقق من تاريخ الميلاد ألا يتجاوز 23 سنة"
+                helperText="ارفع صورة واضحة تثبت قيدك الدراسي الحالي (كارنيه الكلية أو المدرسة، جدول المحاضرات/الحصص، إيصال سداد، أو إثبات قيد)"
               />
             </div>
           </form>

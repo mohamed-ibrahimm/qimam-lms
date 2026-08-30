@@ -1285,7 +1285,7 @@ export default function InstructorClient({
                     <span className="text-xs text-zinc-400 font-bold">ج.م / شهرياً</span>
                   </div>
                   <p className="text-xs text-zinc-400">
-                    منحة مدعومة لطلبة الجامعات حتى سن 22 سنة لشرح المناهج لزملائهم (بإثبات الكارنيه).
+                    منحة مدعومة لطلبة الجامعات والمدارس لشرح المناهج لزملائهم (بإثبات الكارنيه أو الجدول الدراسي).
                   </p>
                 </div>
                 <button
@@ -1309,7 +1309,7 @@ export default function InstructorClient({
                 >
                   {user.isStudentInstructor && user.studentVerificationStatus === 'APPROVED'
                     ? 'اختيار باقة الطالب (120 ج.م)'
-                    : 'توثيق الكارنيه لباقة الطالب (120 ج.م)'}
+                    : 'إثبات الدراسة لباقة الطالب (120 ج.م)'}
                 </button>
               </div>
             </div>
@@ -1501,7 +1501,7 @@ export default function InstructorClient({
                   <span className="font-bold text-white">ضوابط باقة الطالب (120 ج.م):</span>
                 </div>
                 <p className="text-[11px] text-zinc-300 leading-relaxed">
-                  هذه الباقة مخصصة لمن هم بسن <strong>22 سنة أو أقل</strong> وتتطلب إثبات قيد بكارنيه الكلية للعام الحالي. 
+                  هذه الباقة مخصصة لمن هم بسن <strong>22 سنة أو أقل</strong> وتتطلب إثبات قيد بكارنيه الكلية/المدرسة أو جدول المحاضرات للعام الحالي دون الحاجة لبطاقة شخصية. 
                   إذا كان عمرك أكبر من 22 سنة، يرجى اختيار الباقة العادية (الشهري 290 ج.م أو السنوي 2,900 ج.م).
                 </p>
                 {(!user.isStudentInstructor || user.studentVerificationStatus !== 'APPROVED') && (
@@ -1513,7 +1513,7 @@ export default function InstructorClient({
                     }}
                     className="mt-1 px-3 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-zinc-950 font-black text-[11px] flex items-center gap-1 cursor-pointer"
                   >
-                    <span>توثيق كارنيه الكلية وإثبات السن الآن</span>
+                    <span>إثبات الدراسة وتفعيل الباقة الآن</span>
                   </button>
                 )}
               </div>

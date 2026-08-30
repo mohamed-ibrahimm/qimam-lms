@@ -54,7 +54,7 @@ export async function POST(req: Request) {
     } = body;
 
     if (!university?.trim() || !faculty?.trim() || !studyYear?.trim() || !birthDate || !studentIdCardUrl) {
-      return NextResponse.json({ error: 'يرجى إكمال جميع الحقول ورفع صورة كارنيه الكلية' }, { status: 400 });
+      return NextResponse.json({ error: 'يرجى إكمال جميع الحقول ورفع مستند إثبات الدراسة الحالي (كارنيه، جدول، أو إثبات قيد)' }, { status: 400 });
     }
 
     // Strict Age Verification: Max 23 Years Old
