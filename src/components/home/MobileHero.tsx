@@ -73,25 +73,22 @@ export default function MobileHero({
           )}
         </div>
 
-        {/* 2. MIDDLE: Headline */}
-        <div className="w-full max-w-lg mx-auto flex flex-col items-center px-2 py-1 my-auto relative shrink-0">
+        {/* 2. MIDDLE: Large, Broad, Elegant Headline */}
+        <div className="w-full max-w-lg mx-auto flex flex-col items-center px-3 py-2 my-auto relative shrink-0">
           
-          {/* Soft ambient glow without bounding-box clipping */}
-          <div className="absolute -inset-4 pointer-events-none -z-10 bg-radial-gradient from-amber-500/15 via-purple-600/8 to-transparent blur-2xl" />
+          {/* Soft spherical golden ambient glow */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] bg-amber-500/18 rounded-full blur-[70px] pointer-events-none -z-10" />
 
-          <h1 className="font-black tracking-tight w-full mb-2">
-            <span className="text-slate-950 dark:text-white block font-black text-2xl xs:text-[26px] sm:text-3xl leading-[1.28] mb-1.5 tracking-tight">
-              {settings.HERO_TITLE || 'نحو مستقبل برمجي وهندسي احترافي'}
+          <h1 className="font-black tracking-tight w-full mb-3 text-center">
+            <span className="text-white block font-black text-[30px] xs:text-[35px] sm:text-4xl leading-[1.22] mb-2 tracking-tight">
+              نحو مستقبل برمجي<br />وهندسي احترافي
             </span>
-            {/* Tagline: Bold Royal Blue & Indigo in Light Mode, Molten Gold in Dark Mode */}
-            <span className="block font-black text-base xs:text-lg sm:text-xl leading-snug bg-gradient-to-r from-blue-700 via-indigo-600 to-violet-700 dark:from-amber-300 dark:via-yellow-400 dark:to-amber-500 bg-clip-text text-transparent">
-              {(settings.PLATFORM_TAGLINE && !settings.PLATFORM_TAGLINE.includes('?'))
-                ? settings.PLATFORM_TAGLINE
-                : 'بوابتك الاحترافية لاحتراف البرمجة والذكاء الاصطناعي والتصميم'}
+            <span className="block font-black text-[18px] xs:text-[21px] sm:text-2xl leading-snug text-amber-400">
+              بوابتك الاحترافية لاحتراف البرمجة<br />والذكاء الاصطناعي والتصميم
             </span>
           </h1>
 
-          <p className="text-[11px] xs:text-xs text-slate-700 dark:text-zinc-300 max-w-sm mx-auto leading-relaxed font-medium px-2">
+          <p className="text-xs xs:text-sm text-slate-300 max-w-md mx-auto leading-relaxed font-normal px-2 mt-1">
             {settings.HERO_SUBTITLE ||
               `${cleanPlatformName} — مسارات تدريبية هندسية متكاملة، دبلومات برمجية معتمدة، ومشاريع إنتاج واقعية تؤهلك لسوق العمل بثقة واحتراف.`}
           </p>
