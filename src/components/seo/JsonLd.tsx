@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 
 interface JsonLdProps {
   platformName: string;
@@ -11,7 +11,7 @@ export default function JsonLd({
   platformTagline,
   settings = {},
 }: JsonLdProps) {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://qimam.academy';
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://mohamedibrahim-chi.vercel.app';
 
   const structuredData = {
     '@context': 'https://schema.org',

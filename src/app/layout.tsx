@@ -27,7 +27,7 @@ export const viewport: Viewport = {
 export async function generateMetadata(): Promise<Metadata> {
   let title = 'أكاديمية م / محمد إبراهيم';
   let description = 'بوابتك الاحترافية لاحتراف البرمجة والذكاء الاصطناعي والتصميم ومشاريع الإنتاج الحقيقية.';
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://qimam.academy';
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://mohamedibrahim-chi.vercel.app';
 
   try {
     const settings = await prisma.platformSetting.findMany();

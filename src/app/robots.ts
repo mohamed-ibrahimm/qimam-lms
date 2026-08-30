@@ -1,7 +1,7 @@
-﻿import { MetadataRoute } from 'next';
+import { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://qimam.academy';
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://mohamedibrahim-chi.vercel.app';
 
   return {
     rules: [
