@@ -160,36 +160,36 @@ export default function MobileHero({
         
         {/* Quick Contacts */}
         {hasAnySocial && (
-          <div className="space-y-3.5 max-w-sm mx-auto">
-            <span className="text-xs text-slate-600 dark:text-zinc-400 font-semibold block">تواصل مباشر وسريع مع الأكاديمية:</span>
-            <div className="flex flex-wrap items-center justify-center gap-2">
+          <div className="space-y-4 max-w-sm mx-auto">
+            <span className="text-sm text-slate-700 dark:text-zinc-300 font-bold block">تواصل مباشر وسريع مع الأكاديمية:</span>
+            <div className="flex flex-wrap items-center justify-center gap-2.5">
               {whatsappUrl && (
                 <a
                   href={whatsappUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-500/10 dark:hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/30 text-xs font-bold transition-all hover:scale-105 shadow-xs"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-500/15 dark:hover:bg-emerald-500/25 text-emerald-800 dark:text-emerald-200 border border-emerald-300 dark:border-emerald-500/40 text-xs font-bold transition-all shadow-xs"
                   title="محادثة واتساب مباشرة"
                 >
-                  <MessageCircle className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                  <MessageCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
                   <span>واتساب الأكاديمية</span>
                 </a>
               )}
               <Link
                 href="/support"
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-blue-50 hover:bg-blue-100 dark:bg-amber-500/10 dark:hover:bg-amber-500/20 text-blue-700 dark:text-amber-300 border border-blue-200 dark:border-amber-500/30 text-xs font-bold transition-all hover:scale-105 shadow-xs"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-amber-50 hover:bg-amber-100 dark:bg-amber-500/15 dark:hover:bg-amber-500/25 text-amber-800 dark:text-amber-200 border border-amber-300 dark:border-amber-500/40 text-xs font-bold transition-all shadow-xs"
                 title="الدعم الفني والمساعدة"
               >
-                <Headphones className="w-3.5 h-3.5 text-blue-600 dark:text-amber-400 shrink-0" />
+                <Headphones className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
                 <span>الدعم الفني</span>
               </Link>
               {contactEmail && (
                 <a
                   href={`mailto:${contactEmail}`}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-indigo-50 hover:bg-indigo-100 dark:bg-blue-500/10 dark:hover:bg-blue-500/20 text-indigo-700 dark:text-blue-300 border border-indigo-200 dark:border-blue-500/30 text-xs font-semibold transition-all hover:scale-105 shadow-xs"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-blue-50 hover:bg-blue-100 dark:bg-blue-500/15 dark:hover:bg-blue-500/25 text-blue-800 dark:text-blue-200 border border-blue-300 dark:border-blue-500/40 text-xs font-semibold transition-all shadow-xs"
                   title="راسلنا عبر البريد"
                 >
-                  <Mail className="w-3.5 h-3.5 text-indigo-600 dark:text-blue-400 shrink-0" />
+                  <Mail className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
                   <span>جيميل</span>
                 </a>
               )}
@@ -198,10 +198,10 @@ export default function MobileHero({
                   href={facebookUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-sky-50 hover:bg-sky-100 dark:bg-blue-600/10 dark:hover:bg-blue-600/20 text-sky-700 dark:text-blue-400 border border-sky-200 dark:border-blue-500/30 text-xs font-semibold transition-all hover:scale-105 shadow-xs"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-indigo-50 hover:bg-indigo-100 dark:bg-blue-600/15 dark:hover:bg-blue-600/25 text-indigo-800 dark:text-blue-200 border border-indigo-300 dark:border-blue-500/40 text-xs font-semibold transition-all shadow-xs"
                   title="صفحة الفيسبوك الرسمية"
                 >
-                  <Facebook className="w-3.5 h-3.5 text-sky-600 dark:text-blue-400 shrink-0" />
+                  <Facebook className="w-4 h-4 text-indigo-600 dark:text-blue-400 shrink-0" />
                   <span>فيسبوك</span>
                 </a>
               )}
@@ -210,10 +210,10 @@ export default function MobileHero({
                   href={telegramUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-cyan-50 hover:bg-cyan-100 dark:bg-sky-500/10 dark:hover:bg-sky-500/20 text-cyan-700 dark:text-sky-300 border border-cyan-200 dark:border-sky-500/30 text-xs font-semibold transition-all hover:scale-105 shadow-xs"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-sky-50 hover:bg-sky-100 dark:bg-sky-500/15 dark:hover:bg-sky-500/25 text-sky-800 dark:text-sky-200 border border-sky-300 dark:border-sky-500/40 text-xs font-semibold transition-all shadow-xs"
                   title="قناة التيليجرام"
                 >
-                  <Send className="w-3.5 h-3.5 text-cyan-600 dark:text-sky-400 shrink-0" />
+                  <Send className="w-4 h-4 text-sky-600 dark:text-sky-400 shrink-0" />
                   <span>تيليجرام</span>
                 </a>
               )}

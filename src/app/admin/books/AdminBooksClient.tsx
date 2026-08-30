@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import Link from 'next/link';
@@ -142,19 +142,19 @@ export default function AdminBooksClient({ initialBooks }: Props) {
         <div
           className={`p-4 rounded-2xl text-xs font-bold flex items-center justify-between gap-2 shadow-md ${
             message.type === 'success'
-              ? 'bg-emerald-950/80 border border-emerald-700 text-emerald-200'
-              : 'bg-rose-950/80 border border-rose-700 text-rose-200'
+              ? 'bg-emerald-50 dark:bg-emerald-950/80 border border-emerald-300 dark:border-emerald-700 text-emerald-800 dark:text-emerald-200'
+              : 'bg-rose-50 dark:bg-rose-950/80 border border-rose-300 dark:border-rose-700 text-rose-800 dark:text-rose-200'
           }`}
         >
           <div className="flex items-center gap-2">
             {message.type === 'success' ? (
-              <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-400" />
+              <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
             ) : (
-              <AlertTriangle className="w-4 h-4 shrink-0 text-rose-400" />
+              <AlertTriangle className="w-4 h-4 shrink-0 text-rose-600 dark:text-rose-400" />
             )}
             <span>{message.text}</span>
           </div>
-          <button onClick={() => setMessage(null)} className="text-zinc-400 hover:text-white cursor-pointer">
+          <button onClick={() => setMessage(null)} className="text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white cursor-pointer">
             <XCircle className="w-4 h-4" />
           </button>
         </div>

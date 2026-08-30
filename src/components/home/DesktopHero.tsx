@@ -132,35 +132,35 @@ export default function DesktopHero({
         </div>
 
         {hasAnySocial && (
-          <div className="flex flex-wrap items-center justify-center gap-3.5 pt-10 pb-2">
-            <span className="text-sm text-slate-500 dark:text-zinc-400 font-semibold ml-1">تواصل مباشر وسريع:</span>
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-12 pb-4">
+            <span className="text-base text-slate-700 dark:text-zinc-300 font-black ml-2">تواصل مباشر وسريع:</span>
             {whatsappUrl && (
               <a
                 href={whatsappUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-4.5 py-2.5 rounded-full bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-500/15 dark:hover:bg-emerald-500/25 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/30 text-sm font-bold transition-all hover:scale-105 shadow-xs"
+                className="inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-500/20 dark:hover:bg-emerald-500/30 text-emerald-800 dark:text-emerald-200 border-2 border-emerald-300 dark:border-emerald-500/50 text-sm lg:text-base font-black transition-all hover:scale-105 shadow-md"
                 title="محادثة واتساب مباشرة"
               >
-                <MessageCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                <MessageCircle className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                 <span>واتساب الأكاديمية</span>
               </a>
             )}
             <Link
               href="/support"
-              className="inline-flex items-center gap-2 px-4.5 py-2.5 rounded-full bg-amber-50 hover:bg-amber-100 dark:bg-amber-500/15 dark:hover:bg-amber-500/25 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-500/30 text-sm font-bold transition-all hover:scale-105 shadow-xs"
+              className="inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-amber-50 hover:bg-amber-100 dark:bg-amber-500/20 dark:hover:bg-amber-500/30 text-amber-800 dark:text-amber-200 border-2 border-amber-300 dark:border-amber-500/50 text-sm lg:text-base font-black transition-all hover:scale-105 shadow-md"
               title="الدعم الفني والمساعدة"
             >
-              <Headphones className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+              <Headphones className="w-5 h-5 text-amber-600 dark:text-amber-400" />
               <span>الدعم الفني</span>
             </Link>
             {contactEmail && (
               <a
                 href={`mailto:${contactEmail}`}
-                className="inline-flex items-center gap-2 px-4.5 py-2.5 rounded-full bg-blue-50 hover:bg-blue-100 dark:bg-blue-500/15 dark:hover:bg-blue-500/25 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-500/30 text-sm font-semibold transition-all hover:scale-105 shadow-xs"
+                className="inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-blue-50 hover:bg-blue-100 dark:bg-blue-500/20 dark:hover:bg-blue-500/30 text-blue-800 dark:text-blue-200 border-2 border-blue-300 dark:border-blue-500/50 text-sm lg:text-base font-black transition-all hover:scale-105 shadow-md"
                 title="راسلنا عبر البريد"
               >
-                <Mail className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                <Mail className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                 <span>جيميل</span>
               </a>
             )}
@@ -169,10 +169,10 @@ export default function DesktopHero({
                 href={facebookUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-4.5 py-2.5 rounded-full bg-indigo-50 hover:bg-indigo-100 dark:bg-blue-600/15 dark:hover:bg-blue-600/25 text-indigo-700 dark:text-blue-400 border border-indigo-200 dark:border-blue-500/30 text-sm font-semibold transition-all hover:scale-105 shadow-xs"
+                className="inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-indigo-50 hover:bg-indigo-100 dark:bg-blue-600/20 dark:hover:bg-blue-600/30 text-indigo-800 dark:text-blue-200 border-2 border-indigo-300 dark:border-blue-500/50 text-sm lg:text-base font-black transition-all hover:scale-105 shadow-md"
                 title="صفحة الفيسبوك الرسمية"
               >
-                <Facebook className="w-4 h-4 text-indigo-600 dark:text-blue-400" />
+                <Facebook className="w-5 h-5 text-indigo-600 dark:text-blue-400" />
                 <span>فيسبوك</span>
               </a>
             )}
@@ -181,10 +181,10 @@ export default function DesktopHero({
                 href={telegramUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-4.5 py-2.5 rounded-full bg-sky-50 hover:bg-sky-100 dark:bg-sky-500/15 dark:hover:bg-sky-500/25 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-500/30 text-sm font-semibold transition-all hover:scale-105 shadow-xs"
+                className="inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-sky-50 hover:bg-sky-100 dark:bg-sky-500/20 dark:hover:bg-sky-500/30 text-sky-800 dark:text-sky-200 border-2 border-sky-300 dark:border-sky-500/50 text-sm lg:text-base font-black transition-all hover:scale-105 shadow-md"
                 title="قناة التيليجرام"
               >
-                <Send className="w-4 h-4 text-sky-600 dark:text-sky-400" />
+                <Send className="w-5 h-5 text-sky-600 dark:text-sky-400" />
                 <span>تيليجرام</span>
               </a>
             )}
@@ -193,10 +193,10 @@ export default function DesktopHero({
                 href={youtubeUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-4.5 py-2.5 rounded-full bg-red-50 hover:bg-red-100 dark:bg-red-500/15 dark:hover:bg-red-500/25 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-500/30 text-sm font-semibold transition-all hover:scale-105 shadow-xs"
+                className="inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-red-50 hover:bg-red-100 dark:bg-red-500/20 dark:hover:bg-red-500/30 text-red-800 dark:text-red-200 border-2 border-red-300 dark:border-red-500/50 text-sm lg:text-base font-black transition-all hover:scale-105 shadow-md"
                 title="قناة اليوتيوب"
               >
-                <Youtube className="w-4 h-4 text-red-600 dark:text-red-400" />
+                <Youtube className="w-5 h-5 text-red-600 dark:text-red-400" />
                 <span>يوتيوب</span>
               </a>
             )}
@@ -205,10 +205,10 @@ export default function DesktopHero({
                 href={linkedinUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-4.5 py-2.5 rounded-full bg-blue-50 hover:bg-blue-100 dark:bg-indigo-500/15 dark:hover:bg-indigo-500/25 text-blue-700 dark:text-indigo-300 border border-blue-200 dark:border-indigo-500/30 text-sm font-semibold transition-all hover:scale-105 shadow-xs"
+                className="inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-blue-50 hover:bg-blue-100 dark:bg-indigo-500/20 dark:hover:bg-indigo-500/30 text-blue-800 dark:text-indigo-200 border-2 border-blue-300 dark:border-indigo-500/50 text-sm lg:text-base font-black transition-all hover:scale-105 shadow-md"
                 title="حساب لينكد إن"
               >
-                <Linkedin className="w-4 h-4 text-blue-600 dark:text-indigo-400" />
+                <Linkedin className="w-5 h-5 text-blue-600 dark:text-indigo-400" />
                 <span>لينكد إن</span>
               </a>
             )}

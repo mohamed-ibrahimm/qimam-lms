@@ -152,27 +152,27 @@ export default function InstructorsClient({
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-8">
       {/* Header & Nav */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-border">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-border">
         <div className="space-y-1">
-          <div className="flex items-center gap-2 text-xs text-zinc-400">
-            <Link href="/admin" className="hover:text-white transition-colors">
+          <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-zinc-400">
+            <Link href="/admin" className="hover:text-slate-900 dark:hover:text-white transition-colors">
               لوحة التحكم
             </Link>
             <span>/</span>
-            <span className="text-primary-400 font-bold">إدارة المحاضرين والاشتراكات السحابية</span>
+            <span className="text-primary-600 dark:text-primary-400 font-bold">إدارة المحاضرين والاشتراكات السحابية</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-white flex items-center gap-2">
-            <GraduationCap className="w-8 h-8 text-primary-400" />
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+            <GraduationCap className="w-8 h-8 text-primary-600 dark:text-primary-400" />
             المحاضرون والاشتراكات (SaaS Subscriptions)
           </h1>
-          <p className="text-xs text-zinc-400">
+          <p className="text-xs text-slate-600 dark:text-zinc-400">
             متابعة الفترات التجريبية (14 يوماً)، اعتماد إيصالات تجديد الاشتراكات، وحسابات الدفع المباشر لكل محاضر
           </p>
         </div>
 
         <Link
           href="/admin"
-          className="px-4 py-2 rounded-xl bg-surface-raised hover:bg-surface-card border border-border text-zinc-300 text-xs font-bold transition-colors"
+          className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-surface-raised dark:hover:bg-surface-card border border-slate-300 dark:border-border text-slate-700 dark:text-zinc-300 text-xs font-bold transition-colors"
         >
           ← العودة للوحة الإدارة
         </Link>
@@ -183,19 +183,19 @@ export default function InstructorsClient({
         <div
           className={`p-4 rounded-2xl text-xs font-bold flex items-center justify-between gap-2 ${
             message.type === 'success'
-              ? 'bg-emerald-950/70 border border-emerald-800 text-emerald-300'
-              : 'bg-rose-950/70 border border-rose-800 text-rose-300'
+              ? 'bg-emerald-50 dark:bg-emerald-950/70 border border-emerald-300 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300'
+              : 'bg-rose-50 dark:bg-rose-950/70 border border-rose-300 dark:border-rose-800 text-rose-800 dark:text-rose-300'
           }`}
         >
           <div className="flex items-center gap-2">
             {message.type === 'success' ? (
-              <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-400" />
+              <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
             ) : (
-              <AlertTriangle className="w-4 h-4 shrink-0 text-rose-400" />
+              <AlertTriangle className="w-4 h-4 shrink-0 text-rose-600 dark:text-rose-400" />
             )}
             <span>{message.text}</span>
           </div>
-          <button onClick={() => setMessage(null)} className="text-zinc-400 hover:text-white">
+          <button onClick={() => setMessage(null)} className="text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -203,46 +203,46 @@ export default function InstructorsClient({
 
       {/* PENDING SUBSCRIPTIONS RENEWAL BOX */}
       {pendingSubs.length > 0 && (
-        <div className="p-6 rounded-3xl bg-amber-950/30 border border-amber-500/40 shadow-xl space-y-4">
+        <div className="p-6 rounded-3xl bg-amber-50/80 dark:bg-amber-950/30 border-2 border-amber-300 dark:border-amber-500/40 shadow-xl space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-base font-black text-amber-300 flex items-center gap-2">
-              <CreditCard className="w-5 h-5" />
+            <h2 className="text-base font-black text-amber-900 dark:text-amber-300 flex items-center gap-2">
+              <CreditCard className="w-5 h-5 text-amber-600 dark:text-amber-400" />
               طلبات تجديد اشتراكات المحاضرين المعلقة ({pendingSubs.length})
             </h2>
-            <span className="text-xs text-amber-400/80">راجع الإيصال واعتمد تفعيل الحساب فورياً</span>
+            <span className="text-xs text-amber-700 dark:text-amber-400/80 font-bold">راجع الإيصال واعتمد تفعيل الحساب فورياً</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {pendingSubs.map((sub) => (
-              <div key={sub.id} className="p-4 rounded-2xl bg-surface border border-border space-y-3">
+              <div key={sub.id} className="p-4 rounded-2xl bg-white dark:bg-surface border border-slate-200 dark:border-border shadow-sm space-y-3">
                 <div className="flex items-start justify-between">
                   <div>
-                    <h3 className="text-sm font-bold text-white">{sub.instructor?.officialFullName}</h3>
-                    <p className="text-xs text-zinc-400">{sub.instructor?.email} • {sub.instructor?.phone}</p>
+                    <h3 className="text-sm font-bold text-slate-900 dark:text-white">{sub.instructor?.officialFullName}</h3>
+                    <p className="text-xs text-slate-500 dark:text-zinc-400">{sub.instructor?.email} • {sub.instructor?.phone}</p>
                   </div>
-                  <span className="px-2.5 py-1 rounded-lg bg-primary-950 border border-primary-800 text-primary-300 text-xs font-black">
+                  <span className="px-2.5 py-1 rounded-lg bg-indigo-50 dark:bg-primary-950 border border-indigo-200 dark:border-primary-800 text-indigo-700 dark:text-primary-300 text-xs font-black">
                     {formatPrice(sub.amount)}
                   </span>
                 </div>
 
-                <div className="p-3 rounded-xl bg-surface-raised border border-border text-xs space-y-1">
+                <div className="p-3 rounded-xl bg-slate-50 dark:bg-surface-raised border border-slate-200 dark:border-border text-xs space-y-1">
                   <div className="flex justify-between">
-                    <span className="text-zinc-400">الباقة المطلوبة:</span>
-                    <span className="font-bold text-white">{sub.plan === 'ANNUAL' ? 'سنوي (12 شهر)' : 'شهري (1 شهر)'}</span>
+                    <span className="text-slate-500 dark:text-zinc-400">الباقة المطلوبة:</span>
+                    <span className="font-bold text-slate-900 dark:text-white">{sub.plan === 'ANNUAL' ? 'سنوي (12 شهر)' : 'شهري (1 شهر)'}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-zinc-400">وسيلة الدفع:</span>
-                    <span className="font-bold text-white">{sub.paymentMethod === 'INSTAPAY' ? 'إنستاباي' : 'فودافون كاش'}</span>
+                    <span className="text-slate-500 dark:text-zinc-400">وسيلة الدفع:</span>
+                    <span className="font-bold text-slate-900 dark:text-white">{sub.paymentMethod === 'INSTAPAY' ? 'إنستاباي' : 'فودافون كاش'}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-zinc-400">رقم المعاملة:</span>
-                    <span className="font-mono text-white">{sub.transactionId || 'غير محدد'}</span>
+                    <span className="text-slate-500 dark:text-zinc-400">رقم المعاملة:</span>
+                    <span className="font-mono font-bold text-slate-900 dark:text-white">{sub.transactionId || 'غير محدد'}</span>
                   </div>
                   {sub.screenshotUrl && (
                     <button
                       type="button"
                       onClick={() => setViewingScreenshot(sub.screenshotUrl)}
-                      className="text-primary-400 hover:text-primary-300 font-bold underline block pt-1"
+                      className="text-primary-600 dark:text-primary-400 hover:underline font-bold block pt-1"
                     >
                       عرض صورة إيصال التحويل 🖼️
                     </button>
@@ -262,7 +262,7 @@ export default function InstructorsClient({
                     type="button"
                     disabled={processingId === sub.id}
                     onClick={() => handleRejectSubscription(sub.id)}
-                    className="px-4 py-2 rounded-xl bg-rose-950 hover:bg-rose-900 border border-rose-800 text-rose-300 font-bold text-xs disabled:opacity-50 transition-all"
+                    className="px-4 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 dark:bg-rose-950 dark:hover:bg-rose-900 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 font-bold text-xs disabled:opacity-50 transition-all"
                   >
                     رفض
                   </button>
@@ -274,15 +274,15 @@ export default function InstructorsClient({
       )}
 
       {/* Filter and Search Bar */}
-      <div className="p-4 rounded-2xl bg-surface border border-border flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="p-4 rounded-2xl bg-white dark:bg-surface border border-slate-200 dark:border-border flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
         <div className="relative flex-1 w-full">
-          <Search className="w-4 h-4 text-zinc-400 absolute right-3 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-slate-400 dark:text-zinc-400 absolute right-3 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="البحث باسم المحاضر أو البريد أو الهاتف..."
-            className="w-full pl-4 pr-9 py-2 rounded-xl bg-surface-raised border border-border text-white text-xs placeholder:text-zinc-500 focus:outline-none focus:border-primary-500"
+            className="w-full pl-4 pr-9 py-2 rounded-xl bg-slate-50 dark:bg-surface-raised border border-slate-200 dark:border-border text-slate-900 dark:text-white text-xs placeholder:text-slate-400 dark:placeholder:text-zinc-500 focus:outline-none focus:border-primary-500"
           />
         </div>
 
@@ -300,7 +300,7 @@ export default function InstructorsClient({
               className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
                 statusFilter === f.id
                   ? 'bg-primary-600 text-white'
-                  : 'bg-surface-raised text-zinc-400 hover:text-white border border-border'
+                  : 'bg-slate-100 text-slate-600 hover:text-slate-900 dark:bg-surface-raised dark:text-zinc-400 dark:hover:text-white border border-slate-200 dark:border-border'
               }`}
             >
               {f.label}
@@ -310,9 +310,9 @@ export default function InstructorsClient({
       </div>
 
       {/* Instructors Table */}
-      <div className="overflow-x-auto rounded-3xl border border-border bg-surface shadow-xl">
+      <div className="overflow-x-auto rounded-3xl border border-slate-200 dark:border-border bg-white dark:bg-surface shadow-xl">
         <table className="w-full text-right text-xs">
-          <thead className="bg-surface-raised border-b border-border text-zinc-400 font-bold">
+          <thead className="bg-slate-50 dark:bg-surface-raised border-b border-slate-200 dark:border-border text-slate-500 dark:text-zinc-400 font-bold">
             <tr>
               <th className="p-3.5">المحاضر</th>
               <th className="p-3.5">الكورسات</th>
@@ -322,47 +322,47 @@ export default function InstructorsClient({
               <th className="p-3.5 text-center">الإجراءات</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-border/60">
+          <tbody className="divide-y divide-slate-100 dark:divide-border/60">
             {filteredInstructors.map((inst) => {
               const sub = inst.subscriptionState;
               return (
-                <tr key={inst.id} className="hover:bg-surface-raised/40 transition-colors">
+                <tr key={inst.id} className="hover:bg-slate-50/80 dark:hover:bg-surface-raised/40 transition-colors">
                   <td className="p-3.5">
-                    <div className="font-black text-white text-sm">{inst.officialFullName}</div>
-                    <div className="text-[11px] text-zinc-400">{inst.email}</div>
-                    <div className="text-[11px] text-zinc-500 font-mono">{inst.phone || 'بدون هاتف'}</div>
+                    <div className="font-black text-slate-900 dark:text-white text-sm">{inst.officialFullName}</div>
+                    <div className="text-[11px] text-slate-500 dark:text-zinc-400">{inst.email}</div>
+                    <div className="text-[11px] text-slate-400 dark:text-zinc-500 font-mono">{inst.phone || 'بدون هاتف'}</div>
                   </td>
                   <td className="p-3.5">
-                    <span className="px-2.5 py-1 rounded-lg bg-surface-raised border border-border font-bold text-white">
+                    <span className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-surface-raised border border-slate-200 dark:border-border font-bold text-slate-800 dark:text-white">
                       {inst._count?.instructedCourses || 0} كورس
                     </span>
                   </td>
                   <td className="p-3.5 space-y-1">
                     {inst.instapayAddress ? (
-                      <div className="text-[11px] text-purple-300 font-mono">
-                        إنستاباي: <span className="font-bold text-white">{inst.instapayAddress}</span>
+                      <div className="text-[11px] text-purple-700 dark:text-purple-300 font-mono">
+                        إنستاباي: <span className="font-bold text-slate-900 dark:text-white">{inst.instapayAddress}</span>
                       </div>
                     ) : (
-                      <div className="text-[10px] text-zinc-500">إنستاباي: الافتراضي (المنصة)</div>
+                      <div className="text-[10px] text-slate-400 dark:text-zinc-500">إنستاباي: الافتراضي (المنصة)</div>
                     )}
                     {inst.vodafoneCashNumber ? (
-                      <div className="text-[11px] text-rose-300 font-mono">
-                        كاش: <span className="font-bold text-white">{inst.vodafoneCashNumber}</span>
+                      <div className="text-[11px] text-rose-700 dark:text-rose-300 font-mono">
+                        كاش: <span className="font-bold text-slate-900 dark:text-white">{inst.vodafoneCashNumber}</span>
                       </div>
                     ) : (
-                      <div className="text-[10px] text-zinc-500">كاش: الافتراضي (المنصة)</div>
+                      <div className="text-[10px] text-slate-400 dark:text-zinc-500">كاش: الافتراضي (المنصة)</div>
                     )}
                   </td>
                   <td className="p-3.5">
                     <span
                       className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${
                         sub.status === 'ADMIN'
-                          ? 'bg-purple-950 border-purple-800 text-purple-300'
+                          ? 'bg-purple-100 border-purple-300 text-purple-800 dark:bg-purple-950 dark:border-purple-800 dark:text-purple-300'
                           : sub.status === 'ACTIVE'
-                          ? 'bg-emerald-950 border-emerald-800 text-emerald-300'
+                          ? 'bg-emerald-100 border-emerald-300 text-emerald-800 dark:bg-emerald-950 dark:border-emerald-800 dark:text-emerald-300'
                           : sub.status === 'TRIAL'
-                          ? 'bg-amber-950 border-amber-800 text-amber-300'
-                          : 'bg-rose-950 border-rose-800 text-rose-300'
+                          ? 'bg-amber-100 border-amber-300 text-amber-800 dark:bg-amber-950 dark:border-amber-800 dark:text-amber-300'
+                          : 'bg-rose-100 border-rose-300 text-rose-800 dark:bg-rose-950 dark:border-rose-800 dark:text-rose-300'
                       }`}
                     >
                       {sub.status === 'ADMIN'
@@ -376,11 +376,11 @@ export default function InstructorsClient({
                   </td>
                   <td className="p-3.5 font-bold">
                     {sub.status === 'ADMIN' ? (
-                      <span className="text-zinc-500">غير محدود</span>
+                      <span className="text-slate-400 dark:text-zinc-500">غير محدود</span>
                     ) : sub.status === 'EXPIRED' ? (
-                      <span className="text-rose-400">انتهى</span>
+                      <span className="text-rose-600 dark:text-rose-400">انتهى</span>
                     ) : (
-                      <span className="text-emerald-400">{sub.daysRemaining} يوم متبقي</span>
+                      <span className="text-emerald-600 dark:text-emerald-400">{sub.daysRemaining} يوم متبقي</span>
                     )}
                   </td>
                   <td className="p-3.5 text-center">
@@ -403,30 +403,30 @@ export default function InstructorsClient({
 
       {/* MANUAL EXTEND MODAL */}
       {extendingInstructor && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="max-w-md w-full rounded-3xl bg-surface border border-border p-6 sm:p-8 space-y-5 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-border pb-3">
-              <h3 className="text-base font-black text-white flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-primary-400" />
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="max-w-md w-full rounded-3xl bg-white dark:bg-surface border border-slate-200 dark:border-border p-6 sm:p-8 space-y-5 shadow-2xl">
+            <div className="flex items-center justify-between border-b border-slate-200 dark:border-border pb-3">
+              <h3 className="text-base font-black text-slate-900 dark:text-white flex items-center gap-2">
+                <Calendar className="w-5 h-5 text-primary-600 dark:text-primary-400" />
                 تمديد اشتراك المحاضر يدوياً
               </h3>
-              <button onClick={() => setExtendingInstructor(null)} className="text-zinc-400 hover:text-white">
+              <button onClick={() => setExtendingInstructor(null)} className="text-slate-400 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <p className="text-xs text-zinc-300">
+            <p className="text-xs text-slate-600 dark:text-zinc-300">
               تحديد مدة التمديد لحساب المحاضر:{' '}
-              <span className="font-bold text-white">{extendingInstructor.officialFullName}</span>
+              <span className="font-bold text-slate-900 dark:text-white">{extendingInstructor.officialFullName}</span>
             </p>
 
             <form onSubmit={handleManualExtend} className="space-y-4">
               <div className="space-y-1.5">
-                <label className="text-xs text-zinc-400">اختر مدة التمديد:</label>
+                <label className="text-xs text-slate-600 dark:text-zinc-400">اختر مدة التمديد:</label>
                 <select
                   value={extendMonths}
                   onChange={(e) => setExtendMonths(parseInt(e.target.value))}
-                  className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500"
+                  className="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-surface-raised border border-slate-200 dark:border-border text-slate-900 dark:text-white text-xs focus:outline-none focus:border-primary-500"
                 >
                   <option value={1}>شهر واحد (30 يوماً)</option>
                   <option value={3}>3 أشهر (90 يوماً)</option>
@@ -439,7 +439,7 @@ export default function InstructorsClient({
                 <button
                   type="button"
                   onClick={() => setExtendingInstructor(null)}
-                  className="flex-1 py-2.5 rounded-xl bg-surface-raised border border-border text-zinc-300 text-xs font-bold"
+                  className="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-surface-raised border border-slate-300 dark:border-border text-slate-700 dark:text-zinc-300 text-xs font-bold"
                 >
                   إلغاء
                 </button>
@@ -458,11 +458,11 @@ export default function InstructorsClient({
 
       {/* SCREENSHOT MODAL */}
       {viewingScreenshot && (
-        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="max-w-2xl w-full rounded-3xl bg-surface border border-border p-4 space-y-4 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-border pb-2">
-              <span className="text-xs font-bold text-white">إيصال تحويل اشتراك المحاضر</span>
-              <button onClick={() => setViewingScreenshot(null)} className="text-zinc-400 hover:text-white p-1">
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="max-w-2xl w-full rounded-3xl bg-white dark:bg-surface border border-slate-200 dark:border-border p-4 space-y-4 shadow-2xl">
+            <div className="flex items-center justify-between border-b border-slate-200 dark:border-border pb-2">
+              <span className="text-xs font-bold text-slate-900 dark:text-white">إيصال تحويل اشتراك المحاضر</span>
+              <button onClick={() => setViewingScreenshot(null)} className="text-slate-400 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white p-1">
                 <X className="w-5 h-5" />
               </button>
             </div>
