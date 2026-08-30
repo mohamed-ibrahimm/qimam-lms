@@ -337,43 +337,43 @@ export default function HomeCoursesSection({
                       {/* Top Badges */}
                       <div className="absolute top-2.5 right-2.5 left-2.5 flex items-center justify-between pointer-events-none">
                         {isStudentCourse ? (
-                          <span className="px-2.5 py-0.5 rounded-full text-[10.5px] font-black bg-amber-500/90 backdrop-blur-md text-zinc-950 border border-amber-400/50 flex items-center gap-1 shadow-sm">
-                            <GraduationCap className="w-3 h-3 text-zinc-950" />
+                          <span className="px-3 py-1 rounded-full text-xs font-black bg-amber-500 backdrop-blur-md text-zinc-950 border border-amber-300 flex items-center gap-1 shadow-md">
+                            <GraduationCap className="w-3.5 h-3.5 text-zinc-950" />
                             <span>كورس طالب محاضر</span>
                           </span>
                         ) : course.category ? (
-                          <span className="px-2.5 py-0.5 rounded-full text-[10.5px] font-black bg-black/75 backdrop-blur-md text-amber-300 border border-amber-500/30 flex items-center gap-1 shadow-sm">
-                            <CatIcon className="w-3 h-3 text-amber-400" />
+                          <span className="px-3 py-1 rounded-full text-xs font-black bg-black/80 backdrop-blur-md text-amber-300 border border-amber-500/40 flex items-center gap-1 shadow-md">
+                            <CatIcon className="w-3.5 h-3.5 text-amber-400" />
                             <span>{course.category.name}</span>
                           </span>
                         ) : (
-                          <span className="px-2.5 py-0.5 rounded-full text-[10.5px] font-black bg-black/75 backdrop-blur-md text-sky-300 border border-sky-500/30 flex items-center gap-1 shadow-sm">
-                            <Code2 className="w-3 h-3 text-sky-400" />
+                          <span className="px-3 py-1 rounded-full text-xs font-black bg-black/80 backdrop-blur-md text-sky-300 border border-sky-500/40 flex items-center gap-1 shadow-md">
+                            <Code2 className="w-3.5 h-3.5 text-sky-400" />
                             <span>مسار معتمد</span>
                           </span>
                         )}
 
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/90 backdrop-blur-md text-white border border-emerald-400/40 flex items-center gap-1 shadow-sm">
-                          <CheckCircle2 className="w-2.5 h-2.5" />
+                        <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-600 backdrop-blur-md text-white border border-emerald-400/50 flex items-center gap-1 shadow-md">
+                          <CheckCircle2 className="w-3 h-3" />
                           <span>معتمد</span>
                         </span>
                       </div>
 
                       {/* Bottom Metadata bar over image */}
-                      <div className="absolute bottom-2.5 right-2.5 left-2.5 flex items-center justify-between text-[10.5px] text-white/95 pointer-events-none font-bold">
-                        <div className="flex items-center gap-1 bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-full border border-white/15">
-                          <Clock className="w-3 h-3 text-amber-400" />
-                          <span>{formatDuration(course.durationHours)}</span>
+                      <div className="absolute bottom-2.5 right-2.5 left-2.5 flex items-center justify-between text-xs text-white pointer-events-none font-bold">
+                        <div className="flex items-center gap-1.5 bg-black/80 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/20 shadow-md">
+                          <Clock className="w-3.5 h-3.5 text-amber-400" />
+                          <span className="text-white font-bold">{formatDuration(course.durationHours)}</span>
                         </div>
 
-                        <div className="flex items-center gap-1 bg-amber-400/25 backdrop-blur-md text-amber-300 px-2 py-0.5 rounded-full border border-amber-400/30">
-                          <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
-                          <span>4.9</span>
+                        <div className="flex items-center gap-1 bg-amber-500/30 backdrop-blur-md text-amber-200 px-2.5 py-1 rounded-full border border-amber-400/40 shadow-md">
+                          <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                          <span className="font-bold">4.9</span>
                         </div>
 
-                        <div className="flex items-center gap-1 bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-full border border-white/15">
-                          <Layers className="w-3 h-3 text-cyan-400" />
-                          <span>{course._count?.sections || 2} وحدات</span>
+                        <div className="flex items-center gap-1.5 bg-black/80 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/20 shadow-md">
+                          <Layers className="w-3.5 h-3.5 text-cyan-400" />
+                          <span className="text-white font-bold">{course._count?.sections || 2} وحدات</span>
                         </div>
                       </div>
                     </div>
