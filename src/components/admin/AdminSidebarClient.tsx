@@ -30,6 +30,8 @@ interface Props {
 
 export default function AdminSidebarClient({ platformName, adminName }: Props) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const currentTab = searchParams.get('tab');
   const [mobileOpen, setMobileOpen] = useState(false);
 
   // Essential & High-Priority Admin Navigation Links Only
@@ -145,15 +147,12 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
       <div className="flex-1 p-2.5 space-y-1 overflow-y-auto pb-20 scrollbar-thin scrollbar-thumb-amber-500/30 scrollbar-track-transparent">
         {navItems.map((item) => {
           let isActive = false;
-          if (typeof window !== 'undefined') {
-            const currentUrl = pathname + window.location.search;
-            if (item.href.includes('?')) {
-              isActive = currentUrl === item.href;
-            } else {
-              isActive = pathname === item.href || (item.href !== '/admin' && pathname.startsWith(item.href) && !currentUrl.includes('?'));
-            }
+          if (item.matchTab) {
+            isActive = pathname === '/admin/settings' && (currentTab === item.matchTab || (!currentTab && item.matchTab === 'pricing'));
+          } else if (item.href === '/admin') {
+            isActive = pathname === '/admin';
           } else {
-            isActive = pathname === item.href;
+            isActive = pathname.startsWith(item.href) && pathname !== '/admin/settings';
           }
 
           const Icon = item.icon;
