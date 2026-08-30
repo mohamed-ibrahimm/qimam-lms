@@ -459,71 +459,33 @@ export default function Header({
               )}
             </div>
           ) : (
-            /* Auth + Instructor Dropdown - Clean, Classic & Non-Cluttered */
-            <div className="hidden lg:flex items-center gap-2 shrink-0">
+            /* Auth + Dual Dynamic Instructor Pills - Elegant & Distinct */
+            <div className="hidden lg:flex items-center gap-1.5 sm:gap-2 shrink-0">
               
-              {/* Luxury Dropdown: انضم كمحاضر */}
-              <div
-                className="relative"
-                onMouseEnter={() => setInstructorMenuOpen(true)}
-                onMouseLeave={() => setInstructorMenuOpen(false)}
+              {/* Pill 1: مدرس أو دكتور جامعي */}
+              <Link
+                href="/instructors/join?track=expert"
+                className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/30 text-purple-700 dark:text-purple-300 transition-all flex items-center gap-1.5 shrink-0 shadow-xs"
+                title="سجل كمدرس أو دكتور جامعي (0% عمولة - 14 يوماً مجاناً)"
               >
-                <button
-                  type="button"
-                  onClick={() => setInstructorMenuOpen(!instructorMenuOpen)}
-                  className="px-4 py-2 rounded-full text-xs font-black bg-gradient-to-r from-purple-500/15 to-indigo-500/15 hover:from-purple-500/25 hover:to-indigo-500/25 border border-purple-500/30 text-purple-700 dark:text-purple-300 transition-all flex items-center gap-1.5 shrink-0 cursor-pointer shadow-xs"
-                >
-                  <Video className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
-                  <span>انضم كمحاضر</span>
-                  <ChevronDown className={`w-3 h-3 text-purple-400 transition-transform duration-200 ${instructorMenuOpen ? 'rotate-180' : ''}`} />
-                </button>
+                <Video className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
+                <span>{navExpertBtnText}</span>
+              </Link>
 
-                {/* Dropdown Menu */}
-                <div
-                  className={`absolute top-full left-0 mt-2 w-72 rounded-3xl bg-white/95 dark:bg-[#120e24]/95 border border-slate-200/90 dark:border-purple-500/30 shadow-2xl backdrop-blur-2xl p-2.5 space-y-1.5 z-50 text-right transition-all duration-200 ${
-                    instructorMenuOpen ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none -translate-y-2'
-                  }`}
-                >
-                  <Link
-                    href="/instructors/join?track=expert"
-                    onClick={() => setInstructorMenuOpen(false)}
-                    className="flex items-center justify-between p-3 rounded-2xl bg-purple-50 dark:bg-purple-500/10 hover:bg-purple-100 dark:hover:bg-purple-500/20 text-slate-900 dark:text-white transition-all group/item"
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-8 h-8 rounded-xl bg-purple-600 text-white flex items-center justify-center">
-                        <Video className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <span className="text-xs font-black block text-purple-800 dark:text-purple-300">مدرس أو دكتور جامعي</span>
-                        <span className="text-[10px] text-slate-500 dark:text-zinc-400">0% عمولة - 14 يوماً مجاناً</span>
-                      </div>
-                    </div>
-                    <ArrowLeft className="w-3.5 h-3.5 text-purple-600 group-hover/item:-translate-x-1 transition-transform" />
-                  </Link>
-
-                  <Link
-                    href="/instructors/join?track=student"
-                    onClick={() => setInstructorMenuOpen(false)}
-                    className="flex items-center justify-between p-3 rounded-2xl bg-amber-50 dark:bg-amber-500/10 hover:bg-amber-100 dark:hover:bg-amber-500/20 text-slate-900 dark:text-white transition-all group/item"
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-8 h-8 rounded-xl bg-amber-500 text-zinc-950 flex items-center justify-center">
-                        <GraduationCap className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <span className="text-xs font-black block text-amber-800 dark:text-amber-300">محاضر طالب (منحة)</span>
-                        <span className="text-[10px] text-slate-500 dark:text-zinc-400">شهر كامل مجاناً لطلبة الجامعات</span>
-                      </div>
-                    </div>
-                    <ArrowLeft className="w-3.5 h-3.5 text-amber-500 group-hover/item:-translate-x-1 transition-transform" />
-                  </Link>
-                </div>
-              </div>
+              {/* Pill 2: محاضر طالب (منحة الطلاب) - GOLD RADIANCE */}
+              <Link
+                href="/instructors/join?track=student"
+                className="px-3.5 py-1.5 rounded-full text-xs font-black bg-gradient-to-r from-amber-500/20 via-yellow-500/15 to-amber-500/20 hover:from-amber-500/30 hover:to-yellow-500/25 border border-amber-500/50 text-amber-800 dark:text-amber-300 transition-all flex items-center gap-1.5 shrink-0 shadow-sm shadow-amber-500/10"
+                title="منحة المحاضر الطالب لطلبة الجامعات والمدارس (شهر كامل مجاناً)"
+              >
+                <GraduationCap className="w-3.5 h-3.5 text-amber-500" />
+                <span>{navStudentBtnText}</span>
+              </Link>
 
               {/* Login Button */}
               <Link
                 href="/login"
-                className="px-3.5 py-2 rounded-full text-xs font-bold text-slate-700 hover:text-slate-950 bg-slate-100 hover:bg-slate-200 dark:text-zinc-200 dark:hover:text-white dark:bg-zinc-800/80 dark:hover:bg-zinc-700 transition-all shadow-xs flex items-center gap-1.5 shrink-0"
+                className="px-3 py-1.5 rounded-full text-xs font-bold text-slate-700 hover:text-slate-950 bg-slate-100 hover:bg-slate-200 dark:text-zinc-200 dark:hover:text-white dark:bg-zinc-800/80 dark:hover:bg-zinc-700 transition-all shadow-xs flex items-center gap-1 shrink-0"
               >
                 <LogIn className="w-3.5 h-3.5 text-slate-600 dark:text-amber-400" />
                 <span>دخول</span>
@@ -532,7 +494,7 @@ export default function Header({
               {/* Register CTA Button */}
               <Link
                 href="/register"
-                className="px-4 py-2 rounded-full text-xs font-black bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white transition-all shadow-md shadow-blue-600/20 whitespace-nowrap flex items-center gap-1.5 shrink-0"
+                className="px-4 py-1.5 rounded-full text-xs font-black bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white transition-all shadow-md shadow-blue-600/20 whitespace-nowrap flex items-center gap-1 shrink-0"
               >
                 <UserPlus className="w-3.5 h-3.5 text-white" />
                 <span>إنشاء حساب</span>
