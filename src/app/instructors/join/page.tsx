@@ -113,7 +113,6 @@ export default function InstructorJoinPage() {
       icon: Percent,
       borderCol: 'border-amber-500/30 hover:border-amber-500/60',
       iconCol: 'text-amber-500 bg-amber-500/10 border-amber-500/20',
-      accentGlow: 'group-hover:shadow-amber-500/20',
     },
     {
       number: '02',
@@ -122,7 +121,6 @@ export default function InstructorJoinPage() {
       icon: Smartphone,
       borderCol: 'border-purple-500/30 hover:border-purple-500/60',
       iconCol: 'text-purple-500 bg-purple-500/10 border-purple-500/20',
-      accentGlow: 'group-hover:shadow-purple-500/20',
     },
     {
       number: '03',
@@ -131,7 +129,6 @@ export default function InstructorJoinPage() {
       icon: ShieldCheck,
       borderCol: 'border-amber-500/30 hover:border-amber-500/60',
       iconCol: 'text-amber-500 bg-amber-500/10 border-amber-500/20',
-      accentGlow: 'group-hover:shadow-amber-500/20',
     },
     {
       number: '04',
@@ -140,7 +137,6 @@ export default function InstructorJoinPage() {
       icon: Award,
       borderCol: 'border-indigo-500/30 hover:border-indigo-500/60',
       iconCol: 'text-indigo-500 bg-indigo-500/10 border-indigo-500/20',
-      accentGlow: 'group-hover:shadow-indigo-500/20',
     },
     {
       number: '05',
@@ -149,7 +145,6 @@ export default function InstructorJoinPage() {
       icon: Zap,
       borderCol: 'border-amber-500/30 hover:border-amber-500/60',
       iconCol: 'text-amber-500 bg-amber-500/10 border-amber-500/20',
-      accentGlow: 'group-hover:shadow-amber-500/20',
     },
     {
       number: '06',
@@ -158,30 +153,29 @@ export default function InstructorJoinPage() {
       icon: Layers,
       borderCol: 'border-purple-500/30 hover:border-purple-500/60',
       iconCol: 'text-purple-500 bg-purple-500/10 border-purple-500/20',
-      accentGlow: 'group-hover:shadow-purple-500/20',
     },
   ];
 
   return (
-    <div className="min-h-screen pt-28 sm:pt-36 pb-20 px-3.5 sm:px-6 lg:px-8 relative overflow-hidden bg-slate-50 dark:bg-[#06040d] text-slate-900 dark:text-slate-100 selection:bg-amber-500 selection:text-zinc-950 transition-colors duration-300">
+    <div className="min-h-screen pt-28 sm:pt-36 pb-20 px-3.5 sm:px-6 lg:px-8 relative overflow-hidden bg-slate-50 dark:bg-[#090714] text-slate-900 dark:text-slate-100 selection:bg-amber-500 selection:text-zinc-950 transition-colors duration-300">
       
       {/* =========================================================================
-          DYNAMIC AMBIENT AURA (WORKS IN BOTH LIGHT & DARK THEMES)
+          SOPHISTICATED DYNAMIC AMBIENT DRIFT ORBS (RICH LUXURY VELVET GLOW)
          ========================================================================= */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10">
-        <div className="dynamic-drift-1 absolute -top-[10%] right-[10%] w-[600px] sm:w-[700px] h-[600px] sm:h-[700px] bg-gradient-to-br from-amber-500/10 dark:from-amber-500/18 via-yellow-500/5 to-transparent rounded-full blur-[140px]" />
-        <div className="dynamic-drift-2 absolute top-[25%] -left-[5%] w-[650px] sm:w-[750px] h-[650px] sm:h-[750px] bg-gradient-to-tr from-purple-600/8 dark:from-purple-600/14 via-indigo-600/5 to-transparent rounded-full blur-[160px]" />
-        <div className="dynamic-drift-3 absolute bottom-[10%] right-[20%] w-[550px] sm:w-[650px] h-[550px] sm:h-[650px] bg-gradient-to-br from-amber-400/10 dark:from-amber-400/15 via-yellow-600/5 to-transparent rounded-full blur-[150px]" />
-        <div className="absolute inset-0 bg-[radial-gradient(#94a3b818_1px,transparent_1px)] dark:bg-[radial-gradient(#f59e0b12_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none" />
+        <div className="dynamic-drift-1 absolute -top-[10%] right-[10%] w-[600px] sm:w-[750px] h-[600px] sm:h-[750px] bg-gradient-to-br from-amber-500/15 dark:from-amber-500/20 via-yellow-500/8 to-transparent rounded-full blur-[140px]" />
+        <div className="dynamic-drift-2 absolute top-[25%] -left-[5%] w-[650px] sm:w-[800px] h-[650px] sm:h-[800px] bg-gradient-to-tr from-purple-600/10 dark:from-purple-600/16 via-indigo-600/8 to-transparent rounded-full blur-[160px]" />
+        <div className="dynamic-drift-3 absolute bottom-[10%] right-[20%] w-[550px] sm:w-[700px] h-[550px] sm:h-[700px] bg-gradient-to-br from-amber-400/12 dark:from-amber-400/18 via-yellow-600/6 to-transparent rounded-full blur-[150px]" />
+        <div className="absolute inset-0 bg-[radial-gradient(#94a3b818_1px,transparent_1px)] dark:bg-[radial-gradient(#f59e0b15_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none" />
       </div>
 
       {/* =========================================================================
-          1. HERO & TRACK NAVIGATION (PERFECTLY PROPORTIONED FOR MOBILE & DESKTOP)
+          1. HERO & TRACK NAVIGATION
          ========================================================================= */}
       <section className="max-w-5xl mx-auto text-center space-y-6 sm:space-y-7">
         
-        {/* Track Segmented Switcher (Responsive, Sleek & Dynamic) */}
-        <div className="inline-flex p-1.5 rounded-2xl sm:rounded-full bg-white/90 dark:bg-[#120e24]/95 border border-slate-200 dark:border-amber-500/30 shadow-lg shadow-slate-900/5 dark:shadow-2xl backdrop-blur-2xl gap-1.5 flex-col sm:flex-row justify-center w-full sm:w-auto">
+        {/* Track Segmented Switcher (Luxury Capsule) */}
+        <div className="inline-flex p-1.5 rounded-2xl sm:rounded-full bg-white/90 dark:bg-[#130f24]/95 border border-slate-200 dark:border-amber-500/30 shadow-lg shadow-slate-900/5 dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)] backdrop-blur-2xl gap-1.5 flex-col sm:flex-row justify-center w-full sm:w-auto">
           <button
             type="button"
             onClick={() => setActiveTrack('all')}
@@ -224,7 +218,7 @@ export default function InstructorJoinPage() {
 
         {/* Dynamic Tag */}
         <div className="flex justify-center">
-          <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-amber-500/10 dark:bg-amber-500/15 border border-amber-500/30 text-amber-700 dark:text-amber-300 text-[11px] sm:text-xs font-bold backdrop-blur-md shadow-xs">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 dark:bg-amber-500/15 border border-amber-500/30 text-amber-700 dark:text-amber-300 text-xs font-bold backdrop-blur-md shadow-xs">
             <Sparkles className="w-3.5 h-3.5 text-amber-500" />
             <span>
               {activeTrack === 'student'
@@ -243,14 +237,14 @@ export default function InstructorJoinPage() {
           ) : activeTrack === 'student' ? (
             <>
               اشرح لزملائك وأطلق أول كورس لك مع{' '}
-              <span className="bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 dark:from-amber-400 dark:via-yellow-300 dark:to-amber-300 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 dark:from-[#fef08a] dark:via-[#f59e0b] dark:to-[#d97706] bg-clip-text text-transparent drop-shadow-[0_2px_15px_rgba(245,158,11,0.35)]">
                 {platformSettings.studentTrialDays} يوماً مجاناً
               </span>
             </>
           ) : (
             <>
               درّس لطلابك واحتفظ بـ{' '}
-              <span className="bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 dark:from-amber-400 dark:via-yellow-300 dark:to-amber-300 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 dark:from-[#fef08a] dark:via-[#f59e0b] dark:to-[#d97706] bg-clip-text text-transparent drop-shadow-[0_2px_15px_rgba(245,158,11,0.35)]">
                 كامل عوائد مبيعاتك ({100 - Number(platformSettings.commissionPercent)}%)
               </span>{' '}
               مباشرة
@@ -268,7 +262,7 @@ export default function InstructorJoinPage() {
         </p>
 
         {/* =========================================================================
-            DUAL TRACK HERO CARDS (WORKS PERFECTLY IN BOTH LIGHT & DARK THEMES)
+            DUAL TRACK HERO CARDS (VELVET OBSIDIAN & GOLD MASTER CARDS)
            ========================================================================= */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 pt-4 sm:pt-6 text-right">
           
@@ -276,8 +270,8 @@ export default function InstructorJoinPage() {
           <div
             className={`p-5 sm:p-8 rounded-3xl border transition-all duration-300 flex flex-col justify-between space-y-6 relative overflow-hidden group ${
               activeTrack === 'expert' || activeTrack === 'all'
-                ? 'bg-white dark:bg-gradient-to-b dark:from-[#151028]/95 dark:via-[#0e0a1f]/95 dark:to-[#080612]/95 border-purple-200 dark:border-purple-500/40 shadow-xl shadow-purple-500/5 dark:shadow-2xl dark:shadow-purple-950/40 ring-1 ring-purple-500/20'
-                : 'bg-slate-50/50 dark:bg-[#100c1e]/50 border-slate-200 dark:border-zinc-800/70 opacity-70'
+                ? 'bg-white dark:bg-gradient-to-b dark:from-[#18132e]/95 dark:via-[#100c22]/95 dark:to-[#0a0718]/95 border-purple-200 dark:border-purple-500/40 shadow-xl shadow-purple-500/5 dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.7),0_0_30px_-5px_rgba(147,51,234,0.2)] ring-1 ring-purple-500/20'
+                : 'bg-slate-50/50 dark:bg-[#120e24]/50 border-slate-200 dark:border-zinc-800/70 opacity-70'
             }`}
           >
             <div className="space-y-4">
@@ -301,7 +295,7 @@ export default function InstructorJoinPage() {
                 </p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-purple-50/60 dark:bg-[#0c0818] border border-purple-100 dark:border-purple-900/40 space-y-2.5">
+              <div className="p-4 rounded-2xl bg-purple-50/60 dark:bg-[#0e0a1c] border border-purple-100 dark:border-purple-900/40 space-y-2.5">
                 <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-zinc-300">
                   <span>الفترة التجريبية:</span>
                   <span className="text-purple-700 dark:text-purple-300 font-black">{platformSettings.instructorTrialDays} يوماً مجاناً بالكامل</span>
@@ -334,8 +328,8 @@ export default function InstructorJoinPage() {
           <div
             className={`p-5 sm:p-8 rounded-3xl border-2 transition-all duration-300 flex flex-col justify-between space-y-6 relative overflow-hidden group ${
               activeTrack === 'student' || activeTrack === 'all'
-                ? 'bg-gradient-to-b from-amber-50/80 via-white to-amber-50/40 dark:from-[#22180c]/95 dark:via-[#15101a]/95 dark:to-[#0b0814]/95 border-amber-400 dark:border-amber-500/60 shadow-xl shadow-amber-500/10 dark:shadow-2xl dark:shadow-amber-500/10 ring-1 ring-amber-400/30'
-                : 'bg-slate-50/50 dark:bg-[#100c1e]/50 border-slate-200 dark:border-zinc-800/70 opacity-70'
+                ? 'bg-gradient-to-b from-amber-50/80 via-white to-amber-50/40 dark:from-[#261b0c]/95 dark:via-[#181220]/95 dark:to-[#0d0918]/95 border-amber-400 dark:border-amber-500/60 shadow-xl shadow-amber-500/10 dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.7),0_0_40px_-5px_rgba(245,158,11,0.25)] ring-1 ring-amber-400/40'
+                : 'bg-slate-50/50 dark:bg-[#120e24]/50 border-slate-200 dark:border-zinc-800/70 opacity-70'
             }`}
           >
             <div className="space-y-4">
@@ -359,7 +353,7 @@ export default function InstructorJoinPage() {
                 </p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-amber-500/10 dark:bg-[#110d18] border border-amber-200 dark:border-amber-500/30 space-y-2.5">
+              <div className="p-4 rounded-2xl bg-amber-500/10 dark:bg-[#140e1c] border border-amber-200 dark:border-amber-500/30 space-y-2.5">
                 <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-zinc-300">
                   <span>المنحة التجريبية:</span>
                   <span className="text-amber-700 dark:text-amber-400 font-black">{platformSettings.studentTrialDays} يوماً مجاناً بالكامل</span>
@@ -395,7 +389,7 @@ export default function InstructorJoinPage() {
           2. DYNAMIC LIVE REVENUE CALCULATOR
          ========================================================================= */}
       <section className="max-w-4xl mx-auto py-10 sm:py-12">
-        <div className="p-5 sm:p-8 rounded-3xl bg-white dark:bg-gradient-to-b dark:from-[#140f28]/95 dark:via-[#0e0a1f]/95 dark:to-[#080612]/95 border border-slate-200 dark:border-amber-500/30 shadow-xl dark:shadow-2xl space-y-6">
+        <div className="p-5 sm:p-8 rounded-3xl bg-white dark:bg-gradient-to-b dark:from-[#18132e]/95 dark:via-[#100c22]/95 dark:to-[#0a0718]/95 border border-slate-200 dark:border-amber-500/30 shadow-xl dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.7),0_0_30px_-5px_rgba(245,158,11,0.15)] space-y-6">
           <div className="text-center space-y-1">
             <span className="text-xs font-bold text-amber-600 dark:text-amber-400">حاسبة العوائد التفاعلية</span>
             <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
@@ -441,7 +435,7 @@ export default function InstructorJoinPage() {
               </div>
             </div>
 
-            <div className="p-5 rounded-2xl bg-slate-50 dark:bg-[#090614] border border-slate-200 dark:border-amber-500/20 flex flex-col justify-between space-y-4">
+            <div className="p-5 rounded-2xl bg-slate-50 dark:bg-[#0b0816] border border-slate-200 dark:border-amber-500/20 flex flex-col justify-between space-y-4">
               <div className="space-y-1">
                 <span className="text-xs font-medium text-slate-500 dark:text-zinc-400">صافي أرباحك في منصتنا (100% لك):</span>
                 <p className="text-2xl sm:text-3xl font-black text-amber-600 dark:text-amber-400 font-mono">
@@ -484,7 +478,7 @@ export default function InstructorJoinPage() {
             return (
               <div
                 key={f.number}
-                className={`p-5 sm:p-6 rounded-3xl bg-white dark:bg-[#0e0a1e]/90 border border-slate-200 dark:border-zinc-800 transition-all duration-300 hover:-translate-y-1 shadow-sm hover:shadow-md space-y-4 group`}
+                className={`p-5 sm:p-6 rounded-3xl bg-white dark:bg-[#120e24]/90 border border-slate-200 dark:border-zinc-800 transition-all duration-300 hover:-translate-y-1 shadow-sm hover:shadow-md space-y-4 group`}
               >
                 <div className="flex items-center justify-between">
                   <div className={`w-10 h-10 rounded-2xl border flex items-center justify-center ${f.iconCol}`}>
@@ -512,7 +506,7 @@ export default function InstructorJoinPage() {
           4. COMPARISON: OUR PLATFORM VS TRADITIONAL PLATFORMS
          ========================================================================= */}
       <section className="max-w-4xl mx-auto py-10 sm:py-12">
-        <div className="p-5 sm:p-8 rounded-3xl bg-white dark:bg-[#0c0818]/90 border border-slate-200 dark:border-amber-500/30 shadow-xl space-y-6">
+        <div className="p-5 sm:p-8 rounded-3xl bg-white dark:bg-[#120e24]/90 border border-slate-200 dark:border-amber-500/30 shadow-xl space-y-6">
           <div className="text-center space-y-1">
             <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
               مقارنة بين منصتنا والمنصات التعليمية الأخرى
