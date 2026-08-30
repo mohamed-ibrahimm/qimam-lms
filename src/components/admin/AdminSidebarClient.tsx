@@ -129,7 +129,7 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
   return (
     <>
       {/* Desktop Persistent Compact Sidebar (Clean fit, No scrollbar) */}
-      <aside className="hidden md:block w-64 lg:w-72 shrink-0 sticky top-24 h-[calc(100vh-7rem)] mr-3.5 sm:mr-6 z-20">
+      <aside className="hidden md:block w-64 lg:w-72 shrink-0 sticky top-16 h-[calc(100vh-5rem)] z-20">
         {renderContent(false)}
       </aside>
 

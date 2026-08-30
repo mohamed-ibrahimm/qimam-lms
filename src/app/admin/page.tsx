@@ -63,18 +63,18 @@ export default async function AdminOverviewPage() {
   const totalRevenue = approvedPayments.reduce((acc, p) => acc + (p.amount || 0), 0);
 
   return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-slate-200/80 dark:border-border">
+    <div className="space-y-5">
+      {/* Header (Clean, Lifted Up, Perfectly Aligned) */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 border-b border-slate-200/80 dark:border-zinc-800">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">نظرة عامة والتحليلات الأكاديمية</h1>
-          <p className="text-xs text-slate-500 dark:text-zinc-400 mt-1 font-medium">متابعة فورية للمبيعات، الطلاب، المدفوعات، وسير المنصة</p>
+          <h1 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">نظرة عامة والتحليلات الأكاديمية</h1>
+          <p className="text-xs text-slate-500 dark:text-zinc-400 font-medium">متابعة فورية للمبيعات، الطلاب، المدفوعات، وسير المنصة</p>
         </div>
 
         {pendingPaymentsCount > 0 && (
           <Link
             href="/admin/payments"
-            className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-amber-500/20 via-rose-500/15 to-orange-500/20 border border-amber-400/80 text-amber-900 dark:text-amber-300 text-xs font-black flex items-center gap-2 animate-pulse shadow-sm"
+            className="px-3.5 py-1.5 rounded-2xl bg-gradient-to-r from-amber-500/20 via-rose-500/15 to-orange-500/20 border border-amber-400/80 text-amber-900 dark:text-amber-300 text-xs font-black flex items-center gap-2 animate-pulse shadow-sm"
           >
             <AlertCircle className="w-4 h-4 text-amber-600 dark:text-amber-400" />
             <span>يوجد ({pendingPaymentsCount}) مدفوعات بانتظار المراجعة!</span>
