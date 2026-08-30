@@ -186,8 +186,8 @@ export default function Header({
             <span className="text-xs xs:text-sm sm:text-base md:text-lg font-black text-slate-900 dark:text-white dark:bg-gradient-to-r dark:from-white dark:via-amber-100 dark:to-amber-300 dark:bg-clip-text dark:text-transparent group-hover:text-blue-600 dark:group-hover:text-amber-300 transition-colors tracking-tight truncate leading-tight drop-shadow-xs">
               {platformName}
             </span>
-            <span className="text-[8px] sm:text-[10px] text-slate-500 dark:text-amber-200/80 font-medium truncate max-w-[190px] xs:max-w-[260px] sm:max-w-none leading-none mt-0.5 block">
-              {platformTagline}
+            <span className="text-[7.5px] xs:text-[8.5px] sm:text-[10px] text-slate-500 dark:text-amber-200/80 font-medium whitespace-nowrap leading-none mt-0.5 block">
+              بوابتك لاحتراف البرمجة والذكاء الاصطناعي
             </span>
           </div>
         </Link>

@@ -76,15 +76,11 @@ export default function MobileHero({
         {/* 2. MIDDLE: Headline */}
         <div className="w-full max-w-lg mx-auto flex flex-col items-center px-2 py-1 relative shrink-0">
           
-          {/* Background Atmospheric Halo */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[220px] pointer-events-none -z-10 overflow-hidden">
-            <div className="dynamic-drift-1 absolute -top-4 right-1/4 w-[200px] h-[140px] bg-blue-500/15 dark:bg-amber-400/20 rounded-full blur-[80px]" />
-            <div className="dynamic-drift-2 absolute -bottom-4 left-1/4 w-[220px] h-[150px] bg-indigo-500/12 dark:bg-yellow-400/18 rounded-full blur-[85px]" />
-            <div className="dynamic-drift-3 absolute top-1/4 left-1/2 -translate-x-1/2 w-[180px] h-[130px] bg-sky-400/14 dark:bg-amber-500/16 rounded-full blur-[75px]" />
-          </div>
+          {/* Soft ambient glow without bounding-box clipping */}
+          <div className="absolute -inset-4 pointer-events-none -z-10 bg-radial-gradient from-amber-500/15 via-purple-600/8 to-transparent blur-2xl" />
 
           <h1 className="font-black tracking-tight w-full mb-2">
-            <span className="text-slate-950 dark:text-white block font-black text-2xl xs:text-[27px] sm:text-3xl leading-[1.28] mb-1.5 tracking-tight">
+            <span className="text-slate-950 dark:text-white block font-black text-2xl xs:text-[26px] sm:text-3xl leading-[1.28] mb-1.5 tracking-tight">
               {settings.HERO_TITLE || 'نحو مستقبل برمجي وهندسي احترافي'}
             </span>
             {/* Tagline: Bold Royal Blue & Indigo in Light Mode, Molten Gold in Dark Mode */}

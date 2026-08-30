@@ -208,14 +208,9 @@ export default function InstructorJoinPage() {
           </div>
         </div>
 
-        {/* Glowing Dynamic Moving Orbs & Headline (Exactly matching Homepage DesktopHero) */}
-        <div className="relative px-2 overflow-hidden">
-          {/* Dynamic Animated Floating Glowing Orbs centered right behind the Headline */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-[320px] pointer-events-none -z-10 overflow-hidden">
-            <div className="dynamic-drift-1 absolute -top-8 right-1/4 w-[380px] h-[260px] bg-amber-400/25 dark:bg-amber-500/15 rounded-full blur-[110px]" />
-            <div className="dynamic-drift-2 absolute -bottom-8 left-1/4 w-[420px] h-[280px] bg-blue-500/25 dark:bg-purple-600/15 rounded-full blur-[120px]" />
-            <div className="dynamic-drift-3 absolute top-1/4 left-1/2 -translate-x-1/2 w-[340px] h-[240px] bg-indigo-400/20 dark:bg-yellow-500/10 rounded-full blur-[100px]" />
-          </div>
+        {/* Glowing Soft Ambient Halo without bounding box clipping */}
+        <div className="relative px-2">
+          <div className="absolute -inset-6 pointer-events-none -z-10 bg-radial-gradient from-purple-600/15 via-amber-500/10 to-transparent blur-3xl" />
 
           <h1 className="font-black tracking-tight mb-2 max-w-4xl mx-auto">
             <span className="text-slate-900 dark:text-white block font-black text-2xl sm:text-3xl lg:text-[2.6rem] leading-[1.25] mb-2">
