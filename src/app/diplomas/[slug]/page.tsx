@@ -82,7 +82,11 @@ export default async function DiplomaDetailPage({ params }: Props) {
 
   const learningObjectives: string[] = diploma.learningObjectives ? JSON.parse(diploma.learningObjectives) : [];
   const requirements: string[] = diploma.requirements ? JSON.parse(diploma.requirements) : [];
-  const totalOriginalPrice = diploma.diplomaCourses.reduce((sum: number, dc: any) => sum + dc.course.price, 0);
+  const coursesDuration = diploma.diplomaCourses.reduce((sum: number, dc: any) => sum + (dc.course?.durationHours || 0), 0);
+  const totalHours = coursesDuration > 0 ? coursesDuration : (diploma.durationHours || 0);
+  const totalOriginalPrice = diploma.compareAtPrice || diploma.diplomaCourses.reduce((sum: number, dc: any) => sum + (dc.course?.price || 0), 0);
+  const savings = Math.max(0, totalOriginalPrice - diploma.price);
+  const discountPercent = totalOriginalPrice > diploma.price ? Math.round(((totalOriginalPrice - diploma.price) / totalOriginalPrice) * 100) : 0;
 
   return (
     <div className="pb-20 space-y-12">
@@ -99,6 +103,10 @@ export default async function DiplomaDetailPage({ params }: Props) {
                 <Award className="w-3.5 h-3.5" />
                 دبلومة مهنية كبرى
               </span>
+              <span className="text-zinc-400 flex items-center gap-1 pr-2">
+                <Clock className="w-3.5 h-3.5 text-primary-400" />
+                {formatDuration(totalHours)} تدريب مكثف
+              </span>
             </div>
 
             <h1 className="text-2xl sm:text-4xl font-black text-white leading-tight">
@@ -113,6 +121,10 @@ export default async function DiplomaDetailPage({ params }: Props) {
               <div className="flex items-center gap-1.5">
                 <Layers className="w-4 h-4 text-primary-400" />
                 <span>{diploma.diplomaCourses.length} كورسات تخصصية</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Clock className="w-4 h-4 text-amber-400" />
+                <span>إجمالي {formatDuration(totalHours)}</span>
               </div>
               <div className="flex items-center gap-1.5 text-purple-300 font-semibold">
                 <Award className="w-4 h-4 text-purple-400" />
@@ -140,7 +152,17 @@ export default async function DiplomaDetailPage({ params }: Props) {
                     {formatPrice(totalOriginalPrice)}
                   </span>
                 )}
+                {discountPercent > 0 && (
+                  <span className="text-xs font-bold px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">
+                    وفر {discountPercent}%
+                  </span>
+                )}
               </div>
+              {savings > 0 && (
+                <p className="text-[11px] text-emerald-400 font-semibold pt-1">
+                  وفر {formatPrice(savings)} عند الاشتراك
+                </p>
+              )}
             </div>
 
             {isEnrolled ? (

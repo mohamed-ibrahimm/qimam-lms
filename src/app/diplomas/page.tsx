@@ -46,8 +46,11 @@ export default async function DiplomasPage() {
       {/* Diplomas List */}
       <div className="space-y-8">
         {diplomas.map((diploma: any) => {
-          const totalOriginalPrice = diploma.diplomaCourses.reduce((sum: number, dc: any) => sum + dc.course.price, 0);
-          const totalHours = diploma.diplomaCourses.reduce((sum: number, dc: any) => sum + dc.course.durationHours, diploma.durationHours);
+          const coursesDuration = diploma.diplomaCourses.reduce((sum: number, dc: any) => sum + (dc.course?.durationHours || 0), 0);
+          const totalHours = coursesDuration > 0 ? coursesDuration : (diploma.durationHours || 0);
+          const totalOriginalPrice = diploma.compareAtPrice || diploma.diplomaCourses.reduce((sum: number, dc: any) => sum + (dc.course?.price || 0), 0);
+          const savings = Math.max(0, totalOriginalPrice - diploma.price);
+          const discountPercent = totalOriginalPrice > diploma.price ? Math.round(((totalOriginalPrice - diploma.price) / totalOriginalPrice) * 100) : 0;
 
           return (
             <div
@@ -135,9 +138,11 @@ export default async function DiplomasPage() {
                       </span>
                     )}
                   </div>
-                  <p className="text-[11px] text-emerald-400 font-semibold pt-1">
-                    وفر أكثر من {formatPrice(totalOriginalPrice - diploma.price)} عند الاشتراك في الدبلومة
-                  </p>
+                  {savings > 0 && (
+                    <p className="text-[11px] text-emerald-400 font-semibold pt-1">
+                      وفر {formatPrice(savings)} ({discountPercent}%) عند الاشتراك في الدبلومة
+                    </p>
+                  )}
                 </div>
 
                 <Link

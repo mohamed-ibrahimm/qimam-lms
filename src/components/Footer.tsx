@@ -115,6 +115,12 @@ export default function Footer({ initialSettings }: FooterProps) {
                 <span>الشروط وسياسة الاستخدام</span>
               </Link>
             </li>
+            <li>
+              <Link href="/privacy" className="hover:text-amber-300 transition-colors flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/70" />
+                <span>سياسة الخصوصية والأمان</span>
+              </Link>
+            </li>
           </ul>
         </div>
 

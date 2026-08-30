@@ -7,12 +7,20 @@ export const dynamic = 'force-dynamic';
 
 export default async function VerifySearchPage() {
   let latestCertificates: any[] = [];
+  let platformName = 'أكاديمية م / محمد إبراهيم';
+
   try {
-    latestCertificates = await prisma.certificate.findMany({
-      where: { isValid: true },
-      take: 4,
-      orderBy: { issuedAt: 'desc' },
-    });
+    const [certs, settings] = await Promise.all([
+      prisma.certificate.findMany({
+        where: { isValid: true },
+        take: 4,
+        orderBy: { issuedAt: 'desc' },
+      }),
+      prisma.platformSetting.findMany(),
+    ]);
+    latestCertificates = certs;
+    const map = Object.fromEntries(settings.map((s) => [s.key, s.value]));
+    if (map['PLATFORM_NAME']) platformName = map['PLATFORM_NAME'].replace(/سنجر/g, '').trim() || platformName;
   } catch (e) {
     console.error('Failed to fetch latest certificates:', e);
   }
@@ -26,7 +34,7 @@ export default async function VerifySearchPage() {
         </div>
         <h1 className="text-3xl sm:text-4xl font-black text-white">التحقق من صحة الشهادات الرقمية</h1>
         <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
-          أدخل كود الشهادة أو امسح رمز الاستجابة السريعة (QR Code) للتأكد الفوري من مصداقية وصحة وثيقة التخرج الصادرة من أكاديمية قِمَم.
+          أدخل كود الشهادة أو امسح رمز الاستجابة السريعة (QR Code) للتأكد الفوري من مصداقية وصحة وثيقة التخرج الصادرة من {platformName}.
         </p>
       </div>
 

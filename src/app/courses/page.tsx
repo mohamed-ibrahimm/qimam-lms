@@ -43,6 +43,7 @@ export default async function CoursesPage({ searchParams }: Props) {
             },
           },
           category: { select: { id: true, name: true, slug: true } },
+          sections: { select: { id: true, _count: { select: { lessons: true } } } },
           _count: { select: { sections: true, enrollments: true } },
         },
       }),

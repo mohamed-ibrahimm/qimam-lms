@@ -251,9 +251,11 @@ export default async function HomePage() {
                   <div className="lg:col-span-7 space-y-5">
                     <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 dark:text-zinc-100 leading-tight">
                       {trendingDiploma.title}
-                      <span className="block mt-1 bg-gradient-to-l from-indigo-700 via-blue-600 to-sky-600 dark:from-amber-300 dark:to-yellow-200 bg-clip-text text-transparent">
-                        خصم استثنائي 51% لفترة محدودة
-                      </span>
+                      {trendingDiploma.compareAtPrice && trendingDiploma.compareAtPrice > trendingDiploma.price && (
+                        <span className="block mt-1 bg-gradient-to-l from-indigo-700 via-blue-600 to-sky-600 dark:from-amber-300 dark:to-yellow-200 bg-clip-text text-transparent">
+                          خصم استثنائي {Math.round(((trendingDiploma.compareAtPrice - trendingDiploma.price) / trendingDiploma.compareAtPrice) * 100)}% لفترة محدودة
+                        </span>
+                      )}
                     </h2>
                     <p className="text-slate-600 dark:text-zinc-400 leading-relaxed text-sm max-w-lg">
                       {trendingDiploma.shortDescription || trendingDiploma.description}
@@ -284,9 +286,11 @@ export default async function HomePage() {
                               {formatPrice(trendingDiploma.compareAtPrice)}
                             </span>
                           )}
-                          <span className="text-xs font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-500/15 dark:text-emerald-300 dark:border-emerald-500/30">
-                            وفر 51%
-                          </span>
+                          {trendingDiploma.compareAtPrice && trendingDiploma.compareAtPrice > trendingDiploma.price && (
+                            <span className="text-xs font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-500/15 dark:text-emerald-300 dark:border-emerald-500/30">
+                              وفر {Math.round(((trendingDiploma.compareAtPrice - trendingDiploma.price) / trendingDiploma.compareAtPrice) * 100)}%
+                            </span>
+                          )}
                         </div>
                       </div>
 

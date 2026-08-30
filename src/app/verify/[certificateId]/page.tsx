@@ -27,20 +27,28 @@ export default async function CertificateVerificationPage({ params }: Props) {
   const certId = params.certificateId.trim().toUpperCase();
 
   let certificate: any = null;
+  let platformName = 'أكاديمية م / محمد إبراهيم';
+
   try {
-    certificate = await prisma.certificate.findFirst({
-      where: {
-        OR: [
-          { certificateNumber: certId },
-          { id: certId }
-        ]
-      },
-      include: {
-        course: { select: { title: true, slug: true, durationHours: true } },
-        diploma: { select: { title: true, slug: true, durationHours: true } },
-        template: true,
-      }
-    });
+    const [cert, settings] = await Promise.all([
+      prisma.certificate.findFirst({
+        where: {
+          OR: [
+            { certificateNumber: certId },
+            { id: certId }
+          ]
+        },
+        include: {
+          course: { select: { title: true, slug: true, durationHours: true } },
+          diploma: { select: { title: true, slug: true, durationHours: true } },
+          template: true,
+        }
+      }),
+      prisma.platformSetting.findMany(),
+    ]);
+    certificate = cert;
+    const map = Object.fromEntries(settings.map((s) => [s.key, s.value]));
+    if (map['PLATFORM_NAME']) platformName = map['PLATFORM_NAME'].replace(/سنجر/g, '').trim() || platformName;
   } catch (e) {
     console.error('Failed to fetch certificate verification:', e);
   }
@@ -107,8 +115,8 @@ export default async function CertificateVerificationPage({ params }: Props) {
               </div>
             </div>
             <div>
-              <h2 className="text-lg font-black text-white">أكاديمية قِـمَـم للتعليم والتدريب</h2>
-              <p className="text-[11px] text-[#fbbf24] font-semibold">Qimam Academy of Technology & Engineering</p>
+              <h2 className="text-lg font-black text-white">{platformName} للتعليم والتدريب</h2>
+              <p className="text-[11px] text-[#fbbf24] font-semibold">Academy of Technology & Engineering</p>
             </div>
           </div>
 
@@ -178,7 +186,7 @@ export default async function CertificateVerificationPage({ params }: Props) {
           <div className="flex items-center gap-8 text-center text-xs">
             <div className="space-y-1">
               <p className="font-serif italic text-amber-300 text-sm tracking-wider font-bold">
-                {certificate.instructorName || 'م. محمد طارق'}
+                {certificate.instructorName || 'م / محمد إبراهيم'}
               </p>
               <div className="w-28 h-0.5 bg-zinc-700 mx-auto" />
               <p className="text-[10px] text-zinc-500">المحاضر المعتمد</p>
