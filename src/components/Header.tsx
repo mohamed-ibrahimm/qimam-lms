@@ -195,15 +195,15 @@ export default function Header({
         </Link>
 
         {/* =========================================================================
-            2. CENTER: ABSOLUTELY & MATHEMATICALLY CENTERED NAVIGATION
+            2. CENTER: CLEAN FLEXIBLE CENTERED NAVIGATION (ZERO OVERLAP)
            ========================================================================= */}
-        <div className="hidden lg:flex items-center gap-1.5 bg-slate-100/90 dark:bg-black/60 p-1.5 rounded-full border border-slate-200/90 dark:border-white/10 shadow-inner absolute left-1/2 -translate-x-1/2 z-20">
+        <div className="hidden lg:flex items-center gap-1 xl:gap-1.5 bg-slate-100/90 dark:bg-black/60 p-1 xl:p-1.5 rounded-full border border-slate-200/90 dark:border-white/10 shadow-inner shrink-0 mx-auto">
           
           {/* Link: الرئيسية */}
           <Link
             href="/"
             prefetch={true}
-            className={`px-4 py-2 text-xs font-bold rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
+            className={`px-3 xl:px-4 py-1.5 xl:py-2 text-xs font-bold rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
               pathname === '/'
                 ? 'bg-white dark:bg-zinc-800 text-blue-700 dark:text-white border border-slate-200 dark:border-zinc-700 shadow-xs'
                 : 'text-slate-600 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-white hover:bg-white/70 dark:hover:bg-zinc-800/60'
@@ -504,10 +504,10 @@ export default function Header({
                 <span>{navExpertBtnText}</span>
               </Link>
 
-              {/* Join: انضم كـ محاضر طالب */}
+              {/* Join: انضم كـ محاضر طالب (Visible on XL screens) */}
               <Link
                 href="/instructors/join?track=student"
-                className="px-2.5 py-1 rounded-full text-[11px] font-black bg-gradient-to-r from-amber-500/15 via-yellow-500/20 to-amber-500/15 hover:from-amber-500/25 hover:to-yellow-500/30 border border-amber-500/40 hover:border-amber-400 text-amber-800 dark:text-amber-300 transition-all flex items-center gap-1 shrink-0 shadow-sm shadow-amber-500/10"
+                className="hidden xl:flex px-2.5 py-1 rounded-full text-[11px] font-black bg-gradient-to-r from-amber-500/15 via-yellow-500/20 to-amber-500/15 hover:from-amber-500/25 hover:to-yellow-500/30 border border-amber-500/40 hover:border-amber-400 text-amber-800 dark:text-amber-300 transition-all items-center gap-1 shrink-0 shadow-sm shadow-amber-500/10"
                 title="منحة المحاضر الطالب لطلبة الجامعات والمدارس (شهر كامل مجاناً)"
               >
                 <GraduationCap className="w-3 h-3 text-amber-500" />
@@ -517,7 +517,7 @@ export default function Header({
               {/* Login Button */}
               <Link
                 href="/login"
-                className="px-3 py-1 rounded-full text-[11px] font-bold text-slate-700 hover:text-slate-950 bg-slate-100 hover:bg-slate-200 dark:text-zinc-200 dark:hover:text-white dark:bg-zinc-800/80 dark:hover:bg-zinc-700 transition-all shadow-xs flex items-center gap-1 shrink-0"
+                className="px-2.5 py-1 rounded-full text-[11px] font-bold text-slate-700 hover:text-slate-950 bg-slate-100 hover:bg-slate-200 dark:text-zinc-200 dark:hover:text-white dark:bg-zinc-800/80 dark:hover:bg-zinc-700 transition-all shadow-xs flex items-center gap-1 shrink-0"
               >
                 <LogIn className="w-3 h-3 text-slate-600 dark:text-amber-400" />
                 <span>دخول</span>
@@ -526,7 +526,7 @@ export default function Header({
               {/* Register CTA Button */}
               <Link
                 href="/register"
-                className="px-3.5 py-1 rounded-full text-[11px] font-black bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white transition-all shadow-md shadow-blue-600/25 hover:shadow-lg hover:shadow-blue-600/35 whitespace-nowrap flex items-center gap-1 shrink-0 hover:scale-105"
+                className="px-3 py-1 rounded-full text-[11px] font-black bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white transition-all shadow-md shadow-blue-600/25 hover:shadow-lg hover:shadow-blue-600/35 whitespace-nowrap flex items-center gap-1 shrink-0 hover:scale-105"
               >
                 <UserPlus className="w-3 h-3 text-white" />
                 <span>انضمام</span>
