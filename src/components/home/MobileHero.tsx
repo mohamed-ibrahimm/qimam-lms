@@ -159,16 +159,16 @@ export default function MobileHero({
 
       {/* 
         ========================================================================
-        SCREEN 2: BELOW THE FOLD
-        Dedicated, spacious section for Quick Contacts and Official Badges.
+        SCREEN 2: DEDICATED SECOND FULL SCREEN (BELOW THE FOLD)
+        Dedicated, spacious second screen for Quick Contacts & Academy Highlights.
         ========================================================================
       */}
-      <section className="pt-16 pb-20 px-4 bg-slate-100/40 dark:bg-zinc-950/40 space-y-7 text-center">
+      <section className="min-h-[100svh] flex flex-col justify-center items-center py-24 px-4 bg-slate-100/40 dark:bg-zinc-950/60 space-y-8 text-center shrink-0 border-t border-slate-200/60 dark:border-white/5">
         
         {/* Quick Contacts */}
         {hasAnySocial && (
-          <div className="space-y-4 max-w-sm mx-auto">
-            <span className="text-sm text-slate-700 dark:text-zinc-300 font-bold block">تواصل مباشر وسريع مع الأكاديمية:</span>
+          <div className="space-y-4 max-w-sm mx-auto w-full">
+            <span className="text-sm text-slate-800 dark:text-zinc-200 font-bold block">تواصل مباشر وسريع مع الأكاديمية:</span>
             <div className="flex flex-wrap items-center justify-center gap-2.5">
               {whatsappUrl && (
                 <a
