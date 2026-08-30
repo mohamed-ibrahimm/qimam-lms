@@ -51,7 +51,7 @@ export default function MobileHero({
         Dedicated full-screen showcase. Contains exclusively Headline + CTAs.
         ========================================================================
       */}
-      <section className="h-[100dvh] flex flex-col justify-between pt-16 px-4 relative overflow-hidden">
+      <section className="h-[100dvh] min-h-[580px] flex flex-col justify-between pt-16 px-4 relative overflow-hidden">
         
         {/* Dynamic Light/Dark Mesh Blobs in Background */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10">
@@ -65,7 +65,7 @@ export default function MobileHero({
             <a href="#trending-diploma" className="shimmer-border-wrapper group w-full block">
               <div className="shimmer-beam-gold dark:block hidden" />
               <div className="shimmer-beam-blue dark:hidden block" />
-              <div className="shimmer-button-content w-full px-3 py-2 text-[11px] text-slate-800 dark:text-zinc-200 flex items-center justify-between gap-1.5 rounded-full">
+              <div className="shimmer-button-content w-full px-3.5 py-2 text-[11px] text-slate-800 dark:text-zinc-200 flex items-center justify-between gap-1.5 rounded-full">
                 <div className="flex items-center gap-1 shrink-0">
                   <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-amber-400 animate-pulse" />
                   <span className="text-blue-700 dark:text-amber-300 font-black">{settings.HERO_BADGE || 'جديد!'}</span>
@@ -79,53 +79,56 @@ export default function MobileHero({
           </div>
         )}
 
-        {/* 2. CENTER: Main Typography Showcase (High-contrast Dual Mode) */}
-        <div className="flex-1 flex flex-col justify-center items-center text-center my-auto px-1 space-y-3 shrink-0">
+        {/* 2. CENTER: Large, Broad, Elegant Headline */}
+        <div className="flex-1 flex flex-col justify-center items-center text-center my-auto px-2 py-1 space-y-2.5 shrink-0 relative">
+          
+          {/* Soft spherical golden ambient glow */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[260px] h-[260px] bg-amber-500/15 dark:bg-amber-500/18 rounded-full blur-[65px] pointer-events-none -z-10" />
 
-          <h1 className="font-black tracking-tight leading-tight space-y-1 w-full max-w-sm mx-auto">
-            <span className="text-slate-950 dark:text-white block font-black text-2xl xs:text-3xl leading-snug drop-shadow-sm">
+          <h1 className="font-black tracking-tight w-full mb-1 text-center">
+            <span className="text-slate-950 dark:text-white block font-black text-[25px] xs:text-[30px] sm:text-4xl leading-[1.24] mb-1.5 tracking-tight">
               {settings.HERO_TITLE || 'بوابتك الذكية لاحتراف'}
             </span>
-            <span className="bg-gradient-to-r from-blue-700 via-indigo-600 to-purple-600 dark:from-amber-400 dark:via-yellow-300 dark:to-amber-500 bg-clip-text text-transparent block font-black text-lg xs:text-xl leading-snug">
+            <span className="block font-black text-[17px] xs:text-[21px] sm:text-2xl leading-snug bg-gradient-to-r from-blue-700 via-indigo-600 to-purple-600 dark:from-amber-400 dark:via-yellow-300 dark:to-amber-500 bg-clip-text text-transparent">
               {settings.HERO_TITLE_HIGHLIGHT || 'البرمجة والذكاء الاصطناعي'}
             </span>
           </h1>
 
-          <p className="text-xs xs:text-sm text-slate-700 dark:text-zinc-200 max-w-[320px] xs:max-w-xs mx-auto leading-relaxed font-medium">
+          <p className="text-xs xs:text-sm text-slate-700 dark:text-zinc-200 max-w-[340px] xs:max-w-sm mx-auto leading-relaxed font-medium px-2">
             {settings.HERO_SUBTITLE || `${cleanPlatformName} — مسارات تدريبية ودبلومات معتمدة تؤهلك لسوق العمل بثقة واحتراف.`}
           </p>
         </div>
 
-        {/* 3. BOTTOM: 4 Premium Action Buttons */}
-        <div className="w-full max-w-[340px] xs:max-w-sm mx-auto flex flex-col gap-2 pb-24 sm:pb-8 px-1.5 shrink-0 mt-auto">
+        {/* 3. BOTTOM: 4 Action Buttons with clearance above floating icons */}
+        <div className="w-full max-w-[340px] xs:max-w-sm mx-auto flex flex-col gap-2.5 pb-[78px] sm:pb-8 px-1.5 shrink-0 mt-auto">
           
-          {/* Button 1: Diploma (Centered) */}
+          {/* Button 1: Diploma */}
           <a href="#trending-diploma" className="shimmer-border-wrapper group w-full">
             <div className="shimmer-beam-gold dark:block hidden" />
             <div className="shimmer-beam-blue dark:hidden block" />
-            <div className="shimmer-button-content w-full px-3.5 py-2.5 text-xs font-black text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 dark:bg-none dark:text-amber-300 group-hover:opacity-95 flex items-center justify-center gap-2 rounded-2xl shadow-lg">
-              <Flame className="w-3.5 h-3.5 text-amber-300 dark:text-amber-400 animate-bounce shrink-0" />
-              <span className="whitespace-nowrap">{settings.FEATURED_DIPLOMA_BADGE || 'الدبلومة الأكثر طلباً (خصم 51%)'}</span>
+            <div className="shimmer-button-content w-full px-4 py-2.5 xs:py-3 text-xs xs:text-sm font-black text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 dark:bg-none dark:text-amber-300 group-hover:opacity-95 flex items-center justify-center gap-2 rounded-2xl shadow-lg">
+              <Flame className="w-4 h-4 text-amber-300 dark:text-amber-400 animate-bounce shrink-0" />
+              <span className="whitespace-nowrap">{settings.FEATURED_DIPLOMA_BADGE || 'الدبلومة الأكثر طلباً في سوق العمل'}</span>
             </div>
           </a>
 
-          {/* Button 2: Digital Notes & Books Marketplace (Emerald Glow) */}
+          {/* Button 2: Digital Notes & Books Marketplace */}
           <Link
             href="/books"
             prefetch={true}
-            className="group flex items-center justify-center gap-1.5 w-full py-2.5 px-3 text-xs font-black text-emerald-950 dark:text-emerald-300 transition-all rounded-2xl border-2 border-emerald-500/80 hover:border-emerald-400 bg-gradient-to-r from-emerald-500/15 via-teal-500/20 to-emerald-500/15 shadow-md shadow-emerald-500/10 backdrop-blur-md active:scale-[0.98]"
+            className="group flex items-center justify-center gap-2 w-full py-2.5 xs:py-3 px-3.5 text-xs xs:text-sm font-black text-emerald-950 dark:text-emerald-300 transition-all rounded-2xl border-2 border-emerald-500/80 hover:border-emerald-400 bg-gradient-to-r from-emerald-500/15 via-teal-500/20 to-emerald-500/15 shadow-md shadow-emerald-500/10 backdrop-blur-md active:scale-[0.98]"
           >
-            <FileText className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform shrink-0" />
+            <FileText className="w-4 h-4 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform shrink-0" />
             <span className="whitespace-nowrap">{settings.HERO_BTN_BOOKS || 'سوق المذكرات والكتب (خصم 50% ومعاينة)'}</span>
           </Link>
 
-          {/* Button 3: Join as Expert Instructor (Purple Glow) */}
+          {/* Button 3: Join as Expert Instructor */}
           <Link
             href="/instructors/join?track=expert"
             prefetch={true}
-            className="group flex items-center justify-center gap-1.5 w-full py-2.5 px-3 text-xs font-black text-purple-900 dark:text-purple-300 transition-all rounded-2xl border-2 border-purple-500/80 hover:border-purple-400 bg-gradient-to-r from-purple-600/15 via-indigo-600/20 to-purple-600/15 shadow-md shadow-purple-500/10 backdrop-blur-md active:scale-[0.98]"
+            className="group flex items-center justify-center gap-2 w-full py-2.5 xs:py-3 px-3.5 text-xs xs:text-sm font-black text-purple-900 dark:text-purple-300 transition-all rounded-2xl border-2 border-purple-500/80 hover:border-purple-400 bg-gradient-to-r from-purple-600/15 via-indigo-600/20 to-purple-600/15 shadow-md shadow-purple-500/10 backdrop-blur-md active:scale-[0.98]"
           >
-            <Video className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform shrink-0" />
+            <Video className="w-4 h-4 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform shrink-0" />
             <span className="whitespace-nowrap">
               {settings.HERO_BTN_EXPERT
                 ? settings.HERO_BTN_EXPERT.replace(/14\s*يوماً|14\s*يوم/g, `${settings.INSTRUCTOR_TRIAL_DAYS || '14'} يوماً`)
@@ -133,13 +136,13 @@ export default function MobileHero({
             </span>
           </Link>
 
-          {/* Button 4: Join as Student Instructor (Amber Glow) */}
+          {/* Button 4: Join as Student Instructor */}
           <Link
             href="/instructors/join?track=student"
             prefetch={true}
-            className="group flex items-center justify-center gap-1.5 w-full py-2.5 px-3 text-xs font-black text-amber-950 dark:text-amber-300 transition-all rounded-2xl border-2 border-amber-500/80 hover:border-amber-400 bg-gradient-to-r from-amber-500/15 via-yellow-500/20 to-amber-500/15 shadow-md shadow-amber-500/10 backdrop-blur-md active:scale-[0.98]"
+            className="group flex items-center justify-center gap-2 w-full py-2.5 xs:py-3 px-3.5 text-xs xs:text-sm font-black text-amber-950 dark:text-amber-300 transition-all rounded-2xl border-2 border-amber-500/80 hover:border-amber-400 bg-gradient-to-r from-amber-500/15 via-yellow-500/20 to-amber-500/15 shadow-md shadow-amber-500/10 backdrop-blur-md active:scale-[0.98]"
           >
-            <GraduationCap className="w-3.5 h-3.5 text-amber-500 group-hover:scale-110 transition-transform shrink-0" />
+            <GraduationCap className="w-4 h-4 text-amber-500 group-hover:scale-110 transition-transform shrink-0" />
             <span className="whitespace-nowrap">
               {settings.HERO_BTN_STUDENT
                 ? settings.HERO_BTN_STUDENT.replace(/30\s*يوماً|30\s*يوم/g, `${settings.STUDENT_TRIAL_DAYS || '14'} يوماً`)
