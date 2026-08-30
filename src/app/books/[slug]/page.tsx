@@ -14,38 +14,56 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function BookDetailPage({ params }: Props) {
-  const user = await getCurrentUser();
+  let user = null;
+  try {
+    user = await getCurrentUser();
+  } catch (e) {}
 
-  const book = await prisma.digitalBook.findUnique({
-    where: { slug: params.slug },
-    include: {
-      instructor: {
-        select: {
-          id: true,
-          officialFullName: true,
-          firstName: true,
-          avatarUrl: true,
-          bio: true,
-          isStudentInstructor: true,
-        }
+  let decodedSlug = params.slug;
+  try {
+    decodedSlug = decodeURIComponent(params.slug);
+  } catch (e) {}
+
+  let book: any = null;
+  try {
+    book = await prisma.digitalBook.findFirst({
+      where: {
+        OR: [
+          { slug: params.slug },
+          { slug: decodedSlug },
+        ]
       },
-      reviews: {
-        where: { isApproved: true },
-        include: {
-          user: {
-            select: {
-              id: true,
-              firstName: true,
-              lastName: true,
-              officialFullName: true,
-              avatarUrl: true,
-            }
+      include: {
+        instructor: {
+          select: {
+            id: true,
+            officialFullName: true,
+            firstName: true,
+            avatarUrl: true,
+            bio: true,
+            isStudentInstructor: true,
           }
         },
-        orderBy: { createdAt: 'desc' },
+        reviews: {
+          where: { isApproved: true },
+          include: {
+            user: {
+              select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                officialFullName: true,
+                avatarUrl: true,
+              }
+            }
+          },
+          orderBy: { createdAt: 'desc' },
+        }
       }
-    }
-  });
+    });
+  } catch (e) {
+    console.error('Failed to fetch book detail:', e);
+  }
 
   if (!book || book.status !== 'PUBLISHED') {
     notFound();
@@ -65,30 +83,39 @@ export default async function BookDetailPage({ params }: Props) {
     if (user.role === 'ADMIN' || user.id === book.instructorId) {
       isPurchased = true;
     } else {
-      const purchase = await prisma.bookPurchase.findUnique({
-        where: {
-          userId_bookId: {
-            userId: user.id,
-            bookId: book.id,
+      try {
+        const purchase = await prisma.bookPurchase.findUnique({
+          where: {
+            userId_bookId: {
+              userId: user.id,
+              bookId: book.id,
+            }
           }
-        }
-      });
-      isPurchased = !!purchase;
+        });
+        isPurchased = !!purchase;
+      } catch (e) {
+        isPurchased = false;
+      }
     }
   }
 
   // Related books
-  const relatedBooks = await prisma.digitalBook.findMany({
-    where: {
-      id: { not: book.id },
-      status: 'PUBLISHED',
-      OR: [
-        { category: book.category },
-        { academicSubject: book.academicSubject }
-      ]
-    },
-    take: 3
-  });
+  let relatedBooks: any[] = [];
+  try {
+    relatedBooks = await prisma.digitalBook.findMany({
+      where: {
+        id: { not: book.id },
+        status: 'PUBLISHED',
+        OR: [
+          { category: book.category },
+          { academicSubject: book.academicSubject }
+        ]
+      },
+      take: 3
+    });
+  } catch (e) {
+    relatedBooks = [];
+  }
 
   return (
     <div className="min-h-screen pt-20 sm:pt-24 pb-20">
