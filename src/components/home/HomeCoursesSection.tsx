@@ -18,6 +18,7 @@ import {
   GraduationCap,
   Video,
   Flame,
+  FileText,
 } from 'lucide-react';
 
 interface HomeCoursesSectionProps {
@@ -164,14 +165,14 @@ export default function HomeCoursesSection({
         </div>
 
         {/* =========================================================================
-            2. TOP TRACK SWITCHER (جميع الكورسات | كورسات الطلاب | كورسات المحاضرين)
+            2. TOP TRACK SWITCHER (جميع الكورسات | المكتبة والمذكرات | كورسات الطلاب | كورسات المحاضرين)
            ========================================================================= */}
-        <div className="flex flex-wrap items-center justify-center gap-2.5 p-1.5 max-w-2xl mx-auto rounded-full bg-slate-100/90 dark:bg-zinc-950/80 border border-slate-200/90 dark:border-zinc-800 shadow-inner">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 p-1.5 max-w-4xl mx-auto rounded-full bg-slate-100/90 dark:bg-zinc-950/80 border border-slate-200/90 dark:border-zinc-800 shadow-inner">
           {/* Option 1: All Courses */}
           <button
             type="button"
             onClick={() => setSelectedTrack('ALL')}
-            className={`flex-1 min-w-[130px] py-2.5 px-4 rounded-full text-xs sm:text-sm font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
+            className={`flex-1 min-w-[120px] sm:min-w-[130px] py-2.5 px-3.5 sm:px-4 rounded-full text-xs sm:text-sm font-black transition-all flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer ${
               selectedTrack === 'ALL'
                 ? 'bg-white dark:bg-zinc-800 text-blue-700 dark:text-white shadow-md border border-slate-200 dark:border-zinc-700'
                 : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-zinc-200'
@@ -181,11 +182,20 @@ export default function HomeCoursesSection({
             <span>جميع الكورسات ({initialCourses.length})</span>
           </button>
 
-          {/* Option 2: Student Courses */}
+          {/* Option 2: Digital Notes & Books Marketplace (New) */}
+          <Link
+            href="/books"
+            className="flex-1 min-w-[130px] sm:min-w-[140px] py-2.5 px-3.5 sm:px-4 rounded-full text-xs sm:text-sm font-black transition-all flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer bg-gradient-to-r from-emerald-500/15 via-teal-500/20 to-emerald-500/15 text-emerald-800 dark:text-emerald-300 hover:bg-emerald-500/25 border border-emerald-500/40 hover:border-emerald-400 hover:scale-105 shadow-sm"
+          >
+            <FileText className="w-4 h-4 text-emerald-500" />
+            <span>المكتبة والمذكرات (جديد)</span>
+          </Link>
+
+          {/* Option 3: Student Courses */}
           <button
             type="button"
             onClick={() => setSelectedTrack('STUDENT')}
-            className={`flex-1 min-w-[130px] py-2.5 px-4 rounded-full text-xs sm:text-sm font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
+            className={`flex-1 min-w-[120px] sm:min-w-[130px] py-2.5 px-3.5 sm:px-4 rounded-full text-xs sm:text-sm font-black transition-all flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer ${
               selectedTrack === 'STUDENT'
                 ? 'bg-amber-500 text-zinc-950 shadow-md shadow-amber-500/20'
                 : 'text-amber-700 dark:text-amber-300 hover:bg-amber-500/10'
@@ -195,11 +205,11 @@ export default function HomeCoursesSection({
             <span>كورسات الطلاب ({studentCoursesCount})</span>
           </button>
 
-          {/* Option 3: Expert / Instructor Courses */}
+          {/* Option 4: Expert / Instructor Courses */}
           <button
             type="button"
             onClick={() => setSelectedTrack('EXPERT')}
-            className={`flex-1 min-w-[130px] py-2.5 px-4 rounded-full text-xs sm:text-sm font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
+            className={`flex-1 min-w-[120px] sm:min-w-[130px] py-2.5 px-3.5 sm:px-4 rounded-full text-xs sm:text-sm font-black transition-all flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer ${
               selectedTrack === 'EXPERT'
                 ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
                 : 'text-indigo-700 dark:text-indigo-300 hover:bg-indigo-500/10'
