@@ -173,20 +173,20 @@ export default function Header({
         {/* =========================================================================
             1. RIGHT: LOGO & PLATFORM TITLE WITH ROTATING GOLD HALO
            ========================================================================= */}
-        <Link href="/" className="flex items-center gap-2.5 sm:gap-3 shrink-0 group py-1">
-          <div className="dynamic-logo-emblem w-10 h-10 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl p-[2px] shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform shrink-0">
-            <div className="w-full h-full bg-[#0c0918] dark:bg-[#0c0918] rounded-[10px] sm:rounded-[14px] flex items-center justify-center border border-amber-500/40">
-              <GraduationCap className="w-5 h-5 text-amber-400" />
+        <Link href="/" className="flex items-center gap-2 sm:gap-3 shrink-0 group py-1 max-w-[68%] sm:max-w-none min-w-0">
+          <div className="dynamic-logo-emblem w-8 h-8 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl p-[2px] shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform shrink-0">
+            <div className="w-full h-full bg-[#0c0918] dark:bg-[#0c0918] rounded-[9px] sm:rounded-[14px] flex items-center justify-center border border-amber-500/40">
+              <GraduationCap className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
             </div>
           </div>
-          <div className="flex flex-col text-right justify-center shrink-0">
-            <span className="text-[9px] sm:text-[10px] font-black text-amber-500 dark:text-amber-400 flex items-center gap-1 leading-none mb-0.5 whitespace-nowrap">
+          <div className="flex flex-col text-right justify-center min-w-0">
+            <span className="hidden xs:flex text-[8px] sm:text-[10px] font-black text-amber-500 dark:text-amber-400 items-center gap-1 leading-none mb-0.5 whitespace-nowrap">
               ★ منصة تعليمية معتمدة
             </span>
-            <span className="text-sm xs:text-base sm:text-lg font-black text-slate-900 dark:text-white dark:bg-gradient-to-r dark:from-white dark:via-amber-100 dark:to-amber-300 dark:bg-clip-text dark:text-transparent group-hover:text-blue-600 dark:group-hover:text-amber-300 transition-colors tracking-tight whitespace-nowrap leading-tight drop-shadow-xs">
+            <span className="text-xs xs:text-sm sm:text-base md:text-lg font-black text-slate-900 dark:text-white dark:bg-gradient-to-r dark:from-white dark:via-amber-100 dark:to-amber-300 dark:bg-clip-text dark:text-transparent group-hover:text-blue-600 dark:group-hover:text-amber-300 transition-colors tracking-tight truncate leading-tight drop-shadow-xs">
               {platformName}
             </span>
-            <span className="text-[8.5px] xs:text-[9px] sm:text-[10px] text-slate-500 dark:text-amber-200/80 font-medium whitespace-nowrap leading-none mt-0.5 block">
+            <span className="hidden sm:block text-[8.5px] xs:text-[9px] sm:text-[10px] text-slate-500 dark:text-amber-200/80 font-medium truncate leading-none mt-0.5">
               {platformTagline}
             </span>
           </div>

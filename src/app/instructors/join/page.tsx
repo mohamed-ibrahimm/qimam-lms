@@ -157,7 +157,7 @@ export default function InstructorJoinPage() {
   ];
 
   return (
-    <div className="min-h-screen pt-10 sm:pt-12 pb-14 px-3.5 sm:px-6 lg:px-8 relative text-slate-900 dark:text-slate-100 selection:bg-amber-500 selection:text-zinc-950 transition-colors duration-300">
+    <div className="min-h-screen pt-4 sm:pt-8 pb-14 px-3 sm:px-6 lg:px-8 relative text-slate-900 dark:text-slate-100 selection:bg-amber-500 selection:text-zinc-950 transition-colors duration-300">
       
       {/* =========================================================================
           1. HERO & TRACK NAVIGATION (EXACTLY MATCHING DESKTOPHERO ON HOMEPAGE)
@@ -165,12 +165,12 @@ export default function InstructorJoinPage() {
       <section className="max-w-5xl mx-auto text-center relative">
         
         {/* Dynamic Rotating Shimmer Badge Switcher */}
-        <div className="mb-3 inline-block max-w-full px-2">
-          <div className="inline-flex p-1 rounded-2xl sm:rounded-full bg-white/90 dark:bg-[#16122d]/90 border border-slate-200 dark:border-purple-800/80 shadow-md backdrop-blur-md gap-1 flex-col sm:flex-row justify-center w-full sm:w-auto">
+        <div className="mb-2 sm:mb-3 inline-block max-w-full px-1">
+          <div className="inline-flex p-1 rounded-2xl bg-white/95 dark:bg-[#16122d]/90 border border-slate-200 dark:border-purple-800/80 shadow-md backdrop-blur-md gap-1 flex-wrap sm:flex-nowrap justify-center w-full sm:w-auto">
             <button
               type="button"
               onClick={() => setActiveTrack('all')}
-              className={`px-3.5 sm:px-4.5 py-1.5 rounded-xl sm:rounded-full text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+              className={`px-3 py-1.5 rounded-xl text-[11px] sm:text-xs font-black transition-all flex items-center justify-center gap-1 cursor-pointer ${
                 activeTrack === 'all'
                   ? 'bg-slate-900 text-white dark:bg-white dark:text-zinc-950 shadow-sm'
                   : 'text-slate-600 dark:text-zinc-400 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10'
@@ -183,27 +183,27 @@ export default function InstructorJoinPage() {
             <button
               type="button"
               onClick={() => setActiveTrack('expert')}
-              className={`px-3.5 sm:px-4.5 py-1.5 rounded-xl sm:rounded-full text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+              className={`px-3 py-1.5 rounded-xl text-[11px] sm:text-xs font-black transition-all flex items-center justify-center gap-1 cursor-pointer ${
                 activeTrack === 'expert'
                   ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-600/30'
                   : 'text-slate-600 dark:text-zinc-400 hover:text-purple-600 dark:hover:text-purple-300 hover:bg-purple-50 dark:hover:bg-white/10'
               }`}
             >
               <Building className="w-3.5 h-3.5 text-purple-500 dark:text-purple-400" />
-              <span>مسار المدرسين والدكاترة ({platformSettings.instructorTrialDays} يوماً مجاناً)</span>
+              <span>باقة المدرسين والدكاترة ({platformSettings.instructorTrialDays} يوم مجاناً)</span>
             </button>
 
             <button
               type="button"
               onClick={() => setActiveTrack('student')}
-              className={`px-3.5 sm:px-4.5 py-1.5 rounded-xl sm:rounded-full text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+              className={`px-3 py-1.5 rounded-xl text-[11px] sm:text-xs font-black transition-all flex items-center justify-center gap-1 cursor-pointer ${
                 activeTrack === 'student'
                   ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-zinc-950 shadow-md shadow-amber-500/30'
                   : 'text-slate-600 dark:text-zinc-400 hover:text-amber-600 dark:hover:text-amber-300 hover:bg-amber-50 dark:hover:bg-white/10'
               }`}
             >
-              <GraduationCap className="w-4 h-4 text-amber-500" />
-              <span>مسار المحاضر الطالب ({platformSettings.studentTrialDays} يوماً مجاناً)</span>
+              <GraduationCap className="w-3.5 h-3.5 text-amber-500" />
+              <span>باقة المحاضر الطالب ({platformSettings.studentTrialDays} يوم مجاناً)</span>
             </button>
           </div>
         </div>
@@ -217,8 +217,8 @@ export default function InstructorJoinPage() {
             <div className="dynamic-drift-3 absolute top-1/4 left-1/2 -translate-x-1/2 w-[340px] h-[240px] bg-indigo-400/20 dark:bg-yellow-500/10 rounded-full blur-[100px]" />
           </div>
 
-          <h1 className="font-black tracking-tight mb-2.5 max-w-4xl mx-auto">
-            <span className="text-slate-900 dark:text-white block font-black text-2xl sm:text-3xl lg:text-[2.6rem] leading-[1.25] mb-2">
+          <h1 className="font-black tracking-tight mb-2 max-w-4xl mx-auto">
+            <span className="text-slate-900 dark:text-white block font-black text-xl sm:text-3xl lg:text-[2.6rem] leading-[1.25] mb-1">
               {platformSettings.joinPageTitle ? (
                 platformSettings.joinPageTitle
               ) : activeTrack === 'student' ? (
@@ -227,7 +227,7 @@ export default function InstructorJoinPage() {
                 'درّس لطلابك واحتفظ بكامل عوائد مبيعاتك مباشرة'
               )}
             </span>
-            <span className="bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-600 dark:from-amber-300 dark:via-yellow-400 dark:to-amber-500 bg-clip-text text-transparent block font-black text-xl sm:text-2xl lg:text-[1.95rem] leading-snug">
+            <span className="bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-600 dark:from-amber-300 dark:via-yellow-400 dark:to-amber-500 bg-clip-text text-transparent block font-black text-lg sm:text-2xl lg:text-[1.95rem] leading-snug">
               {activeTrack === 'student' ? (
                 `منحة المحاضر الطالب (${platformSettings.studentTrialDays} يوماً مجاناً بالكامل)`
               ) : (
@@ -238,7 +238,7 @@ export default function InstructorJoinPage() {
         </div>
 
         {/* Subtitle */}
-        <p className="text-xs sm:text-sm lg:text-base text-slate-600 dark:text-zinc-300 max-w-3xl mx-auto mb-5 leading-relaxed px-2">
+        <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-300 max-w-3xl mx-auto mb-4 leading-relaxed px-2">
           {platformSettings.joinPageSubtitle ? (
             platformSettings.joinPageSubtitle
           ) : activeTrack === 'student'
@@ -249,38 +249,38 @@ export default function InstructorJoinPage() {
         {/* =========================================================================
             DUAL TRACK HERO CARDS (EXACT HOMEPAGE MATCHING STYLE - FULL VIEWPORT FIT)
            ========================================================================= */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 text-right max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-5 text-right max-w-4xl mx-auto">
           
           {/* Card 1: Teachers & University Professors */}
           <div
-            className={`p-4 sm:p-5 rounded-3xl border transition-all duration-300 flex flex-col justify-between space-y-3 relative overflow-hidden group ${
+            className={`p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border transition-all duration-300 flex flex-col justify-between space-y-3 relative overflow-hidden group ${
               activeTrack === 'expert' || activeTrack === 'all'
-                ? 'bg-white/95 dark:bg-[#16122d]/90 border-purple-300/90 dark:border-purple-800/80 shadow-md hover:shadow-xl backdrop-blur-md ring-1 ring-purple-500/20'
+                ? 'bg-white/95 dark:bg-[#16122d]/90 border-purple-300 dark:border-purple-800/80 shadow-md hover:shadow-xl backdrop-blur-md ring-1 ring-purple-500/20'
                 : 'bg-slate-50/50 dark:bg-[#120e24]/50 border-slate-200 dark:border-zinc-800/70 opacity-70'
             }`}
           >
-            <div className="space-y-2.5">
+            <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="px-2.5 py-0.5 rounded-full bg-purple-500/10 dark:bg-purple-500/15 text-purple-700 dark:text-purple-300 border border-purple-500/20 dark:border-purple-500/30 text-[11px] font-bold inline-flex items-center gap-1.5">
+                <span className="px-2.5 py-0.5 rounded-full bg-purple-500/10 dark:bg-purple-500/15 text-purple-700 dark:text-purple-300 border border-purple-500/20 dark:border-purple-500/30 text-[10.5px] sm:text-[11px] font-bold inline-flex items-center gap-1.5">
                   <Building className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
                   للمدرسين والدكاترة الجامعيين
                 </span>
-                <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                <span className="text-[10.5px] sm:text-[11px] font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
                   <CheckCircle2 className="w-3.5 h-3.5" />
                   تفعيل فوري بدون مستندات
                 </span>
               </div>
 
               <div className="space-y-0.5">
-                <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white">
+                <h3 className="text-sm sm:text-lg font-black text-slate-900 dark:text-white">
                   {platformSettings.expertCardTitle}
                 </h3>
-                <p className="text-xs text-slate-600 dark:text-zinc-300 leading-relaxed">
+                <p className="text-[11px] sm:text-xs text-slate-600 dark:text-zinc-300 leading-relaxed">
                   {platformSettings.expertCardDesc}
                 </p>
               </div>
 
-              <div className="p-3 rounded-2xl bg-purple-50/60 dark:bg-[#1c163b]/80 border border-purple-100 dark:border-purple-900/40 space-y-1.5 text-xs">
+              <div className="p-2.5 sm:p-3 rounded-2xl bg-purple-50/70 dark:bg-[#1c163b]/80 border border-purple-200 dark:border-purple-900/40 space-y-1.5 text-[11px] sm:text-xs">
                 <div className="flex items-center justify-between font-bold text-slate-700 dark:text-zinc-300">
                   <span>الفترة التجريبية:</span>
                   <span className="text-purple-700 dark:text-purple-300 font-black">{platformSettings.instructorTrialDays} يوماً مجاناً بالكامل</span>
@@ -302,7 +302,7 @@ export default function InstructorJoinPage() {
 
             <Link
               href="/register?role=instructor&track=expert"
-              className="w-full py-2.5 sm:py-3 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 hover:from-purple-500 hover:to-indigo-500 text-white font-black text-xs text-center shadow-md shadow-purple-600/20 transition-all hover:scale-[1.01] flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-2.5 sm:py-3 rounded-xl sm:rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 hover:from-purple-500 hover:to-indigo-500 text-white font-black text-xs text-center shadow-md shadow-purple-600/20 transition-all hover:scale-[1.01] flex items-center justify-center gap-2 cursor-pointer"
             >
               <span>بدء تجربة المدرس أو الدكتور ({platformSettings.instructorTrialDays} يوماً مجاناً)</span>
               <ArrowLeft className="w-3.5 h-3.5" />
@@ -311,34 +311,34 @@ export default function InstructorJoinPage() {
 
           {/* Card 2: Student Instructors (GOLD SHINE VIP) */}
           <div
-            className={`p-4 sm:p-5 rounded-3xl border-2 transition-all duration-300 flex flex-col justify-between space-y-3 relative overflow-hidden group ${
+            className={`p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl border-2 transition-all duration-300 flex flex-col justify-between space-y-3 relative overflow-hidden group ${
               activeTrack === 'student' || activeTrack === 'all'
-                ? 'bg-amber-500/15 hover:bg-amber-500/25 dark:bg-amber-500/15 dark:hover:bg-amber-500/25 border-2 border-amber-500/70 hover:border-amber-400 shadow-md hover:shadow-amber-500/20 backdrop-blur-md'
+                ? 'bg-amber-50/95 dark:bg-amber-500/15 border-2 border-amber-400 dark:border-amber-500/70 shadow-md hover:shadow-amber-500/20 backdrop-blur-md'
                 : 'bg-slate-50/50 dark:bg-[#120e24]/50 border-slate-200 dark:border-zinc-800/70 opacity-70'
             }`}
           >
-            <div className="space-y-2.5">
+            <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-900 dark:text-amber-300 border border-amber-500/40 text-[11px] font-black inline-flex items-center gap-1.5">
+                <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-900 dark:text-amber-300 border border-amber-500/40 text-[10.5px] sm:text-[11px] font-black inline-flex items-center gap-1.5">
                   <GraduationCap className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                   لطلبة الكليات والمدارس
                 </span>
-                <span className="text-[11px] font-bold text-amber-800 dark:text-amber-400 flex items-center gap-1">
+                <span className="text-[10.5px] sm:text-[11px] font-bold text-amber-800 dark:text-amber-400 flex items-center gap-1">
                   <FileText className="w-3.5 h-3.5" />
                   إثبات دراسي ميسر
                 </span>
               </div>
 
               <div className="space-y-0.5">
-                <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white">
+                <h3 className="text-sm sm:text-lg font-black text-slate-900 dark:text-white">
                   {platformSettings.studentCardTitle}
                 </h3>
-                <p className="text-xs text-slate-600 dark:text-zinc-300 leading-relaxed">
+                <p className="text-[11px] sm:text-xs text-slate-600 dark:text-zinc-300 leading-relaxed">
                   {platformSettings.studentCardDesc}
                 </p>
               </div>
 
-              <div className="p-3 rounded-2xl bg-amber-500/15 dark:bg-[#181222]/90 border border-amber-300 dark:border-amber-500/40 space-y-1.5 text-xs">
+              <div className="p-2.5 sm:p-3 rounded-2xl bg-amber-100/70 dark:bg-[#181222]/90 border border-amber-300 dark:border-amber-500/40 space-y-1.5 text-[11px] sm:text-xs">
                 <div className="flex items-center justify-between font-bold text-slate-700 dark:text-zinc-300">
                   <span>المنحة التجريبية:</span>
                   <span className="text-amber-800 dark:text-amber-400 font-black">{platformSettings.studentTrialDays} يوماً مجاناً بالكامل</span>
@@ -348,22 +348,22 @@ export default function InstructorJoinPage() {
                   <span className="text-emerald-600 dark:text-emerald-400 font-black">{platformSettings.studentPrice} ج.م شهرياً</span>
                 </div>
                 <div className="flex items-center justify-between font-bold text-slate-700 dark:text-zinc-300">
-                  <span>إثبات الدراسة المطلوب:</span>
-                  <span className="text-slate-900 dark:text-white">{platformSettings.studentProofText}</span>
+                  <span>التحصيل المالي:</span>
+                  <span className="text-slate-900 dark:text-white">InstaPay وفودافون كاش مباشرة</span>
                 </div>
                 <div className="flex items-center justify-between font-bold text-slate-700 dark:text-zinc-300">
-                  <span>البطاقة الشخصية:</span>
-                  <span className="text-emerald-600 dark:text-emerald-400 font-bold">لا يُطلب بطاقة شخصية نهائياً</span>
+                  <span>المستندات المطلوبة:</span>
+                  <span className="text-amber-800 dark:text-amber-400 font-bold">{platformSettings.studentProofText}</span>
                 </div>
               </div>
             </div>
 
             <Link
               href="/register?role=instructor&track=student"
-              className="w-full py-2.5 sm:py-3 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 hover:to-yellow-300 text-zinc-950 font-black text-xs text-center shadow-md shadow-amber-500/25 transition-all hover:scale-[1.01] flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-2.5 sm:py-3 rounded-xl sm:rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 hover:to-yellow-300 text-zinc-950 font-black text-xs text-center shadow-md shadow-amber-500/20 transition-all hover:scale-[1.01] flex items-center justify-center gap-2 cursor-pointer"
             >
-              <span>اشترك كـ محاضر طالب ({platformSettings.studentTrialDays} يوماً مجاناً)</span>
-              <ArrowLeft className="w-3.5 h-3.5 text-zinc-950" />
+              <span>تفعيل منحة الطالب ({platformSettings.studentTrialDays} يوماً مجاناً)</span>
+              <ArrowLeft className="w-3.5 h-3.5" />
             </Link>
           </div>
 
