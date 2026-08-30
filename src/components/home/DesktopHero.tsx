@@ -42,17 +42,17 @@ export default function DesktopHero({
   hasAnySocial,
 }: DesktopHeroProps) {
   return (
-    <section className="hidden md:flex flex-col justify-center items-center min-h-[calc(100vh-5.5rem)] pt-16 pb-20 lg:pt-24 lg:pb-28 relative">
-      <div className="max-w-6xl mx-auto px-6 lg:px-8 text-center my-auto w-full">
+    <section className="hidden md:flex flex-col justify-center items-center min-h-[calc(100vh-4.5rem)] pt-6 sm:pt-8 lg:pt-10 pb-12 relative">
+      <div className="max-w-7xl mx-auto px-4 lg:px-8 text-center my-auto w-full space-y-6 lg:space-y-7">
         
         {/* Promotional Dynamic Rotating Shimmer Banner */}
         {settings.BANNER_ENABLED !== 'false' && (
-          <div className="mb-8 inline-block max-w-full px-2">
+          <div className="inline-block max-w-full px-2">
             <a href="#trending-diploma" className="shimmer-border-wrapper group inline-block max-w-full">
               <div className="shimmer-beam-gold" />
-              <div className="shimmer-button-content px-6 py-2.5 text-xs text-slate-800 dark:text-zinc-200 flex items-center gap-3 flex-nowrap justify-center">
+              <div className="shimmer-button-content px-5 py-2 text-xs text-slate-800 dark:text-zinc-200 flex items-center gap-2.5 flex-nowrap justify-center">
                 <div className="flex items-center gap-1.5 shrink-0">
-                  <Sparkles className="w-4 h-4 text-blue-600 dark:text-amber-400 animate-pulse" />
+                  <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-amber-400 animate-pulse" />
                   <span className="text-blue-700 dark:text-amber-300 font-black">{settings.HERO_BADGE || 'جديد!'}</span>
                 </div>
                 <div className="h-3.5 w-px bg-slate-300 dark:bg-amber-500/40 shrink-0" />
@@ -65,22 +65,22 @@ export default function DesktopHero({
           </div>
         )}
 
-        {/* Headlines */}
-        <div className="space-y-4 max-w-4xl mx-auto">
-          <h1 className="text-4xl lg:text-6xl font-black text-slate-950 dark:text-white leading-[1.15] tracking-tight">
-            {settings.HERO_TITLE || 'بوابتك الذكية لاحتراف'} <br />
+        {/* Headlines with balanced scale and 2 clean lines */}
+        <div className="space-y-3 max-w-5xl mx-auto px-2">
+          <h1 className="text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px] font-black text-slate-950 dark:text-white leading-[1.25] tracking-tight">
+            {settings.HERO_TITLE || 'بوابتك الذكية لاحتراف'} <br className="hidden sm:inline" />
             <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-amber-400 dark:via-yellow-300 dark:to-amber-500 bg-clip-text text-transparent">
               {settings.HERO_TITLE_HIGHLIGHT || 'البرمجة وهندسة النظم والذكاء الاصطناعي'}
             </span>
           </h1>
 
-          <p className="text-base lg:text-lg text-slate-600 dark:text-zinc-300 max-w-3xl mx-auto leading-relaxed font-normal">
+          <p className="text-sm sm:text-base lg:text-lg text-slate-600 dark:text-zinc-300 max-w-3xl mx-auto leading-relaxed font-normal pt-1">
             {settings.HERO_SUBTITLE || `${cleanPlatformName} — مسارات تدريبية هندسية متكاملة، دبلومات برمجية معتمدة، ومشاريع إنتاج واقعية تؤهلك لسوق العمل بثقة واحتراف.`}
           </p>
         </div>
 
         {/* 4 Premium Action Pillars on a Single Unified Horizontal Row */}
-        <div className="flex flex-wrap lg:flex-nowrap items-center justify-center gap-2 lg:gap-3 w-full mx-auto px-1 max-w-[1360px]">
+        <div className="flex flex-wrap lg:flex-nowrap items-center justify-center gap-2.5 lg:gap-3.5 w-full mx-auto px-1 max-w-[1360px] pt-1">
           
           {/* 1. Diploma Button (Shimmer Molten Gold) */}
           <a href="#trending-diploma" className="shimmer-border-wrapper group shrink-0">
