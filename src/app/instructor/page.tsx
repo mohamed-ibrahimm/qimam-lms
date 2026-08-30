@@ -36,6 +36,15 @@ export default async function InstructorStudioPage() {
         instapayName: true,
         vodafoneCashNumber: true,
         paymentInstructions: true,
+        isStudentInstructor: true,
+        studentVerificationStatus: true,
+        studentBirthDate: true,
+        studentUniversity: true,
+        studentFaculty: true,
+        studentStudyYear: true,
+        studentIdCardUrl: true,
+        studentNationalIdUrl: true,
+        studentVerificationNote: true,
         createdAt: true,
       }
     });

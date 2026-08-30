@@ -158,7 +158,7 @@ export default function RegisterPage() {
                 <div className="flex items-center gap-2.5">
                   <GraduationCap className="w-5 h-5 text-amber-400 shrink-0" />
                   <div>
-                    <span className="font-black text-amber-300 block">باقة المحاضر الطالب (سن 23 فأقل) 🎓</span>
+                    <span className="font-black text-amber-300 block">باقة المحاضر الطالب (سن 23 سنة فأقل)</span>
                     <span className="text-[11px] text-zinc-300">منحة تمكين: شهر كامل مجاناً (30 يوماً) + باقة 120 ج.م</span>
                   </div>
                 </div>
@@ -167,18 +167,18 @@ export default function RegisterPage() {
                   onClick={() => setTrack('')}
                   className="text-[11px] text-zinc-400 hover:text-white underline shrink-0 mr-2"
                 >
-                  التحويل لخبير
+                  التحويل لمدرس أو دكتور
                 </button>
               </div>
             ) : (
               <div className="p-3 rounded-xl bg-purple-950/60 border border-purple-800/60 text-purple-200 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2 animate-in fade-in">
-                <span className="font-semibold">فترة تجريبية 14 يوماً مجاناً مع 0% عمولة للمحاضر الخبير</span>
+                <span className="font-semibold">فترة تجريبية 14 يوماً مجاناً مع 0% عمولة للمدرسين والدكاترة</span>
                 <button
                   type="button"
                   onClick={() => setTrack('student')}
                   className="text-amber-400 font-bold hover:underline shrink-0 text-[11px] text-right cursor-pointer"
                 >
-                  أنا طالب جامعي (30 يوم مجاناً) 🎓
+                  أنا طالب جامعي (30 يوماً مجاناً)
                 </button>
               </div>
             )

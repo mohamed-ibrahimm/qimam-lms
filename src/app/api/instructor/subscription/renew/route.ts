@@ -20,6 +20,26 @@ export async function POST(req: Request) {
 
     const isStudent = plan === 'STUDENT_PRO';
     const isAnnual = plan === 'ANNUAL';
+
+    if (isStudent) {
+      const fullUser = await prisma.user.findUnique({
+        where: { id: user.id },
+        select: { isStudentInstructor: true, studentVerificationStatus: true, studentBirthDate: true }
+      });
+      if (fullUser?.studentBirthDate) {
+        const b = new Date(fullUser.studentBirthDate);
+        const today = new Date();
+        let age = today.getFullYear() - b.getFullYear();
+        const m = today.getMonth() - b.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < b.getDate())) age--;
+        if (age > 23) {
+          return NextResponse.json({
+            error: `عفواً، باقة الطالب مخصصة لمن هم بسن 23 سنة فأقل. بما أن عمرك (${age} سنة) أكبر من 23 سنة، يرجى الاشتراك في باقة المحاضر العادية (الشهري 290 ج.م أو السنوي).`
+          }, { status: 400 });
+        }
+      }
+    }
+
     const amount = isStudent ? 120 : isAnnual ? 2900 : 290;
     const durationMonths = isAnnual ? 12 : 1;
 

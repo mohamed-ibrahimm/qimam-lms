@@ -144,6 +144,15 @@ export default function InstructorClient({
     setTimeout(() => setCopiedKey(null), 2000);
   };
 
+  const userAge = user?.studentBirthDate ? (() => {
+    const b = new Date(user.studentBirthDate);
+    const today = new Date();
+    let age = today.getFullYear() - b.getFullYear();
+    const m = today.getMonth() - b.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < b.getDate())) age--;
+    return age;
+  })() : null;
+
   const handleDeleteCourse = async () => {
     if (!deletingCourse || isDeleting) return;
     setIsDeleting(true);
@@ -440,19 +449,10 @@ export default function InstructorClient({
               <span className="hidden sm:inline">بيانات أرباحي</span>
             </button>
 
-            {!user.isStudentInstructor ? (
-              <button
-                type="button"
-                onClick={() => setShowStudentVerifModal(true)}
-                className="px-3.5 py-2 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/40 text-purple-300 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
-              >
-                <GraduationCap className="w-4 h-4 text-amber-400" />
-                <span>اشترك كمحاضر طالب (30 يوم مجاناً) 🎓</span>
-              </button>
-            ) : (
+            {user.isStudentInstructor && user.studentVerificationStatus === 'APPROVED' && (
               <span className="px-3.5 py-2 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 text-xs font-bold flex items-center gap-1.5">
                 <GraduationCap className="w-4 h-4 text-amber-400" />
-                <span>محاضر طالب معتمد 🎓</span>
+                <span>طالب محاضر معتمد</span>
               </span>
             )}
           </div>
@@ -525,34 +525,6 @@ export default function InstructorClient({
             >
               <CreditCard className="w-4 h-4" />
               <span>{isExpired ? 'تجديد الاشتراك الآن' : 'ترقية أو تجديد الباقة'}</span>
-            </button>
-          </div>
-        )}
-
-        {/* Student Special Grant Callout (30 days free for students aged <= 23) */}
-        {!user.isStudentInstructor && user.role !== 'ADMIN' && (
-          <div className="p-4 sm:p-5 rounded-3xl bg-gradient-to-r from-purple-950/70 via-indigo-950/40 to-zinc-900 border-2 border-purple-500/50 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-3.5">
-              <div className="w-11 h-11 rounded-2xl bg-purple-500/20 border border-purple-500/40 text-purple-300 flex items-center justify-center shrink-0">
-                <GraduationCap className="w-6 h-6" />
-              </div>
-              <div className="space-y-0.5">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-black text-white">هل أنت طالب جامعي وتريد الشرح لزملائك؟ (سن 23 سنة فأقل) 🎓</span>
-                  <span className="px-2 py-0.5 rounded-full bg-amber-500 text-zinc-950 font-black text-[10px]">منحة حصرية</span>
-                </div>
-                <p className="text-xs text-zinc-300">
-                  ارفع كارنيه كليتك واحصل فورياً على <strong>شهر كامل مجاناً (30 يوماً تجريبية)</strong> وباقة اشتراك مدعومة بعد انتهاء الشهر.
-                </p>
-              </div>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => setShowStudentVerifModal(true)}
-              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 text-zinc-950 font-black text-xs shadow-lg shadow-amber-950/40 transition-all hover:scale-105 shrink-0 cursor-pointer"
-            >
-              توثيق الكارنيه وتفعيل شهر مجاناً 🚀
             </button>
           </div>
         )}
@@ -1237,15 +1209,31 @@ export default function InstructorClient({
               </div>
             </div>
 
+            {/* Rule Note: Age 23 vs Normal Subscription */}
+            <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-xs flex items-start gap-3">
+              <GraduationCap className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+              <div className="space-y-1">
+                <span className="font-black text-white block">قواعد وضوابط الاشتراكات:</span>
+                <p className="text-zinc-300 leading-relaxed">
+                  إذا كان عمر المحاضر <strong>أكبر من 23 سنة</strong>، فإنه يشترك في <strong>الباقة العادية للمحاضر</strong> (الاشتراك الشهري 290 ج.م أو السنوي 2,900 ج.م). أما <strong>باقة المحاضر الطالب (120 ج.م)</strong> فهي منحة مخصصة حصرياً لطلبة الجامعات حتى سن 23 سنة فقط بموجب إثبات قيد بكارنيه الكلية للعام الدراسي الحالي.
+                </p>
+              </div>
+            </div>
+
             {/* Plans Comparison */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-              <div className="p-5 rounded-2xl border-2 border-slate-200 dark:border-zinc-800 space-y-3">
-                <span className="text-xs font-bold text-slate-500 dark:text-zinc-400">الباقة الشهرية</span>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-3xl font-black text-slate-900 dark:text-white font-mono">290</span>
-                  <span className="text-xs text-slate-500 dark:text-zinc-400 font-bold">ج.م / شهرياً</span>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+              {/* Plan 1: Regular Monthly */}
+              <div className="p-5 rounded-2xl border-2 border-slate-200 dark:border-zinc-800 space-y-3 flex flex-col justify-between">
+                <div className="space-y-2">
+                  <span className="text-xs font-bold text-slate-500 dark:text-zinc-400">الباقة العادية - شهرياً</span>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-3xl font-black text-slate-900 dark:text-white font-mono">290</span>
+                    <span className="text-xs text-slate-500 dark:text-zinc-400 font-bold">ج.م / شهرياً</span>
+                  </div>
+                  <p className="text-xs text-slate-500 dark:text-zinc-400">
+                    الباقة الأساسية لكافة المحاضرين، الدكاترة، والخبراء من أي سن مع تجديد مرن شهر بشهر.
+                  </p>
                 </div>
-                <p className="text-xs text-slate-500 dark:text-zinc-400">تجديد مرن شهر بشهر مع الحفاظ على كافة دوراتك وبيانات طلابك.</p>
                 <button
                   type="button"
                   onClick={() => {
@@ -1254,20 +1242,25 @@ export default function InstructorClient({
                   }}
                   className="w-full py-2.5 rounded-xl bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-xs font-bold text-slate-900 dark:text-white transition-colors cursor-pointer"
                 >
-                  اختيار الباقة الشهرية
+                  اختيار الباقة الشهرية (290 ج.م)
                 </button>
               </div>
 
-              <div className="p-5 rounded-2xl border-2 border-amber-500 bg-amber-500/5 dark:bg-amber-500/10 space-y-3 relative">
+              {/* Plan 2: Regular Annual */}
+              <div className="p-5 rounded-2xl border-2 border-amber-500 bg-amber-500/5 dark:bg-amber-500/10 space-y-3 flex flex-col justify-between relative">
                 <span className="absolute top-3 left-3 px-2 py-0.5 rounded-full bg-amber-500 text-zinc-950 text-[10px] font-black">
                   الأكثر توفيراً (وفر شهرين)
                 </span>
-                <span className="text-xs font-bold text-amber-600 dark:text-amber-400">الباقة السنوية (12 شهر)</span>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-3xl font-black text-amber-600 dark:text-amber-400 font-mono">2,900</span>
-                  <span className="text-xs text-slate-500 dark:text-zinc-400 font-bold">ج.م / سنوياً</span>
+                <div className="space-y-2 pt-3">
+                  <span className="text-xs font-bold text-amber-600 dark:text-amber-400">الباقة العادية - سنوياً</span>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-3xl font-black text-amber-600 dark:text-amber-400 font-mono">2,900</span>
+                    <span className="text-xs text-slate-500 dark:text-zinc-400 font-bold">ج.م / سنوياً</span>
+                  </div>
+                  <p className="text-xs text-slate-500 dark:text-zinc-400">
+                    استقرار كامل لمدة 12 شهراً لكافة المحاضرين مع خصم شهرين ودعم فني مخصص.
+                  </p>
                 </div>
-                <p className="text-xs text-slate-500 dark:text-zinc-400">راحة بال لعام كامل بدون قلق بشأن تجديد الاشتراكات مع دعم فني متقدم.</p>
                 <button
                   type="button"
                   onClick={() => {
@@ -1276,7 +1269,47 @@ export default function InstructorClient({
                   }}
                   className="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 text-xs font-black shadow-md shadow-amber-500/20 transition-all hover:scale-105 cursor-pointer"
                 >
-                  اختيار الباقة السنوية الآن
+                  اختيار الباقة السنوية (وفر شهرين)
+                </button>
+              </div>
+
+              {/* Plan 3: Student Plan */}
+              <div className="p-5 rounded-2xl border-2 border-purple-800/60 bg-purple-950/20 space-y-3 flex flex-col justify-between relative">
+                <span className="absolute top-3 left-3 px-2 py-0.5 rounded-full bg-purple-500/30 text-purple-300 border border-purple-500/40 text-[10px] font-black">
+                  سن 23 فأقل فقط
+                </span>
+                <div className="space-y-2 pt-3">
+                  <span className="text-xs font-bold text-purple-300">باقة المحاضر الطالب (مدعومة)</span>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-3xl font-black text-purple-300 font-mono">120</span>
+                    <span className="text-xs text-zinc-400 font-bold">ج.م / شهرياً</span>
+                  </div>
+                  <p className="text-xs text-zinc-400">
+                    منحة مدعومة لطلبة الجامعات حتى سن 23 سنة لشرح المناهج لزملائهم (بإثبات الكارنيه).
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (userAge !== null && userAge > 23) {
+                      setMessage({
+                        type: 'error',
+                        text: `عمرك المسجل (${userAge} سنة) يتجاوز الحد الأقصى لباقة الطلاب (23 سنة). يرجى اختيار إحدى باقات المحاضر العادية.`
+                      });
+                      return;
+                    }
+                    if (!user.isStudentInstructor || user.studentVerificationStatus !== 'APPROVED') {
+                      setShowStudentVerifModal(true);
+                      return;
+                    }
+                    setRenewPlan('STUDENT_PRO');
+                    setShowRenewModal(true);
+                  }}
+                  className="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold transition-all cursor-pointer shadow-md"
+                >
+                  {user.isStudentInstructor && user.studentVerificationStatus === 'APPROVED'
+                    ? 'اختيار باقة الطالب (120 ج.م)'
+                    : 'توثيق الكارنيه لباقة الطالب (120 ج.م)'}
                 </button>
               </div>
             </div>
@@ -1403,23 +1436,6 @@ export default function InstructorClient({
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <button
                 type="button"
-                onClick={() => setRenewPlan('STUDENT_PRO')}
-                className={`p-3.5 rounded-2xl border text-right transition-all space-y-1 relative ${
-                  renewPlan === 'STUDENT_PRO'
-                    ? 'bg-purple-950/70 border-purple-500 shadow-md ring-1 ring-purple-500'
-                    : 'bg-surface-raised border-border text-zinc-400'
-                }`}
-              >
-                <span className="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[9px] font-black inline-block mb-1">
-                  🎓 للطلبة (سن 23 فأقل)
-                </span>
-                <span className="text-xs font-bold text-white block">باقة المحاضر الطالب</span>
-                <span className="text-lg font-black text-purple-300 block">120 ج.م</span>
-                <span className="text-[10px] text-zinc-400 block">دعم خاص للجامعيين</span>
-              </button>
-
-              <button
-                type="button"
                 onClick={() => setRenewPlan('MONTHLY')}
                 className={`p-3.5 rounded-2xl border text-right transition-all space-y-1 ${
                   renewPlan === 'MONTHLY'
@@ -1427,9 +1443,9 @@ export default function InstructorClient({
                     : 'bg-surface-raised border-border text-zinc-400'
                 }`}
               >
-                <span className="text-xs font-bold text-white block">اشتراك شهري محترف</span>
+                <span className="text-xs font-bold text-white block">الباقة العادية (شهري)</span>
                 <span className="text-lg font-black text-primary-300 block">290 ج.م</span>
-                <span className="text-[10px] text-zinc-400 block">مرونة شهرية عامة</span>
+                <span className="text-[10px] text-zinc-400 block">لكافة المحاضرين والأساتذة</span>
               </button>
 
               <button
@@ -1444,11 +1460,64 @@ export default function InstructorClient({
                 <span className="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 text-[9px] font-bold">
                   وفر شهرين!
                 </span>
-                <span className="text-xs font-bold text-white block">اشتراك سنوي شامل</span>
+                <span className="text-xs font-bold text-white block">الباقة العادية (سنوي)</span>
                 <span className="text-lg font-black text-emerald-400 block">2,900 ج.م</span>
-                <span className="text-[10px] text-zinc-400 block">العام الأكثر توفيراً</span>
+                <span className="text-[10px] text-zinc-400 block">العام الأكثر توفيراً للجميع</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  if (userAge !== null && userAge > 23) {
+                    setMessage({
+                      type: 'error',
+                      text: `عمرك المسجل (${userAge} سنة) يتجاوز الحد الأقصى لباقة الطلاب (23 سنة). يجب الاشتراك في إحدى باقات المحاضر العادية.`
+                    });
+                    setRenewPlan('MONTHLY');
+                    return;
+                  }
+                  setRenewPlan('STUDENT_PRO');
+                }}
+                className={`p-3.5 rounded-2xl border text-right transition-all space-y-1 relative ${
+                  renewPlan === 'STUDENT_PRO'
+                    ? 'bg-purple-950/70 border-purple-500 shadow-md ring-1 ring-purple-500'
+                    : 'bg-surface-raised border-border text-zinc-400'
+                }`}
+              >
+                <span className="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[9px] font-black inline-block mb-1">
+                  سن 23 فأقل فقط
+                </span>
+                <span className="text-xs font-bold text-white block">باقة المحاضر الطالب</span>
+                <span className="text-lg font-black text-purple-300 block">120 ج.م</span>
+                <span className="text-[10px] text-zinc-400 block">منحة مدعومة للجامعيين</span>
               </button>
             </div>
+
+            {/* Student Plan Guidelines Box */}
+            {renewPlan === 'STUDENT_PRO' && (
+              <div className="p-3 rounded-xl bg-purple-950/40 border border-purple-800/60 text-xs text-purple-200 space-y-1.5 animate-in fade-in">
+                <div className="flex items-center gap-2">
+                  <GraduationCap className="w-4 h-4 text-amber-400 shrink-0" />
+                  <span className="font-bold text-white">ضوابط باقة الطالب (120 ج.م):</span>
+                </div>
+                <p className="text-[11px] text-zinc-300 leading-relaxed">
+                  هذه الباقة مخصصة حصرياً لمن هم بسن <strong>23 سنة أو أقل</strong> وتتطلب إثبات قيد بكارنيه الكلية للعام الحالي. 
+                  إذا كان عمرك أكبر من 23 سنة، يرجى اختيار الباقة العادية (الشهري 290 ج.م أو السنوي 2,900 ج.م).
+                </p>
+                {(!user.isStudentInstructor || user.studentVerificationStatus !== 'APPROVED') && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowRenewModal(false);
+                      setShowStudentVerifModal(true);
+                    }}
+                    className="mt-1 px-3 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-zinc-950 font-black text-[11px] flex items-center gap-1 cursor-pointer"
+                  >
+                    <span>توثيق كارنيه الكلية وإثبات السن الآن</span>
+                  </button>
+                )}
+              </div>
+            )}
 
             {/* Admin Payment Accounts Box */}
             <div className="p-4 rounded-2xl bg-surface-raised border border-border space-y-3">

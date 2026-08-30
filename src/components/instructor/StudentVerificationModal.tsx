@@ -132,7 +132,7 @@ export default function StudentVerificationModal({
               <GraduationCap className="w-3.5 h-3.5 text-amber-400" />
               منحة تمكين الطلاب المحاضرين (سن 23 سنة فأقل)
             </span>
-            <h3 className="text-base font-black text-white">توثيق هوية طالب جامعي + شهر كامل مجاناً 🎓</h3>
+            <h3 className="text-base font-black text-white">توثيق هوية طالب جامعي وتفعيل شهر كامل مجاناً</h3>
           </div>
           <button
             type="button"
@@ -150,7 +150,7 @@ export default function StudentVerificationModal({
               <CheckCircle2 className="w-8 h-8" />
             </div>
             <div className="space-y-2">
-              <h3 className="text-lg font-black text-white">تهانينا! تم تفعيل شهر كامل مجاناً 🎉</h3>
+              <h3 className="text-lg font-black text-white">تهانينا! تم تفعيل شهر كامل مجاناً</h3>
               <p className="text-xs text-zinc-300 leading-relaxed max-w-md mx-auto">
                 {successMessage}
               </p>
@@ -242,8 +242,8 @@ export default function StudentVerificationModal({
                     isAgeValid ? 'text-emerald-400' : 'text-rose-400'
                   }`}>
                     {isAgeValid
-                      ? `عمرك المحسوب: ${currentAge} سنة (مؤهل لمنحة الطلاب ✅)`
-                      : `عمرك المحسوب: ${currentAge} سنة (يتجاوز شرط الحد الأقصى 23 سنة ❌)`}
+                      ? `عمرك المحسوب: ${currentAge} سنة (مؤهل لمنحة الطلاب)`
+                      : `عمرك المحسوب: ${currentAge} سنة (يتجاوز شرط الحد الأقصى 23 سنة - يجب الاشتراك في باقة المحاضر العادية)`}
                   </span>
                 )}
               </div>
