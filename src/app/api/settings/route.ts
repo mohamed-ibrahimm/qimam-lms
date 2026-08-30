@@ -27,15 +27,15 @@ export async function GET() {
       instructorPriceAnnual: map['INSTRUCTOR_PRICE_ANNUAL'] || '1499',
       instructorPriceStudent: map['INSTRUCTOR_PRICE_STUDENT'] || '120',
       studentMaxAge: map['STUDENT_MAX_AGE'] || '22',
-      studentTrialDays: map['STUDENT_TRIAL_DAYS'] || '30',
+      studentTrialDays: map['STUDENT_TRIAL_DAYS'] || '14',
       instructorTrialDays: map['INSTRUCTOR_TRIAL_DAYS'] || '14',
       platformCommissionPercent: map['PLATFORM_COMMISSION_PERCENT'] || '0',
 
       // CMS Page Texts
       heroTitle: map['HERO_TITLE'] || '',
       heroSubtitle: map['HERO_SUBTITLE'] || '',
-      heroBtnExpert: map['HERO_BTN_EXPERT'] || 'انضم كـ مدرس أو دكتور جامعي (0% عمولة)',
-      heroBtnStudent: map['HERO_BTN_STUDENT'] || 'اشترك كمحاضر طالب (شهر كامل مجاناً)',
+      heroBtnExpert: map['HERO_BTN_EXPERT'] || `انضم كـ مدرس أو دكتور (${map['INSTRUCTOR_TRIAL_DAYS'] || '14'} يوماً مجاناً • 0% عمولة)`,
+      heroBtnStudent: map['HERO_BTN_STUDENT'] || `اشترك كمحاضر طالب (منحة ${map['STUDENT_TRIAL_DAYS'] || '14'} يوماً مجاناً)`,
       bannerText: map['BANNER_TEXT'] || '',
       bannerEnabled: map['BANNER_ENABLED'] !== 'false',
     }, {

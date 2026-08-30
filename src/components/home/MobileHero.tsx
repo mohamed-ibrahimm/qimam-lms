@@ -126,7 +126,11 @@ export default function MobileHero({
             className="group flex items-center justify-center gap-1.5 w-full py-2.5 px-3 text-xs font-black text-purple-900 dark:text-purple-300 transition-all rounded-2xl border-2 border-purple-500/80 hover:border-purple-400 bg-gradient-to-r from-purple-600/15 via-indigo-600/20 to-purple-600/15 shadow-md shadow-purple-500/10 backdrop-blur-md active:scale-[0.98]"
           >
             <Video className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform shrink-0" />
-            <span className="whitespace-nowrap">{settings.HERO_BTN_EXPERT || 'انضم كـ مدرس أو دكتور (14 يوماً مجاناً • 0% عمولة)'}</span>
+            <span className="whitespace-nowrap">
+              {settings.HERO_BTN_EXPERT
+                ? settings.HERO_BTN_EXPERT.replace(/14\s*يوماً|14\s*يوم/g, `${settings.INSTRUCTOR_TRIAL_DAYS || '14'} يوماً`)
+                : `انضم كـ مدرس أو دكتور (${settings.INSTRUCTOR_TRIAL_DAYS || '14'} يوماً مجاناً • 0% عمولة)`}
+            </span>
           </Link>
 
           {/* Button 4: Join as Student Instructor (Amber Glow) */}
@@ -136,7 +140,11 @@ export default function MobileHero({
             className="group flex items-center justify-center gap-1.5 w-full py-2.5 px-3 text-xs font-black text-amber-950 dark:text-amber-300 transition-all rounded-2xl border-2 border-amber-500/80 hover:border-amber-400 bg-gradient-to-r from-amber-500/15 via-yellow-500/20 to-amber-500/15 shadow-md shadow-amber-500/10 backdrop-blur-md active:scale-[0.98]"
           >
             <GraduationCap className="w-3.5 h-3.5 text-amber-500 group-hover:scale-110 transition-transform shrink-0" />
-            <span className="whitespace-nowrap">{settings.HERO_BTN_STUDENT || 'اشترك كمحاضر طالب (منحة 30 يوماً مجاناً)'}</span>
+            <span className="whitespace-nowrap">
+              {settings.HERO_BTN_STUDENT
+                ? settings.HERO_BTN_STUDENT.replace(/30\s*يوماً|30\s*يوم/g, `${settings.STUDENT_TRIAL_DAYS || '14'} يوماً`)
+                : `اشترك كمحاضر طالب (منحة ${settings.STUDENT_TRIAL_DAYS || '14'} يوماً مجاناً)`}
+            </span>
           </Link>
         </div>
 

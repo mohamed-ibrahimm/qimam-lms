@@ -108,7 +108,11 @@ export default function DesktopHero({
             className="group flex items-center justify-center gap-1.5 px-4 lg:px-5 py-2.5 lg:py-3 text-xs lg:text-[13px] font-black text-purple-900 dark:text-purple-300 transition-all rounded-full border-2 border-purple-500/80 hover:border-purple-400 bg-gradient-to-r from-purple-600/15 via-indigo-600/20 to-purple-600/15 hover:from-purple-600/25 hover:to-indigo-600/30 shadow-md shadow-purple-500/15 hover:shadow-purple-500/30 hover:scale-105 backdrop-blur-md shrink-0"
           >
             <Video className="w-4 h-4 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform shrink-0" />
-            <span className="whitespace-nowrap">{settings.HERO_BTN_EXPERT || 'انضم كـ مدرس أو دكتور (14 يوماً مجاناً • 0% عمولة)'}</span>
+            <span className="whitespace-nowrap">
+              {settings.HERO_BTN_EXPERT
+                ? settings.HERO_BTN_EXPERT.replace(/14\s*يوماً|14\s*يوم/g, `${settings.INSTRUCTOR_TRIAL_DAYS || '14'} يوماً`)
+                : `انضم كـ مدرس أو دكتور (${settings.INSTRUCTOR_TRIAL_DAYS || '14'} يوماً مجاناً • 0% عمولة)`}
+            </span>
           </Link>
 
           {/* 4. Student Instructor Button (Molten Amber Glow) */}
@@ -118,7 +122,11 @@ export default function DesktopHero({
             className="group flex items-center justify-center gap-1.5 px-4 lg:px-5 py-2.5 lg:py-3 text-xs lg:text-[13px] font-black text-amber-950 dark:text-amber-300 transition-all rounded-full border-2 border-amber-500/80 hover:border-amber-400 bg-gradient-to-r from-amber-500/15 via-yellow-500/20 to-amber-500/15 hover:from-amber-500/25 hover:to-yellow-500/30 shadow-md shadow-amber-500/15 hover:shadow-amber-500/30 hover:scale-105 backdrop-blur-md shrink-0"
           >
             <GraduationCap className="w-4 h-4 text-amber-500 group-hover:scale-110 transition-transform shrink-0" />
-            <span className="whitespace-nowrap">{settings.HERO_BTN_STUDENT || 'اشترك كمحاضر طالب (منحة 30 يوماً مجاناً)'}</span>
+            <span className="whitespace-nowrap">
+              {settings.HERO_BTN_STUDENT
+                ? settings.HERO_BTN_STUDENT.replace(/30\s*يوماً|30\s*يوم/g, `${settings.STUDENT_TRIAL_DAYS || '14'} يوماً`)
+                : `اشترك كمحاضر طالب (منحة ${settings.STUDENT_TRIAL_DAYS || '14'} يوماً مجاناً)`}
+            </span>
           </Link>
 
         </div>
