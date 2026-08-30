@@ -416,13 +416,37 @@ export default function AdminSettingsPage() {
 
                 <div>
                   <label className="block text-xs font-semibold text-zinc-300 mb-1">
+                    نص زر الدبلومة المميزة بالهيرو (البادج والتخفيض)
+                  </label>
+                  <input
+                    type="text"
+                    value={settings.FEATURED_DIPLOMA_BADGE || 'الدبلومة الأكثر طلباً (خصم 51%)'}
+                    onChange={(e) => handleChange('FEATURED_DIPLOMA_BADGE', e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950 border border-border text-white text-xs focus:outline-none focus:border-amber-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-zinc-300 mb-1">
+                    نص زر سوق ومكتبة المذكرات بالهيرو (عروض وخصومات)
+                  </label>
+                  <input
+                    type="text"
+                    value={settings.HERO_BTN_BOOKS || 'سوق المذكرات والكتب (خصم 50% ومعاينة مجانية)'}
+                    onChange={(e) => handleChange('HERO_BTN_BOOKS', e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950 border border-border text-white text-xs focus:outline-none focus:border-emerald-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-zinc-300 mb-1">
                     نص زر المدرس أو الدكتور الجامعي بالهيرو
                   </label>
                   <input
                     type="text"
-                    value={settings.HERO_BTN_EXPERT || 'انضم كـ مدرس أو دكتور جامعي (0% عمولة)'}
+                    value={settings.HERO_BTN_EXPERT || 'انضم كـ مدرس أو دكتور (14 يوماً مجاناً • 0% عمولة)'}
                     onChange={(e) => handleChange('HERO_BTN_EXPERT', e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950 border border-border text-white text-xs focus:outline-none focus:border-indigo-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950 border border-border text-white text-xs focus:outline-none focus:border-purple-500"
                   />
                 </div>
 
@@ -432,9 +456,9 @@ export default function AdminSettingsPage() {
                   </label>
                   <input
                     type="text"
-                    value={settings.HERO_BTN_STUDENT || 'اشترك كمحاضر طالب (شهر كامل مجاناً)'}
+                    value={settings.HERO_BTN_STUDENT || 'اشترك كمحاضر طالب (منحة 30 يوماً مجاناً)'}
                     onChange={(e) => handleChange('HERO_BTN_STUDENT', e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950 border border-border text-white text-xs focus:outline-none focus:border-indigo-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950 border border-border text-white text-xs focus:outline-none focus:border-amber-500"
                   />
                 </div>
 
