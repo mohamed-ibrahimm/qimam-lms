@@ -154,7 +154,7 @@ export default function BooksCatalogClient({
       {/* =========================================================================
           1. CENTERED WORLD-CLASS HERO BANNER (Full-width, Symmetrical Glassmorphism)
          ========================================================================= */}
-      <div className="relative rounded-[40px] overflow-hidden p-6 sm:p-10 md:p-12 border-2 border-amber-500/30 bg-gradient-to-br from-[#0c081e] via-[#140e2b] to-[#0a0618] shadow-[0_25px_70px_rgba(0,0,0,0.8)] text-center">
+      <div className="relative rounded-[40px] overflow-hidden p-6 sm:p-10 md:p-12 border-2 border-amber-500/30 bg-slate-950 dark:bg-gradient-to-br dark:from-[#0c081e] dark:via-[#140e2b] dark:to-[#0a0618] text-white shadow-[0_25px_70px_rgba(0,0,0,0.8)] text-center">
         
         {/* Dynamic Glowing Ambiance */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[850px] h-[450px] bg-gradient-to-b from-amber-500/20 via-purple-600/15 to-transparent rounded-full blur-[140px] pointer-events-none" />
@@ -749,7 +749,7 @@ export default function BooksCatalogClient({
       {/* =========================================================================
           5. PUBLISHER REVENUE INVITATION (كن ناشراً معتمداً)
          ========================================================================= */}
-      <div className="relative rounded-[36px] overflow-hidden p-8 sm:p-12 border border-purple-500/30 bg-gradient-to-r from-[#110c26] via-[#1a1238] to-[#110c26] shadow-2xl text-center sm:text-right flex flex-col sm:flex-row items-center justify-between gap-8">
+      <div className="relative rounded-[36px] overflow-hidden p-8 sm:p-12 border border-purple-500/30 bg-slate-950 dark:bg-gradient-to-r dark:from-[#110c26] dark:via-[#1a1238] dark:to-[#110c26] text-white shadow-2xl text-center sm:text-right flex flex-col sm:flex-row items-center justify-between gap-8">
         <div className="space-y-3 max-w-2xl">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-purple-500/20 text-purple-300 text-xs font-black border border-purple-500/30">
             <Sparkles className="w-3.5 h-3.5 text-purple-400" />
@@ -760,7 +760,7 @@ export default function BooksCatalogClient({
             هل أنت محاضر متميز أو طالب متفوق؟ انشر مذكراتك واربح 85%!
           </h2>
 
-          <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
+          <p className="text-xs sm:text-sm text-slate-700 dark:text-zinc-300 leading-relaxed">
             ارفع كتبك ومذكراتك وملخصاتك الآن، وتمتع بحماية مشددة ضد التحميل والنسخ (DRM Shield) مع استلام أرباحك دورياً وبناء جمهورك الطلابي والمهني.
           </p>
         </div>
@@ -788,13 +788,13 @@ export default function BooksCatalogClient({
          ========================================================================= */}
       {previewModalBook && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
-          <div className="relative w-full max-w-2xl rounded-[32px] bg-[#120d28] border-2 border-amber-500/50 shadow-2xl p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto text-right">
+          <div className="relative w-full max-w-2xl rounded-[32px] bg-white dark:bg-[#120d28] border-2 border-slate-200 dark:border-amber-500/50 shadow-2xl p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto text-right text-slate-900 dark:text-white">
             
             {/* Close Button */}
             <button
               type="button"
               onClick={() => setPreviewModalBook(null)}
-              className="absolute top-5 left-5 p-2 rounded-full bg-white/10 hover:bg-white/20 text-zinc-300 hover:text-white transition-all cursor-pointer"
+              className="absolute top-5 left-5 p-2 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/20 text-slate-600 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -816,7 +816,7 @@ export default function BooksCatalogClient({
                   {previewModalBook.category} • {previewModalBook.academicSubject}
                 </div>
 
-                <h2 className="text-lg sm:text-xl font-black text-white leading-snug">
+                <h2 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white leading-snug">
                   {previewModalBook.title}
                 </h2>
 
@@ -831,7 +831,7 @@ export default function BooksCatalogClient({
             </div>
 
             {/* Description */}
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-2">
+            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 space-y-2">
               <h4 className="text-xs font-black text-amber-400">نبذة ومحتويات المذكرة:</h4>
               <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
                 {previewModalBook.description}
@@ -854,7 +854,7 @@ export default function BooksCatalogClient({
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2 border-t border-zinc-800">
               <div className="text-center sm:text-right">
                 <span className="text-xs text-zinc-400 block">السعر المطلوب:</span>
-                <span className="text-xl font-black text-amber-400 font-mono">
+                <span className="text-xl font-black text-slate-900 dark:text-amber-400 font-mono">
                   {previewModalBook.isFree || previewModalBook.price === 0 ? 'مجاناً ' : `${previewModalBook.price} ج.م`}
                 </span>
               </div>

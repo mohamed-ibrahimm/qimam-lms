@@ -166,38 +166,15 @@ html.light-theme .border-border,
   border-color: #e2e8f0 !important;
 }
 
-/* Typography in Light Mode - High Contrast & Soothing */
-html.light-theme [class*="text-zinc-100"],
-html.light-theme [class*="text-white"],
-[data-theme="light"] [class*="text-zinc-100"],
-[data-theme="light"] [class*="text-white"] {
+/* Typography & Elements in Light Mode */
+html.light-theme .text-slate-default,
+[data-theme="light"] .text-slate-default {
   color: #0f172a !important;
 }
 
-html.light-theme [class*="text-zinc-200"],
-html.light-theme [class*="text-zinc-300"],
-[data-theme="light"] [class*="text-zinc-200"],
-[data-theme="light"] [class*="text-zinc-300"] {
-  color: #334155 !important;
-}
-
-html.light-theme [class*="text-zinc-400"],
-[data-theme="light"] [class*="text-zinc-400"] {
-  color: #64748b !important;
-}
-
-html.light-theme [class*="text-zinc-500"],
-[data-theme="light"] [class*="text-zinc-500"] {
-  color: #94a3b8 !important;
-}
-
-/* Amber text in Light Mode (only when not explicitly given a blue or white light text color) */
-html.light-theme .text-amber-300:not([class*="text-blue"]):not([class*="text-indigo"]):not([class*="text-white"]),
-html.light-theme .text-amber-400:not([class*="text-blue"]):not([class*="text-indigo"]):not([class*="text-white"]),
-html.light-theme .text-yellow-400:not([class*="text-blue"]):not([class*="text-indigo"]):not([class*="text-white"]),
-[data-theme="light"] .text-amber-300:not([class*="text-blue"]):not([class*="text-indigo"]):not([class*="text-white"]),
-[data-theme="light"] .text-amber-400:not([class*="text-blue"]):not([class*="text-indigo"]):not([class*="text-white"]),
-[data-theme="light"] .text-yellow-400:not([class*="text-blue"]):not([class*="text-indigo"]):not([class*="text-white"]) {
+/* Amber text in Light Mode (only for specific gold accents) */
+html.light-theme .text-gold-accent,
+[data-theme="light"] .text-gold-accent {
   color: #b45309 !important;
 }
 

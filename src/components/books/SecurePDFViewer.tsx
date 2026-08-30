@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
@@ -409,8 +409,8 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
               <div className="space-y-6 my-auto text-right leading-relaxed">
                 {currentPage === 1 ? (
                   <div className="text-center space-y-6 py-12">
-                    <div className="w-24 h-24 rounded-3xl bg-gradient-to-tr from-amber-500 to-yellow-400 text-zinc-950 flex items-center justify-center mx-auto text-4xl shadow-2xl shadow-amber-500/30">
-                     
+                    <div className="w-24 h-24 rounded-3xl bg-gradient-to-tr from-amber-500 to-yellow-400 text-zinc-950 flex items-center justify-center mx-auto shadow-2xl shadow-amber-500/30">
+                      <BookOpen className="w-12 h-12 text-zinc-950" />
                     </div>
                     <div className="space-y-3">
                       <span className="px-3.5 py-1.5 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-300 text-xs font-black border border-amber-500/30">
