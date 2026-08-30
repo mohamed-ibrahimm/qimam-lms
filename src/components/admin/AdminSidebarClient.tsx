@@ -46,6 +46,11 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
   const currentTab = searchParams.get('tab');
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  // Clean platform name by stripping 'أكاديمية' prefix
+  const cleanDisplayName = useMemo(() => {
+    return platformName.replace(/^أكاديمية\s*/i, '').trim() || platformName;
+  }, [platformName]);
+
   const navSections: NavSection[] = useMemo(() => [
     {
       title: 'الرئيسية',
@@ -94,10 +99,10 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
             </div>
             <div className="min-w-0">
               <span className="text-[9.5px] font-black uppercase tracking-wider text-amber-600 dark:text-amber-400 block leading-none">
-                لوحة الإدارة الشاملة
+                لوحة الإدارة
               </span>
               <h2 className="text-xs sm:text-[13px] font-black text-slate-900 dark:text-white truncate mt-1">
-                {platformName}
+                {cleanDisplayName}
               </h2>
             </div>
           </div>
