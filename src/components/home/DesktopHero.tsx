@@ -79,44 +79,44 @@ export default function DesktopHero({
           </p>
         </div>
 
-        {/* 4 Premium Action Pillars */}
-        <div className="flex flex-wrap items-center justify-center gap-3.5 w-full mx-auto px-2 max-w-5xl">
+        {/* 4 Premium Action Pillars on a Single Unified Horizontal Row */}
+        <div className="flex flex-wrap lg:flex-nowrap items-center justify-center gap-2 lg:gap-3 w-full mx-auto px-1 max-w-[1360px]">
           
-          {/* 1. Diploma Button */}
-          <a href="#trending-diploma" className="shimmer-border-wrapper group">
+          {/* 1. Diploma Button (Shimmer Molten Gold) */}
+          <a href="#trending-diploma" className="shimmer-border-wrapper group shrink-0">
             <div className="shimmer-beam-gold" />
-            <div className="shimmer-button-content px-7 py-3.5 text-sm font-black text-white dark:text-amber-300 group-hover:opacity-95 flex items-center justify-center gap-2">
+            <div className="shimmer-button-content px-4 lg:px-5 py-2.5 lg:py-3 text-xs lg:text-[13px] font-black text-white dark:text-amber-300 group-hover:opacity-95 flex items-center justify-center gap-1.5 rounded-full shadow-lg">
               <Flame className="w-4 h-4 text-amber-400 animate-bounce shrink-0" />
               <span className="whitespace-nowrap">{settings.FEATURED_DIPLOMA_BADGE || 'الدبلومة الأكثر طلباً (خصم 51%)'}</span>
-              <ArrowLeft className="w-4 h-4 text-white dark:text-amber-400 group-hover:-translate-x-1 transition-transform shrink-0" />
+              <ArrowLeft className="w-3.5 h-3.5 text-white dark:text-amber-400 group-hover:-translate-x-1 transition-transform shrink-0" />
             </div>
           </a>
 
-          {/* 2. Digital Notes & Books Marketplace (New) */}
+          {/* 2. Digital Notes & Books Marketplace (Emerald Glow) */}
           <Link
             href="/books"
             prefetch={true}
-            className="group flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-black text-emerald-950 dark:text-emerald-300 transition-all rounded-full border-2 border-emerald-500/60 hover:border-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 dark:bg-emerald-500/15 dark:hover:bg-emerald-500/25 shadow-md hover:shadow-emerald-500/20 hover:scale-105 backdrop-blur-md"
+            className="group flex items-center justify-center gap-1.5 px-4 lg:px-5 py-2.5 lg:py-3 text-xs lg:text-[13px] font-black text-emerald-900 dark:text-emerald-300 transition-all rounded-full border-2 border-emerald-500/80 hover:border-emerald-400 bg-gradient-to-r from-emerald-500/15 via-teal-500/20 to-emerald-500/15 hover:from-emerald-500/25 hover:to-teal-500/30 shadow-md shadow-emerald-500/15 hover:shadow-emerald-500/30 hover:scale-105 backdrop-blur-md shrink-0"
           >
             <FileText className="w-4 h-4 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform shrink-0" />
-            <span className="whitespace-nowrap">{settings.HERO_BTN_BOOKS || 'سوق المذكرات والكتب (خصم 50% ومعاينة مجانية)'}</span>
+            <span className="whitespace-nowrap">{settings.HERO_BTN_BOOKS || 'سوق المذكرات والكتب (خصم 50% ومعاينة)'}</span>
           </Link>
 
-          {/* 3. Expert Instructor Button */}
+          {/* 3. Expert Instructor Button (Royal Purple Glow) */}
           <Link
             href="/instructors/join?track=expert"
             prefetch={true}
-            className="group flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-black text-slate-800 hover:text-purple-700 dark:text-zinc-200 dark:hover:text-white transition-all rounded-full border border-purple-300/90 hover:border-purple-500 bg-white/95 hover:bg-white dark:border-purple-800/80 dark:bg-[#16122d]/80 dark:hover:border-purple-600 dark:hover:bg-[#1c163b] shadow-sm hover:shadow-md hover:scale-105 backdrop-blur-md"
+            className="group flex items-center justify-center gap-1.5 px-4 lg:px-5 py-2.5 lg:py-3 text-xs lg:text-[13px] font-black text-purple-900 dark:text-purple-300 transition-all rounded-full border-2 border-purple-500/80 hover:border-purple-400 bg-gradient-to-r from-purple-600/15 via-indigo-600/20 to-purple-600/15 hover:from-purple-600/25 hover:to-indigo-600/30 shadow-md shadow-purple-500/15 hover:shadow-purple-500/30 hover:scale-105 backdrop-blur-md shrink-0"
           >
             <Video className="w-4 h-4 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform shrink-0" />
             <span className="whitespace-nowrap">{settings.HERO_BTN_EXPERT || 'انضم كـ مدرس أو دكتور (14 يوماً مجاناً • 0% عمولة)'}</span>
           </Link>
 
-          {/* 4. Student Instructor Button */}
+          {/* 4. Student Instructor Button (Molten Amber Glow) */}
           <Link
             href="/instructors/join?track=student"
             prefetch={true}
-            className="group flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-black text-amber-950 dark:text-amber-300 transition-all rounded-full border-2 border-amber-500/70 hover:border-amber-400 bg-amber-500/15 hover:bg-amber-500/25 dark:bg-amber-500/15 dark:hover:bg-amber-500/25 shadow-md hover:shadow-amber-500/20 hover:scale-105 backdrop-blur-md"
+            className="group flex items-center justify-center gap-1.5 px-4 lg:px-5 py-2.5 lg:py-3 text-xs lg:text-[13px] font-black text-amber-950 dark:text-amber-300 transition-all rounded-full border-2 border-amber-500/80 hover:border-amber-400 bg-gradient-to-r from-amber-500/15 via-yellow-500/20 to-amber-500/15 hover:from-amber-500/25 hover:to-yellow-500/30 shadow-md shadow-amber-500/15 hover:shadow-amber-500/30 hover:scale-105 backdrop-blur-md shrink-0"
           >
             <GraduationCap className="w-4 h-4 text-amber-500 group-hover:scale-110 transition-transform shrink-0" />
             <span className="whitespace-nowrap">{settings.HERO_BTN_STUDENT || 'اشترك كمحاضر طالب (منحة 30 يوماً مجاناً)'}</span>
