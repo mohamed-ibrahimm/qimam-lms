@@ -238,14 +238,14 @@ export default function Header({
                 coursesMenuOpen ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none -translate-y-1'
               }`}
             >
-              <div className="rounded-3xl bg-white dark:bg-[#0c0918] border border-slate-200 dark:border-amber-500/40 shadow-2xl backdrop-blur-2xl p-2.5 space-y-1.5 ring-1 ring-black/5 dark:ring-white/10">
+              <div className="rounded-3xl bg-white dark:bg-[#0c0918] border-2 border-slate-200 dark:border-amber-500/40 shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.8)] p-2.5 space-y-1.5 ring-1 ring-slate-900/5 dark:ring-white/10">
                 <Link
                   href="/courses"
                   onClick={() => setCoursesMenuOpen(false)}
-                  className="flex items-center justify-between p-2.5 rounded-2xl bg-amber-500/10 hover:bg-amber-500/20 text-slate-900 dark:text-white transition-all group/item border border-amber-500/20"
+                  className="flex items-center justify-between p-2.5 rounded-2xl bg-amber-50 dark:bg-amber-500/10 hover:bg-amber-100 dark:hover:bg-amber-500/20 text-slate-900 dark:text-white transition-all group/item border border-amber-200 dark:border-amber-500/30"
                 >
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-500 flex items-center justify-center shrink-0">
+                    <div className="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
                       <BookOpen className="w-4 h-4" />
                     </div>
                     <div>
@@ -253,41 +253,41 @@ export default function Header({
                       <span className="text-[10px] text-slate-500 dark:text-zinc-400">كافة التخصصات والمسارات</span>
                     </div>
                   </div>
-                  <ArrowLeft className="w-3.5 h-3.5 text-amber-500 group-hover/item:-translate-x-1 transition-transform" />
+                  <ArrowLeft className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 group-hover/item:-translate-x-1 transition-transform" />
                 </Link>
 
                 <Link
                   href="/courses?type=students"
                   onClick={() => setCoursesMenuOpen(false)}
-                  className="flex items-center justify-between p-2.5 rounded-2xl hover:bg-amber-500/15 text-slate-900 dark:text-white transition-all group/item border border-transparent hover:border-amber-500/30"
+                  className="flex items-center justify-between p-2.5 rounded-2xl bg-slate-50/90 dark:bg-zinc-900/70 hover:bg-amber-50 dark:hover:bg-amber-500/15 text-slate-900 dark:text-white transition-all group/item border border-slate-100 dark:border-zinc-800 hover:border-amber-300 dark:hover:border-amber-500/40"
                 >
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-500 flex items-center justify-center shrink-0">
+                    <div className="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
                       <GraduationCap className="w-4 h-4" />
                     </div>
                     <div>
-                      <span className="text-xs font-black block text-amber-700 dark:text-amber-300">كورسات الطلاب</span>
+                      <span className="text-xs font-black block text-amber-800 dark:text-amber-300">كورسات الطلاب</span>
                       <span className="text-[10px] text-slate-500 dark:text-zinc-400">شروحات ومناهج الطلبة</span>
                     </div>
                   </div>
-                  <span className="text-[9px] px-1.5 py-0.5 rounded-md bg-amber-500/20 text-amber-600 dark:text-amber-300 font-bold">طالب</span>
+                  <span className="text-[9px] px-1.5 py-0.5 rounded-md bg-amber-500/20 text-amber-700 dark:text-amber-300 font-bold">طالب</span>
                 </Link>
 
                 <Link
                   href="/courses?type=instructors"
                   onClick={() => setCoursesMenuOpen(false)}
-                  className="flex items-center justify-between p-2.5 rounded-2xl hover:bg-indigo-500/15 text-slate-900 dark:text-white transition-all group/item border border-transparent hover:border-indigo-500/30"
+                  className="flex items-center justify-between p-2.5 rounded-2xl bg-slate-50/90 dark:bg-zinc-900/70 hover:bg-indigo-50 dark:hover:bg-indigo-500/15 text-slate-900 dark:text-white transition-all group/item border border-slate-100 dark:border-zinc-800 hover:border-indigo-300 dark:hover:border-indigo-500/40"
                 >
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center shrink-0">
+                    <div className="w-8 h-8 rounded-xl bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
                       <Video className="w-4 h-4" />
                     </div>
                     <div>
-                      <span className="text-xs font-black block text-indigo-700 dark:text-indigo-300">كورسات المحاضرين</span>
+                      <span className="text-xs font-black block text-indigo-800 dark:text-indigo-300">كورسات المحاضرين</span>
                       <span className="text-[10px] text-slate-500 dark:text-zinc-400">مدرسين ودكاترة معتمدين</span>
                     </div>
                   </div>
-                  <span className="text-[9px] px-1.5 py-0.5 rounded-md bg-indigo-500/20 text-indigo-600 dark:text-indigo-300 font-bold">دكتور</span>
+                  <span className="text-[9px] px-1.5 py-0.5 rounded-md bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 font-bold">دكتور</span>
                 </Link>
               </div>
             </div>
@@ -494,10 +494,10 @@ export default function Header({
               {/* Register CTA Button */}
               <Link
                 href="/register"
-                className="px-4 py-1.5 rounded-full text-xs font-black bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white transition-all shadow-md shadow-blue-600/25 hover:shadow-lg hover:shadow-blue-600/35 whitespace-nowrap flex items-center gap-1.5 shrink-0 hover:scale-105"
+                className="px-3.5 py-1.5 rounded-full text-xs font-black bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white transition-all shadow-md shadow-blue-600/25 hover:shadow-lg hover:shadow-blue-600/35 whitespace-nowrap flex items-center gap-1 shrink-0 hover:scale-105"
               >
                 <UserPlus className="w-3.5 h-3.5 text-white" />
-                <span>إنشاء حساب</span>
+                <span>انضمام</span>
               </Link>
             </div>
           )}
@@ -653,7 +653,7 @@ export default function Header({
                     className="py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-black text-xs flex items-center justify-center gap-1.5 shadow-md shadow-blue-600/30"
                   >
                     <UserPlus className="w-4 h-4 text-white" />
-                    <span>إنشاء حساب جديد</span>
+                    <span>انضمام جديد</span>
                   </Link>
                 </div>
                 
