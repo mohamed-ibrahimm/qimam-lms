@@ -51,24 +51,24 @@ export default function MobileHero({
         Dedicated 100% Full-Screen Showcase. Contains exclusively Headline + CTAs.
         ========================================================================
       */}
-      <section className="h-[100dvh] min-h-[560px] flex flex-col justify-between pt-16 pb-1 px-3 relative overflow-hidden">
+      <section className="h-[100dvh] min-h-[560px] flex flex-col justify-between pt-20 xs:pt-22 pb-1 px-3 relative overflow-hidden">
         
-        {/* Exact Desktop-Matched Ambient Lighting & Multi-Colored Radiant Blooms */}
+        {/* Soft, Subdued Multi-Colored Radiant Blooms (Leaning Deep Sleek Black) */}
         {/* 1. Top central imperial gold & violet dome */}
-        <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-[140%] max-w-lg h-[420px] bg-[radial-gradient(ellipse_at_top,_rgba(245,158,11,0.22),_rgba(124,58,237,0.18)_40%,_transparent_75%)] dark:bg-[radial-gradient(ellipse_at_top,_rgba(245,158,11,0.2),_rgba(124,58,237,0.16)_40%,_transparent_75%)] blur-[75px] pointer-events-none -z-10" />
+        <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-[140%] max-w-lg h-[400px] bg-[radial-gradient(ellipse_at_top,_rgba(245,158,11,0.14),_rgba(124,58,237,0.11)_40%,_transparent_75%)] dark:bg-[radial-gradient(ellipse_at_top,_rgba(245,158,11,0.12),_rgba(124,58,237,0.09)_40%,_transparent_75%)] blur-[85px] pointer-events-none -z-10" />
         
         {/* 2. Right warm amber-solar flare */}
-        <div className="absolute top-1/4 -right-16 w-[320px] h-[320px] bg-[radial-gradient(circle,_rgba(245,158,11,0.18),_rgba(251,146,60,0.12)_50%,_transparent_65%)] dark:bg-[radial-gradient(circle,_rgba(245,158,11,0.16),_rgba(217,119,6,0.1)_50%,_transparent_65%)] blur-[80px] rounded-full pointer-events-none -z-10" />
+        <div className="absolute top-1/4 -right-16 w-[300px] h-[300px] bg-[radial-gradient(circle,_rgba(245,158,11,0.11),_rgba(251,146,60,0.07)_50%,_transparent_65%)] dark:bg-[radial-gradient(circle,_rgba(245,158,11,0.09),_rgba(217,119,6,0.06)_50%,_transparent_65%)] blur-[90px] rounded-full pointer-events-none -z-10" />
         
         {/* 3. Left royal purple-indigo aurora bloom */}
-        <div className="absolute top-1/3 -left-16 w-[340px] h-[340px] bg-[radial-gradient(circle,_rgba(147,51,234,0.2),_rgba(99,102,241,0.15)_50%,_transparent_70%)] dark:bg-[radial-gradient(circle,_rgba(168,85,247,0.15),_rgba(99,102,241,0.12)_50%,_transparent_70%)] blur-[85px] rounded-full pointer-events-none -z-10" />
+        <div className="absolute top-1/3 -left-16 w-[320px] h-[320px] bg-[radial-gradient(circle,_rgba(147,51,234,0.12),_rgba(99,102,241,0.09)_50%,_transparent_70%)] dark:bg-[radial-gradient(circle,_rgba(168,85,247,0.09),_rgba(99,102,241,0.07)_50%,_transparent_70%)] blur-[90px] rounded-full pointer-events-none -z-10" />
         
         {/* 4. Center luminous golden spotlight */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[350px] h-[280px] bg-[radial-gradient(ellipse,_rgba(251,191,36,0.14),_transparent_65%)] dark:bg-[radial-gradient(ellipse,_rgba(251,191,36,0.12),_transparent_65%)] blur-[70px] pointer-events-none -z-10" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[320px] h-[250px] bg-[radial-gradient(ellipse,_rgba(251,191,36,0.09),_transparent_65%)] dark:bg-[radial-gradient(ellipse,_rgba(251,191,36,0.07),_transparent_65%)] blur-[80px] pointer-events-none -z-10" />
 
-        {/* 1. TOP: Dynamic Promotional Shimmer Announcement */}
+        {/* 1. TOP: Dynamic Promotional Shimmer Announcement (Lowered comfortably below header) */}
         {settings.BANNER_ENABLED !== 'false' && (
-          <div className="pt-1.5 px-1 w-full shrink-0 max-w-sm mx-auto">
+          <div className="pt-2.5 xs:pt-3 px-1 w-full shrink-0 max-w-sm mx-auto">
             <a href="#trending-diploma" className="shimmer-border-wrapper group w-full block">
               <div className="shimmer-beam-gold dark:block hidden" />
               <div className="shimmer-beam-blue dark:hidden block" />
@@ -78,7 +78,7 @@ export default function MobileHero({
                   <span className="text-blue-700 dark:text-amber-300 font-black">{settings.HERO_BADGE || 'جديد!'}</span>
                 </div>
                 <span className="truncate group-hover:text-blue-700 dark:group-hover:text-amber-200 transition-colors font-semibold text-[10.5px]">
-                  {settings.BANNER_TEXT || 'خصم 50% لفترة محدودة على جميع المسارات'}
+                  {settings.BANNER_TEXT || 'خصم استثنائي 50% لفترة محدودة على جميع المسارات'}
                 </span>
                 <ArrowLeft className="w-3 h-3 text-blue-600 dark:text-amber-400 group-hover:-translate-x-1 transition-transform shrink-0" />
               </div>
