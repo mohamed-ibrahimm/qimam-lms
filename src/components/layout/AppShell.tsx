@@ -36,7 +36,7 @@ export default function AppShell({
     );
   }
 
-  const isAdmin = pathname.startsWith('/admin');
+  const isStudio = pathname.startsWith('/admin') || pathname.startsWith('/instructor');
 
   // Shell with Header at the top across all pages (Public, Admin, Instructor, Student)
   return (
@@ -47,12 +47,12 @@ export default function AppShell({
         initialPlatformTagline={initialPlatformTagline}
         initialUser={initialUser}
       />
-      <main className={`flex-1 w-full ${isAdmin ? 'pt-16 sm:pt-20 md:pt-24' : 'pt-14 sm:pt-20 md:pt-24 pb-8'}`}>
+      <main className={`flex-1 w-full ${isStudio ? 'pt-16 sm:pt-20 md:pt-24' : 'pt-14 sm:pt-20 md:pt-24 pb-8'}`}>
         <div key={pathname} className="animate-page-enter">
           {children}
         </div>
       </main>
-      {!isAdmin && <Footer initialSettings={initialSettings} />}
+      {!isStudio && <Footer initialSettings={initialSettings} />}
       <FloatingWhatsApp settings={initialSettings} />
     </div>
   );

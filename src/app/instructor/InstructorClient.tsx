@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import FileUploadInput from '@/components/FileUploadInput';
 import { formatPrice, formatDuration } from '@/lib/utils';
+import InstructorSidebarClient, { InstructorTabType } from '@/components/instructor/InstructorSidebarClient';
 import {
   GraduationCap,
   BookOpen,
@@ -27,6 +28,18 @@ import {
   Sparkles,
   Copy,
   Check,
+  Star,
+  ShieldCheck,
+  Wallet,
+  ArrowLeft,
+  ArrowRight,
+  Eye,
+  RefreshCw,
+  FileText,
+  CheckCircle,
+  ArrowUpRight,
+  BarChart3,
+  SlidersHorizontal,
 } from 'lucide-react';
 
 interface InstructorClientProps {
@@ -49,7 +62,7 @@ export default function InstructorClient({
   platformSettings,
 }: InstructorClientProps) {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<'courses' | 'payments' | 'orders' | 'coupons'>('courses');
+  const [activeTab, setActiveTab] = useState<InstructorTabType>('overview');
   const [courses, setCourses] = useState<any[]>(initialCourses);
   const [coupons, setCoupons] = useState<any[]>(initialCoupons || []);
   const [payments, setPayments] = useState<any[]>(initialPayments || []);
@@ -58,6 +71,16 @@ export default function InstructorClient({
 
   useEffect(() => {
     setMounted(true);
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setShowAddModal(false);
+        setShowRenewModal(false);
+        setDeletingCourse(null);
+        setViewingScreenshot(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   // Course Delete State
@@ -323,223 +346,476 @@ export default function InstructorClient({
   const isExpired = subscriptionState?.status === 'EXPIRED';
   const isActivePaid = subscriptionState?.status === 'ACTIVE';
 
+  const totalEarnedRevenue = payments
+    .filter((p) => p.status === 'APPROVED')
+    .reduce((sum, p) => sum + (p.amount || 0), 0);
+  const pendingPaymentsCount = payments.filter((p) => p.status === 'PENDING').length;
+  const totalLessonsCount = courses.reduce((acc, c) => {
+    return acc + (c.sections || []).reduce((sAcc: number, s: any) => sAcc + (s.lessons?.length || 0), 0);
+  }, 0);
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-8">
-      {/* Top Breadcrumb & Exit Bar */}
-      <div className="flex items-center justify-between gap-4 pb-3 border-b border-border">
-        <div className="flex items-center gap-2 text-xs">
-          <Link href="/" className="text-zinc-400 hover:text-amber-300 transition-colors font-medium">
-            الرئيسية
-          </Link>
-          <span className="text-zinc-600">/</span>
-          <span className="text-amber-300 font-bold">استوديو المحاضر السحابي</span>
-        </div>
-        <div className="flex items-center gap-2">
-          {user.role === 'ADMIN' && (
-            <Link
-              href="/admin/instructors"
-              className="px-3 py-1.5 rounded-full bg-blue-500/15 hover:bg-blue-500/25 border border-blue-500/40 text-blue-300 hover:text-blue-200 text-xs font-bold transition-all shadow-sm"
-            >
-              <span>إدارة المحاضرين (Admin)</span>
-            </Link>
-          )}
-          <Link
-            href="/"
-            className="px-3.5 py-1.5 rounded-full bg-zinc-800 hover:bg-zinc-700 text-zinc-200 hover:text-white text-xs font-bold border border-zinc-700 transition-colors"
-          >
-            ← العودة للرئيسية
-          </Link>
-        </div>
+    <div className="min-h-screen relative flex flex-col md:flex-row">
+      {/* Dynamic Ambient Mesh in Background */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
+        <div className="dynamic-drift-1 absolute top-[5%] right-[15%] w-[550px] h-[550px] bg-amber-500/10 rounded-full blur-[130px]" />
+        <div className="dynamic-drift-2 absolute bottom-[10%] right-[40%] w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[140px]" />
+        <div className="dynamic-drift-3 absolute top-[35%] left-[5%] w-[450px] h-[450px] bg-blue-500/10 rounded-full blur-[120px]" />
+        <div className="dynamic-drift-4 absolute bottom-[25%] left-[25%] w-[480px] h-[480px] bg-emerald-500/10 rounded-full blur-[125px]" />
       </div>
 
-      {/* Subscription Status Callout Banner */}
-      {user.role !== 'ADMIN' && (
-        <div
-          className={`p-5 sm:p-6 rounded-3xl border shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4 transition-all ${
-            isExpired
-              ? 'bg-rose-950/40 border-rose-800/80 shadow-rose-950/30 text-rose-200'
-              : isTrial
-              ? 'bg-gradient-to-r from-amber-950/50 via-yellow-950/30 to-amber-950/50 border-amber-500/40 shadow-amber-950/20 text-amber-200'
-              : 'bg-emerald-950/40 border-emerald-800/80 shadow-emerald-950/30 text-emerald-200'
-          }`}
-        >
-          <div className="flex items-center gap-3.5">
-            <div
-              className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 border ${
-                isExpired
-                  ? 'bg-rose-500/20 border-rose-500/40 text-rose-400 text-xl font-bold'
-                  : isTrial
-                  ? 'bg-amber-500/20 border-amber-500/40 text-amber-400 text-xl font-bold'
-                  : 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400 text-xl font-bold'
-              }`}
-            >
-              {isExpired ? '⚠️' : isTrial ? '⏳' : '💎'}
+      {/* Instructor Persistent Luxury Sidebar */}
+      <InstructorSidebarClient
+        instructorName={user.officialFullName || `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'محاضر قمم'}
+        instructorEmail={user.email}
+        subscriptionPlan={user.subscriptionPlan || 'FREE_TRIAL'}
+        coursesCount={courses.length}
+        pendingOrdersCount={pendingPaymentsCount}
+        couponsCount={coupons.length}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        onNewCourseClick={() => {
+          if (isExpired) {
+            setMessage({ type: 'error', text: 'انتهت الفترة التجريبية، يرجى تجديد الاشتراك أولاً لإضافة دورات جديدة' });
+            return;
+          }
+          setModalError(null);
+          setShowAddModal(true);
+        }}
+        publicProfileSlug={user.username || user.id}
+      />
+
+      {/* Main Studio View Area matching Admin Layout */}
+      <main className="flex-1 p-3 sm:p-6 md:p-8 max-w-7xl relative z-10 w-full min-w-0 space-y-6">
+        {/* Studio Top Control Bar */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-slate-200/80 dark:border-zinc-800">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-zinc-400">
+              <Link href="/" className="hover:text-amber-500 transition-colors">الرئيسية</Link>
+              <span>/</span>
+              <span className="text-amber-600 dark:text-amber-400 font-bold">استوديو المحاضر السحابي</span>
+              <span>/</span>
+              <span className="font-bold text-slate-900 dark:text-white">
+                {activeTab === 'overview' && 'نظرة عامة والتحليلات'}
+                {activeTab === 'courses' && 'دوراتي التدريبية'}
+                {activeTab === 'orders' && 'طلبات وإيصالات الطلاب'}
+                {activeTab === 'payments' && 'بيانات استلام أرباحي'}
+                {activeTab === 'coupons' && 'كوبونات الخصم'}
+                {activeTab === 'subscription' && 'باقة اشتراك الاستوديو'}
+              </span>
             </div>
-            <div className="space-y-1">
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-sm sm:text-base font-black text-white">
-                  {isExpired
-                    ? 'انتهت الفترة التجريبية وتوقفت مبيعات كورساتك مؤقتاً'
-                    : isTrial
-                    ? `أنت الآن في الفترة التجريبية المجانية (متبقي ${subscriptionState?.daysRemaining || 0} يوم)`
-                    : `اشتراكك السحابي نشط (متبقي ${subscriptionState?.daysRemaining || 0} يوم)`}
-                </span>
-                <span
-                  className={`px-2 py-0.5 rounded text-[10px] font-black border ${
-                    isExpired
-                      ? 'bg-rose-900/60 border-rose-700 text-rose-300'
-                      : isTrial
-                      ? 'bg-amber-900/60 border-amber-600 text-amber-300'
-                      : 'bg-emerald-900/60 border-emerald-600 text-emerald-300'
-                  }`}
-                >
-                  {isExpired ? 'اشتراك منتهي' : isTrial ? '14 يوماً مجاناً' : 'مشترك معتمد'}
-                </span>
-              </div>
-              <p className="text-xs text-zinc-300">
-                {isExpired
-                  ? 'يرجى تجديد اشتراكك (الشهري أو السنوي) لإعادة فتح استقبال طلبات الطلاب على كورساتك فورياً.'
-                  : isTrial
-                  ? 'يمكنك خلال هذه الفترة رفع كورساتك، وتعيين بيانات انستاباي وكاش، وإنشاء كوبونات لطلابك مجاناً.'
-                  : 'جميع كورساتك نشطة وتستقبل طلبات الشراء ويتم تحويل مبالغ الطلاب على حساباتك مباشرة.'}
-              </p>
-            </div>
+            <h1 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+              <GraduationCap className="w-6 h-6 text-amber-500" />
+              <span>أكاديمية المحاضر: {user.officialFullName}</span>
+            </h1>
           </div>
 
-          <button
-            type="button"
-            onClick={() => setShowRenewModal(true)}
-            className={`px-6 py-2.5 rounded-xl font-black text-xs shrink-0 shadow-lg flex items-center gap-2 transition-all hover:scale-105 ${
+          <div className="flex items-center gap-2.5 flex-wrap w-full sm:w-auto">
+            <button
+              type="button"
+              onClick={() => {
+                if (isExpired) {
+                  setMessage({ type: 'error', text: 'انتهت الفترة التجريبية، يرجى تجديد الاشتراك أولاً لإضافة دورات جديدة' });
+                  return;
+                }
+                setModalError(null);
+                setShowAddModal(true);
+              }}
+              className="flex-1 sm:flex-initial px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 font-black text-xs shadow-md shadow-amber-500/20 flex items-center justify-center gap-1.5 transition-all hover:scale-105 cursor-pointer"
+            >
+              <Plus className="w-4 h-4" />
+              <span>إضافة كورس جديد</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveTab('payments')}
+              className="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-200 text-xs font-bold border border-slate-200 dark:border-zinc-700 transition-colors flex items-center gap-1.5 cursor-pointer"
+            >
+              <CreditCard className="w-4 h-4 text-emerald-500" />
+              <span className="hidden sm:inline">بيانات أرباحي</span>
+            </button>
+
+            {user.role === 'ADMIN' && (
+              <Link
+                href="/admin"
+                className="px-3.5 py-2 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/40 text-purple-700 dark:text-purple-300 text-xs font-bold transition-all flex items-center gap-1.5"
+              >
+                <ShieldCheck className="w-4 h-4" />
+                <span className="hidden sm:inline">لوحة الإدارة</span>
+              </Link>
+            )}
+          </div>
+        </div>
+
+        {/* Subscription Status Callout Banner */}
+        {user.role !== 'ADMIN' && (
+          <div
+            className={`p-4 sm:p-5 rounded-3xl border shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4 transition-all ${
               isExpired
-                ? 'bg-gradient-to-r from-rose-600 to-red-600 text-white shadow-rose-950/50'
+                ? 'bg-rose-950/40 border-rose-800/80 shadow-rose-950/30 text-rose-200'
                 : isTrial
-                ? 'bg-gradient-to-r from-amber-500 to-yellow-500 text-zinc-950 shadow-amber-950/40'
-                : 'bg-zinc-800 hover:bg-zinc-700 text-white border border-zinc-700'
+                ? 'bg-gradient-to-r from-amber-950/50 via-yellow-950/30 to-amber-950/50 border-amber-500/40 shadow-amber-950/20 text-amber-200'
+                : 'bg-emerald-950/40 border-emerald-800/80 shadow-emerald-950/30 text-emerald-200'
             }`}
           >
-            <CreditCard className="w-4 h-4" />
-            <span>{isExpired ? 'تجديد الاشتراك الآن' : 'ترقية أو تجديد الاشتراك'}</span>
-          </button>
-        </div>
-      )}
+            <div className="flex items-center gap-3.5">
+              <div
+                className={`w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 border ${
+                  isExpired
+                    ? 'bg-rose-500/20 border-rose-500/40 text-rose-400'
+                    : isTrial
+                    ? 'bg-amber-500/20 border-amber-500/40 text-amber-400'
+                    : 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400'
+                }`}
+              >
+                {isExpired ? <AlertTriangle className="w-5 h-5" /> : isTrial ? <Clock className="w-5 h-5" /> : <Sparkles className="w-5 h-5" />}
+              </div>
+              <div className="space-y-0.5">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-sm font-black text-white">
+                    {isExpired
+                      ? 'انتهت الفترة التجريبية وتوقفت مبيعات كورساتك مؤقتاً'
+                      : isTrial
+                      ? `أنت الآن في الفترة التجريبية المجانية (متبقي ${subscriptionState?.daysRemaining || 0} يوم)`
+                      : `اشتراكك السحابي نشط (متبقي ${subscriptionState?.daysRemaining || 0} يوم)`}
+                  </span>
+                  <span
+                    className={`px-2 py-0.5 rounded text-[10px] font-black border ${
+                      isExpired
+                        ? 'bg-rose-900/60 border-rose-700 text-rose-300'
+                        : isTrial
+                        ? 'bg-amber-900/60 border-amber-600 text-amber-300'
+                        : 'bg-emerald-900/60 border-emerald-600 text-emerald-300'
+                    }`}
+                  >
+                    {isExpired ? 'اشتراك منتهي' : isTrial ? '14 يوماً مجاناً' : 'مشترك معتمد'}
+                  </span>
+                </div>
+                <p className="text-xs text-zinc-300">
+                  {isExpired
+                    ? 'يرجى تجديد اشتراكك (الشهري أو السنوي) لإعادة فتح استقبال طلبات الطلاب على كورساتك فورياً.'
+                    : isTrial
+                    ? 'يمكنك خلال هذه الفترة رفع دوراتك وتعيين حسابات InstaPay وفودافون كاش لطلابك مجاناً.'
+                    : 'جميع كورساتك نشطة وتستقبل طلبات الشراء ويتم تحويل مبالغ الطلاب على حساباتك مباشرة.'}
+                </p>
+              </div>
+            </div>
 
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-border">
-        <div className="space-y-1">
-          <span className="text-xs font-bold text-purple-400">استوديو المحاضر المستقل</span>
-          <h1 className="text-2xl sm:text-3xl font-black text-white flex items-center gap-2">
-            <GraduationCap className="w-7 h-7 text-primary-400" />
-            أكاديمية المحاضر: {user.officialFullName}
-          </h1>
-          <p className="text-xs text-zinc-400">
-            إدارة كورساتك، متابعة تحويلات الطلاب وتأكيد إيصالاتهم، وتعيين حسابات الدفع المباشر، وكوبونات الخصم
-          </p>
-        </div>
-
-        <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-          <button
-            type="button"
-            onClick={() => {
-              if (isExpired) {
-                setMessage({ type: 'error', text: 'انتهت الفترة التجريبية، يرجى تجديد الاشتراك أولاً لإضافة كورسات جديدة' });
-                return;
-              }
-              setModalError(null);
-              setShowAddModal(true);
-            }}
-            className="dynamic-multi-cta flex-1 sm:flex-initial px-5 py-2.5 rounded-xl text-white font-black text-xs shadow-lg shadow-blue-600/25 flex items-center justify-center gap-2 transition-all hover:scale-105"
-          >
-            <Plus className="w-4 h-4 text-white shrink-0" />
-            <span>إضافة كورس جديد</span>
-          </button>
-
-          <Link
-            href="/chat"
-            className="flex-1 sm:flex-initial px-4 py-2.5 rounded-xl bg-surface-raised hover:bg-surface-card border border-border text-white font-bold text-xs flex items-center justify-center gap-2 transition-colors"
-          >
-            <MessageSquare className="w-4 h-4 text-primary-400 shrink-0" />
-            <span>محادثات الطلاب</span>
-          </Link>
-        </div>
-      </div>
-
-      {/* Navigation Tabs */}
-      <div className="flex items-center gap-2 border-b border-border overflow-x-auto pb-2 scrollbar-none">
-        <button
-          type="button"
-          onClick={() => setActiveTab('courses')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap ${
-            activeTab === 'courses'
-              ? 'bg-primary-600 text-white shadow-md'
-              : 'bg-surface-raised text-zinc-400 hover:text-white'
-          }`}
-        >
-          <BookOpen className="w-4 h-4" />
-          <span>دوراتي التدريبية ({courses.length})</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setActiveTab('payments')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap ${
-            activeTab === 'payments'
-              ? 'bg-primary-600 text-white shadow-md'
-              : 'bg-surface-raised text-zinc-400 hover:text-white'
-          }`}
-        >
-          <CreditCard className="w-4 h-4" />
-          <span>بيانات استلام أرباحي المباشرة</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setActiveTab('orders')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap ${
-            activeTab === 'orders'
-              ? 'bg-primary-600 text-white shadow-md'
-              : 'bg-surface-raised text-zinc-400 hover:text-white'
-          }`}
-        >
-          <Receipt className="w-4 h-4" />
-          <span>طلبات الطلاب والتحويلات ({payments.filter((p) => p.status === 'PENDING').length} معلق)</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setActiveTab('coupons')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap ${
-            activeTab === 'coupons'
-              ? 'bg-primary-600 text-white shadow-md'
-              : 'bg-surface-raised text-zinc-400 hover:text-white'
-          }`}
-        >
-          <Tag className="w-4 h-4" />
-          <span>كوبونات الخصم ({coupons.length})</span>
-        </button>
-      </div>
-
-      {/* Alert Messages */}
-      {message && (
-        <div
-          className={`p-4 rounded-2xl text-xs font-bold flex items-center justify-between gap-2 ${
-            message.type === 'success'
-              ? 'bg-emerald-950/70 border border-emerald-800 text-emerald-300'
-              : 'bg-rose-950/70 border border-rose-800 text-rose-300'
-          }`}
-        >
-          <div className="flex items-center gap-2">
-            {message.type === 'success' ? (
-              <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-400" />
-            ) : (
-              <AlertTriangle className="w-4 h-4 shrink-0 text-rose-400" />
-            )}
-            <span>{message.text}</span>
+            <button
+              type="button"
+              onClick={() => setShowRenewModal(true)}
+              className={`px-5 py-2.5 rounded-xl font-black text-xs shrink-0 shadow-lg flex items-center gap-2 transition-all hover:scale-105 cursor-pointer ${
+                isExpired
+                  ? 'bg-gradient-to-r from-rose-600 to-red-600 text-white shadow-rose-950/50'
+                  : isTrial
+                  ? 'bg-gradient-to-r from-amber-500 to-yellow-500 text-zinc-950 shadow-amber-950/40'
+                  : 'bg-zinc-800 hover:bg-zinc-700 text-white border border-zinc-700'
+              }`}
+            >
+              <CreditCard className="w-4 h-4" />
+              <span>{isExpired ? 'تجديد الاشتراك الآن' : 'ترقية أو تجديد الباقة'}</span>
+            </button>
           </div>
-          <button onClick={() => setMessage(null)} className="text-zinc-400 hover:text-white">
-            <X className="w-4 h-4" />
-          </button>
-        </div>
-      )}
+        )}
+
+        {/* Alert Messages */}
+        {message && (
+          <div
+            className={`p-4 rounded-2xl text-xs font-bold flex items-center justify-between gap-2 shadow-md ${
+              message.type === 'success'
+                ? 'bg-emerald-950/80 border border-emerald-700 text-emerald-200'
+                : 'bg-rose-950/80 border border-rose-700 text-rose-200'
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              {message.type === 'success' ? (
+                <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-400" />
+              ) : (
+                <AlertTriangle className="w-4 h-4 shrink-0 text-rose-400" />
+              )}
+              <span>{message.text}</span>
+            </div>
+            <button onClick={() => setMessage(null)} className="text-zinc-400 hover:text-white cursor-pointer">
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        )}
+
+        {/* TAB 0: OVERVIEW (نظرة عامة والتحليلات) */}
+        {activeTab === 'overview' && (
+          <div className="space-y-6">
+            {/* 4 Stat Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {/* Stat 1: Students */}
+              <div className="p-5 rounded-3xl bg-white/90 dark:bg-zinc-900/90 border border-slate-200/80 dark:border-purple-900/40 shadow-xl shadow-slate-900/5 backdrop-blur-xl space-y-2">
+                <div className="flex items-center justify-between text-slate-500 dark:text-zinc-400">
+                  <span className="text-xs font-bold">إجمالي الطلاب المسجلين</span>
+                  <div className="p-2 rounded-xl bg-purple-500/15 text-purple-700 dark:text-purple-300">
+                    <Users className="w-4 h-4" />
+                  </div>
+                </div>
+                <p className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+                  {totalStudents} <span className="text-xs font-bold text-slate-500 dark:text-zinc-400">طالب</span>
+                </p>
+                <div className="text-[11px] text-slate-500 dark:text-zinc-400 flex items-center gap-1">
+                  <span>عبر {courses.length} دورة تدريبية</span>
+                </div>
+              </div>
+
+              {/* Stat 2: Active Courses */}
+              <div className="p-5 rounded-3xl bg-white/90 dark:bg-zinc-900/90 border border-slate-200/80 dark:border-purple-900/40 shadow-xl shadow-slate-900/5 backdrop-blur-xl space-y-2">
+                <div className="flex items-center justify-between text-slate-500 dark:text-zinc-400">
+                  <span className="text-xs font-bold">الدورات التدريبية</span>
+                  <div className="p-2 rounded-xl bg-amber-500/15 text-amber-700 dark:text-amber-300">
+                    <BookOpen className="w-4 h-4" />
+                  </div>
+                </div>
+                <p className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+                  {courses.length} <span className="text-xs font-bold text-slate-500 dark:text-zinc-400">دورة</span>
+                </p>
+                <div className="text-[11px] text-slate-500 dark:text-zinc-400 flex items-center gap-1">
+                  <span>تتضمن {totalLessonsCount} درساً ومحاضرة</span>
+                </div>
+              </div>
+
+              {/* Stat 3: Direct Revenue */}
+              <div className="p-5 rounded-3xl bg-white/90 dark:bg-zinc-900/90 border border-slate-200/80 dark:border-purple-900/40 shadow-xl shadow-slate-900/5 backdrop-blur-xl space-y-2">
+                <div className="flex items-center justify-between text-slate-500 dark:text-zinc-400">
+                  <span className="text-xs font-bold">أرباحك المباشرة المحققة</span>
+                  <div className="p-2 rounded-xl bg-emerald-500/15 text-emerald-700 dark:text-emerald-300">
+                    <TrendingUp className="w-4 h-4" />
+                  </div>
+                </div>
+                <p className="text-2xl sm:text-3xl font-black text-emerald-600 dark:text-emerald-400 tracking-tight font-mono">
+                  {formatPrice(totalEarnedRevenue)}
+                </p>
+                <div className="text-[11px] text-emerald-600 dark:text-emerald-400/90 flex items-center gap-1 font-bold">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span>تحويلات مباشرة لحسابك 100%</span>
+                </div>
+              </div>
+
+              {/* Stat 4: SaaS Plan */}
+              <div className="p-5 rounded-3xl bg-white/90 dark:bg-zinc-900/90 border border-slate-200/80 dark:border-purple-900/40 shadow-xl shadow-slate-900/5 backdrop-blur-xl space-y-2">
+                <div className="flex items-center justify-between text-slate-500 dark:text-zinc-400">
+                  <span className="text-xs font-bold">اشتراك استوديو المحاضر</span>
+                  <div className="p-2 rounded-xl bg-blue-500/15 text-blue-700 dark:text-blue-300">
+                    <Sparkles className="w-4 h-4" />
+                  </div>
+                </div>
+                <p className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
+                  {isExpired ? 'منتهي' : isTrial ? `${subscriptionState?.daysRemaining || 0} يوم` : 'نشط معتمد'}
+                </p>
+                <div className="text-[11px] text-slate-500 dark:text-zinc-400 flex items-center justify-between">
+                  <span>{isTrial ? 'فترة تجريبية مجانية' : 'باقة SaaS Pro'}</span>
+                  <button
+                    type="button"
+                    onClick={() => setShowRenewModal(true)}
+                    className="text-amber-600 dark:text-amber-400 font-bold hover:underline cursor-pointer"
+                  >
+                    {isExpired ? 'تجديد الآن' : 'ترقية/تجديد'}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Fast Action Shortcuts */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  if (isExpired) {
+                    setMessage({ type: 'error', text: 'انتهت الفترة التجريبية، يرجى تجديد الاشتراك أولاً لإضافة دورات جديدة' });
+                    return;
+                  }
+                  setShowAddModal(true);
+                }}
+                className="p-4 rounded-2xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-right transition-all flex items-center justify-between group cursor-pointer"
+              >
+                <div className="space-y-0.5">
+                  <span className="text-xs font-black text-slate-900 dark:text-white block">إضافة كورس جديد</span>
+                  <span className="text-[11px] text-slate-500 dark:text-zinc-400 block">رفع فيديوهات ومناهج تعليمية</span>
+                </div>
+                <Plus className="w-5 h-5 text-amber-500 group-hover:scale-110 transition-transform" />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveTab('orders')}
+                className="p-4 rounded-2xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-right transition-all flex items-center justify-between group cursor-pointer"
+              >
+                <div className="space-y-0.5">
+                  <span className="text-xs font-black text-slate-900 dark:text-white block">
+                    طلبات الطلاب {pendingPaymentsCount > 0 && `(${pendingPaymentsCount} معلق)`}
+                  </span>
+                  <span className="text-[11px] text-slate-500 dark:text-zinc-400 block">مراجعة وتأكيد الإيصالات</span>
+                </div>
+                <Receipt className="w-5 h-5 text-rose-500 group-hover:scale-110 transition-transform" />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveTab('payments')}
+                className="p-4 rounded-2xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-right transition-all flex items-center justify-between group cursor-pointer"
+              >
+                <div className="space-y-0.5">
+                  <span className="text-xs font-black text-slate-900 dark:text-white block">بيانات استلام أرباحي</span>
+                  <span className="text-[11px] text-slate-500 dark:text-zinc-400 block">InstaPay وفودافون كاش</span>
+                </div>
+                <CreditCard className="w-5 h-5 text-emerald-500 group-hover:scale-110 transition-transform" />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveTab('coupons')}
+                className="p-4 rounded-2xl bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 text-right transition-all flex items-center justify-between group cursor-pointer"
+              >
+                <div className="space-y-0.5">
+                  <span className="text-xs font-black text-slate-900 dark:text-white block">كوبونات وأكواد الخصم</span>
+                  <span className="text-[11px] text-slate-500 dark:text-zinc-400 block">{coupons.length} كوبون نشط</span>
+                </div>
+                <Tag className="w-5 h-5 text-purple-500 group-hover:scale-110 transition-transform" />
+              </button>
+            </div>
+
+            {/* Pending Student Orders Callout (if any) */}
+            {pendingPaymentsCount > 0 && (
+              <div className="p-5 rounded-3xl bg-amber-500/10 border border-amber-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-amber-500/20 text-amber-500 flex items-center justify-center shrink-0">
+                    <AlertTriangle className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-black text-slate-900 dark:text-white">
+                      يوجد لديك {pendingPaymentsCount} طلب تحويل معلق بانتظار مراجعتك وتأكيدك!
+                    </h4>
+                    <p className="text-xs text-slate-500 dark:text-zinc-400">
+                      قام الطلاب برفع إيصالات التحويل بانتظار اعتمادك ليتم فتح محتوى الكورس لهم تلقائياً.
+                    </p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('orders')}
+                  className="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 text-xs font-black shrink-0 transition-all cursor-pointer"
+                >
+                  مراجعة الطلبات الآن
+                </button>
+              </div>
+            )}
+
+            {/* Recent Student Payments & Courses Summary */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Recent Orders Box */}
+              <div className="p-5 rounded-3xl bg-white/90 dark:bg-zinc-900/90 border border-slate-200/80 dark:border-purple-900/40 shadow-xl shadow-slate-900/5 space-y-4">
+                <div className="flex items-center justify-between border-b border-slate-100 dark:border-zinc-800 pb-3">
+                  <div className="flex items-center gap-2">
+                    <Receipt className="w-4 h-4 text-amber-500" />
+                    <h3 className="text-sm font-black text-slate-900 dark:text-white">أحدث طلبات وتحويلات الطلاب</h3>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('orders')}
+                    className="text-xs font-bold text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1 cursor-pointer"
+                  >
+                    <span>عرض الكل ({payments.length})</span>
+                    <ArrowLeft className="w-3 h-3" />
+                  </button>
+                </div>
+
+                {payments.length === 0 ? (
+                  <div className="text-center py-8 text-slate-400 dark:text-zinc-500 text-xs">
+                    لا توجد طلبات دفع مسجلة حتى الآن.
+                  </div>
+                ) : (
+                  <div className="space-y-2.5">
+                    {payments.slice(0, 5).map((p) => (
+                      <div
+                        key={p.id}
+                        className="p-3 rounded-2xl bg-slate-50 dark:bg-zinc-800/50 border border-slate-100 dark:border-zinc-800 flex items-center justify-between gap-3 text-xs"
+                      >
+                        <div className="space-y-0.5 min-w-0">
+                          <p className="font-black text-slate-900 dark:text-white truncate">
+                            {p.user?.officialFullName || p.user?.firstName || 'طالب'}
+                          </p>
+                          <p className="text-[11px] text-slate-500 dark:text-zinc-400 truncate">
+                            {p.order?.course?.title || 'كورس'}
+                          </p>
+                        </div>
+                        <div className="text-left shrink-0 space-y-0.5">
+                          <span className="font-black text-amber-600 dark:text-amber-400 font-mono block">
+                            {formatPrice(p.amount)}
+                          </span>
+                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full block text-center ${
+                            p.status === 'APPROVED'
+                              ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
+                              : p.status === 'REJECTED'
+                              ? 'bg-rose-500/15 text-rose-700 dark:text-rose-300'
+                              : 'bg-amber-500/15 text-amber-800 dark:text-amber-300'
+                          }`}>
+                            {p.status === 'APPROVED' ? 'مقبول' : p.status === 'REJECTED' ? 'مرفوض' : 'معلق'}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Courses Overview Box */}
+              <div className="p-5 rounded-3xl bg-white/90 dark:bg-zinc-900/90 border border-slate-200/80 dark:border-purple-900/40 shadow-xl shadow-slate-900/5 space-y-4">
+                <div className="flex items-center justify-between border-b border-slate-100 dark:border-zinc-800 pb-3">
+                  <div className="flex items-center gap-2">
+                    <BookOpen className="w-4 h-4 text-amber-500" />
+                    <h3 className="text-sm font-black text-slate-900 dark:text-white">دوراتك التدريبية</h3>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('courses')}
+                    className="text-xs font-bold text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1 cursor-pointer"
+                  >
+                    <span>إدارة الكورسات ({courses.length})</span>
+                    <ArrowLeft className="w-3 h-3" />
+                  </button>
+                </div>
+
+                {courses.length === 0 ? (
+                  <div className="text-center py-8 text-slate-400 dark:text-zinc-500 text-xs">
+                    لم تقم بإضافة أي كورسات بعد. اضغط على إضافة كورس للبدء.
+                  </div>
+                ) : (
+                  <div className="space-y-2.5">
+                    {courses.slice(0, 5).map((c) => (
+                      <div
+                        key={c.id}
+                        className="p-3 rounded-2xl bg-slate-50 dark:bg-zinc-800/50 border border-slate-100 dark:border-zinc-800 flex items-center justify-between gap-3 text-xs"
+                      >
+                        <div className="space-y-0.5 min-w-0">
+                          <p className="font-black text-slate-900 dark:text-white truncate">{c.title}</p>
+                          <p className="text-[11px] text-slate-500 dark:text-zinc-400">
+                            {c._count?.sections || 0} وحدات • {c._count?.enrollments || 0} مشترك
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2 shrink-0">
+                          <span className="font-black text-slate-900 dark:text-white font-mono">
+                            {formatPrice(c.price)}
+                          </span>
+                          <Link
+                            href={`/instructor/courses/${c.id}/curriculum`}
+                            className="px-2.5 py-1 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 text-amber-800 dark:text-amber-300 font-bold text-[11px] transition-colors"
+                          >
+                            تعديل المنهاج
+                          </Link>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
 
       {/* TAB 1: COURSES */}
       {activeTab === 'courses' && (
@@ -558,7 +834,10 @@ export default function InstructorClient({
 
             <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-emerald-500/15 via-teal-500/5 to-white/90 dark:from-surface dark:to-surface border border-emerald-500/30 shadow-lg shadow-emerald-900/5 backdrop-blur-xl space-y-2 hover:-translate-y-1 transition-all">
               <span className="text-xs font-bold text-slate-600 dark:text-zinc-400">التقييم العام للمحاضر</span>
-              <p className="text-2xl font-black text-emerald-700 dark:text-emerald-400 tracking-tight">4.9 / 5.0 ⭐</p>
+              <p className="text-2xl font-black text-emerald-700 dark:text-emerald-400 tracking-tight flex items-center gap-1.5">
+                <span>4.9 / 5.0</span>
+                <Star className="w-4 h-4 fill-amber-400 text-amber-400 inline" />
+              </p>
             </div>
           </div>
 
@@ -793,9 +1072,10 @@ export default function InstructorClient({
                           <button
                             type="button"
                             onClick={() => setViewingScreenshot(p.screenshotUrl)}
-                            className="text-[11px] text-primary-400 hover:text-primary-300 underline font-bold mt-0.5 block"
+                            className="text-[11px] text-amber-500 hover:text-amber-400 font-bold mt-0.5 inline-flex items-center gap-1 cursor-pointer"
                           >
-                            عرض لقطة الشاشة 🖼️
+                            <span>معاينة الإيصال</span>
+                            <Eye className="w-3 h-3" />
                           </button>
                         )}
                       </td>
@@ -809,7 +1089,7 @@ export default function InstructorClient({
                               : 'bg-amber-950 border-amber-800 text-amber-300'
                           }`}
                         >
-                          {p.status === 'APPROVED' ? 'تم التفعيل ✅' : p.status === 'REJECTED' ? 'مرفوض ❌' : 'قيد المراجعة ⏳'}
+                          {p.status === 'APPROVED' ? 'تم التفعيل' : p.status === 'REJECTED' ? 'مرفوض' : 'قيد المراجعة'}
                         </span>
                       </td>
                       <td className="p-3.5 text-center">
@@ -845,7 +1125,128 @@ export default function InstructorClient({
         </div>
       )}
 
-      {/* TAB 4: INSTRUCTOR COUPONS */}
+      {/* TAB 5: SUBSCRIPTION (باقة اشتراك الاستوديو) */}
+      {activeTab === 'subscription' && (
+        <div className="space-y-6 max-w-4xl">
+          <div className="p-6 sm:p-8 rounded-3xl bg-white/90 dark:bg-zinc-900/90 border border-slate-200/80 dark:border-purple-900/40 shadow-xl space-y-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-100 dark:border-zinc-800 pb-5">
+              <div className="space-y-1">
+                <span className="text-xs font-bold text-amber-500">نظام الاشتراكات السحابية للمحاضرين</span>
+                <h2 className="text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-amber-500" />
+                  <span>تفاصيل باقة اشتراك استوديو المحاضر (SaaS)</span>
+                </h2>
+                <p className="text-xs text-slate-500 dark:text-zinc-400">
+                  امتلك أكاديميتك الخاصة دون أي نسبة استقطاع من مبيعاتك مع أحدث تقنيات التعليم الرقمي.
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setShowRenewModal(true)}
+                className="px-6 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 font-black text-xs shadow-md shadow-amber-500/20 transition-all hover:scale-105 cursor-pointer"
+              >
+                {isExpired ? 'تجديد الاشتراك الآن' : 'ترقية أو تجديد الباقة'}
+              </button>
+            </div>
+
+            {/* Current Status Highlights */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-800 space-y-1">
+                <span className="text-[11px] text-slate-500 dark:text-zinc-400 font-bold">نوع الباقة الحالية</span>
+                <p className="text-base font-black text-slate-900 dark:text-white">
+                  {user.subscriptionPlan === 'FREE_TRIAL' ? 'فترة تجريبية مجانية (14 يوماً)' : user.subscriptionPlan || 'باقة المحاضر Pro'}
+                </p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-800 space-y-1">
+                <span className="text-[11px] text-slate-500 dark:text-zinc-400 font-bold">حالة الحساب</span>
+                <p className={`text-base font-black ${
+                  isExpired ? 'text-rose-500' : isTrial ? 'text-amber-500' : 'text-emerald-500'
+                }`}>
+                  {isExpired ? 'منتهي الصلاحية' : isTrial ? `تجريبي (متبقي ${subscriptionState?.daysRemaining || 0} يوم)` : 'نشط ومعتمد'}
+                </p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-800 space-y-1">
+                <span className="text-[11px] text-slate-500 dark:text-zinc-400 font-bold">نسبة عمولة المنصة</span>
+                <p className="text-base font-black text-emerald-600 dark:text-emerald-400">
+                  0% (أرباحك 100% لك)
+                </p>
+              </div>
+            </div>
+
+            {/* Included Features */}
+            <div className="space-y-3">
+              <h3 className="text-sm font-black text-slate-900 dark:text-white">ما تتضمنه باقة المحاضر المحترف:</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-700 dark:text-zinc-300">
+                <div className="flex items-center gap-2 p-3 rounded-xl bg-slate-50 dark:bg-zinc-800/30 border border-slate-100 dark:border-zinc-800">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>استقبال تحويلات الطلاب على InstaPay وفودافون كاش بدون وسيط</span>
+                </div>
+                <div className="flex items-center gap-2 p-3 rounded-xl bg-slate-50 dark:bg-zinc-800/30 border border-slate-100 dark:border-zinc-800">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>رفع الفيديوهات السحابية وحمايتها ضد التحميل والتسجيل</span>
+                </div>
+                <div className="flex items-center gap-2 p-3 rounded-xl bg-slate-50 dark:bg-zinc-800/30 border border-slate-100 dark:border-zinc-800">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>بنك أسئلة واختبارات تفاعلية وتصحيح تلقائي وإصدار شهادات</span>
+                </div>
+                <div className="flex items-center gap-2 p-3 rounded-xl bg-slate-50 dark:bg-zinc-800/30 border border-slate-100 dark:border-zinc-800">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>إنشاء كوبونات وأكواد خصم ترويجية غير محدودة لكورساتك</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Plans Comparison */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+              <div className="p-5 rounded-2xl border-2 border-slate-200 dark:border-zinc-800 space-y-3">
+                <span className="text-xs font-bold text-slate-500 dark:text-zinc-400">الباقة الشهرية</span>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-3xl font-black text-slate-900 dark:text-white font-mono">290</span>
+                  <span className="text-xs text-slate-500 dark:text-zinc-400 font-bold">ج.م / شهرياً</span>
+                </div>
+                <p className="text-xs text-slate-500 dark:text-zinc-400">تجديد مرن شهر بشهر مع الحفاظ على كافة دوراتك وبيانات طلابك.</p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setRenewPlan('MONTHLY');
+                    setShowRenewModal(true);
+                  }}
+                  className="w-full py-2.5 rounded-xl bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-xs font-bold text-slate-900 dark:text-white transition-colors cursor-pointer"
+                >
+                  اختيار الباقة الشهرية
+                </button>
+              </div>
+
+              <div className="p-5 rounded-2xl border-2 border-amber-500 bg-amber-500/5 dark:bg-amber-500/10 space-y-3 relative">
+                <span className="absolute top-3 left-3 px-2 py-0.5 rounded-full bg-amber-500 text-zinc-950 text-[10px] font-black">
+                  الأكثر توفيراً (وفر شهرين)
+                </span>
+                <span className="text-xs font-bold text-amber-600 dark:text-amber-400">الباقة السنوية (12 شهر)</span>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-3xl font-black text-amber-600 dark:text-amber-400 font-mono">2,900</span>
+                  <span className="text-xs text-slate-500 dark:text-zinc-400 font-bold">ج.م / سنوياً</span>
+                </div>
+                <p className="text-xs text-slate-500 dark:text-zinc-400">راحة بال لعام كامل بدون قلق بشأن تجديد الاشتراكات مع دعم فني متقدم.</p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setRenewPlan('ANNUAL');
+                    setShowRenewModal(true);
+                  }}
+                  className="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 text-xs font-black shadow-md shadow-amber-500/20 transition-all hover:scale-105 cursor-pointer"
+                >
+                  اختيار الباقة السنوية الآن
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* TAB 4: COUPONS */}
       {activeTab === 'coupons' && (
         <div className="space-y-6">
           <div className="p-6 rounded-3xl bg-surface border border-border space-y-4">
@@ -941,6 +1342,7 @@ export default function InstructorClient({
           </div>
         </div>
       )}
+      </main>
 
       {/* RENEWAL / UPGRADE MODAL */}
       {showRenewModal && mounted && createPortal(
