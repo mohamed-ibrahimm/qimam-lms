@@ -157,20 +157,20 @@ export default function InstructorJoinPage() {
   ];
 
   return (
-    <div className="min-h-screen pt-20 sm:pt-24 pb-16 px-4 sm:px-6 lg:px-8 relative text-slate-900 dark:text-slate-100 selection:bg-amber-500 selection:text-zinc-950 transition-colors duration-300">
+    <div className="min-h-screen pt-10 sm:pt-12 pb-14 px-3.5 sm:px-6 lg:px-8 relative text-slate-900 dark:text-slate-100 selection:bg-amber-500 selection:text-zinc-950 transition-colors duration-300">
       
       {/* =========================================================================
           1. HERO & TRACK NAVIGATION (EXACTLY MATCHING DESKTOPHERO ON HOMEPAGE)
          ========================================================================= */}
-      <section className="max-w-6xl mx-auto text-center relative">
+      <section className="max-w-5xl mx-auto text-center relative">
         
         {/* Dynamic Rotating Shimmer Badge Switcher */}
-        <div className="mb-6 inline-block max-w-full px-2">
+        <div className="mb-3 inline-block max-w-full px-2">
           <div className="inline-flex p-1 rounded-2xl sm:rounded-full bg-white/90 dark:bg-[#16122d]/90 border border-slate-200 dark:border-purple-800/80 shadow-md backdrop-blur-md gap-1 flex-col sm:flex-row justify-center w-full sm:w-auto">
             <button
               type="button"
               onClick={() => setActiveTrack('all')}
-              className={`px-4 sm:px-5 py-2 rounded-xl sm:rounded-full text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+              className={`px-3.5 sm:px-4.5 py-1.5 rounded-xl sm:rounded-full text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                 activeTrack === 'all'
                   ? 'bg-slate-900 text-white dark:bg-white dark:text-zinc-950 shadow-sm'
                   : 'text-slate-600 dark:text-zinc-400 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10'
@@ -183,7 +183,7 @@ export default function InstructorJoinPage() {
             <button
               type="button"
               onClick={() => setActiveTrack('expert')}
-              className={`px-4 sm:px-5 py-2 rounded-xl sm:rounded-full text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+              className={`px-3.5 sm:px-4.5 py-1.5 rounded-xl sm:rounded-full text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                 activeTrack === 'expert'
                   ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-600/30'
                   : 'text-slate-600 dark:text-zinc-400 hover:text-purple-600 dark:hover:text-purple-300 hover:bg-purple-50 dark:hover:bg-white/10'
@@ -196,7 +196,7 @@ export default function InstructorJoinPage() {
             <button
               type="button"
               onClick={() => setActiveTrack('student')}
-              className={`px-4 sm:px-5 py-2 rounded-xl sm:rounded-full text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+              className={`px-3.5 sm:px-4.5 py-1.5 rounded-xl sm:rounded-full text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                 activeTrack === 'student'
                   ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-zinc-950 shadow-md shadow-amber-500/30'
                   : 'text-slate-600 dark:text-zinc-400 hover:text-amber-600 dark:hover:text-amber-300 hover:bg-amber-50 dark:hover:bg-white/10'
@@ -211,14 +211,14 @@ export default function InstructorJoinPage() {
         {/* Glowing Dynamic Moving Orbs & Headline (Exactly matching Homepage DesktopHero) */}
         <div className="relative px-2">
           {/* Dynamic Animated Floating Glowing Orbs centered right behind the Headline */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-[360px] pointer-events-none -z-10 overflow-visible">
-            <div className="dynamic-drift-1 absolute -top-10 right-1/4 w-[420px] h-[300px] bg-amber-400/25 dark:bg-amber-500/15 rounded-full blur-[110px]" />
-            <div className="dynamic-drift-2 absolute -bottom-10 left-1/4 w-[460px] h-[320px] bg-blue-500/25 dark:bg-purple-600/15 rounded-full blur-[120px]" />
-            <div className="dynamic-drift-3 absolute top-1/4 left-1/2 -translate-x-1/2 w-[380px] h-[280px] bg-indigo-400/20 dark:bg-yellow-500/10 rounded-full blur-[100px]" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-[320px] pointer-events-none -z-10 overflow-visible">
+            <div className="dynamic-drift-1 absolute -top-8 right-1/4 w-[380px] h-[260px] bg-amber-400/25 dark:bg-amber-500/15 rounded-full blur-[110px]" />
+            <div className="dynamic-drift-2 absolute -bottom-8 left-1/4 w-[420px] h-[280px] bg-blue-500/25 dark:bg-purple-600/15 rounded-full blur-[120px]" />
+            <div className="dynamic-drift-3 absolute top-1/4 left-1/2 -translate-x-1/2 w-[340px] h-[240px] bg-indigo-400/20 dark:bg-yellow-500/10 rounded-full blur-[100px]" />
           </div>
 
-          <h1 className="font-black tracking-tight mb-4 max-w-5xl mx-auto">
-            <span className="text-slate-900 dark:text-white block font-black text-3xl sm:text-4xl lg:text-5xl leading-[1.2] mb-3">
+          <h1 className="font-black tracking-tight mb-2 max-w-4xl mx-auto">
+            <span className="text-slate-900 dark:text-white block font-black text-2xl sm:text-3xl lg:text-4xl leading-tight mb-1.5">
               {platformSettings.joinPageTitle ? (
                 platformSettings.joinPageTitle
               ) : activeTrack === 'student' ? (
@@ -227,7 +227,7 @@ export default function InstructorJoinPage() {
                 'درّس لطلابك واحتفظ بكامل عوائد مبيعاتك مباشرة'
               )}
             </span>
-            <span className="bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-600 dark:from-amber-300 dark:via-yellow-400 dark:to-amber-500 bg-clip-text text-transparent block font-black text-2xl sm:text-3xl lg:text-4xl leading-snug">
+            <span className="bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-600 dark:from-amber-300 dark:via-yellow-400 dark:to-amber-500 bg-clip-text text-transparent block font-black text-xl sm:text-2xl lg:text-3xl leading-snug">
               {activeTrack === 'student' ? (
                 `منحة المحاضر الطالب (${platformSettings.studentTrialDays} يوماً مجاناً بالكامل)`
               ) : (
@@ -238,7 +238,7 @@ export default function InstructorJoinPage() {
         </div>
 
         {/* Subtitle */}
-        <p className="text-sm sm:text-base lg:text-lg text-slate-600 dark:text-zinc-300 max-w-3xl mx-auto mb-8 leading-relaxed font-normal px-2">
+        <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-300 max-w-2xl mx-auto mb-4 leading-normal px-2">
           {platformSettings.joinPageSubtitle ? (
             platformSettings.joinPageSubtitle
           ) : activeTrack === 'student'
@@ -247,32 +247,32 @@ export default function InstructorJoinPage() {
         </p>
 
         {/* =========================================================================
-            DUAL TRACK HERO CARDS (EXACT HOMEPAGE MATCHING STYLE)
+            DUAL TRACK HERO CARDS (EXACT HOMEPAGE MATCHING STYLE - FULL VIEWPORT FIT)
            ========================================================================= */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 text-right max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 text-right max-w-4xl mx-auto">
           
           {/* Card 1: Teachers & University Professors */}
           <div
-            className={`p-6 rounded-3xl border transition-all duration-300 flex flex-col justify-between space-y-4 relative overflow-hidden group ${
+            className={`p-4 sm:p-5 rounded-3xl border transition-all duration-300 flex flex-col justify-between space-y-3 relative overflow-hidden group ${
               activeTrack === 'expert' || activeTrack === 'all'
                 ? 'bg-white/95 dark:bg-[#16122d]/90 border-purple-300/90 dark:border-purple-800/80 shadow-md hover:shadow-xl backdrop-blur-md ring-1 ring-purple-500/20'
                 : 'bg-slate-50/50 dark:bg-[#120e24]/50 border-slate-200 dark:border-zinc-800/70 opacity-70'
             }`}
           >
-            <div className="space-y-3.5">
+            <div className="space-y-2.5">
               <div className="flex items-center justify-between">
-                <span className="px-3 py-1 rounded-full bg-purple-500/10 dark:bg-purple-500/15 text-purple-700 dark:text-purple-300 border border-purple-500/20 dark:border-purple-500/30 text-xs font-bold inline-flex items-center gap-1.5">
+                <span className="px-2.5 py-0.5 rounded-full bg-purple-500/10 dark:bg-purple-500/15 text-purple-700 dark:text-purple-300 border border-purple-500/20 dark:border-purple-500/30 text-[11px] font-bold inline-flex items-center gap-1.5">
                   <Building className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
                   للمدرسين والدكاترة الجامعيين
                 </span>
-                <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
                   <CheckCircle2 className="w-3.5 h-3.5" />
                   تفعيل فوري بدون مستندات
                 </span>
               </div>
 
-              <div className="space-y-1">
-                <h3 className="text-lg font-black text-slate-900 dark:text-white">
+              <div className="space-y-0.5">
+                <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white">
                   {platformSettings.expertCardTitle}
                 </h3>
                 <p className="text-xs text-slate-600 dark:text-zinc-300 leading-relaxed">
@@ -280,7 +280,7 @@ export default function InstructorJoinPage() {
                 </p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-purple-50/60 dark:bg-[#1c163b]/80 border border-purple-100 dark:border-purple-900/40 space-y-2 text-xs">
+              <div className="p-3 rounded-2xl bg-purple-50/60 dark:bg-[#1c163b]/80 border border-purple-100 dark:border-purple-900/40 space-y-1.5 text-xs">
                 <div className="flex items-center justify-between font-bold text-slate-700 dark:text-zinc-300">
                   <span>الفترة التجريبية:</span>
                   <span className="text-purple-700 dark:text-purple-300 font-black">{platformSettings.instructorTrialDays} يوماً مجاناً بالكامل</span>
@@ -302,35 +302,35 @@ export default function InstructorJoinPage() {
 
             <Link
               href="/register?role=instructor&track=expert"
-              className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 hover:from-purple-500 hover:to-indigo-500 text-white font-black text-xs text-center shadow-md shadow-purple-600/20 transition-all hover:scale-[1.01] flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-2.5 sm:py-3 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 hover:from-purple-500 hover:to-indigo-500 text-white font-black text-xs text-center shadow-md shadow-purple-600/20 transition-all hover:scale-[1.01] flex items-center justify-center gap-2 cursor-pointer"
             >
               <span>بدء تجربة المدرس أو الدكتور ({platformSettings.instructorTrialDays} يوماً مجاناً)</span>
-              <ArrowLeft className="w-4 h-4" />
+              <ArrowLeft className="w-3.5 h-3.5" />
             </Link>
           </div>
 
           {/* Card 2: Student Instructors (GOLD SHINE VIP) */}
           <div
-            className={`p-6 rounded-3xl border-2 transition-all duration-300 flex flex-col justify-between space-y-4 relative overflow-hidden group ${
+            className={`p-4 sm:p-5 rounded-3xl border-2 transition-all duration-300 flex flex-col justify-between space-y-3 relative overflow-hidden group ${
               activeTrack === 'student' || activeTrack === 'all'
                 ? 'bg-amber-500/15 hover:bg-amber-500/25 dark:bg-amber-500/15 dark:hover:bg-amber-500/25 border-2 border-amber-500/70 hover:border-amber-400 shadow-md hover:shadow-amber-500/20 backdrop-blur-md'
                 : 'bg-slate-50/50 dark:bg-[#120e24]/50 border-slate-200 dark:border-zinc-800/70 opacity-70'
             }`}
           >
-            <div className="space-y-3.5">
+            <div className="space-y-2.5">
               <div className="flex items-center justify-between">
-                <span className="px-3 py-1 rounded-full bg-amber-500/20 text-amber-900 dark:text-amber-300 border border-amber-500/40 text-xs font-black inline-flex items-center gap-1.5">
-                  <GraduationCap className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-900 dark:text-amber-300 border border-amber-500/40 text-[11px] font-black inline-flex items-center gap-1.5">
+                  <GraduationCap className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                   لطلبة الكليات والمدارس
                 </span>
-                <span className="text-xs font-bold text-amber-800 dark:text-amber-400 flex items-center gap-1">
+                <span className="text-[11px] font-bold text-amber-800 dark:text-amber-400 flex items-center gap-1">
                   <FileText className="w-3.5 h-3.5" />
                   إثبات دراسي ميسر
                 </span>
               </div>
 
-              <div className="space-y-1">
-                <h3 className="text-lg font-black text-slate-900 dark:text-white">
+              <div className="space-y-0.5">
+                <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white">
                   {platformSettings.studentCardTitle}
                 </h3>
                 <p className="text-xs text-slate-600 dark:text-zinc-300 leading-relaxed">
@@ -338,7 +338,7 @@ export default function InstructorJoinPage() {
                 </p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-amber-500/15 dark:bg-[#181222]/90 border border-amber-300 dark:border-amber-500/40 space-y-2 text-xs">
+              <div className="p-3 rounded-2xl bg-amber-500/15 dark:bg-[#181222]/90 border border-amber-300 dark:border-amber-500/40 space-y-1.5 text-xs">
                 <div className="flex items-center justify-between font-bold text-slate-700 dark:text-zinc-300">
                   <span>المنحة التجريبية:</span>
                   <span className="text-amber-800 dark:text-amber-400 font-black">{platformSettings.studentTrialDays} يوماً مجاناً بالكامل</span>
@@ -360,10 +360,10 @@ export default function InstructorJoinPage() {
 
             <Link
               href="/register?role=instructor&track=student"
-              className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 hover:to-yellow-300 text-zinc-950 font-black text-xs text-center shadow-md shadow-amber-500/25 transition-all hover:scale-[1.01] flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-2.5 sm:py-3 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 hover:to-yellow-300 text-zinc-950 font-black text-xs text-center shadow-md shadow-amber-500/25 transition-all hover:scale-[1.01] flex items-center justify-center gap-2 cursor-pointer"
             >
               <span>اشترك كـ محاضر طالب ({platformSettings.studentTrialDays} يوماً مجاناً)</span>
-              <ArrowLeft className="w-4 h-4 text-zinc-950" />
+              <ArrowLeft className="w-3.5 h-3.5 text-zinc-950" />
             </Link>
           </div>
 

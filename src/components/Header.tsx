@@ -193,15 +193,15 @@ export default function Header({
         </Link>
 
         {/* =========================================================================
-            2. CENTER: CLASSIC NAVIGATION WITH "جميع الكورسات" & SEAMLESS DROPDOWN
+            2. CENTER: CLASSIC NAVIGATION (Shifted slightly rightwards for ideal symmetry)
            ========================================================================= */}
-        <div className="hidden lg:flex items-center gap-2 bg-slate-100/90 dark:bg-black/50 p-1.5 rounded-full border border-slate-200/90 dark:border-white/10 shadow-inner shrink-0">
+        <div className="hidden lg:flex items-center gap-1.5 bg-slate-100/90 dark:bg-black/50 p-1.5 rounded-full border border-slate-200/90 dark:border-white/10 shadow-inner shrink-0 mr-2 xl:mr-6">
           
           {/* Link: الرئيسية */}
           <Link
             href="/"
             prefetch={true}
-            className={`px-4 py-2 text-xs font-bold rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
+            className={`px-3.5 py-1.5 text-xs font-bold rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
               pathname === '/'
                 ? 'bg-white dark:bg-zinc-800 text-blue-700 dark:text-white border border-slate-200 dark:border-zinc-700 shadow-xs'
                 : 'text-slate-600 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-white hover:bg-white/70 dark:hover:bg-zinc-800/60'
@@ -221,7 +221,7 @@ export default function Header({
               href="/courses"
               prefetch={true}
               onClick={() => setCoursesMenuOpen(false)}
-              className={`px-4 py-2 text-xs sm:text-sm font-black rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 cursor-pointer ${
+              className={`px-3.5 py-1.5 text-xs font-black rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 cursor-pointer ${
                 pathname.startsWith('/courses')
                   ? 'diploma-luxury-pill scale-105 ring-2 ring-amber-400/50 shadow-md shadow-amber-500/20'
                   : 'diploma-luxury-pill hover:scale-105'
@@ -297,7 +297,7 @@ export default function Header({
           <Link
             href="/diplomas"
             prefetch={true}
-            className={`px-4 py-2 text-xs font-bold rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
+            className={`px-3.5 py-1.5 text-xs font-bold rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
               pathname.startsWith('/diplomas')
                 ? 'bg-purple-600 text-white shadow-md shadow-purple-600/20'
                 : 'text-slate-600 dark:text-zinc-300 hover:text-purple-600 dark:hover:text-white hover:bg-white/70 dark:hover:bg-zinc-800/60'
@@ -309,7 +309,7 @@ export default function Header({
         </div>
 
         {/* =========================================================================
-            3. LEFT: INSTRUCTOR JOIN PILLS + AUTH & THEME BUTTONS
+            3. LEFT: COMPACT & REFINED INSTRUCTOR JOIN PILLS + AUTH BUTTONS
            ========================================================================= */}
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           
@@ -318,9 +318,9 @@ export default function Header({
             <div className="relative hidden lg:block">
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="flex items-center gap-2 py-1.5 px-3 rounded-full border border-slate-200/90 dark:border-purple-800/60 bg-white/90 dark:bg-zinc-800/90 hover:border-amber-400 dark:hover:border-amber-400 transition-all shadow-xs cursor-pointer"
+                className="flex items-center gap-2 py-1 px-2.5 rounded-full border border-slate-200/90 dark:border-purple-800/60 bg-white/90 dark:bg-zinc-800/90 hover:border-amber-400 dark:hover:border-amber-400 transition-all shadow-xs cursor-pointer"
               >
-                <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 dark:from-amber-400 dark:to-yellow-500 flex items-center justify-center text-xs font-black text-white dark:text-zinc-950 overflow-hidden shrink-0">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 dark:from-amber-400 dark:to-yellow-500 flex items-center justify-center text-[11px] font-black text-white dark:text-zinc-950 overflow-hidden shrink-0">
                   {currentUser.avatarUrl ? (
                     <img
                       src={currentUser.avatarUrl}
@@ -334,10 +334,10 @@ export default function Header({
                     <span>{currentUser.firstName?.[0] || 'ق'}</span>
                   )}
                 </div>
-                <span className="text-xs font-bold text-slate-800 dark:text-white max-w-[120px] truncate">
+                <span className="text-xs font-bold text-slate-800 dark:text-white max-w-[110px] truncate">
                   {currentUser.firstName}
                 </span>
-                <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-zinc-400 mr-0.5" />
+                <ChevronDown className="w-3 h-3 text-slate-500 dark:text-zinc-400 mr-0.5" />
               </button>
 
               {dropdownOpen && (
@@ -459,44 +459,44 @@ export default function Header({
               )}
             </div>
           ) : (
-            /* Auth + Dual Instructor Join Pills */
-            <div className="hidden lg:flex items-center gap-1.5 sm:gap-2 shrink-0">
+            /* Auth + Compact Dual Instructor Join Pills */
+            <div className="hidden lg:flex items-center gap-1.5 shrink-0">
               
-              {/* Join: مدرس أو دكتور */}
+              {/* Join: انضم كـ محاضر */}
               <Link
                 href="/instructors/join?track=expert"
-                className="px-3 py-1.5 rounded-full text-xs font-bold bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 text-purple-700 dark:text-purple-300 hover:border-purple-400 transition-all flex items-center gap-1 shrink-0 shadow-xs"
+                className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 text-purple-700 dark:text-purple-300 hover:border-purple-400 transition-all flex items-center gap-1 shrink-0 shadow-xs"
                 title="سجل كمدرس أو دكتور جامعي (0% عمولة - 14 يوماً مجاناً)"
               >
-                <Video className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
+                <Video className="w-3 h-3 text-purple-600 dark:text-purple-400" />
                 <span>{navExpertBtnText}</span>
               </Link>
 
-              {/* Join: محاضر طالب */}
+              {/* Join: انضم كـ محاضر طالب */}
               <Link
                 href="/instructors/join?track=student"
-                className="px-3 py-1.5 rounded-full text-xs font-black bg-gradient-to-r from-amber-500/15 via-yellow-500/20 to-amber-500/15 hover:from-amber-500/25 hover:to-yellow-500/30 border border-amber-500/40 hover:border-amber-400 text-amber-800 dark:text-amber-300 transition-all flex items-center gap-1 shrink-0 shadow-sm shadow-amber-500/10"
+                className="px-2.5 py-1 rounded-full text-[11px] font-black bg-gradient-to-r from-amber-500/15 via-yellow-500/20 to-amber-500/15 hover:from-amber-500/25 hover:to-yellow-500/30 border border-amber-500/40 hover:border-amber-400 text-amber-800 dark:text-amber-300 transition-all flex items-center gap-1 shrink-0 shadow-sm shadow-amber-500/10"
                 title="منحة المحاضر الطالب لطلبة الجامعات والمدارس (شهر كامل مجاناً)"
               >
-                <GraduationCap className="w-3.5 h-3.5 text-amber-500" />
+                <GraduationCap className="w-3 h-3 text-amber-500" />
                 <span>{navStudentBtnText}</span>
               </Link>
 
               {/* Login Button */}
               <Link
                 href="/login"
-                className="px-3.5 py-1.5 rounded-full text-xs font-bold text-slate-700 hover:text-slate-950 bg-slate-100 hover:bg-slate-200 dark:text-zinc-200 dark:hover:text-white dark:bg-zinc-800/80 dark:hover:bg-zinc-700 transition-all shadow-xs flex items-center gap-1.5 shrink-0"
+                className="px-3 py-1 rounded-full text-[11px] font-bold text-slate-700 hover:text-slate-950 bg-slate-100 hover:bg-slate-200 dark:text-zinc-200 dark:hover:text-white dark:bg-zinc-800/80 dark:hover:bg-zinc-700 transition-all shadow-xs flex items-center gap-1 shrink-0"
               >
-                <LogIn className="w-3.5 h-3.5 text-slate-600 dark:text-amber-400" />
+                <LogIn className="w-3 h-3 text-slate-600 dark:text-amber-400" />
                 <span>دخول</span>
               </Link>
 
               {/* Register CTA Button */}
               <Link
                 href="/register"
-                className="px-3.5 py-1.5 rounded-full text-xs font-black bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white transition-all shadow-md shadow-blue-600/25 hover:shadow-lg hover:shadow-blue-600/35 whitespace-nowrap flex items-center gap-1 shrink-0 hover:scale-105"
+                className="px-3.5 py-1 rounded-full text-[11px] font-black bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white transition-all shadow-md shadow-blue-600/25 hover:shadow-lg hover:shadow-blue-600/35 whitespace-nowrap flex items-center gap-1 shrink-0 hover:scale-105"
               >
-                <UserPlus className="w-3.5 h-3.5 text-white" />
+                <UserPlus className="w-3 h-3 text-white" />
                 <span>انضمام</span>
               </Link>
             </div>
@@ -510,11 +510,11 @@ export default function Header({
               e.stopPropagation();
               toggleTheme();
             }}
-            className="w-9 h-9 rounded-full border border-slate-200 dark:border-zinc-700 bg-white/90 dark:bg-zinc-800/90 text-slate-700 dark:text-amber-400 hover:bg-slate-100 dark:hover:bg-zinc-700 transition-all flex items-center justify-center shrink-0 shadow-xs cursor-pointer"
+            className="w-8 h-8 rounded-full border border-slate-200 dark:border-zinc-700 bg-white/90 dark:bg-zinc-800/90 text-slate-700 dark:text-amber-400 hover:bg-slate-100 dark:hover:bg-zinc-700 transition-all flex items-center justify-center shrink-0 shadow-xs cursor-pointer"
             title={theme === 'DARK' ? 'التحويل إلى الوضع النهاري' : 'التحويل إلى الوضع الليلي'}
             aria-label="تبديل المظهر"
           >
-            {theme === 'DARK' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-blue-600" />}
+            {theme === 'DARK' ? <Sun className="w-3.5 h-3.5 text-amber-400" /> : <Moon className="w-3.5 h-3.5 text-blue-600" />}
           </button>
 
           {/* Mobile Menu Hamburger Button */}
