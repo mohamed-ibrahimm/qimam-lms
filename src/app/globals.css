@@ -1040,18 +1040,32 @@ html.dark .shimmer-border-wrapper:hover .shimmer-button-content,
 
 .dynamic-navbar-aura {
   position: relative;
+  transition: all 0.3s ease;
 }
 
 .dynamic-navbar-aura::before {
   content: '';
   position: absolute;
+  inset: -2px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #f59e0b, #ec4899, #8b5cf6, #3b82f6, #10b981, #f59e0b, #fbbf24);
+  background-size: 300% 300%;
+  animation: navAuraFlow 6s linear infinite;
+  opacity: 0.75;
+  filter: blur(8px);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.dynamic-navbar-aura::after {
+  content: '';
+  position: absolute;
   inset: -1px;
   border-radius: 9999px;
-  background: linear-gradient(90deg, rgba(245, 158, 11, 0.3), rgba(168, 85, 247, 0.2), rgba(59, 130, 246, 0.25), rgba(245, 158, 11, 0.3));
-  background-size: 200% 200%;
-  animation: navAuraFlow 8s ease infinite;
-  opacity: 0.2;
-  filter: blur(6px);
+  background: linear-gradient(90deg, #f59e0b, #a855f7, #3b82f6, #10b981, #f59e0b);
+  background-size: 300% 300%;
+  animation: navAuraFlow 6s linear infinite;
+  opacity: 0.9;
   z-index: -1;
   pointer-events: none;
 }
