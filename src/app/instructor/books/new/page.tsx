@@ -81,7 +81,7 @@ export default function NewBookPage() {
   };
 
   return (
-    <div className="min-h-screen pt-20 sm:pt-24 pb-20 max-w-4xl mx-auto px-4 sm:px-6 space-y-8">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 space-y-8 pb-16">
       
       {/* Top Breadcrumb */}
       <div className="flex items-center gap-2 text-xs font-bold text-zinc-400">

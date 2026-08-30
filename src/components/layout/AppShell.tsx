@@ -47,7 +47,7 @@ export default function AppShell({
         initialPlatformTagline={initialPlatformTagline}
         initialUser={initialUser}
       />
-      <main className="flex-1 w-full pt-20 sm:pt-24 md:pt-28 pb-8">
+      <main className="flex-1 w-full pt-28 sm:pt-32 md:pt-36 pb-12">
         <div key={pathname} className="animate-page-enter">
           {children}
         </div>

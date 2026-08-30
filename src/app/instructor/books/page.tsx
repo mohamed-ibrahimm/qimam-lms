@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import { getCurrentUser } from '@/lib/auth';
@@ -36,7 +36,7 @@ export default async function InstructorBooksPage() {
   const totalRevenue = books.reduce((sum, b) => sum + ((b.salesCount || 0) * (b.price || 0)), 0);
 
   return (
-    <div className="min-h-screen pt-20 sm:pt-24 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 pb-16">
       
       {/* 1. TOP HEADER */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-zinc-800 pb-6">
@@ -112,17 +112,35 @@ export default async function InstructorBooksPage() {
               >
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10.5px] font-black px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/30">
+                    <span className="text-[10.5px] font-black px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30">
                       {book.category}
                     </span>
-                    <span className="text-xs font-mono font-black text-emerald-500">
-                      {book.isFree ? 'مجانية' : `${book.price} ج.م`}
+                    
+                    <span
+                      className={`text-[10px] font-black px-2.5 py-0.5 rounded-full border ${
+                        book.status === 'PUBLISHED'
+                          ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/40'
+                          : book.status === 'PENDING_REVIEW'
+                          ? 'bg-amber-500/15 text-amber-800 dark:text-amber-300 border-amber-500/40'
+                          : 'bg-rose-500/15 text-rose-700 dark:text-rose-300 border-rose-500/40'
+                      }`}
+                    >
+                      {book.status === 'PUBLISHED'
+                        ? 'معتمد ومنشور'
+                        : book.status === 'PENDING_REVIEW'
+                        ? 'قيد المراجعة'
+                        : 'مرفوض'}
                     </span>
                   </div>
 
-                  <h3 className="text-sm font-black text-slate-900 dark:text-white line-clamp-2">
-                    {book.title}
-                  </h3>
+                  <div className="flex items-baseline justify-between pt-1">
+                    <h3 className="text-sm font-black text-slate-900 dark:text-white line-clamp-2">
+                      {book.title}
+                    </h3>
+                    <span className="text-xs font-mono font-black text-amber-600 dark:text-amber-400 shrink-0 mr-2">
+                      {book.isFree ? 'مجانية' : `${book.price} ج.م`}
+                    </span>
+                  </div>
 
                   <p className="text-xs text-slate-500 dark:text-zinc-400 line-clamp-2">
                     {book.shortDescription || book.description}
