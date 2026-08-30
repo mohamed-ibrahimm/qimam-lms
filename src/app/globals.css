@@ -57,7 +57,7 @@ body {
 }
 
 .page-canvas {
-  background-color: #0f0f15;
+  background-color: transparent;
   color: #f4f4f5;
   transition: background-color 0.25s ease, color 0.25s ease;
 }

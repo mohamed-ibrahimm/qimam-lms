@@ -42,7 +42,7 @@ export default function DesktopHero({
   hasAnySocial,
 }: DesktopHeroProps) {
   return (
-    <section className="hidden md:flex flex-col justify-center items-center min-h-[calc(100vh-4.5rem)] pt-8 sm:pt-10 lg:pt-12 pb-14 relative">
+    <section className="hidden md:flex flex-col justify-center items-center min-h-screen pt-28 sm:pt-32 lg:pt-36 pb-14 relative">
       <div className="max-w-[1500px] mx-auto px-4 lg:px-8 text-center my-auto w-full space-y-8 lg:space-y-10">
         
         {/* Promotional Dynamic Rotating Shimmer Banner */}

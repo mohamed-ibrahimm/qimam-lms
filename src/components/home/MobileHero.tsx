@@ -51,7 +51,7 @@ export default function MobileHero({
         Dedicated full-screen showcase. Contains exclusively Headline + CTAs.
         ========================================================================
       */}
-      <section className="h-[100dvh] min-h-[600px] flex flex-col justify-between pt-16 px-4 relative">
+      <section className="h-[100dvh] min-h-[600px] flex flex-col justify-between pt-20 xs:pt-24 px-4 relative">
         
         {/* Exact Desktop-Matched Ambient Lighting & Multi-Colored Radiant Blooms */}
         {/* 1. Top central imperial gold & violet dome */}
