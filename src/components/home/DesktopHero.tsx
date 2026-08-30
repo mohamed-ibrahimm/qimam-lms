@@ -6,6 +6,7 @@ import {
   ArrowLeft,
   BookOpen,
   GraduationCap,
+  Video,
   MessageCircle,
   Headphones,
   Mail,
@@ -98,13 +99,21 @@ export default function DesktopHero({
           </a>
 
           <Link
-            href="/instructors/join"
+            href="/instructors/join?track=expert"
             prefetch={true}
-            className="group flex items-center justify-center gap-2.5 px-8 py-4 text-base font-black text-slate-800 hover:text-purple-700 dark:text-zinc-200 dark:hover:text-white transition-all rounded-full border border-purple-300/90 hover:border-purple-500 bg-white/95 hover:bg-white dark:border-purple-800/80 dark:bg-[#16122d]/80 dark:hover:border-purple-600 dark:hover:bg-[#1c163b] shadow-sm hover:shadow-md backdrop-blur-md"
+            className="group flex items-center justify-center gap-2 px-6 py-4 text-sm lg:text-base font-black text-slate-800 hover:text-purple-700 dark:text-zinc-200 dark:hover:text-white transition-all rounded-full border border-purple-300/90 hover:border-purple-500 bg-white/95 hover:bg-white dark:border-purple-800/80 dark:bg-[#16122d]/80 dark:hover:border-purple-600 dark:hover:bg-[#1c163b] shadow-sm hover:shadow-md backdrop-blur-md"
           >
-            <GraduationCap className="w-5 h-5 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform shrink-0" />
-            <span className="whitespace-nowrap">انضم كـ محاضر (0% عمولة)</span>
-            <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-300 shrink-0" />
+            <Video className="w-4 h-4 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform shrink-0" />
+            <span className="whitespace-nowrap">انضم كـ محاضر خبير (0% عمولة)</span>
+          </Link>
+
+          <Link
+            href="/instructors/join?track=student"
+            prefetch={true}
+            className="group flex items-center justify-center gap-2 px-6 py-4 text-sm lg:text-base font-black text-amber-950 dark:text-amber-300 transition-all rounded-full border-2 border-amber-500/70 hover:border-amber-400 bg-amber-500/15 hover:bg-amber-500/25 dark:bg-amber-500/15 dark:hover:bg-amber-500/25 shadow-md hover:shadow-amber-500/20 hover:scale-105 backdrop-blur-md"
+          >
+            <GraduationCap className="w-5 h-5 text-amber-500 group-hover:scale-110 transition-transform shrink-0" />
+            <span className="whitespace-nowrap">اشترك كمحاضر طالب (شهر مجاناً 🎓)</span>
           </Link>
         </div>
 

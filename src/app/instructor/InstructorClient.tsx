@@ -131,7 +131,7 @@ export default function InstructorClient({
 
   // Subscription Renewal Modal State
   const [showRenewModal, setShowRenewModal] = useState(false);
-  const [renewPlan, setRenewPlan] = useState<'MONTHLY' | 'ANNUAL'>('MONTHLY');
+  const [renewPlan, setRenewPlan] = useState<'MONTHLY' | 'ANNUAL' | 'STUDENT_PRO'>('MONTHLY');
   const [renewMethod, setRenewMethod] = useState<'INSTAPAY' | 'VODAFONE_CASH'>('INSTAPAY');
   const [renewTxId, setRenewTxId] = useState('');
   const [renewScreenshot, setRenewScreenshot] = useState('');
@@ -440,14 +440,20 @@ export default function InstructorClient({
               <span className="hidden sm:inline">بيانات أرباحي</span>
             </button>
 
-            {user.role === 'ADMIN' && (
-              <Link
-                href="/admin"
-                className="px-3.5 py-2 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/40 text-purple-700 dark:text-purple-300 text-xs font-bold transition-all flex items-center gap-1.5"
+            {!user.isStudentInstructor ? (
+              <button
+                type="button"
+                onClick={() => setShowStudentVerifModal(true)}
+                className="px-3.5 py-2 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/40 text-purple-300 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
               >
-                <ShieldCheck className="w-4 h-4" />
-                <span className="hidden sm:inline">لوحة الإدارة</span>
-              </Link>
+                <GraduationCap className="w-4 h-4 text-amber-400" />
+                <span>اشترك كمحاضر طالب (30 يوم مجاناً) 🎓</span>
+              </button>
+            ) : (
+              <span className="px-3.5 py-2 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 text-xs font-bold flex items-center gap-1.5">
+                <GraduationCap className="w-4 h-4 text-amber-400" />
+                <span>محاضر طالب معتمد 🎓</span>
+              </span>
             )}
           </div>
         </div>
@@ -1394,36 +1400,53 @@ export default function InstructorClient({
             </div>
 
             {/* Plan Selector */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <button
                 type="button"
-                onClick={() => setRenewPlan('MONTHLY')}
-                className={`p-4 rounded-2xl border text-right transition-all space-y-1 ${
-                  renewPlan === 'MONTHLY'
-                    ? 'bg-primary-950/60 border-primary-500 shadow-md'
+                onClick={() => setRenewPlan('STUDENT_PRO')}
+                className={`p-3.5 rounded-2xl border text-right transition-all space-y-1 relative ${
+                  renewPlan === 'STUDENT_PRO'
+                    ? 'bg-purple-950/70 border-purple-500 shadow-md ring-1 ring-purple-500'
                     : 'bg-surface-raised border-border text-zinc-400'
                 }`}
               >
-                <span className="text-xs font-bold text-white block">اشتراك شهري (1 شهر)</span>
+                <span className="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[9px] font-black inline-block mb-1">
+                  🎓 للطلبة (سن 23 فأقل)
+                </span>
+                <span className="text-xs font-bold text-white block">باقة المحاضر الطالب</span>
+                <span className="text-lg font-black text-purple-300 block">120 ج.م</span>
+                <span className="text-[10px] text-zinc-400 block">دعم خاص للجامعيين</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setRenewPlan('MONTHLY')}
+                className={`p-3.5 rounded-2xl border text-right transition-all space-y-1 ${
+                  renewPlan === 'MONTHLY'
+                    ? 'bg-primary-950/60 border-primary-500 shadow-md ring-1 ring-primary-500'
+                    : 'bg-surface-raised border-border text-zinc-400'
+                }`}
+              >
+                <span className="text-xs font-bold text-white block">اشتراك شهري محترف</span>
                 <span className="text-lg font-black text-primary-300 block">290 ج.م</span>
-                <span className="text-[10px] text-zinc-400 block">تجديد شهر بشهر</span>
+                <span className="text-[10px] text-zinc-400 block">مرونة شهرية عامة</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setRenewPlan('ANNUAL')}
-                className={`p-4 rounded-2xl border text-right transition-all space-y-1 relative ${
+                className={`p-3.5 rounded-2xl border text-right transition-all space-y-1 relative ${
                   renewPlan === 'ANNUAL'
-                    ? 'bg-primary-950/60 border-primary-500 shadow-md'
+                    ? 'bg-primary-950/60 border-primary-500 shadow-md ring-1 ring-primary-500'
                     : 'bg-surface-raised border-border text-zinc-400'
                 }`}
               >
                 <span className="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 text-[9px] font-bold">
                   وفر شهرين!
                 </span>
-                <span className="text-xs font-bold text-white block">اشتراك سنوي (12 شهر)</span>
+                <span className="text-xs font-bold text-white block">اشتراك سنوي شامل</span>
                 <span className="text-lg font-black text-emerald-400 block">2,900 ج.م</span>
-                <span className="text-[10px] text-zinc-400 block">راحة بال لمدة عام كامل</span>
+                <span className="text-[10px] text-zinc-400 block">العام الأكثر توفيراً</span>
               </button>
             </div>
 

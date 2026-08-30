@@ -1,4 +1,4 @@
-﻿import { NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { getCurrentUser } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
@@ -18,14 +18,15 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'يرجى اختيار باقة الاشتراك ووسيلة الدفع' }, { status: 400 });
     }
 
+    const isStudent = plan === 'STUDENT_PRO';
     const isAnnual = plan === 'ANNUAL';
-    const amount = isAnnual ? 2900 : 290;
+    const amount = isStudent ? 120 : isAnnual ? 2900 : 290;
     const durationMonths = isAnnual ? 12 : 1;
 
     const payment = await prisma.instructorSubscriptionPayment.create({
       data: {
         instructorId: user.id,
-        plan: isAnnual ? 'ANNUAL' : 'MONTHLY',
+        plan: isStudent ? 'STUDENT_PRO' : isAnnual ? 'ANNUAL' : 'MONTHLY',
         amount,
         paymentMethod: paymentMethod === 'VODAFONE_CASH' ? 'VODAFONE_CASH' : 'INSTAPAY',
         transactionId: transactionId ? transactionId.trim() : null,

@@ -6,6 +6,7 @@ import {
   ArrowLeft,
   BookOpen,
   GraduationCap,
+  Video,
   MessageCircle,
   Headphones,
   Mail,
@@ -114,15 +115,24 @@ export default function MobileHero({
             </div>
           </a>
 
-          {/* Button 2: Join as Instructor */}
+          {/* Button 2: Join as Expert Instructor */}
           <Link
-            href="/instructors/join"
+            href="/instructors/join?track=expert"
             prefetch={true}
-            className="group flex items-center justify-center gap-2.5 w-full py-3.5 px-5 text-sm xs:text-base font-black text-slate-800 hover:text-purple-700 dark:text-zinc-200 dark:hover:text-white transition-all rounded-2xl border border-purple-300/90 hover:border-purple-500 bg-white hover:bg-slate-50 dark:border-purple-800/80 dark:bg-[#16122d]/90 dark:hover:border-purple-600 dark:hover:bg-[#1c163b] shadow-sm hover:shadow-md backdrop-blur-md active:scale-[0.98]"
+            className="group flex items-center justify-center gap-2 w-full py-3.5 px-4 text-xs xs:text-sm font-black text-slate-800 hover:text-purple-700 dark:text-zinc-200 dark:hover:text-white transition-all rounded-2xl border border-purple-300/90 hover:border-purple-500 bg-white hover:bg-slate-50 dark:border-purple-800/80 dark:bg-[#16122d]/90 dark:hover:border-purple-600 dark:hover:bg-[#1c163b] shadow-sm hover:shadow-md backdrop-blur-md active:scale-[0.98]"
           >
-            <GraduationCap className="w-5 h-5 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform shrink-0" />
-            <span className="whitespace-nowrap">انضم كـ محاضر (0% عمولة)</span>
-            <ArrowLeft className="w-4.5 h-4.5 group-hover:-translate-x-1 transition-transform duration-300 shrink-0" />
+            <Video className="w-4 h-4 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform shrink-0" />
+            <span className="whitespace-nowrap">انضم كـ محاضر خبير (0% عمولة)</span>
+          </Link>
+
+          {/* Button 3: Join as Student Instructor */}
+          <Link
+            href="/instructors/join?track=student"
+            prefetch={true}
+            className="group flex items-center justify-center gap-2 w-full py-3.5 px-4 text-xs xs:text-sm font-black text-amber-950 dark:text-amber-300 transition-all rounded-2xl border-2 border-amber-500/70 hover:border-amber-400 bg-amber-500/15 hover:bg-amber-500/25 dark:bg-amber-500/15 dark:hover:bg-amber-500/25 shadow-md backdrop-blur-md active:scale-[0.98]"
+          >
+            <GraduationCap className="w-4 h-4 text-amber-500 group-hover:scale-110 transition-transform shrink-0" />
+            <span className="whitespace-nowrap">اشترك كمحاضر طالب (شهر مجاناً 🎓)</span>
           </Link>
         </div>
 

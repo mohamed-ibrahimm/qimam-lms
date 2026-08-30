@@ -57,8 +57,12 @@ export async function POST(req: Request) {
 
     const requestedRole = body.role === 'INSTRUCTOR' ? 'INSTRUCTOR' : 'STUDENT';
     const isInstructor = requestedRole === 'INSTRUCTOR';
+    const isStudentTrack = isInstructor && (body.track === 'student' || body.isStudentInstructor === true);
     const now = new Date();
-    const trialEndsAt = isInstructor ? new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000) : null;
+    // Student Instructors get 30 days trial; Senior/Pro get 14 days
+    const trialDays = isStudentTrack ? 30 : 14;
+    const trialEndsAt = isInstructor ? new Date(now.getTime() + trialDays * 24 * 60 * 60 * 1000) : null;
+    const subscriptionPlan = isStudentTrack ? 'STUDENT_PRO' : (isInstructor ? 'FREE_TRIAL' : 'FREE_TRIAL');
 
     let user: any = null;
     try {
@@ -73,9 +77,11 @@ export async function POST(req: Request) {
           phone: phone?.trim() || null,
           passwordHash,
           role: requestedRole,
+          isStudentInstructor: isStudentTrack,
+          studentVerificationStatus: isStudentTrack ? 'PENDING' : null,
           instructorStatus: isInstructor ? 'TRIAL' : 'TRIAL',
           trialEndsAt: trialEndsAt,
-          subscriptionPlan: isInstructor ? 'FREE_TRIAL' : 'FREE_TRIAL',
+          subscriptionPlan: subscriptionPlan,
           isEmailVerified: true,
         }
       });

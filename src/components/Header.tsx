@@ -451,12 +451,20 @@ export default function Header({
                 <span>إنشاء حساب</span>
               </Link>
               <Link
-                href="/instructors/join"
+                href="/instructors/join?track=expert"
                 className="px-3 py-1.5 rounded-full text-xs font-bold bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/30 text-purple-700 dark:text-purple-300 transition-all flex items-center gap-1 shrink-0"
-                title="سجل كمحاضر مستقل - 14 يوماً مجاناً وعروض حصرية"
+                title="سجل كمحاضر خبير - 14 يوماً مجاناً"
               >
                 <Video className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
-                <span>انضم كمحاضر</span>
+                <span>كمحاضر خبير</span>
+              </Link>
+              <Link
+                href="/instructors/join?track=student"
+                className="px-3 py-1.5 rounded-full text-xs font-bold bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-700 dark:text-amber-300 transition-all flex items-center gap-1 shrink-0 shadow-xs"
+                title="منحة الطلاب - شهر كامل 30 يوماً مجاناً لسن 23 فأقل"
+              >
+                <GraduationCap className="w-3.5 h-3.5 text-amber-500" />
+                <span>كمحاضر طالب 🎓</span>
               </Link>
             </div>
           )}
@@ -629,14 +637,24 @@ export default function Header({
                     <span>إنشاء حساب</span>
                   </Link>
                 </div>
-                <Link
-                  href="/instructors/join"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="w-full py-2.5 px-3 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/40 text-purple-700 dark:text-purple-300 font-bold text-xs flex items-center justify-center gap-2 transition-colors"
-                >
-                  <Video className="w-4 h-4 text-purple-600 dark:text-purple-400" />
-                  <span>انضم كمحاضر مستقل (14 يوماً مجاناً)</span>
-                </Link>
+                <div className="grid grid-cols-2 gap-2">
+                  <Link
+                    href="/instructors/join?track=expert"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="py-2.5 px-2 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/40 text-purple-700 dark:text-purple-300 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"
+                  >
+                    <Video className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                    <span>كمحاضر خبير</span>
+                  </Link>
+                  <Link
+                    href="/instructors/join?track=student"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="py-2.5 px-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-700 dark:text-amber-300 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"
+                  >
+                    <GraduationCap className="w-4 h-4 text-amber-500" />
+                    <span>كمحاضر طالب 🎓</span>
+                  </Link>
+                </div>
               </div>
             )}
 

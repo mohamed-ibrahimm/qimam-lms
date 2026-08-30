@@ -20,10 +20,12 @@ export default function RegisterPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const initialRoleParam = searchParams.get('role');
+  const initialTrackParam = searchParams.get('track');
 
   const [role, setRole] = useState<'STUDENT' | 'INSTRUCTOR'>(
-    initialRoleParam?.toUpperCase() === 'INSTRUCTOR' ? 'INSTRUCTOR' : 'STUDENT'
+    initialRoleParam?.toUpperCase() === 'INSTRUCTOR' || initialTrackParam === 'student' ? 'INSTRUCTOR' : 'STUDENT'
   );
+  const [track, setTrack] = useState<string>(initialTrackParam || '');
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -37,10 +39,13 @@ export default function RegisterPage() {
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    if (initialRoleParam?.toUpperCase() === 'INSTRUCTOR') {
+    if (initialRoleParam?.toUpperCase() === 'INSTRUCTOR' || initialTrackParam === 'student') {
       setRole('INSTRUCTOR');
     }
-  }, [initialRoleParam]);
+    if (initialTrackParam) {
+      setTrack(initialTrackParam);
+    }
+  }, [initialRoleParam, initialTrackParam]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -78,6 +83,7 @@ export default function RegisterPage() {
           phone: formData.phone.trim(),
           password: formData.password,
           role,
+          track: role === 'INSTRUCTOR' ? track : undefined,
         }),
       });
 
@@ -98,29 +104,29 @@ export default function RegisterPage() {
     <div className="relative min-h-[85vh] flex items-center justify-center px-4 py-10 overflow-hidden">
       {/* Background Glow */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10">
-        <div className="dynamic-drift-1 absolute top-[10%] right-[25%] w-[450px] h-[450px] bg-purple-600/15 dark:bg-purple-600/20 rounded-full blur-[120px]" />
-        <div className="dynamic-drift-2 absolute bottom-[15%] left-[20%] w-[500px] h-[500px] bg-amber-500/15 dark:bg-amber-500/20 rounded-full blur-[130px]" />
+        <div className="absolute top-[10%] right-[10%] w-72 h-72 bg-blue-500/10 dark:bg-purple-600/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-[10%] left-[10%] w-80 h-80 bg-indigo-500/10 dark:bg-indigo-600/10 rounded-full blur-3xl" />
       </div>
 
-      <div className="w-full max-w-md space-y-5">
-        {/* Header Title */}
+      <div className="w-full max-w-md bg-white dark:bg-gradient-to-b dark:from-[#171233] dark:to-[#100c24] border border-slate-200 dark:border-purple-800/40 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
         <div className="text-center space-y-1.5">
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-            {role === 'INSTRUCTOR' ? 'إنشاء حساب محاضر' : 'إنشاء حساب جديد'}
-          </h1>
-          <p className="text-xs sm:text-sm font-medium text-slate-600 dark:text-zinc-300">
-            أكاديمية المهندس محمد إبراهيم التعليمية
+          <h1 className="text-2xl font-black text-slate-900 dark:text-white">إنشاء حساب جديد</h1>
+          <p className="text-xs text-slate-500 dark:text-zinc-400">
+            {role === 'INSTRUCTOR'
+              ? track === 'student'
+                ? 'انضم كـ محاضر طالب واستفد من 30 يوماً تجربة مجانية كاملة'
+                : 'انضم كـ محاضر وابدأ تدريس طلابك باحترافية كاملة'
+              : 'ابدأ رحلتك التعليمية واكتسب مهارات برمجية وهندسية قوية'}
           </p>
         </div>
 
-        {/* Main Card */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-white/95 dark:bg-[#120e24]/95 border border-slate-200 dark:border-amber-500/30 shadow-2xl shadow-purple-950/40 space-y-5 backdrop-blur-2xl">
-          
+        {/* Role Switcher & Track Indicator */}
+        <div className="space-y-3">
           {/* Role Switcher */}
           <div className="p-1 rounded-2xl bg-slate-100 dark:bg-[#181330] border border-slate-200 dark:border-purple-900/40 grid grid-cols-2 gap-1">
             <button
               type="button"
-              onClick={() => setRole('STUDENT')}
+              onClick={() => { setRole('STUDENT'); setTrack(''); }}
               className={`py-2.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
                 role === 'STUDENT'
                   ? 'bg-blue-600 text-white shadow-md'
@@ -128,7 +134,7 @@ export default function RegisterPage() {
               }`}
             >
               <GraduationCap className="w-4 h-4" />
-              <span>حساب طالب</span>
+              <span>حساب طالب متدرب</span>
             </button>
 
             <button
@@ -145,16 +151,37 @@ export default function RegisterPage() {
             </button>
           </div>
 
-
-
-          {/* Instructor Notice */}
+          {/* Instructor Track Indicator */}
           {role === 'INSTRUCTOR' && (
-            <div className="p-3 rounded-xl bg-purple-950/60 border border-purple-800/60 text-purple-200 text-xs flex items-center justify-between animate-in fade-in">
-              <span className="font-semibold">فترة تجريبية 14 يوماً مجاناً مع 0% عمولة</span>
-              <Link href="/instructors/join" className="text-amber-400 font-bold hover:underline shrink-0 mr-2 text-[11px]">
-                تفاصيل الباقات
-              </Link>
-            </div>
+            track === 'student' ? (
+              <div className="p-3.5 rounded-2xl bg-gradient-to-r from-amber-500/20 via-purple-500/15 to-amber-500/20 border border-amber-500/50 text-xs flex items-center justify-between animate-in fade-in shadow-md">
+                <div className="flex items-center gap-2.5">
+                  <GraduationCap className="w-5 h-5 text-amber-400 shrink-0" />
+                  <div>
+                    <span className="font-black text-amber-300 block">باقة المحاضر الطالب (سن 23 فأقل) 🎓</span>
+                    <span className="text-[11px] text-zinc-300">منحة تمكين: شهر كامل مجاناً (30 يوماً) + باقة 120 ج.م</span>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setTrack('')}
+                  className="text-[11px] text-zinc-400 hover:text-white underline shrink-0 mr-2"
+                >
+                  التحويل لخبير
+                </button>
+              </div>
+            ) : (
+              <div className="p-3 rounded-xl bg-purple-950/60 border border-purple-800/60 text-purple-200 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2 animate-in fade-in">
+                <span className="font-semibold">فترة تجريبية 14 يوماً مجاناً مع 0% عمولة للمحاضر الخبير</span>
+                <button
+                  type="button"
+                  onClick={() => setTrack('student')}
+                  className="text-amber-400 font-bold hover:underline shrink-0 text-[11px] text-right cursor-pointer"
+                >
+                  أنا طالب جامعي (30 يوم مجاناً) 🎓
+                </button>
+              </div>
+            )
           )}
 
           {errorMessage && (
@@ -163,9 +190,10 @@ export default function RegisterPage() {
               <span>{errorMessage}</span>
             </div>
           )}
+        </div>
 
-          {/* Manual Registration Form */}
-          <form onSubmit={handleManualSubmit} className="space-y-3.5">
+        {/* Manual Registration Form */}
+        <form onSubmit={handleManualSubmit} className="space-y-3.5">
             {/* Full Name */}
             <div>
               <label className="block text-xs font-bold text-slate-700 dark:text-zinc-200 mb-1.5">
@@ -272,7 +300,6 @@ export default function RegisterPage() {
               </button>
             </div>
           </form>
-        </div>
 
         {/* Footer Link */}
         <p className="text-center text-xs sm:text-sm text-slate-500 dark:text-zinc-400">
