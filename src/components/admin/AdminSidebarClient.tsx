@@ -165,9 +165,9 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
   return (
     <>
       {/* =========================================================================
-          1. SLIM & ELEGANT TOP STATUS BAR (No space wasted, 100% full width layout)
+          1. SLIM & ELEGANT TOP STATUS BAR (Contained in layout, zero overlap)
          ========================================================================= */}
-      <div className="w-full bg-white/80 dark:bg-[#0c0918]/85 border-b border-slate-200/80 dark:border-amber-500/20 backdrop-blur-xl px-4 sm:px-8 py-3 flex items-center justify-between z-20 sticky top-14 sm:top-16 shadow-xs">
+      <div className="w-full bg-white/90 dark:bg-zinc-900/90 border border-slate-200/80 dark:border-amber-500/25 backdrop-blur-xl px-4 sm:px-6 py-3 rounded-2xl flex items-center justify-between shadow-sm mb-6">
         <div className="flex items-center gap-2.5">
           <div className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse shadow-sm shadow-amber-400/50" />
           <span className="text-xs sm:text-sm font-black text-slate-900 dark:text-white">

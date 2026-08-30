@@ -38,14 +38,13 @@ export default async function AdminLayout({
         <div className="dynamic-drift-4 absolute bottom-[25%] left-[25%] w-[480px] h-[480px] bg-emerald-400/10 dark:bg-teal-600/10 rounded-full blur-[125px]" />
       </div>
 
-      {/* Modern Slim Status Bar & Floating Command Palette Launcher */}
-      <AdminSidebarClient
-        platformName={platformName}
-        adminName={adminName}
-      />
-
       {/* Main Admin View Area (Full Width & Pristine Margin) */}
       <main className="flex-1 p-3 sm:p-6 md:p-8 max-w-7xl mx-auto relative z-10 w-full min-w-0">
+        {/* Modern Slim Status Bar & Floating Command Palette Launcher */}
+        <AdminSidebarClient
+          platformName={platformName}
+          adminName={adminName}
+        />
         {children}
       </main>
     </div>
