@@ -77,18 +77,18 @@ export default function MobileHero({
         <div className="w-full max-w-lg mx-auto flex flex-col items-center px-3 py-2 my-auto relative shrink-0">
           
           {/* Soft spherical ambient glow for both modes */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] bg-blue-500/10 dark:bg-amber-500/18 rounded-full blur-[70px] pointer-events-none -z-10" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] bg-blue-500/10 dark:bg-amber-500/20 rounded-full blur-[70px] pointer-events-none -z-10" />
 
           <h1 className="font-black tracking-tight w-full mb-3 text-center">
             <span className="text-slate-950 dark:text-white block font-black text-[30px] xs:text-[35px] sm:text-4xl leading-[1.22] mb-2 tracking-tight">
               نحو مستقبل برمجي<br />وهندسي احترافي
             </span>
-            <span className="block font-black text-[18px] xs:text-[21px] sm:text-2xl leading-snug bg-gradient-to-r from-blue-700 via-indigo-600 to-violet-700 dark:from-amber-300 dark:via-yellow-400 dark:to-amber-500 bg-clip-text text-transparent">
+            <span className="block font-black text-[18px] xs:text-[21px] sm:text-2xl leading-snug text-blue-700 dark:text-amber-400">
               بوابتك الاحترافية لاحتراف البرمجة<br />والذكاء الاصطناعي والتصميم
             </span>
           </h1>
 
-          <p className="text-xs xs:text-sm text-slate-700 dark:text-slate-300 max-w-md mx-auto leading-relaxed font-medium px-2 mt-1">
+          <p className="text-xs xs:text-sm text-slate-700 dark:text-zinc-200 max-w-md mx-auto leading-relaxed font-normal px-2 mt-1">
             {settings.HERO_SUBTITLE ||
               `${cleanPlatformName} — مسارات تدريبية هندسية متكاملة، دبلومات برمجية معتمدة، ومشاريع إنتاج واقعية تؤهلك لسوق العمل بثقة واحتراف.`}
           </p>
