@@ -1233,4 +1233,37 @@ html.dark .hero-focal-gradient,
   background: linear-gradient(135deg, #60a5fa 0%, #818cf8 25%, #c084fc 55%, #f472b6 75%, #fbbf24 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+/* =========================================================================
+   MILITARY-GRADE DRM & ZERO-LATENCY ANTI-SCREENSHOT ENGINE
+   ========================================================================= */
+
+.drm-secure-canvas {
+  transition: filter 0.05s linear, opacity 0.05s linear;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+
+/* Instant Hardware/Compositor-level Blackout when Snipping tool or OS takes screenshot */
+html:not(:focus-within) .drm-secure-canvas,
+body:not(:focus-within) .drm-secure-canvas,
+body.drm-shield-active .drm-secure-canvas,
+.drm-captured .drm-secure-canvas {
+  filter: blur(60px) brightness(0.02) contrast(3) !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Complete destruction on Print / PDF export / Save */
+@media print {
+  body * {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
 }

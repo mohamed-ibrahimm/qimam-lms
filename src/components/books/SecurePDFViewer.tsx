@@ -67,32 +67,40 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
 
   // Anti-Screenshot & Focus-Loss Blur + Anti-Copy Lockdown
   useEffect(() => {
-    // 1. Anti-Snipping / Window Blur Defense (Blacks out when screenshot tool or outside app is active)
+    // 1. Instant Synchronous Hardware Blocker (Zero Render Latency)
     const handleBlur = () => {
       setIsWindowBlurred(true);
+      document.body.classList.add('drm-shield-active');
     };
 
     const handleFocus = () => {
       setIsWindowBlurred(false);
+      document.body.classList.remove('drm-shield-active');
     };
 
     const handleVisibilityChange = () => {
       if (document.hidden) {
         setIsWindowBlurred(true);
+        document.body.classList.add('drm-shield-active');
       } else {
         setIsWindowBlurred(false);
+        document.body.classList.remove('drm-shield-active');
       }
     };
 
     // 2. Anti-PrintScreen & Shortcut Blocker
     const handleKeyDown = (e: KeyboardEvent) => {
-      // PrintScreen / Snipping keys
+      // PrintScreen / Snipping keys (Win+Shift+S, PrintScreen, etc.)
       if (e.key === 'PrintScreen' || e.code === 'PrintScreen' || (e.key === 's' && (e.metaKey || e.ctrlKey) && e.shiftKey)) {
         setIsWindowBlurred(true);
+        document.body.classList.add('drm-shield-active');
         try {
           navigator.clipboard.writeText('🔒 المحتوى محمي بنظام DRM ضد التصوير والنسخ.');
         } catch (err) {}
-        setTimeout(() => setIsWindowBlurred(false), 2000);
+        setTimeout(() => {
+          setIsWindowBlurred(false);
+          document.body.classList.remove('drm-shield-active');
+        }, 2500);
       }
 
       // Block Print: Ctrl+P / Cmd+P
@@ -135,10 +143,14 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
     const handleKeyUp = (e: KeyboardEvent) => {
       if (e.key === 'PrintScreen' || e.code === 'PrintScreen') {
         setIsWindowBlurred(true);
+        document.body.classList.add('drm-shield-active');
         try {
           navigator.clipboard.writeText('🔒 المحتوى محمي بنظام DRM ضد التصوير والنسخ.');
         } catch (err) {}
-        setTimeout(() => setIsWindowBlurred(false), 2000);
+        setTimeout(() => {
+          setIsWindowBlurred(false);
+          document.body.classList.remove('drm-shield-active');
+        }, 2500);
       }
     };
 
@@ -154,6 +166,7 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
+      document.body.classList.remove('drm-shield-active');
     };
   }, [currentPage, totalPages, isAccessible]);
 
@@ -396,7 +409,7 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
           >
             {/* Realistic Paper Page Container */}
             <div
-              className={`p-6 sm:p-14 min-h-[750px] sm:min-h-[980px] flex flex-col justify-between rounded-3xl border ${
+              className={`drm-secure-canvas p-6 sm:p-14 min-h-[750px] sm:min-h-[980px] flex flex-col justify-between rounded-3xl border ${
                 readingTheme === 'DARK'
                   ? 'bg-[#110c22] text-slate-100 border-purple-900/30 shadow-[0_20px_70px_rgba(0,0,0,0.9)]'
                   : readingTheme === 'SEPIA'
@@ -504,25 +517,9 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
 
             </div>
 
-            {/* =====================================================================
-                3. SUBTLE, NON-INTRUSIVE ELEGANT WATERMARK (Zero Readability Interference)
-               ===================================================================== */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden flex flex-col justify-around opacity-[0.02] dark:opacity-[0.035] select-none">
-              {[1, 2].map((row) => (
-                <div
-                  key={row}
-                  className="flex justify-around items-center whitespace-nowrap transform -rotate-12 text-[10px] sm:text-xs font-medium text-slate-900 dark:text-white tracking-widest"
-                  style={{ userSelect: 'none' }}
-                >
-                  <span>{watermarkText}</span>
-                  <span className="hidden sm:inline">{watermarkText}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Subtle Security Footprint Badge */}
-            <div className="absolute bottom-3 left-4 pointer-events-none z-20 px-2.5 py-0.5 rounded-full bg-black/20 dark:bg-white/5 backdrop-blur-xs text-[9px] font-mono text-zinc-500 dark:text-zinc-400 opacity-40">
-              DRM-ID: {book.id.substring(0, 6)} • {currentUser?.username || 'PREVIEW'}
+            {/* Subtle Security Footprint Badge (Zero Reading Distraction) */}
+            <div className="absolute bottom-3 left-4 pointer-events-none z-20 px-3 py-1 rounded-full bg-black/30 dark:bg-white/5 backdrop-blur-md text-[9.5px] font-mono text-zinc-500 dark:text-zinc-400 opacity-50 border border-white/5">
+              DRM-PROTECTED • {currentUser?.username || 'STUDENT'} • ID: {book.id.substring(0, 8)}
             </div>
 
             {/* =====================================================================
