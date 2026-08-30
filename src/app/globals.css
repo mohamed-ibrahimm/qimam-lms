@@ -232,7 +232,16 @@ html.light-theme a[class*="from-amber-500"]:not(.shimmer-border-wrapper),
 [data-theme="light"] a[class*="from-amber-500"]:not(.shimmer-border-wrapper) {
   background: linear-gradient(135deg, #1e40af 0%, #2563eb 50%, #1d4ed8 100%) !important;
   color: #ffffff !important;
+  border-color: #3b82f6 !important;
   box-shadow: 0 6px 20px -2px rgba(37, 99, 235, 0.35) !important;
+}
+
+html.light-theme button[class*="from-amber-500"] svg,
+html.light-theme a[class*="from-amber-500"]:not(.shimmer-border-wrapper) svg,
+[data-theme="light"] button[class*="from-amber-500"] svg,
+[data-theme="light"] a[class*="from-amber-500"]:not(.shimmer-border-wrapper) svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
 }
 
 html.light-theme button[class*="from-amber-500"]:hover,

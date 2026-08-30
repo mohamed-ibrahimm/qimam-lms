@@ -319,14 +319,14 @@ export default function Header({
           <Link
             href="/books"
             prefetch={true}
-            className={`px-4.5 py-2 text-xs sm:text-[13px] font-bold rounded-full transition-all inline-flex items-center gap-2 shrink-0 ${
+            className={`px-5 py-2.5 text-xs sm:text-[13.5px] font-black rounded-full transition-all inline-flex items-center gap-2.5 shrink-0 ${
               pathname.startsWith('/books')
-                ? 'bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-zinc-950 font-black shadow-lg shadow-amber-500/25 scale-[1.03] border border-amber-300'
-                : 'text-slate-700 dark:text-zinc-300 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-slate-100/80 dark:hover:bg-zinc-800/70 border border-transparent'
+                ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 dark:from-amber-500 dark:via-yellow-400 dark:to-amber-500 text-white dark:text-zinc-950 font-black shadow-lg shadow-blue-600/25 dark:shadow-amber-500/25 scale-[1.03] border border-blue-400 dark:border-amber-300'
+                : 'text-slate-700 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-amber-400 hover:bg-slate-100/90 dark:hover:bg-zinc-800/70 border border-transparent'
             }`}
           >
-            <FileText className={`w-3.5 h-3.5 ${pathname.startsWith('/books') ? 'text-zinc-950' : 'text-amber-500'}`} />
-            <span>المكتبة والمذكرات</span>
+            <FileText className={`w-4 h-4 sm:w-[18px] sm:h-[18px] shrink-0 transition-transform ${pathname.startsWith('/books') ? 'text-white dark:text-zinc-950 scale-110' : 'text-blue-600 dark:text-amber-400'}`} />
+            <span className="whitespace-nowrap">المكتبة والمذكرات</span>
           </Link>
 
           {/* Link: الدبلومات الشاملة */}

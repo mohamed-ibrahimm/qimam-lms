@@ -51,6 +51,8 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
   const [zoomLevel, setZoomLevel] = useState(100);
   const [readingTheme, setReadingTheme] = useState<'DARK' | 'SEPIA' | 'LIGHT'>('DARK');
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isCapturingShield, setIsCapturingShield] = useState(false);
+  const [isWindowBlurred, setIsWindowBlurred] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const totalPages = book.pageCount || 38;
@@ -69,20 +71,28 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
     // 1. Synchronize Fullscreen state
     const handleFullscreenChange = () => {
       setIsFullscreen(!!document.fullscreenElement);
+      setIsWindowBlurred(false);
+    };
+
+    const triggerScreenshotShield = () => {
+      setIsCapturingShield(true);
+      try {
+        navigator.clipboard.writeText('🔒 محتوى المذكرة محمي بنظام DRM الرقمي ضد النسخ والالتقاط.');
+      } catch (err) {}
+      setTimeout(() => setIsCapturingShield(false), 1400);
     };
 
     // 2. Anti-PrintScreen & Shortcut Blocker
     const handleKeyDown = (e: KeyboardEvent) => {
       // PrintScreen key
       if (e.key === 'PrintScreen' || e.code === 'PrintScreen') {
-        try {
-          navigator.clipboard.writeText('🔒 محتوى المذكرة محمي بنظام DRM الرقمي ضد النسخ والالتقاط.');
-        } catch (err) {}
+        triggerScreenshotShield();
       }
 
       // Block Print: Ctrl+P / Cmd+P
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'p') {
         e.preventDefault();
+        triggerScreenshotShield();
         return false;
       }
       // Block Save: Ctrl+S / Cmd+S
@@ -119,22 +129,36 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
 
     const handleKeyUp = (e: KeyboardEvent) => {
       if (e.key === 'PrintScreen' || e.code === 'PrintScreen') {
-        try {
-          navigator.clipboard.writeText('🔒 محتوى المذكرة محمي بنظام DRM الرقمي ضد النسخ والالتقاط.');
-        } catch (err) {}
+        triggerScreenshotShield();
       }
+    };
+
+    const handleWindowBlur = () => {
+      // When window loses focus (e.g. Snipping tool, Alt-Tab), obscure if not in active native fullscreen
+      if (!document.fullscreenElement) {
+        setIsWindowBlurred(true);
+      }
+    };
+
+    const handleWindowFocus = () => {
+      setIsWindowBlurred(false);
+      setIsCapturingShield(false);
     };
 
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
+    window.addEventListener('blur', handleWindowBlur);
+    window.addEventListener('focus', handleWindowFocus);
     document.addEventListener('fullscreenchange', handleFullscreenChange);
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
+      window.removeEventListener('blur', handleWindowBlur);
+      window.removeEventListener('focus', handleWindowFocus);
       document.removeEventListener('fullscreenchange', handleFullscreenChange);
     };
-  }, [currentPage, totalPages, isAccessible]);
+  }, [currentPage, totalPages, isAccessible, watermarkText]);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -468,10 +492,47 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
 
             </div>
 
-            {/* Subtle Security Footprint Badge (Zero Reading Distraction) */}
-            <div className="absolute bottom-3 left-4 pointer-events-none z-20 px-3 py-1 rounded-full bg-black/30 dark:bg-white/5 backdrop-blur-md text-[9.5px] font-mono text-zinc-500 dark:text-zinc-400 opacity-50 border border-white/5">
-              DRM-PROTECTED • {currentUser?.username || 'STUDENT'} • ID: {book.id.substring(0, 8)}
+            {/* =========================================================================
+                DRM WATERMARK GRID (Diagonal repeating subtle security overlay)
+               ========================================================================= */}
+            <div className="absolute inset-0 pointer-events-none select-none z-10 flex flex-col justify-around items-center overflow-hidden py-8">
+              {[0, 1, 2, 3].map((rowIdx) => (
+                <div
+                  key={rowIdx}
+                  className="w-[140%] text-center transform -rotate-[22deg] my-4 space-y-1"
+                >
+                  <div className="text-xs sm:text-sm font-black tracking-wider text-slate-900/15 dark:text-amber-300/20 select-none font-mono">
+                    🔒 أكاديمية قِمَم التعليمية • {watermarkText}
+                  </div>
+                  <div className="text-[10px] sm:text-[11px] font-bold text-slate-700/12 dark:text-zinc-400/15 select-none font-mono">
+                    DRM-PROTECTED • BOOK: {book.slug.toUpperCase()} • PAGE {currentPage}
+                  </div>
+                </div>
+              ))}
             </div>
+
+            {/* Subtle Security Footprint Badge */}
+            <div className="absolute bottom-3 left-4 pointer-events-none z-20 px-3 py-1 rounded-full bg-black/40 dark:bg-white/10 backdrop-blur-md text-[10px] font-mono text-slate-700 dark:text-amber-300 opacity-80 border border-black/10 dark:border-white/10 font-bold shadow-xs">
+              🛡️ DRM-SECURE • {currentUser?.username || 'STUDENT'} • ID: {book.id.substring(0, 8).toUpperCase()}
+            </div>
+
+            {/* Anti-Screen Capture Shield (Flashes when PrintScreen / Snipping Tool / Loss of Focus detected) */}
+            {(isCapturingShield || isWindowBlurred) && (
+              <div className="absolute inset-0 z-50 bg-black/95 backdrop-blur-3xl flex flex-col items-center justify-center p-6 text-center space-y-3 animate-in fade-in duration-100">
+                <div className="w-14 h-14 rounded-2xl bg-amber-500/20 border-2 border-amber-500/40 text-amber-400 flex items-center justify-center shadow-lg shadow-amber-500/20">
+                  <Shield className="w-7 h-7" />
+                </div>
+                <h4 className="text-base font-black text-white">
+                  🔒 محتوى رقمي مشفر ومحمي بحقوق النشر
+                </h4>
+                <p className="text-xs text-amber-300 font-bold max-w-sm leading-relaxed">
+                  يمنع نظام الـ DRM تصوير الشاشة أو تداول المذكرة خارج المنصة. انقر داخل الشاشة لاستئناف القراءة.
+                </p>
+                <div className="text-[10px] font-mono text-zinc-500">
+                  SECURITY ID: {book.id.substring(0, 10)} • USER: {currentUser?.username || 'STUDENT'}
+                </div>
+              </div>
+            )}
 
           </div>
         ) : (
