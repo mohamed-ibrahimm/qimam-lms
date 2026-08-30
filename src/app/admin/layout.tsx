@@ -29,19 +29,19 @@ export default async function AdminLayout({
   const adminName = user.officialFullName || `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'المدير';
 
   return (
-    <div className="min-h-screen pt-14 sm:pt-16 pb-12 relative bg-slate-50 dark:bg-[#07050e] text-slate-900 dark:text-slate-100 antialiased transition-colors">
+    <div className="min-h-screen flex flex-col pt-[4.25rem] sm:pt-[4.75rem] bg-slate-50 dark:bg-[#07050e] text-slate-900 dark:text-slate-100 antialiased transition-colors">
       
-      {/* Container with ideal max-width and balanced padding */}
-      <div className="max-w-[1600px] mx-auto px-3 sm:px-6 flex flex-col md:flex-row gap-4 sm:gap-6 items-start">
+      {/* Full-width seamless Dashboard Frame (Docked Sidebar + Fluid Content) */}
+      <div className="flex-1 flex flex-col md:flex-row w-full">
         
-        {/* Streamlined Admin Sidebar */}
+        {/* Docked Admin Sidebar (Attached cleanly to the right edge) */}
         <AdminSidebarClient
           platformName={platformName}
           adminName={adminName}
         />
 
-        {/* Main Admin Content View (Clean, Raised Up, Zero Dead Space) */}
-        <main className="flex-1 w-full min-w-0 py-1">
+        {/* Main Admin Content Canvas */}
+        <main className="flex-1 min-w-0 p-4 sm:p-6 md:p-8 max-w-7xl">
           {children}
         </main>
       </div>

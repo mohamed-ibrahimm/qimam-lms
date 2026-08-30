@@ -8,18 +8,15 @@ import {
   Users,
   GraduationCap,
   CreditCard,
-  Sparkles,
   BookOpen,
   Star,
   Tag,
   Award,
-  Settings,
   ShieldAlert,
-  Search,
   SlidersHorizontal,
-  DollarSign,
   X,
   Menu,
+  Sparkles,
 } from 'lucide-react';
 
 interface Props {
@@ -31,7 +28,7 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // Essential, Clean Admin Navigation Links (No Clutter, No Redundant Items)
+  // Essential Admin Links with crisp labels and clean icons
   const navItems = useMemo(() => [
     { name: 'لوحة التحكم والتحليلات', href: '/admin', icon: LayoutDashboard },
     { name: 'إعدادات المنصة والأسعار (VIP)', href: '/admin/settings', icon: SlidersHorizontal, badge: 'VIP' },
@@ -46,20 +43,20 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
   ], []);
 
   const renderContent = (isDrawer = false) => (
-    <div className="flex flex-col h-full bg-white dark:bg-[#0d091a] text-slate-900 dark:text-slate-100 rounded-2xl md:rounded-3xl border border-slate-200/90 dark:border-amber-500/25 shadow-xl">
+    <div className="flex flex-col h-full bg-white dark:bg-[#0c0818] text-slate-900 dark:text-slate-100 border-l border-slate-200 dark:border-zinc-800/80">
       
-      {/* Header Info */}
-      <div className="p-4 border-b border-slate-200 dark:border-zinc-800 space-y-1 shrink-0">
+      {/* Header Info (Docked & Clean) */}
+      <div className="p-4 sm:p-5 border-b border-slate-200 dark:border-zinc-800/80 space-y-1.5 shrink-0 bg-slate-50/50 dark:bg-black/20">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-500 to-yellow-400 flex items-center justify-center text-zinc-950 font-black text-xs shadow-md shadow-amber-500/20">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 to-yellow-400 flex items-center justify-center text-zinc-950 font-black text-sm shadow-md shadow-amber-500/20 shrink-0">
               👑
             </div>
-            <div>
+            <div className="min-w-0">
               <span className="text-[10px] font-black uppercase text-amber-600 dark:text-amber-400 block leading-none">
                 لوحة الإدارة
               </span>
-              <h2 className="text-xs font-black text-slate-900 dark:text-white truncate max-w-[140px] mt-0.5">
+              <h2 className="text-xs sm:text-sm font-black text-slate-900 dark:text-white truncate mt-0.5">
                 {platformName}
               </h2>
             </div>
@@ -77,8 +74,8 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
         </div>
       </div>
 
-      {/* Streamlined Links List (Fits in one screen with zero scrollbar on desktop) */}
-      <div className="flex-1 p-3 space-y-1.5 overflow-y-auto">
+      {/* Streamlined Links List (Spacious & Fits cleanly with zero scroll on desktop) */}
+      <div className="flex-1 p-3 space-y-1 overflow-y-auto">
         {navItems.map((item) => {
           const isActive = pathname === item.href || (item.href !== '/admin' && pathname.startsWith(item.href));
           const Icon = item.icon;
@@ -88,9 +85,9 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
               key={item.href}
               href={item.href}
               onClick={() => setMobileOpen(false)}
-              className={`flex items-center justify-between px-3 py-2.5 rounded-2xl text-xs font-bold transition-all ${
+              className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${
                 isActive
-                  ? 'bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-zinc-950 shadow-md shadow-amber-500/25 font-black scale-[1.02]'
+                  ? 'bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-zinc-950 shadow-md shadow-amber-500/25 font-black scale-[1.01]'
                   : 'text-slate-700 dark:text-zinc-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5'
               }`}
             >
@@ -114,10 +111,10 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
       </div>
 
       {/* Footer Status */}
-      <div className="p-3 border-t border-slate-200 dark:border-zinc-800 shrink-0 bg-slate-50/60 dark:bg-black/40 rounded-b-2xl md:rounded-b-3xl">
+      <div className="p-3.5 border-t border-slate-200 dark:border-zinc-800/80 shrink-0 bg-slate-50/80 dark:bg-black/40">
         <div className="flex items-center justify-between text-[11px] text-slate-600 dark:text-zinc-400 font-bold">
-          <span>{adminName}</span>
-          <span className="text-emerald-600 dark:text-emerald-400 font-black flex items-center gap-1">
+          <span className="truncate max-w-[150px]">{adminName}</span>
+          <span className="text-emerald-600 dark:text-emerald-400 font-black flex items-center gap-1 shrink-0">
             ● متصل
           </span>
         </div>
@@ -128,18 +125,18 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
 
   return (
     <>
-      {/* Desktop Persistent Compact Sidebar (Clean fit, No scrollbar) */}
-      <aside className="hidden md:block w-64 lg:w-72 shrink-0 sticky top-16 h-[calc(100vh-5rem)] z-20">
+      {/* Desktop Docked Right Sidebar (Solid Full-Height Dashboard Column) */}
+      <aside className="hidden md:flex flex-col w-64 lg:w-72 shrink-0 sticky top-[4.25rem] sm:top-[4.75rem] h-[calc(100vh-4.75rem)] z-20">
         {renderContent(false)}
       </aside>
 
       {/* Mobile Sticky Top Header */}
-      <div className="md:hidden flex items-center justify-between p-3 bg-white dark:bg-[#0c0918] border-b border-slate-200 dark:border-zinc-800 sticky top-16 z-30 shadow-sm">
+      <div className="md:hidden flex items-center justify-between p-3 bg-white dark:bg-[#0c0818] border-b border-slate-200 dark:border-zinc-800 sticky top-16 z-30 shadow-sm">
         <div className="flex items-center gap-2">
           <button
             type="button"
             onClick={() => setMobileOpen(true)}
-            className="p-2 rounded-xl bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-white"
+            className="p-2 rounded-xl bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-white cursor-pointer"
           >
             <Menu className="w-5 h-5" />
           </button>
@@ -152,7 +149,7 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
           href="/admin/settings"
           className="px-3 py-1.5 rounded-xl bg-amber-500 text-zinc-950 font-black text-xs flex items-center gap-1 shadow-sm"
         >
-          <Settings className="w-3.5 h-3.5" />
+          <SlidersHorizontal className="w-3.5 h-3.5" />
           <span>الإعدادات</span>
         </Link>
       </div>
@@ -164,7 +161,7 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
             className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity"
             onClick={() => setMobileOpen(false)}
           />
-          <div className="relative w-72 max-w-[85vw] h-full shadow-2xl z-10 p-3 animate-in slide-in-from-right duration-200">
+          <div className="relative w-72 max-w-[85vw] h-full shadow-2xl z-10 animate-in slide-in-from-right duration-200">
             {renderContent(true)}
           </div>
         </div>
