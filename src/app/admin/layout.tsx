@@ -29,8 +29,15 @@ export default async function AdminLayout({
   const adminName = user.officialFullName || `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'المدير';
 
   return (
-    <div className="min-h-screen flex flex-col pt-[4.25rem] sm:pt-[4.5rem] bg-slate-50 dark:bg-[#07050e] text-slate-900 dark:text-slate-100 antialiased transition-colors">
+    <div className="min-h-screen pt-16 sm:pt-20 relative flex flex-col bg-slate-50 dark:bg-[#07050e] text-slate-900 dark:text-slate-100 antialiased transition-colors">
       
+      {/* Dynamic Animated Ambient Light Orbs (Exact matching Homepage DesktopHero) */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
+        <div className="dynamic-drift-1 absolute top-[10%] right-[20%] w-[500px] h-[380px] bg-amber-400/20 dark:bg-amber-500/15 rounded-full blur-[120px]" />
+        <div className="dynamic-drift-2 absolute bottom-[15%] left-[25%] w-[520px] h-[400px] bg-blue-500/20 dark:bg-purple-600/15 rounded-full blur-[130px]" />
+        <div className="dynamic-drift-3 absolute top-[40%] left-[5%] w-[420px] h-[320px] bg-indigo-400/15 dark:bg-yellow-500/10 rounded-full blur-[110px]" />
+      </div>
+
       {/* Full-width seamless Dashboard Frame (Docked Sidebar + Fluid Content) */}
       <div className="flex-1 flex flex-col md:flex-row w-full items-start">
         
@@ -40,8 +47,8 @@ export default async function AdminLayout({
           adminName={adminName}
         />
 
-        {/* Main Admin Content Canvas (Raised up right below header with no dead space) */}
-        <main className="flex-1 min-w-0 px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3 w-full max-w-7xl">
+        {/* Main Admin Content Canvas (Raised up directly below header with zero dead space) */}
+        <main className="flex-1 min-w-0 px-3 sm:px-6 lg:px-8 py-1.5 sm:py-2 w-full max-w-7xl">
           {children}
         </main>
       </div>

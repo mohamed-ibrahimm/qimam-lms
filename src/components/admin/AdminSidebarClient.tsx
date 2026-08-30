@@ -16,7 +16,6 @@ import {
   SlidersHorizontal,
   X,
   Menu,
-  Sparkles,
 } from 'lucide-react';
 
 interface Props {
@@ -43,20 +42,20 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
   ], []);
 
   const renderContent = (isDrawer = false) => (
-    <div className="flex flex-col h-full bg-white dark:bg-[#0c0818] text-slate-900 dark:text-slate-100 border-l border-slate-200 dark:border-zinc-800/80">
+    <div className="flex flex-col h-full bg-white/95 dark:bg-[#0c0918]/95 text-slate-900 dark:text-slate-100 border-l border-slate-200 dark:border-amber-500/25 backdrop-blur-2xl shadow-xl">
       
       {/* Header Info (Docked & Clean) */}
-      <div className="p-4 sm:p-5 border-b border-slate-200 dark:border-zinc-800/80 space-y-1.5 shrink-0 bg-slate-50/50 dark:bg-black/20">
+      <div className="p-3.5 sm:p-4 border-b border-slate-200 dark:border-amber-500/20 space-y-1 shrink-0 bg-slate-50/70 dark:bg-black/30">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5 min-w-0">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 to-yellow-400 flex items-center justify-center text-zinc-950 font-black text-sm shadow-md shadow-amber-500/20 shrink-0">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-500 to-yellow-400 flex items-center justify-center text-zinc-950 font-black text-xs shadow-md shadow-amber-500/20 shrink-0">
               👑
             </div>
             <div className="min-w-0">
-              <span className="text-[10px] font-black uppercase text-amber-600 dark:text-amber-400 block leading-none">
+              <span className="text-[9px] font-black uppercase text-amber-600 dark:text-amber-400 block leading-none">
                 لوحة الإدارة
               </span>
-              <h2 className="text-xs sm:text-sm font-black text-slate-900 dark:text-white truncate mt-0.5">
+              <h2 className="text-xs font-black text-slate-900 dark:text-white truncate mt-0.5">
                 {platformName}
               </h2>
             </div>
@@ -75,7 +74,7 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
       </div>
 
       {/* Streamlined Links List (Spacious & Fits cleanly with zero scroll on desktop) */}
-      <div className="flex-1 p-3 space-y-1 overflow-y-auto">
+      <div className="flex-1 p-2.5 sm:p-3 space-y-1 overflow-y-auto pb-14">
         {navItems.map((item) => {
           const isActive = pathname === item.href || (item.href !== '/admin' && pathname.startsWith(item.href));
           const Icon = item.icon;
@@ -85,7 +84,7 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
               key={item.href}
               href={item.href}
               onClick={() => setMobileOpen(false)}
-              className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${
+              className={`flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all ${
                 isActive
                   ? 'bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-zinc-950 shadow-md shadow-amber-500/25 font-black scale-[1.01]'
                   : 'text-slate-700 dark:text-zinc-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5'
@@ -111,7 +110,7 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
       </div>
 
       {/* Footer Status */}
-      <div className="p-3.5 border-t border-slate-200 dark:border-zinc-800/80 shrink-0 bg-slate-50/80 dark:bg-black/40">
+      <div className="p-3 border-t border-slate-200 dark:border-amber-500/20 shrink-0 bg-slate-50/80 dark:bg-black/50">
         <div className="flex items-center justify-between text-[11px] text-slate-600 dark:text-zinc-400 font-bold">
           <span className="truncate max-w-[150px]">{adminName}</span>
           <span className="text-emerald-600 dark:text-emerald-400 font-black flex items-center gap-1 shrink-0">
@@ -126,12 +125,12 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
   return (
     <>
       {/* Desktop Docked Right Sidebar (Solid Full-Height Dashboard Column) */}
-      <aside className="hidden md:flex flex-col w-64 lg:w-72 shrink-0 sticky top-[4.25rem] sm:top-[4.5rem] h-[calc(100vh-4.5rem)] z-20">
+      <aside className="hidden md:flex flex-col w-64 lg:w-72 shrink-0 sticky top-16 sm:top-20 h-[calc(100vh-5rem)] z-20">
         {renderContent(false)}
       </aside>
 
       {/* Mobile Sticky Top Header */}
-      <div className="md:hidden flex items-center justify-between p-3 bg-white dark:bg-[#0c0818] border-b border-slate-200 dark:border-zinc-800 sticky top-16 z-30 shadow-sm">
+      <div className="md:hidden flex items-center justify-between p-3 bg-white dark:bg-[#0c0918] border-b border-slate-200 dark:border-zinc-800 sticky top-16 z-30 shadow-sm">
         <div className="flex items-center gap-2">
           <button
             type="button"
