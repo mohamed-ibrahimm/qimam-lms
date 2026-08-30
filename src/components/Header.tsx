@@ -259,6 +259,23 @@ export default function Header({
                 </Link>
 
                 <Link
+                  href="/books"
+                  onClick={() => setCoursesMenuOpen(false)}
+                  className="flex items-center justify-between p-2.5 rounded-2xl bg-emerald-50 dark:bg-emerald-500/10 hover:bg-emerald-100 dark:hover:bg-emerald-500/20 text-slate-900 dark:text-white transition-all group/item border border-emerald-200 dark:border-emerald-500/30"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                      <FileText className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="text-xs font-black block text-emerald-900 dark:text-emerald-300">سوق المذكرات والكتب الرقمية</span>
+                      <span className="text-[10px] text-slate-500 dark:text-zinc-400">ملخصات ومراجع محمية بالـ DRM</span>
+                    </div>
+                  </div>
+                  <span className="text-[9px] px-1.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 font-bold">DRM</span>
+                </Link>
+
+                <Link
                   href="/courses?type=students"
                   onClick={() => setCoursesMenuOpen(false)}
                   className="flex items-center justify-between p-2.5 rounded-2xl bg-slate-50/90 dark:bg-zinc-900/70 hover:bg-amber-50 dark:hover:bg-amber-500/15 text-slate-900 dark:text-white transition-all group/item border border-slate-100 dark:border-zinc-800 hover:border-amber-300 dark:hover:border-amber-500/40"

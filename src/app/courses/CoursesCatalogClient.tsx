@@ -26,7 +26,8 @@ import {
   TrendingUp,
   Crown,
   Sparkle,
-  Video
+  Video,
+  FileText,
 } from 'lucide-react';
 import { formatPrice, formatDuration } from '@/lib/utils';
 
@@ -435,9 +436,9 @@ export default function CoursesCatalogClient({
               </div>
             )}
 
-            {/* 3-Way Track Switcher Bar */}
+            {/* Track Switcher Bar */}
             <div className="flex flex-wrap items-center justify-center gap-2 pt-6 border-t border-slate-200/90 dark:border-purple-900/40 relative z-10">
-              <span className="text-xs font-bold text-slate-500 dark:text-zinc-400">مسار الكورسات:</span>
+              <span className="text-xs font-bold text-slate-500 dark:text-zinc-400">الأقسام:</span>
 
               <button
                 type="button"
@@ -451,6 +452,15 @@ export default function CoursesCatalogClient({
                 <BookOpen className="w-3.5 h-3.5" />
                 <span>جميع الكورسات ({initialCourses.length})</span>
               </button>
+
+              {/* Direct Link to Books & Notes Marketplace */}
+              <Link
+                href="/books"
+                className="px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer bg-gradient-to-r from-emerald-500/15 via-teal-500/20 to-emerald-500/15 text-emerald-800 dark:text-emerald-300 hover:bg-emerald-500/25 border border-emerald-500/40 hover:border-emerald-400 hover:scale-105 shadow-sm"
+              >
+                <FileText className="w-4 h-4 text-emerald-500" />
+                <span>المكتبة والمذكرات الرقمية (جديد)</span>
+              </Link>
 
               <button
                 type="button"
@@ -521,6 +531,17 @@ export default function CoursesCatalogClient({
                     <span>جميع الكورسات (الكل)</span>
                     <span className="text-[11px] font-mono">{initialCourses.length}</span>
                   </button>
+
+                  <Link
+                    href="/books"
+                    className="w-full py-2.5 px-3 rounded-2xl text-xs font-bold text-right flex items-center justify-between transition-all cursor-pointer bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-500/20 border border-emerald-500/30"
+                  >
+                    <span className="flex items-center gap-1.5 font-black">
+                      <FileText className="w-3.5 h-3.5 text-emerald-500" />
+                      <span>المكتبة والمذكرات الرقمية</span>
+                    </span>
+                    <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 font-black">DRM</span>
+                  </Link>
 
                   <button
                     type="button"
