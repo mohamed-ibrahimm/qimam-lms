@@ -193,15 +193,15 @@ export default function Header({
         </Link>
 
         {/* =========================================================================
-            2. CENTER: PERFECTLY CENTERED NAVIGATION WITH PROMINENT "جميع الكورسات"
+            2. CENTER: ABSOLUTELY & MATHEMATICALLY CENTERED NAVIGATION
            ========================================================================= */}
-        <div className="hidden lg:flex items-center gap-2 bg-slate-100/90 dark:bg-black/50 p-1.5 rounded-full border border-slate-200/90 dark:border-white/10 shadow-inner shrink-0 mx-auto">
+        <div className="hidden lg:flex items-center gap-1.5 bg-slate-100/90 dark:bg-black/60 p-1.5 rounded-full border border-slate-200/90 dark:border-white/10 shadow-inner absolute left-1/2 -translate-x-1/2 z-20">
           
           {/* Link: الرئيسية */}
           <Link
             href="/"
             prefetch={true}
-            className={`px-3.5 py-1.5 text-xs font-bold rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
+            className={`px-4 py-2 text-xs font-bold rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
               pathname === '/'
                 ? 'bg-white dark:bg-zinc-800 text-blue-700 dark:text-white border border-slate-200 dark:border-zinc-700 shadow-xs'
                 : 'text-slate-600 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-white hover:bg-white/70 dark:hover:bg-zinc-800/60'
@@ -221,9 +221,9 @@ export default function Header({
               href="/courses"
               prefetch={true}
               onClick={() => setCoursesMenuOpen(false)}
-              className={`px-4.5 py-1.5 sm:py-2 text-xs sm:text-[13px] font-black rounded-full transition-all inline-flex items-center gap-2 shrink-0 cursor-pointer shadow-md ${
+              className={`px-5 py-2 text-xs sm:text-[13.5px] font-black rounded-full transition-all inline-flex items-center gap-2 shrink-0 cursor-pointer shadow-lg ${
                 pathname.startsWith('/courses')
-                  ? 'diploma-luxury-pill scale-105 ring-2 ring-amber-400/50 shadow-amber-500/20'
+                  ? 'diploma-luxury-pill scale-105 ring-2 ring-amber-400/60 shadow-amber-500/25'
                   : 'diploma-luxury-pill hover:scale-105'
               }`}
             >
@@ -297,7 +297,7 @@ export default function Header({
           <Link
             href="/diplomas"
             prefetch={true}
-            className={`px-3.5 py-1.5 text-xs font-bold rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
+            className={`px-4 py-2 text-xs font-bold rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
               pathname.startsWith('/diplomas')
                 ? 'bg-purple-600 text-white shadow-md shadow-purple-600/20'
                 : 'text-slate-600 dark:text-zinc-300 hover:text-purple-600 dark:hover:text-white hover:bg-white/70 dark:hover:bg-zinc-800/60'
