@@ -193,9 +193,9 @@ export default function Header({
         </Link>
 
         {/* =========================================================================
-            2. CENTER: CLASSIC NAVIGATION (Shifted slightly rightwards for ideal symmetry)
+            2. CENTER: PERFECTLY CENTERED NAVIGATION WITH PROMINENT "جميع الكورسات"
            ========================================================================= */}
-        <div className="hidden lg:flex items-center gap-1.5 bg-slate-100/90 dark:bg-black/50 p-1.5 rounded-full border border-slate-200/90 dark:border-white/10 shadow-inner shrink-0 mr-2 xl:mr-6">
+        <div className="hidden lg:flex items-center gap-2 bg-slate-100/90 dark:bg-black/50 p-1.5 rounded-full border border-slate-200/90 dark:border-white/10 shadow-inner shrink-0 mx-auto">
           
           {/* Link: الرئيسية */}
           <Link
@@ -211,7 +211,7 @@ export default function Header({
             <span>الرئيسية</span>
           </Link>
 
-          {/* THE FEATURED CENTERPIECE: جميع الكورسات مع القائمة المنسدلة الانسيابية بدون انقطاع */}
+          {/* THE FEATURED PROMINENT CENTERPIECE: جميع الكورسات مع خط مميز وتدرج ذهبي فخم */}
           <div
             className="relative group"
             onMouseEnter={() => setCoursesMenuOpen(true)}
@@ -221,14 +221,14 @@ export default function Header({
               href="/courses"
               prefetch={true}
               onClick={() => setCoursesMenuOpen(false)}
-              className={`px-3.5 py-1.5 text-xs font-black rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 cursor-pointer ${
+              className={`px-4.5 py-1.5 sm:py-2 text-xs sm:text-[13px] font-black rounded-full transition-all inline-flex items-center gap-2 shrink-0 cursor-pointer shadow-md ${
                 pathname.startsWith('/courses')
-                  ? 'diploma-luxury-pill scale-105 ring-2 ring-amber-400/50 shadow-md shadow-amber-500/20'
+                  ? 'diploma-luxury-pill scale-105 ring-2 ring-amber-400/50 shadow-amber-500/20'
                   : 'diploma-luxury-pill hover:scale-105'
               }`}
             >
-              <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-              <span className="whitespace-nowrap">جميع الكورسات</span>
+              <Sparkles className="w-4 h-4 text-amber-400 shrink-0 animate-pulse" />
+              <span className="whitespace-nowrap font-black tracking-wide">جميع الكورسات</span>
               <ChevronDown className={`w-3.5 h-3.5 text-amber-400 transition-transform duration-200 shrink-0 ${coursesMenuOpen ? 'rotate-180' : ''}`} />
             </Link>
 

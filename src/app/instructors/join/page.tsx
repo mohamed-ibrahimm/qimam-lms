@@ -217,8 +217,8 @@ export default function InstructorJoinPage() {
             <div className="dynamic-drift-3 absolute top-1/4 left-1/2 -translate-x-1/2 w-[340px] h-[240px] bg-indigo-400/20 dark:bg-yellow-500/10 rounded-full blur-[100px]" />
           </div>
 
-          <h1 className="font-black tracking-tight mb-2 max-w-4xl mx-auto">
-            <span className="text-slate-900 dark:text-white block font-black text-2xl sm:text-3xl lg:text-4xl leading-tight mb-1.5">
+          <h1 className="font-black tracking-tight mb-2.5 max-w-4xl mx-auto">
+            <span className="text-slate-900 dark:text-white block font-black text-2xl sm:text-3xl lg:text-[2.6rem] leading-[1.25] mb-2">
               {platformSettings.joinPageTitle ? (
                 platformSettings.joinPageTitle
               ) : activeTrack === 'student' ? (
@@ -227,7 +227,7 @@ export default function InstructorJoinPage() {
                 'درّس لطلابك واحتفظ بكامل عوائد مبيعاتك مباشرة'
               )}
             </span>
-            <span className="bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-600 dark:from-amber-300 dark:via-yellow-400 dark:to-amber-500 bg-clip-text text-transparent block font-black text-xl sm:text-2xl lg:text-3xl leading-snug">
+            <span className="bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-600 dark:from-amber-300 dark:via-yellow-400 dark:to-amber-500 bg-clip-text text-transparent block font-black text-xl sm:text-2xl lg:text-[1.95rem] leading-snug">
               {activeTrack === 'student' ? (
                 `منحة المحاضر الطالب (${platformSettings.studentTrialDays} يوماً مجاناً بالكامل)`
               ) : (
@@ -238,7 +238,7 @@ export default function InstructorJoinPage() {
         </div>
 
         {/* Subtitle */}
-        <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-300 max-w-2xl mx-auto mb-4 leading-normal px-2">
+        <p className="text-xs sm:text-sm lg:text-base text-slate-600 dark:text-zinc-300 max-w-3xl mx-auto mb-5 leading-relaxed px-2">
           {platformSettings.joinPageSubtitle ? (
             platformSettings.joinPageSubtitle
           ) : activeTrack === 'student'
