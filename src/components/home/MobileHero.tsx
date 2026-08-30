@@ -51,24 +51,24 @@ export default function MobileHero({
         Dedicated 100% Full-Screen Showcase. Contains exclusively Headline + CTAs.
         ========================================================================
       */}
-      <section className="h-[100svh] min-h-[500px] max-h-[100svh] flex flex-col justify-between pt-16 xs:pt-18 pb-2 px-3 relative overflow-hidden shrink-0">
+      <section className="h-[100svh] min-h-[500px] max-h-[100svh] flex flex-col justify-between pt-16 xs:pt-18 pb-1 px-3 relative overflow-hidden shrink-0">
         
-        {/* Soft, Subdued Multi-Colored Radiant Blooms (Leaning Deep Sleek Black) */}
+        {/* Ultra-Soft, Subtle Ambient Glow (Deep Sleek Black Canvas) */}
         {/* 1. Top central imperial gold & violet dome */}
-        <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-[140%] max-w-lg h-[400px] bg-[radial-gradient(ellipse_at_top,_rgba(245,158,11,0.14),_rgba(124,58,237,0.11)_40%,_transparent_75%)] dark:bg-[radial-gradient(ellipse_at_top,_rgba(245,158,11,0.12),_rgba(124,58,237,0.09)_40%,_transparent_75%)] blur-[85px] pointer-events-none -z-10" />
+        <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-[140%] max-w-lg h-[380px] bg-[radial-gradient(ellipse_at_top,_rgba(245,158,11,0.09),_rgba(124,58,237,0.06)_40%,_transparent_75%)] dark:bg-[radial-gradient(ellipse_at_top,_rgba(245,158,11,0.07),_rgba(124,58,237,0.05)_40%,_transparent_75%)] blur-[95px] pointer-events-none -z-10" />
         
         {/* 2. Right warm amber-solar flare */}
-        <div className="absolute top-1/4 -right-16 w-[300px] h-[300px] bg-[radial-gradient(circle,_rgba(245,158,11,0.11),_rgba(251,146,60,0.07)_50%,_transparent_65%)] dark:bg-[radial-gradient(circle,_rgba(245,158,11,0.09),_rgba(217,119,6,0.06)_50%,_transparent_65%)] blur-[90px] rounded-full pointer-events-none -z-10" />
+        <div className="absolute top-1/4 -right-16 w-[280px] h-[280px] bg-[radial-gradient(circle,_rgba(245,158,11,0.06),_transparent_65%)] dark:bg-[radial-gradient(circle,_rgba(245,158,11,0.05),_transparent_65%)] blur-[100px] rounded-full pointer-events-none -z-10" />
         
         {/* 3. Left royal purple-indigo aurora bloom */}
-        <div className="absolute top-1/3 -left-16 w-[320px] h-[320px] bg-[radial-gradient(circle,_rgba(147,51,234,0.12),_rgba(99,102,241,0.09)_50%,_transparent_70%)] dark:bg-[radial-gradient(circle,_rgba(168,85,247,0.09),_rgba(99,102,241,0.07)_50%,_transparent_70%)] blur-[90px] rounded-full pointer-events-none -z-10" />
+        <div className="absolute top-1/3 -left-16 w-[300px] h-[300px] bg-[radial-gradient(circle,_rgba(147,51,234,0.07),_transparent_70%)] dark:bg-[radial-gradient(circle,_rgba(168,85,247,0.05),_transparent_70%)] blur-[100px] rounded-full pointer-events-none -z-10" />
         
         {/* 4. Center luminous golden spotlight */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[320px] h-[250px] bg-[radial-gradient(ellipse,_rgba(251,191,36,0.09),_transparent_65%)] dark:bg-[radial-gradient(ellipse,_rgba(251,191,36,0.07),_transparent_65%)] blur-[80px] pointer-events-none -z-10" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[300px] h-[220px] bg-[radial-gradient(ellipse,_rgba(251,191,36,0.05),_transparent_65%)] dark:bg-[radial-gradient(ellipse,_rgba(251,191,36,0.04),_transparent_65%)] blur-[90px] pointer-events-none -z-10" />
 
         {/* 1. TOP: Dynamic Promotional Shimmer Announcement (Lowered comfortably below header) */}
         {settings.BANNER_ENABLED !== 'false' && (
-          <div className="pt-2 px-1 w-full shrink-0 max-w-sm mx-auto">
+          <div className="pt-2.5 xs:pt-3 px-1 w-full shrink-0 max-w-sm mx-auto">
             <a href="#trending-diploma" className="shimmer-border-wrapper group w-full block">
               <div className="shimmer-beam-gold dark:block hidden" />
               <div className="shimmer-beam-blue dark:hidden block" />
@@ -87,13 +87,13 @@ export default function MobileHero({
         )}
 
         {/* 2. CENTER: Large, Broad, Spacious Headline & Subtitle */}
-        <div className="flex-1 flex flex-col justify-center items-center text-center my-auto px-2 py-1.5 space-y-2.5 xs:space-y-3 shrink-0 relative">
+        <div className="flex-1 flex flex-col justify-center items-center text-center my-auto px-2 py-1.5 space-y-3 shrink-0 relative">
 
           <h1 className="font-black tracking-tight w-full mb-1 text-center space-y-1.5">
-            <span className="text-slate-950 dark:text-white block font-black text-[27px] xs:text-[33px] sm:text-4xl leading-[1.22] tracking-tight">
+            <span className="text-slate-950 dark:text-white block font-black text-[28px] xs:text-[34px] sm:text-4xl leading-[1.22] tracking-tight">
               {settings.HERO_TITLE || 'بوابتك الذكية لاحتراف'}
             </span>
-            <span className="block font-black text-[19px] xs:text-[23px] sm:text-2xl leading-snug bg-gradient-to-r from-blue-700 via-indigo-600 to-purple-600 dark:from-amber-400 dark:via-yellow-300 dark:to-amber-500 bg-clip-text text-transparent">
+            <span className="block font-black text-[20px] xs:text-[24px] sm:text-2xl leading-snug bg-gradient-to-r from-blue-700 via-indigo-600 to-purple-600 dark:from-amber-400 dark:via-yellow-300 dark:to-amber-500 bg-clip-text text-transparent">
               {settings.HERO_TITLE_HIGHLIGHT || 'البرمجة وهندسة النظم والذكاء الاصطناعي'}
             </span>
           </h1>
@@ -104,7 +104,7 @@ export default function MobileHero({
         </div>
 
         {/* 3. BOTTOM: 4 Action Buttons pushed down directly to the very bottom */}
-        <div className="w-full max-w-[360px] xs:max-w-md mx-auto flex flex-col gap-1.5 xs:gap-2 pb-1 px-1 shrink-0 mt-auto">
+        <div className="w-full max-w-[360px] xs:max-w-md mx-auto flex flex-col gap-2 pb-1 px-1 shrink-0 mt-auto">
           
           {/* Button 1: Diploma */}
           <a href="#trending-diploma" className="shimmer-border-wrapper group w-full">
