@@ -98,7 +98,7 @@ export default function MobileHero({
         </div>
 
         {/* 3. BOTTOM: Action Buttons with clearance above floating icons */}
-        <div className="w-full max-w-sm mx-auto flex flex-col gap-2.5 pb-20 sm:pb-6 px-2 shrink-0 mt-auto">
+        <div className="w-full max-w-[340px] xs:max-w-sm mx-auto flex flex-col gap-2 pb-[78px] sm:pb-6 px-1.5 shrink-0 mt-auto">
           {/* Button 1: Diploma (Royal Indigo in Light Mode, Molten Gold in Dark Mode) */}
           <a href="#trending-diploma" className="shimmer-border-wrapper group w-full">
             <div className="shimmer-beam-gold dark:block hidden" />
