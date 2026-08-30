@@ -19,6 +19,7 @@ import {
   Eye,
   CheckCircle2,
   AlertTriangle,
+  FileText,
 } from 'lucide-react';
 
 interface Props {
@@ -316,7 +317,7 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
               }`}
               title="الوضع الورقي الكلاسيكي (مريح للعين)"
             >
-              <span className="text-[11px] font-black leading-none px-0.5"></span>
+              <FileText className="w-3.5 h-3.5" />
             </button>
 
             <button
