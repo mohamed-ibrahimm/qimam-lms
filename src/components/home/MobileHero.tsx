@@ -50,7 +50,7 @@ export default function MobileHero({
         - Bottom: Anchored action buttons at the bottom of the fold.
         ========================================================================
       */}
-      <section className="min-h-[calc(100dvh-4rem)] flex flex-col justify-between items-center pt-14 pb-4 px-3.5 text-center relative overflow-hidden">
+      <section className="min-h-[100svh] min-h-screen flex flex-col justify-between items-center pt-14 pb-4 px-3.5 text-center relative overflow-hidden">
         
         {/* 1. TOP: Dynamic Shimmer Banner */}
         <div className="w-full flex justify-center pt-1 px-1 shrink-0">
@@ -139,7 +139,7 @@ export default function MobileHero({
         Dedicated, spacious section for Quick Contacts and Official Badges.
         ========================================================================
       */}
-      <section className="pt-12 pb-16 px-4 border-t border-slate-200/80 dark:border-zinc-800/60 bg-slate-100/60 dark:bg-zinc-950/50 space-y-7 text-center">
+      <section className="pt-16 pb-20 px-4 bg-slate-100/40 dark:bg-zinc-950/40 space-y-7 text-center">
         
         {/* Quick Contacts */}
         {hasAnySocial && (
