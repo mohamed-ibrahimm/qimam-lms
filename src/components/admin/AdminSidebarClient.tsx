@@ -88,39 +88,24 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
   ], []);
 
   const renderContent = (isDrawer = false) => (
-    <div className="flex flex-col h-full bg-white/95 dark:bg-[#0c0818]/95 text-slate-900 dark:text-slate-100 rounded-3xl border border-slate-200/90 dark:border-amber-500/25 shadow-2xl backdrop-blur-2xl overflow-hidden">
+    <div className="flex flex-col h-full bg-white/95 dark:bg-[#0c0818]/95 text-slate-900 dark:text-slate-100 rounded-3xl border border-slate-200/90 dark:border-amber-500/25 shadow-2xl backdrop-blur-2xl overflow-hidden pt-2">
       
-      {/* Header Profile & Platform Badge */}
-      <div className="p-4 border-b border-slate-200 dark:border-amber-500/20 shrink-0 bg-gradient-to-b from-amber-500/10 via-purple-500/5 to-transparent">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3 min-w-0">
-            <div className="w-9 h-9 rounded-2xl bg-gradient-to-tr from-amber-500 via-yellow-400 to-amber-600 flex items-center justify-center text-zinc-950 font-black text-sm shadow-md shadow-amber-500/20 shrink-0 border border-amber-300">
-              👑
-            </div>
-            <div className="min-w-0">
-              <span className="text-[9.5px] font-black uppercase tracking-wider text-amber-600 dark:text-amber-400 block leading-none">
-                لوحة الإدارة
-              </span>
-              <h2 className="text-xs sm:text-[13px] font-black text-slate-900 dark:text-white truncate mt-1">
-                {cleanDisplayName}
-              </h2>
-            </div>
-          </div>
-
-          {isDrawer && (
-            <button
-              type="button"
-              onClick={() => setMobileOpen(false)}
-              className="p-1.5 rounded-xl bg-slate-100 dark:bg-zinc-800 text-slate-500 hover:text-slate-900 dark:text-zinc-300 dark:hover:text-white cursor-pointer"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          )}
+      {/* Mobile Drawer Close Header Only */}
+      {isDrawer && (
+        <div className="p-3 border-b border-slate-200 dark:border-amber-500/20 flex items-center justify-between shrink-0 mb-1">
+          <span className="text-xs font-black text-amber-500">لوحة الإدارة</span>
+          <button
+            type="button"
+            onClick={() => setMobileOpen(false)}
+            className="p-1.5 rounded-xl bg-slate-100 dark:bg-zinc-800 text-slate-500 hover:text-slate-900 dark:text-zinc-300 dark:hover:text-white cursor-pointer"
+          >
+            <X className="w-4 h-4" />
+          </button>
         </div>
-      </div>
+      )}
 
       {/* Categorized Navigation Links with Custom Amber Scroll */}
-      <div className="flex-1 p-3 space-y-3.5 overflow-y-auto pb-24 scrollbar-thin scrollbar-thumb-amber-500/30 scrollbar-track-transparent">
+      <div className="flex-1 p-3 space-y-3 overflow-y-auto pb-24 scrollbar-thin scrollbar-thumb-amber-500/30 scrollbar-track-transparent">
         {navSections.map((section) => (
           <div key={section.title} className="space-y-1">
             <div className="px-3 py-0.5 text-[10px] font-black uppercase tracking-wider text-slate-400 dark:text-zinc-500">
