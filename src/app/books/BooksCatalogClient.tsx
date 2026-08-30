@@ -86,7 +86,6 @@ export default function BooksCatalogClient({
   const [selectedCategory, setSelectedCategory] = useState('ALL');
   const [priceFilter, setPriceFilter] = useState<'ALL' | 'FREE' | 'PAID'>('ALL');
   const [sortBy, setSortBy] = useState<'POPULAR' | 'RATING' | 'NEWEST' | 'PRICE_ASC'>('POPULAR');
-  const [previewModalBook, setPreviewModalBook] = useState<BookItem | null>(null);
 
   const categories = useMemo(() => [
     { id: 'ALL', name: 'كافة الأقسام والمذكرات', icon: Layers, count: initialBooks.length },
@@ -374,15 +373,14 @@ export default function BooksCatalogClient({
                       </div>
 
                       <div className="flex items-center gap-2">
-                        <button
-                          type="button"
-                          onClick={() => setPreviewModalBook(book)}
-                          className="px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-200 hover:bg-amber-500 hover:text-zinc-950 font-black text-xs transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
-                          title="معاينة سريعة"
+                        <Link
+                          href={`/books/${book.slug}`}
+                          className="px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-200 hover:bg-amber-500 hover:text-zinc-950 font-black text-xs transition-all flex items-center gap-1.5 shadow-xs"
+                          title="عرض تفاصيل المذكرة والقارئ"
                         >
                           <Eye className="w-3.5 h-3.5" />
-                          <span>معاينة</span>
-                        </button>
+                          <span>معاينة وقراءة</span>
+                        </Link>
 
                         {isPurchased ? (
                           <Link
@@ -676,15 +674,14 @@ export default function BooksCatalogClient({
 
                       {/* CTAs */}
                       <div className="flex items-center gap-1.5">
-                        <button
-                          type="button"
-                          onClick={() => setPreviewModalBook(book)}
-                          className="p-2.5 rounded-xl bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:text-zinc-950 hover:bg-amber-500 transition-all font-bold text-xs flex items-center gap-1 cursor-pointer"
-                          title="معاينة سريعة"
+                        <Link
+                          href={`/books/${book.slug}`}
+                          className="p-2.5 rounded-xl bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:text-zinc-950 hover:bg-amber-500 transition-all font-bold text-xs flex items-center gap-1"
+                          title="عرض تفاصيل المذكرة والقارئ"
                         >
                           <Eye className="w-3.5 h-3.5" />
-                          <span className="hidden xs:inline">معاينة</span>
-                        </button>
+                          <span className="hidden xs:inline">معاينة وقراءة</span>
+                        </Link>
 
                         {isPurchased ? (
                           <Link
@@ -782,117 +779,6 @@ export default function BooksCatalogClient({
           </Link>
         </div>
       </div>
-
-      {/* =========================================================================
-          6. INSTANT QUICK-PREVIEW MODAL (معاينة منبثقة سريعة)
-         ========================================================================= */}
-      {previewModalBook && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
-          <div className="relative w-full max-w-2xl rounded-[32px] bg-white dark:bg-[#120d28] border-2 border-slate-200 dark:border-amber-500/50 shadow-2xl p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto text-right text-slate-900 dark:text-white">
-            
-            {/* Close Button */}
-            <button
-              type="button"
-              onClick={() => setPreviewModalBook(null)}
-              className="absolute top-5 left-5 p-2 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/20 text-slate-600 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            {/* Modal Header */}
-            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 pt-2">
-              <div className="w-28 h-36 rounded-2xl bg-slate-950 overflow-hidden shrink-0 border-2 border-amber-500/40 shadow-xl">
-                {previewModalBook.coverImage ? (
-                  <img src={previewModalBook.coverImage} alt={previewModalBook.title} className="w-full h-full object-cover" />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center text-amber-400">
-                    <BookOpen className="w-10 h-10" />
-                  </div>
-                )}
-              </div>
-
-              <div className="space-y-2 text-center sm:text-right flex-1">
-                <div className="inline-block px-3 py-1 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-300 text-xs font-black border border-amber-500/30">
-                  {previewModalBook.category} • {previewModalBook.academicSubject}
-                </div>
-
-                <h2 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white leading-snug">
-                  {previewModalBook.title}
-                </h2>
-
-                <div className="flex items-center justify-center sm:justify-start gap-3 text-xs text-slate-600 dark:text-zinc-400 font-bold">
-                  <span>المؤلف: <strong className="text-slate-900 dark:text-white font-black">{previewModalBook.authorName}</strong></span>
-                  <span>•</span>
-                  <span>{previewModalBook.pageCount} صفحة</span>
-                  <span>•</span>
-                  <span className="text-amber-600 dark:text-amber-400 font-black">⭐ {previewModalBook.rating.toFixed(1)}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Description */}
-            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 space-y-2">
-              <h4 className="text-xs font-black text-amber-600 dark:text-amber-400">نبذة ومحتويات المذكرة:</h4>
-              <p className="text-xs sm:text-sm text-slate-700 dark:text-zinc-300 leading-relaxed font-medium">
-                {previewModalBook.description}
-              </p>
-            </div>
-
-            {/* DRM & Security Guarantee */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-bold">
-              <div className="p-3.5 rounded-2xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 text-emerald-800 dark:text-emerald-300 flex items-center gap-2.5">
-                <Shield className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                <span>حماية مشددة بنظام DRM</span>
-              </div>
-              <div className="p-3.5 rounded-2xl bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/30 text-blue-800 dark:text-blue-300 flex items-center gap-2.5">
-                <Eye className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
-                <span>معاينة مجانية {previewModalBook.previewPagesCount} صفحات</span>
-              </div>
-            </div>
-
-            {/* Modal Actions */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-3 border-t border-slate-200 dark:border-zinc-800">
-              <div className="text-center sm:text-right">
-                <span className="text-xs text-slate-500 dark:text-zinc-400 block font-bold">السعر المطلوب:</span>
-                <span className="text-2xl font-black text-slate-900 dark:text-amber-400 font-mono">
-                  {previewModalBook.isFree || previewModalBook.price === 0 ? 'مجاناً' : `${previewModalBook.price} ج.م`}
-                </span>
-              </div>
-
-              <div className="flex items-center gap-2.5 w-full sm:w-auto">
-                <Link
-                  href={`/books/${previewModalBook.slug}`}
-                  onClick={() => setPreviewModalBook(null)}
-                  className="flex-1 sm:flex-none px-6 py-3 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-black text-xs flex items-center justify-center gap-2 text-center shadow-md cursor-pointer"
-                >
-                  <Eye className="w-4 h-4 text-amber-400" />
-                  <span>فتح القارئ ومعاينة الصفحات</span>
-                </Link>
-
-                {previewModalBook.isFree || previewModalBook.price === 0 ? (
-                  <Link
-                    href={`/books/${previewModalBook.slug}`}
-                    onClick={() => setPreviewModalBook(null)}
-                    className="flex-1 sm:flex-none px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs text-center shadow-md cursor-pointer"
-                  >
-                    قراءة كاملة مجاناً
-                  </Link>
-                ) : (
-                  <Link
-                    href={`/checkout?bookId=${previewModalBook.id}`}
-                    onClick={() => setPreviewModalBook(null)}
-                    className="flex-1 sm:flex-none px-7 py-3 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-zinc-950 font-black text-xs shadow-lg shadow-amber-500/25 hover:scale-105 active:scale-95 transition-all text-center flex items-center justify-center gap-2 cursor-pointer"
-                  >
-                    <ShoppingBag className="w-4 h-4" />
-                    <span>شراء الآن</span>
-                  </Link>
-                )}
-              </div>
-            </div>
-
-          </div>
-        </div>
-      )}
 
     </div>
   );
