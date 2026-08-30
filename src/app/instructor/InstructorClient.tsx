@@ -70,6 +70,29 @@ export default function InstructorClient({
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [mounted, setMounted] = useState(false);
 
+  const [platformPricing, setPlatformPricing] = useState({
+    monthlyPrice: 290,
+    annualPrice: 1499,
+    studentPrice: 120,
+    studentMaxAge: 22,
+  });
+
+  useEffect(() => {
+    fetch('/api/settings')
+      .then((r) => r.json())
+      .then((data) => {
+        if (data) {
+          setPlatformPricing({
+            monthlyPrice: Number(data.instructorPriceMonthly) || 290,
+            annualPrice: Number(data.instructorPriceAnnual) || 1499,
+            studentPrice: Number(data.instructorPriceStudent) || 120,
+            studentMaxAge: Number(data.studentMaxAge) || 22,
+          });
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   useEffect(() => {
     setMounted(true);
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -1227,7 +1250,7 @@ export default function InstructorClient({
                 <div className="space-y-2">
                   <span className="text-xs font-bold text-slate-500 dark:text-zinc-400">الباقة العادية - شهرياً</span>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-3xl font-black text-slate-900 dark:text-white font-mono">290</span>
+                    <span className="text-3xl font-black text-slate-900 dark:text-white font-mono">{platformPricing.monthlyPrice}</span>
                     <span className="text-xs text-slate-500 dark:text-zinc-400 font-bold">ج.م / شهرياً</span>
                   </div>
                   <p className="text-xs text-slate-500 dark:text-zinc-400">
@@ -1242,7 +1265,7 @@ export default function InstructorClient({
                   }}
                   className="w-full py-2.5 rounded-xl bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-xs font-bold text-slate-900 dark:text-white transition-colors cursor-pointer"
                 >
-                  اختيار الباقة الشهرية (290 ج.م)
+                  اختيار الباقة الشهرية ({platformPricing.monthlyPrice} ج.م)
                 </button>
               </div>
 
@@ -1254,7 +1277,7 @@ export default function InstructorClient({
                 <div className="space-y-2 pt-3">
                   <span className="text-xs font-bold text-amber-600 dark:text-amber-400">الباقة العادية - سنوياً</span>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-3xl font-black text-amber-600 dark:text-amber-400 font-mono">2,900</span>
+                    <span className="text-3xl font-black text-amber-600 dark:text-amber-400 font-mono">{platformPricing.annualPrice.toLocaleString('en-US')}</span>
                     <span className="text-xs text-slate-500 dark:text-zinc-400 font-bold">ج.م / سنوياً</span>
                   </div>
                   <p className="text-xs text-slate-500 dark:text-zinc-400">
@@ -1276,12 +1299,12 @@ export default function InstructorClient({
               {/* Plan 3: Student Plan */}
               <div className="p-5 rounded-2xl border-2 border-purple-800/60 bg-purple-950/20 space-y-3 flex flex-col justify-between relative">
                 <span className="absolute top-3 left-3 px-2 py-0.5 rounded-full bg-purple-500/30 text-purple-300 border border-purple-500/40 text-[10px] font-black">
-                  سن 22 فأقل فقط
+                  سن {platformPricing.studentMaxAge} فأقل فقط
                 </span>
                 <div className="space-y-2 pt-3">
                   <span className="text-xs font-bold text-purple-300">باقة المحاضر الطالب (مدعومة)</span>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-3xl font-black text-purple-300 font-mono">120</span>
+                    <span className="text-3xl font-black text-purple-300 font-mono">{platformPricing.studentPrice}</span>
                     <span className="text-xs text-zinc-400 font-bold">ج.م / شهرياً</span>
                   </div>
                   <p className="text-xs text-zinc-400">
@@ -1291,10 +1314,10 @@ export default function InstructorClient({
                 <button
                   type="button"
                   onClick={() => {
-                    if (userAge !== null && userAge > 22) {
+                    if (userAge !== null && userAge > platformPricing.studentMaxAge) {
                       setMessage({
                         type: 'error',
-                        text: `عمرك المسجل (${userAge} سنة) يتجاوز الحد الأقصى لباقة الطلاب (22 سنة). يرجى اختيار إحدى باقات المحاضر العادية.`
+                        text: `عمرك المسجل (${userAge} سنة) يتجاوز الحد الأقصى لباقة الطلاب (${platformPricing.studentMaxAge} سنة). يرجى اختيار إحدى باقات المحاضر العادية.`
                       });
                       return;
                     }
@@ -1308,8 +1331,8 @@ export default function InstructorClient({
                   className="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold transition-all cursor-pointer shadow-md"
                 >
                   {user.isStudentInstructor && user.studentVerificationStatus === 'APPROVED'
-                    ? 'اختيار باقة الطالب (120 ج.م)'
-                    : 'إثبات الدراسة لباقة الطالب (120 ج.م)'}
+                    ? `اختيار باقة الطالب (${platformPricing.studentPrice} ج.م)`
+                    : `إثبات الدراسة لباقة الطالب (${platformPricing.studentPrice} ج.م)`}
                 </button>
               </div>
             </div>
@@ -1444,7 +1467,7 @@ export default function InstructorClient({
                 }`}
               >
                 <span className="text-xs font-bold text-white block">الباقة العادية (شهري)</span>
-                <span className="text-lg font-black text-primary-300 block">290 ج.م</span>
+                <span className="text-lg font-black text-primary-300 block">{platformPricing.monthlyPrice} ج.م</span>
                 <span className="text-[10px] text-zinc-400 block">لكافة المحاضرين والأساتذة</span>
               </button>
 
@@ -1461,17 +1484,17 @@ export default function InstructorClient({
                   وفر شهرين!
                 </span>
                 <span className="text-xs font-bold text-white block">الباقة العادية (سنوي)</span>
-                <span className="text-lg font-black text-emerald-400 block">2,900 ج.م</span>
+                <span className="text-lg font-black text-emerald-400 block">{platformPricing.annualPrice.toLocaleString('en-US')} ج.م</span>
                 <span className="text-[10px] text-zinc-400 block">العام الأكثر توفيراً للجميع</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => {
-                  if (userAge !== null && userAge > 22) {
+                  if (userAge !== null && userAge > platformPricing.studentMaxAge) {
                     setMessage({
                       type: 'error',
-                      text: `عمرك المسجل (${userAge} سنة) يتجاوز الحد الأقصى لباقة الطلاب (22 سنة). يجب الاشتراك في إحدى باقات المحاضر العادية.`
+                      text: `عمرك المسجل (${userAge} سنة) يتجاوز الحد الأقصى لباقة الطلاب (${platformPricing.studentMaxAge} سنة). يجب الاشتراك في إحدى باقات المحاضر العادية.`
                     });
                     setRenewPlan('MONTHLY');
                     return;
@@ -1485,10 +1508,10 @@ export default function InstructorClient({
                 }`}
               >
                 <span className="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[9px] font-black inline-block mb-1">
-                  سن 22 فأقل فقط
+                  سن {platformPricing.studentMaxAge} فأقل فقط
                 </span>
                 <span className="text-xs font-bold text-white block">باقة المحاضر الطالب</span>
-                <span className="text-lg font-black text-purple-300 block">120 ج.م</span>
+                <span className="text-lg font-black text-purple-300 block">{platformPricing.studentPrice} ج.م</span>
                 <span className="text-[10px] text-zinc-400 block">منحة مدعومة للجامعيين</span>
               </button>
             </div>
@@ -1498,11 +1521,11 @@ export default function InstructorClient({
               <div className="p-3 rounded-xl bg-purple-950/40 border border-purple-800/60 text-xs text-purple-200 space-y-1.5 animate-in fade-in">
                 <div className="flex items-center gap-2">
                   <GraduationCap className="w-4 h-4 text-amber-400 shrink-0" />
-                  <span className="font-bold text-white">ضوابط باقة الطالب (120 ج.م):</span>
+                  <span className="font-bold text-white">ضوابط باقة الطالب ({platformPricing.studentPrice} ج.م):</span>
                 </div>
                 <p className="text-[11px] text-zinc-300 leading-relaxed">
-                  هذه الباقة مخصصة لمن هم بسن <strong>22 سنة أو أقل</strong> وتتطلب إثبات قيد بكارنيه الكلية/المدرسة أو جدول المحاضرات للعام الحالي دون الحاجة لبطاقة شخصية. 
-                  إذا كان عمرك أكبر من 22 سنة، يرجى اختيار الباقة العادية (الشهري 290 ج.م أو السنوي 2,900 ج.م).
+                  هذه الباقة مخصصة لمن هم بسن <strong>{platformPricing.studentMaxAge} سنة أو أقل</strong> وتتطلب إثبات قيد بكارنيه الكلية/المدرسة أو جدول المحاضرات للعام الحالي دون الحاجة لبطاقة شخصية. 
+                  إذا كان عمرك أكبر من {platformPricing.studentMaxAge} سنة، يرجى اختيار الباقة العادية (الشهري {platformPricing.monthlyPrice} ج.م أو السنوي {platformPricing.annualPrice.toLocaleString('en-US')} ج.م).
                 </p>
                 {(!user.isStudentInstructor || user.studentVerificationStatus !== 'APPROVED') && (
                   <button

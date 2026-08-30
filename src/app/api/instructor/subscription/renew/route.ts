@@ -21,6 +21,20 @@ export async function POST(req: Request) {
     const isStudent = plan === 'STUDENT_PRO';
     const isAnnual = plan === 'ANNUAL';
 
+    // Fetch dynamic pricing and limits from platform settings
+    const dbSettings = await prisma.platformSetting.findMany({
+      where: {
+        key: {
+          in: ['INSTRUCTOR_PRICE_MONTHLY', 'INSTRUCTOR_PRICE_ANNUAL', 'INSTRUCTOR_PRICE_STUDENT', 'STUDENT_MAX_AGE']
+        }
+      }
+    });
+    const settingsMap = Object.fromEntries(dbSettings.map((s) => [s.key, s.value]));
+    const monthlyPrice = Number(settingsMap['INSTRUCTOR_PRICE_MONTHLY']) || 290;
+    const annualPrice = Number(settingsMap['INSTRUCTOR_PRICE_ANNUAL']) || 1499;
+    const studentPrice = Number(settingsMap['INSTRUCTOR_PRICE_STUDENT']) || 120;
+    const maxAge = Number(settingsMap['STUDENT_MAX_AGE']) || 22;
+
     if (isStudent) {
       const fullUser = await prisma.user.findUnique({
         where: { id: user.id },
@@ -32,15 +46,15 @@ export async function POST(req: Request) {
         let age = today.getFullYear() - b.getFullYear();
         const m = today.getMonth() - b.getMonth();
         if (m < 0 || (m === 0 && today.getDate() < b.getDate())) age--;
-        if (age > 22) {
+        if (age > maxAge) {
           return NextResponse.json({
-            error: `عفواً، باقة الطالب مخصصة لمن هم بسن 22 سنة فأقل. بما أن عمرك (${age} سنة) أكبر من 22 سنة، يرجى الاشتراك في باقة المدرسين والدكاترة العادية (الشهري 290 ج.م أو السنوي).`
+            error: `عفواً، باقة الطالب مخصصة لمن هم بسن ${maxAge} سنة فأقل. بما أن عمرك (${age} سنة) أكبر من ${maxAge} سنة، يرجى الاشتراك في باقة المدرسين والدكاترة العادية (الشهري ${monthlyPrice} ج.م أو السنوي).`
           }, { status: 400 });
         }
       }
     }
 
-    const amount = isStudent ? 120 : isAnnual ? 2900 : 290;
+    const amount = isStudent ? studentPrice : isAnnual ? annualPrice : monthlyPrice;
     const durationMonths = isAnnual ? 12 : 1;
 
     const payment = await prisma.instructorSubscriptionPayment.create({

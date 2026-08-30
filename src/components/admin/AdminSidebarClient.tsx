@@ -29,6 +29,7 @@ import {
   User,
   ShoppingBag,
   SlidersHorizontal,
+  DollarSign,
   X
 } from 'lucide-react';
 
@@ -74,7 +75,8 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
       groupName: 'المحاضرون والاشتراكات',
       items: [
         { name: 'المحاضرون واشتراكات SaaS', href: '/admin/instructors', icon: GraduationCap, badge: 'SaaS' },
-        { name: 'توثيق الطلاب المحاضرين (سن 23)', href: '/admin/student-verifications', icon: Award, badge: 'منحة 30 يوم' },
+        { name: 'التحكم بأسعار باقات المحاضرين', href: '/admin/settings?tab=pricing', icon: DollarSign, badge: 'أسعار' },
+        { name: 'توثيق الطلاب المحاضرين', href: '/admin/student-verifications', icon: Award, badge: 'منحة 30 يوم' },
         { name: 'صفحة انضم كمحاضر والباقات', href: '/instructors/join', icon: Star, isExternal: true },
         { name: 'استوديو تدريس المحاضر', href: '/instructor', icon: SlidersHorizontal, isExternal: true },
       ],
@@ -114,7 +116,7 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
     {
       groupName: 'التخصيص ومظهر المنصة',
       items: [
-        { name: 'محرر الموقع والبنرات السحري', href: '/admin/content-editor', icon: Sparkles, badge: 'محرر' },
+        { name: 'التحكم بنصوص وصفحات الموقع (CMS)', href: '/admin/settings?tab=content', icon: Sparkles, badge: 'نصوص' },
         { name: 'إعدادات المنصة وطرق الدفع والـ SEO', href: '/admin/settings', icon: Settings },
         { name: 'الملف الشخصي والحساب', href: '/profile', icon: User, isExternal: true },
         { name: 'الصفحة الرئيسية للموقع', href: '/', icon: Home, isExternal: true },

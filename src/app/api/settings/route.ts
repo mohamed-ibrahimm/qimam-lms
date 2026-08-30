@@ -9,7 +9,9 @@ export async function GET() {
     const map = Object.fromEntries(settings.map((s) => [s.key, s.value]));
     const rawWhatsapp = map['WHATSAPP_NUMBER'] || map['CONTACT_WHATSAPP'] || map['CONTACT_PHONE'] || '';
     const safeWhatsapp = (rawWhatsapp && !rawWhatsapp.includes('1001234567')) ? rawWhatsapp : '01555791568';
+    
     return NextResponse.json({
+      settings: map,
       platformName: (map['PLATFORM_NAME'] || 'أكاديمية م / محمد إبراهيم').replace(/سنجر/g, '').trim() || 'أكاديمية م / محمد إبراهيم',
       platformTagline: map['PLATFORM_TAGLINE'] || 'بوابتك الاحترافية لاحتراف البرمجة والذكاء الاصطناعي والتصميم',
       watermarkEnabled: map['WATERMARK_ENABLED'] !== 'false',
@@ -19,6 +21,23 @@ export async function GET() {
       telegramUrl: map['TELEGRAM_URL'] || '',
       youtubeUrl: map['YOUTUBE_URL'] || '',
       linkedinUrl: map['LINKEDIN_URL'] || '',
+      
+      // SaaS Subscription Prices & Limits
+      instructorPriceMonthly: map['INSTRUCTOR_PRICE_MONTHLY'] || '290',
+      instructorPriceAnnual: map['INSTRUCTOR_PRICE_ANNUAL'] || '1499',
+      instructorPriceStudent: map['INSTRUCTOR_PRICE_STUDENT'] || '120',
+      studentMaxAge: map['STUDENT_MAX_AGE'] || '22',
+      studentTrialDays: map['STUDENT_TRIAL_DAYS'] || '30',
+      instructorTrialDays: map['INSTRUCTOR_TRIAL_DAYS'] || '14',
+      platformCommissionPercent: map['PLATFORM_COMMISSION_PERCENT'] || '0',
+
+      // CMS Page Texts
+      heroTitle: map['HERO_TITLE'] || '',
+      heroSubtitle: map['HERO_SUBTITLE'] || '',
+      heroBtnExpert: map['HERO_BTN_EXPERT'] || 'انضم كـ مدرس أو دكتور جامعي (0% عمولة)',
+      heroBtnStudent: map['HERO_BTN_STUDENT'] || 'اشترك كمحاضر طالب (شهر كامل مجاناً)',
+      bannerText: map['BANNER_TEXT'] || '',
+      bannerEnabled: map['BANNER_ENABLED'] !== 'false',
     }, {
       headers: {
         'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
@@ -26,6 +45,7 @@ export async function GET() {
     });
   } catch (e) {
     return NextResponse.json({
+      settings: {},
       platformName: 'أكاديمية م / محمد إبراهيم',
       platformTagline: 'بوابتك الاحترافية لاحتراف البرمجة والذكاء الاصطناعي والتصميم',
       watermarkEnabled: true,
@@ -35,6 +55,13 @@ export async function GET() {
       telegramUrl: '',
       youtubeUrl: '',
       linkedinUrl: '',
+      instructorPriceMonthly: '290',
+      instructorPriceAnnual: '1499',
+      instructorPriceStudent: '120',
+      studentMaxAge: '22',
+      studentTrialDays: '30',
+      instructorTrialDays: '14',
+      platformCommissionPercent: '0',
     });
   }
 }

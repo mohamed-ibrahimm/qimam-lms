@@ -52,6 +52,8 @@ export default function Header({
   const cleanInitialName = (initialPlatformName || 'أكاديمية م / محمد إبراهيم').replace(/سنجر/g, '').trim();
   const [platformName, setPlatformName] = useState(cleanInitialName || 'أكاديمية م / محمد إبراهيم');
   const [platformTagline, setPlatformTagline] = useState(initialPlatformTagline || 'بوابتك الاحترافية لاحتراف البرمجة والذكاء الاصطناعي والتصميم');
+  const [navExpertBtnText, setNavExpertBtnText] = useState('مدرس أو دكتور جامعي');
+  const [navStudentBtnText, setNavStudentBtnText] = useState('محاضر طالب');
 
   // Sync if prop updates from server
   useEffect(() => {
@@ -81,6 +83,8 @@ export default function Header({
           setPlatformName(data.platformName.replace(/سنجر/g, '').trim());
         }
         if (data.platformTagline && !data.platformTagline.includes('?')) setPlatformTagline(data.platformTagline);
+        if (data.settings?.NAV_EXPERT_BTN_TEXT) setNavExpertBtnText(data.settings.NAV_EXPERT_BTN_TEXT);
+        if (data.settings?.NAV_STUDENT_BTN_TEXT) setNavStudentBtnText(data.settings.NAV_STUDENT_BTN_TEXT);
       }
     } catch (e) {}
   };
@@ -453,18 +457,18 @@ export default function Header({
               <Link
                 href="/instructors/join?track=expert"
                 className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/30 text-purple-700 dark:text-purple-300 transition-all flex items-center gap-1.5 shrink-0"
-                title="سجل كمدرس أو دكتور جامعي - 14 يوماً مجاناً"
+                title="سجل كمدرس أو دكتور جامعي"
               >
                 <Video className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
-                <span>مدرس أو دكتور جامعي</span>
+                <span>{navExpertBtnText}</span>
               </Link>
               <Link
                 href="/instructors/join?track=student"
                 className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-700 dark:text-amber-300 transition-all flex items-center gap-1.5 shrink-0 shadow-xs"
-                title="منحة الطلاب - شهر كامل مجاناً لطلبة الجامعات"
+                title="منحة المحاضر الطالب لطلبة الجامعات والمدارس"
               >
                 <GraduationCap className="w-3.5 h-3.5 text-amber-500" />
-                <span>محاضر طالب</span>
+                <span>{navStudentBtnText}</span>
               </Link>
             </div>
           )}
@@ -644,7 +648,7 @@ export default function Header({
                     className="py-2.5 px-2 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/40 text-purple-700 dark:text-purple-300 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"
                   >
                     <Video className="w-4 h-4 text-purple-600 dark:text-purple-400" />
-                    <span>مدرس أو دكتور جامعي</span>
+                    <span>{navExpertBtnText}</span>
                   </Link>
                   <Link
                     href="/instructors/join?track=student"
@@ -652,7 +656,7 @@ export default function Header({
                     className="py-2.5 px-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-700 dark:text-amber-300 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"
                   >
                     <GraduationCap className="w-4 h-4 text-amber-500" />
-                    <span>محاضر طالب</span>
+                    <span>{navStudentBtnText}</span>
                   </Link>
                 </div>
               </div>

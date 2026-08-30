@@ -70,18 +70,26 @@ export async function POST(req: Request) {
       age--;
     }
 
-    if (age > 22) {
+    // Fetch dynamic max age and trial days from settings
+    const dbSettings = await prisma.platformSetting.findMany({
+      where: { key: { in: ['STUDENT_MAX_AGE', 'STUDENT_TRIAL_DAYS'] } }
+    });
+    const settingsMap = Object.fromEntries(dbSettings.map((s) => [s.key, s.value]));
+    const maxAge = Number(settingsMap['STUDENT_MAX_AGE']) || 22;
+    const trialDays = Number(settingsMap['STUDENT_TRIAL_DAYS']) || 30;
+
+    if (age > maxAge) {
       return NextResponse.json({
-        error: `عذراً، باقة الطالب مخصصة لطلبة الجامعات حتى سن 22 سنة (عمرك المسجل: ${age} سنة). يمكنك الاشتراك في باقة المدرسين والدكاترة العادية.`
+        error: `عذراً، باقة الطالب مخصصة لطلبة الجامعات والمدارس حتى سن ${maxAge} سنة (عمرك المسجل: ${age} سنة). يمكنك الاشتراك في باقة المدرسين والدكاترة العادية.`
       }, { status: 400 });
     }
 
-    if (age < 15) {
+    if (age < 12) {
       return NextResponse.json({ error: 'تاريخ الميلاد المدخل غير منطقي' }, { status: 400 });
     }
 
-    // Update user profile and activate 30-Day Free Trial
-    const thirtyDaysFromNow = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+    // Update user profile and activate Free Trial based on settings
+    const trialDaysFromNow = new Date(Date.now() + trialDays * 24 * 60 * 60 * 1000);
 
     const updatedUser = await prisma.user.update({
       where: { id: user.id },
@@ -95,7 +103,7 @@ export async function POST(req: Request) {
         studentIdCardUrl: studentIdCardUrl.trim(),
         studentNationalIdUrl: nationalIdUrl?.trim() || null,
         instructorStatus: 'TRIAL',
-        trialEndsAt: thirtyDaysFromNow,
+        trialEndsAt: trialDaysFromNow,
         subscriptionPlan: 'STUDENT_PRO',
       }
     });

@@ -122,7 +122,7 @@ export default function MobileHero({
             className="group flex items-center justify-center gap-2 w-full py-3.5 px-4 text-xs xs:text-sm font-black text-slate-800 hover:text-purple-700 dark:text-zinc-200 dark:hover:text-white transition-all rounded-2xl border border-purple-300/90 hover:border-purple-500 bg-white hover:bg-slate-50 dark:border-purple-800/80 dark:bg-[#16122d]/90 dark:hover:border-purple-600 dark:hover:bg-[#1c163b] shadow-sm hover:shadow-md backdrop-blur-md active:scale-[0.98]"
           >
             <Video className="w-4 h-4 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform shrink-0" />
-            <span className="whitespace-nowrap">انضم كـ مدرس أو دكتور جامعي (0% عمولة)</span>
+            <span className="whitespace-nowrap">{settings.HERO_BTN_EXPERT || 'انضم كـ مدرس أو دكتور جامعي (0% عمولة)'}</span>
           </Link>
 
           {/* Button 3: Join as Student Instructor */}
@@ -132,7 +132,7 @@ export default function MobileHero({
             className="group flex items-center justify-center gap-2 w-full py-3.5 px-4 text-xs xs:text-sm font-black text-amber-950 dark:text-amber-300 transition-all rounded-2xl border-2 border-amber-500/70 hover:border-amber-400 bg-amber-500/15 hover:bg-amber-500/25 dark:bg-amber-500/15 dark:hover:bg-amber-500/25 shadow-md backdrop-blur-md active:scale-[0.98]"
           >
             <GraduationCap className="w-4 h-4 text-amber-500 group-hover:scale-110 transition-transform shrink-0" />
-            <span className="whitespace-nowrap">اشترك كمحاضر طالب (شهر كامل مجاناً)</span>
+            <span className="whitespace-nowrap">{settings.HERO_BTN_STUDENT || 'اشترك كمحاضر طالب (شهر كامل مجاناً)'}</span>
           </Link>
         </div>
 

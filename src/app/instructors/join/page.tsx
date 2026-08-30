@@ -44,6 +44,57 @@ export default function InstructorJoinPage() {
     else if (trackParam === 'expert') setActiveTrack('expert');
   }, [trackParam]);
 
+  // Dynamic Settings from Admin Panel
+  const [platformSettings, setPlatformSettings] = useState({
+    monthlyPrice: '290',
+    annualPrice: '1499',
+    studentPrice: '120',
+    studentMaxAge: '22',
+    studentTrialDays: '30',
+    instructorTrialDays: '14',
+    commissionPercent: '0',
+    joinPageTitle: '',
+    joinPageSubtitle: '',
+    expertCardTitle: 'انضم كـ مدرس أو دكتور جامعي',
+    expertCardDesc: 'مخصص للأساتذة والمحاضرين الذين يرغبون في بناء استوديو تعليمي سحابي مستقل لدفعاتهم مع سيطرة كاملة على المحتوى والأسعار.',
+    studentCardTitle: 'اشترك كـ محاضر طالب',
+    studentCardDesc: 'لكل طالب بالكلية أو المدرسة يريد شرح المواد لزملائه؛ نمنحك شهر كامل مجاناً وشارة "طالب معتمد" مع باقة اشتراك مدعومة ومخفضة.',
+    studentProofText: 'كارنيه، جدول دراسي، أو إثبات قيد',
+  });
+
+  useEffect(() => {
+    const fetchSettings = () => {
+      fetch('/api/settings', { cache: 'no-store' })
+        .then((r) => r.json())
+        .then((data) => {
+          if (data) {
+            const map = data.settings || {};
+            setPlatformSettings({
+              monthlyPrice: data.instructorPriceMonthly || map.INSTRUCTOR_PRICE_MONTHLY || '290',
+              annualPrice: data.instructorPriceAnnual || map.INSTRUCTOR_PRICE_ANNUAL || '1499',
+              studentPrice: data.instructorPriceStudent || map.INSTRUCTOR_PRICE_STUDENT || '120',
+              studentMaxAge: data.studentMaxAge || map.STUDENT_MAX_AGE || '22',
+              studentTrialDays: data.studentTrialDays || map.STUDENT_TRIAL_DAYS || '30',
+              instructorTrialDays: data.instructorTrialDays || map.INSTRUCTOR_TRIAL_DAYS || '14',
+              commissionPercent: data.platformCommissionPercent || map.PLATFORM_COMMISSION_PERCENT || '0',
+              joinPageTitle: map.JOIN_PAGE_TITLE || '',
+              joinPageSubtitle: map.JOIN_PAGE_SUBTITLE || '',
+              expertCardTitle: map.JOIN_EXPERT_CARD_TITLE || 'انضم كـ مدرس أو دكتور جامعي',
+              expertCardDesc: map.JOIN_EXPERT_CARD_DESC || 'مخصص للأساتذة والمحاضرين الذين يرغبون في بناء استوديو تعليمي سحابي مستقل لدفعاتهم مع سيطرة كاملة على المحتوى والأسعار.',
+              studentCardTitle: map.JOIN_STUDENT_CARD_TITLE || 'اشترك كـ محاضر طالب',
+              studentCardDesc: map.JOIN_STUDENT_CARD_DESC || 'لكل طالب بالكلية أو المدرسة يريد شرح المواد لزملائه؛ نمنحك شهر كامل مجاناً وشارة "طالب معتمد" مع باقة اشتراك مدعومة ومخفضة.',
+              studentProofText: map.JOIN_STUDENT_PROOF_TEXT || 'كارنيه، جدول دراسي، أو إثبات قيد',
+            });
+          }
+        })
+        .catch(() => {});
+    };
+
+    fetchSettings();
+    window.addEventListener('platform-settings-updated', fetchSettings);
+    return () => window.removeEventListener('platform-settings-updated', fetchSettings);
+  }, []);
+
   // Dynamic Revenue Calculator
   const [studentCount, setStudentCount] = useState(80);
   const [coursePrice, setCoursePrice] = useState(350);
@@ -55,8 +106,8 @@ export default function InstructorJoinPage() {
   const features = [
     {
       number: '01',
-      title: 'نموذج 0% عمولة على المبيعات',
-      description: 'تحتفظ بكامل عوائد دوراتك التدريبية بنسبة 100%. لا نقتطع أي نسبة مئوية من مبيعاتك نهائياً، فالجهد جهدك والعائد بالكامل لك.',
+      title: `نموذج ${platformSettings.commissionPercent}% عمولة على المبيعات`,
+      description: `تحتفظ بكامل عوائد دوراتك التدريبية بنسبة 100%. لا نقتطع أي نسبة مئوية من مبيعاتك نهائياً، فالجهد جهدك والعائد بالكامل لك.`,
       icon: Percent,
       gradient: 'from-emerald-500/20 via-teal-500/10 to-transparent',
       borderCol: 'border-emerald-500/30 hover:border-emerald-500/60',
@@ -158,7 +209,7 @@ export default function InstructorJoinPage() {
             }`}
           >
             <Building className="w-3.5 h-3.5 text-indigo-400" />
-            <span>مسار المدرسين والدكاترة الجامعيين (14 يوماً مجاناً)</span>
+            <span>مسار المدرسين والدكاترة الجامعيين ({platformSettings.instructorTrialDays} يوماً مجاناً)</span>
           </button>
 
           <button
@@ -171,7 +222,7 @@ export default function InstructorJoinPage() {
             }`}
           >
             <GraduationCap className="w-4 h-4 text-amber-400" />
-            <span>مسار المحاضر الطالب (شهر كامل مجاناً)</span>
+            <span>مسار المحاضر الطالب ({platformSettings.studentTrialDays} يوماً مجاناً)</span>
           </button>
         </div>
 
@@ -191,18 +242,20 @@ export default function InstructorJoinPage() {
 
         {/* Main Headline */}
         <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
-          {activeTrack === 'student' ? (
+          {platformSettings.joinPageTitle ? (
+            platformSettings.joinPageTitle
+          ) : activeTrack === 'student' ? (
             <>
               اشرح لزملائك وأطلق أول كورس لك مع{' '}
               <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-400 bg-clip-text text-transparent">
-                شهر كامل مجاناً
+                {platformSettings.studentTrialDays} يوماً مجاناً
               </span>
             </>
           ) : (
             <>
               درّس لطلابك واحتفظ بـ{' '}
               <span className="bg-gradient-to-r from-indigo-400 via-purple-300 to-indigo-300 bg-clip-text text-transparent">
-                كامل عوائد مبيعاتك
+                كامل عوائد مبيعاتك ({100 - Number(platformSettings.commissionPercent)}%)
               </span>{' '}
               مباشرة
             </>
@@ -211,8 +264,10 @@ export default function InstructorJoinPage() {
 
         {/* Subtitle */}
         <p className="text-sm sm:text-base lg:text-lg text-zinc-300 max-w-3xl mx-auto leading-relaxed">
-          {activeTrack === 'student'
-            ? 'إذا كنت طالباً بالكلية أو المدرسة وتريد تقديم الشروحات والمناهج لزملائك؛ نوفر لك منحة 30 يوماً مجاناً بالكامل مع باقة اشتراك مدعومة بعد انتهاء الشهر بإثبات دراسي بسيط (كارنيه، جدول، أو إثبات قيد) دون الحاجة لبطاقة شخصية.'
+          {platformSettings.joinPageSubtitle ? (
+            platformSettings.joinPageSubtitle
+          ) : activeTrack === 'student'
+            ? `إذا كنت طالباً بالكلية أو المدرسة وتريد تقديم الشروحات والمناهج لزملائك؛ نوفر لك منحة ${platformSettings.studentTrialDays} يوماً مجاناً بالكامل مع باقة اشتراك مدعومة (${platformSettings.studentPrice} ج.م) بإثبات دراسي بسيط (${platformSettings.studentProofText}) دون الحاجة لبطاقة شخصية.`
             : 'استوديو تدريس سحابي متكامل يمنح المدرسين والدكاترة الجامعيين استقلالية تامة، مع تحويل أرباحك فورياً إلى حسابك الشخصي عبر إنستاباي والمحافظ بدون اقتطاع أي عمولة.'}
         </p>
 
@@ -243,21 +298,21 @@ export default function InstructorJoinPage() {
 
               <div className="space-y-1.5">
                 <h3 className="text-xl font-black text-white">
-                  انضم كـ مدرس أو دكتور جامعي
+                  {platformSettings.expertCardTitle}
                 </h3>
                 <p className="text-xs text-zinc-300 leading-relaxed">
-                  مخصص للأساتذة والمحاضرين الذين يرغبون في بناء استوديو تعليمي سحابي مستقل لدفعاتهم مع سيطرة كاملة على المحتوى والأسعار.
+                  {platformSettings.expertCardDesc}
                 </p>
               </div>
 
               <div className="p-4 rounded-2xl bg-indigo-950/40 border border-indigo-800/40 space-y-2.5">
                 <div className="flex items-center justify-between text-xs font-bold text-indigo-200">
                   <span>الفترة التجريبية:</span>
-                  <span className="text-indigo-300 font-black">14 يوماً مجاناً بالكامل</span>
+                  <span className="text-indigo-300 font-black">{platformSettings.instructorTrialDays} يوماً مجاناً بالكامل</span>
                 </div>
                 <div className="flex items-center justify-between text-xs font-bold text-indigo-200">
                   <span>عمولة المبيعات:</span>
-                  <span className="text-emerald-400 font-black">0% (الأرباح لك 100%)</span>
+                  <span className="text-emerald-400 font-black">{platformSettings.commissionPercent}% (الأرباح لك 100%)</span>
                 </div>
                 <div className="flex items-center justify-between text-xs font-bold text-indigo-200">
                   <span>التحصيل المالي:</span>
@@ -274,7 +329,7 @@ export default function InstructorJoinPage() {
               href="/register?role=instructor&track=expert"
               className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-xs text-center shadow-lg shadow-indigo-600/30 transition-all hover:scale-[1.01] flex items-center justify-center gap-2 cursor-pointer"
             >
-              <span>بدء تجربة المدرس أو الدكتور الجامعي (14 يوماً مجاناً)</span>
+              <span>بدء تجربة المدرس أو الدكتور ({platformSettings.instructorTrialDays} يوماً مجاناً)</span>
               <ArrowLeft className="w-4 h-4" />
             </Link>
           </div>
@@ -301,29 +356,29 @@ export default function InstructorJoinPage() {
 
               <div className="space-y-1.5">
                 <h3 className="text-xl font-black text-white">
-                  اشترك كـ محاضر طالب
+                  {platformSettings.studentCardTitle}
                 </h3>
                 <p className="text-xs text-zinc-300 leading-relaxed">
-                  لكل طالب بالكلية أو المدرسة يريد شرح المواد لزملائه؛ نمنحك شهر كامل مجاناً وشارة "طالب معتمد" مع باقة اشتراك مدعومة ومخفضة.
+                  {platformSettings.studentCardDesc}
                 </p>
               </div>
 
               <div className="p-4 rounded-2xl bg-amber-950/30 border border-amber-800/40 space-y-2.5">
                 <div className="flex items-center justify-between text-xs font-bold text-amber-200">
                   <span>المنحة التجريبية:</span>
-                  <span className="text-amber-400 font-black">شهر كامل مجاناً (30 يوماً بالكامل)</span>
+                  <span className="text-amber-400 font-black">{platformSettings.studentTrialDays} يوماً مجاناً بالكامل</span>
                 </div>
                 <div className="flex items-center justify-between text-xs font-bold text-amber-200">
-                  <span>سعر الباقة بعد الشهر:</span>
-                  <span className="text-emerald-400 font-black">120 ج.م شهرياً (خصم 60% مدعوم)</span>
+                  <span>سعر الباقة بعد التجربة:</span>
+                  <span className="text-emerald-400 font-black">{platformSettings.studentPrice} ج.م شهرياً</span>
                 </div>
                 <div className="flex items-center justify-between text-xs font-bold text-amber-200">
                   <span>إثبات الدراسة المطلوب:</span>
-                  <span className="text-white">كارنيه، جدول دراسي، أو إثبات قيد</span>
+                  <span className="text-white">{platformSettings.studentProofText}</span>
                 </div>
                 <div className="flex items-center justify-between text-xs font-bold text-amber-200">
                   <span>البطاقة الشخصية:</span>
-                  <span className="text-emerald-400 font-bold">لا يُطلب بطاقة شخصية (إثبات دراسي فقط)</span>
+                  <span className="text-emerald-400 font-bold">لا يُطلب بطاقة شخصية نهائياً</span>
                 </div>
               </div>
             </div>
@@ -332,7 +387,7 @@ export default function InstructorJoinPage() {
               href="/register?role=instructor&track=student"
               className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-zinc-950 font-black text-xs text-center shadow-lg shadow-amber-500/25 transition-all hover:scale-[1.01] flex items-center justify-center gap-2 cursor-pointer"
             >
-              <span>اشترك كـ محاضر طالب (شهر كامل مجاناً)</span>
+              <span>اشترك كـ محاضر طالب ({platformSettings.studentTrialDays} يوماً مجاناً)</span>
               <ArrowLeft className="w-4 h-4 text-zinc-950" />
             </Link>
           </div>
@@ -348,7 +403,7 @@ export default function InstructorJoinPage() {
           <div className="text-center space-y-1">
             <span className="text-xs font-bold text-indigo-400">حاسبة العوائد التفاعلية</span>
             <h2 className="text-xl sm:text-2xl font-black text-white">
-              كم ستحقق من أرباح مع نموذج 0% عمولة؟
+              كم ستحقق من أرباح مع نموذج {platformSettings.commissionPercent}% عمولة؟
             </h2>
             <p className="text-xs text-zinc-400">
               حرك المؤشرات لتكتشف الفارق بين منصة قمم والمنصات التقليدية التي تقتطع 30% إلى 50% من أرباحك.
@@ -440,27 +495,27 @@ export default function InstructorJoinPage() {
               <tr>
                 <td className="p-4 font-bold text-white">الفئة المستهدفة</td>
                 <td className="p-4">المدرسون، الدكاترة، والأساتذة من كافة الأعمار</td>
-                <td className="p-4 font-bold text-amber-300">طلبة الكليات والمدارس والمعاهد (حتى سن 22 سنة)</td>
+                <td className="p-4 font-bold text-amber-300">طلبة الكليات والمدارس والمعاهد (حتى سن {platformSettings.studentMaxAge} سنة)</td>
               </tr>
               <tr>
                 <td className="p-4 font-bold text-white">فترة التجربة المجانية</td>
-                <td className="p-4">14 يوماً مجاناً بالكامل</td>
-                <td className="p-4 font-bold text-emerald-400">شهر كامل (30 يوماً مجاناً)</td>
+                <td className="p-4">{platformSettings.instructorTrialDays} يوماً مجاناً بالكامل</td>
+                <td className="p-4 font-bold text-emerald-400">{platformSettings.studentTrialDays} يوماً مجاناً بالكامل</td>
               </tr>
               <tr>
                 <td className="p-4 font-bold text-white">قيمة الاشتراك بعد التجربة</td>
-                <td className="p-4">290 ج.م شهرياً أو 1,499 ج.م سنوياً</td>
-                <td className="p-4 font-bold text-amber-400">120 ج.م شهرياً فقط (مدعوم بنسبة 60%)</td>
+                <td className="p-4">{platformSettings.monthlyPrice} ج.م شهرياً أو {platformSettings.annualPrice} ج.م سنوياً</td>
+                <td className="p-4 font-bold text-amber-400">{platformSettings.studentPrice} ج.م شهرياً فقط</td>
               </tr>
               <tr>
                 <td className="p-4 font-bold text-white">المستندات المطلوبة</td>
                 <td className="p-4 text-emerald-400 font-medium">لا توجد أي مستندات (تفعيل فوري)</td>
-                <td className="p-4 text-emerald-400 font-medium">مستند دراسي بسيط (كارنيه/جدول/إثبات قيد) - بدون بطاقة شخصية</td>
+                <td className="p-4 text-emerald-400 font-medium">{platformSettings.studentProofText} - بدون بطاقة شخصية</td>
               </tr>
               <tr>
                 <td className="p-4 font-bold text-white">نسبة عمولة المنصة</td>
-                <td className="p-4 text-emerald-400 font-bold">0% عمولة نهائياً</td>
-                <td className="p-4 text-emerald-400 font-bold">0% عمولة نهائياً</td>
+                <td className="p-4 text-emerald-400 font-bold">{platformSettings.commissionPercent}% عمولة نهائياً</td>
+                <td className="p-4 text-emerald-400 font-bold">{platformSettings.commissionPercent}% عمولة نهائياً</td>
               </tr>
               <tr>
                 <td className="p-4 font-bold text-white">تحصيل الأرباح</td>
@@ -552,7 +607,7 @@ export default function InstructorJoinPage() {
           <div className="space-y-1 text-right">
             <span className="font-bold text-white block">ملاحظة تنظيمية هامة بشأن الاشتراكات:</span>
             <p className="text-zinc-300 leading-relaxed">
-              إذا كان عمر المحاضر <strong>أكبر من 22 سنة</strong>، فإنه يشترك في <strong>باقة المدرسين والدكاترة العادية</strong> (الاشتراك الشهري 290 ج.م أو السنوي 1,499 ج.م). أما <strong>باقة المحاضر الطالب (120 ج.م)</strong> فهي منحة مخصصة لطلبة الكليات والمدارس حتى سن 22 سنة بإثبات دراسي (كارنيه، جدول، أو إثبات قيد) دون الحاجة لبطاقة شخصية.
+              إذا كان عمر المحاضر <strong>أكبر من {platformSettings.studentMaxAge} سنة</strong>، فإنه يشترك في <strong>باقة المدرسين والدكاترة العادية</strong> (الاشتراك الشهري {platformSettings.monthlyPrice} ج.م أو السنوي {platformSettings.annualPrice} ج.م). أما <strong>باقة المحاضر الطالب ({platformSettings.studentPrice} ج.م)</strong> فهي منحة مخصصة لطلبة الكليات والمدارس حتى سن {platformSettings.studentMaxAge} سنة بإثبات دراسي ({platformSettings.studentProofText}) دون الحاجة لبطاقة شخصية.
             </p>
           </div>
         </div>
@@ -574,16 +629,16 @@ export default function InstructorJoinPage() {
               
               <div className="py-2">
                 <div className="flex items-baseline gap-1">
-                  <span className="text-3xl font-black text-white">290</span>
+                  <span className="text-3xl font-black text-white">{platformSettings.monthlyPrice}</span>
                   <span className="text-xs font-bold text-zinc-400">ج.م / شهرياً</span>
                 </div>
                 <div className="text-[11px] text-zinc-500 mt-0.5">متاح لكافة الأعمار</div>
               </div>
 
               <ul className="space-y-2 text-xs text-zinc-300 font-medium">
-                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /> 14 يوماً تجربة مجانية في البداية</li>
+                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /> {platformSettings.instructorTrialDays} يوماً تجربة مجانية في البداية</li>
                 <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /> كورسات وطلاب غير محدود</li>
-                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /> 0% عمولة على المبيعات</li>
+                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /> {platformSettings.commissionPercent}% عمولة على المبيعات</li>
                 <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /> تحويل فوري لأرباحك عبر إنستاباي</li>
               </ul>
             </div>
@@ -592,7 +647,7 @@ export default function InstructorJoinPage() {
               href="/register?role=instructor&track=expert"
               className="w-full py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-xs text-center transition-all cursor-pointer"
             >
-              الاشتراك الشهري (290 ج.م)
+              الاشتراك الشهري ({platformSettings.monthlyPrice} ج.م)
             </Link>
           </div>
 
@@ -611,16 +666,16 @@ export default function InstructorJoinPage() {
               
               <div className="py-2">
                 <div className="flex items-baseline gap-1">
-                  <span className="text-3xl font-black text-indigo-400">1,499</span>
+                  <span className="text-3xl font-black text-indigo-400">{platformSettings.annualPrice}</span>
                   <span className="text-xs font-bold text-zinc-400">ج.م / سنوياً</span>
                 </div>
                 <div className="text-[11px] text-zinc-500 line-through mt-0.5">بدلاً من 3,500 ج.م</div>
               </div>
 
               <ul className="space-y-2 text-xs text-zinc-300 font-medium">
-                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-indigo-400 shrink-0" /> 14 يوماً تجربة مجانية أولاً</li>
+                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-indigo-400 shrink-0" /> {platformSettings.instructorTrialDays} يوماً تجربة مجانية أولاً</li>
                 <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-indigo-400 shrink-0" /> عدد كورسات وطلاب غير محدود</li>
-                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-indigo-400 shrink-0" /> 0% عمولة نهائياً على المبيعات</li>
+                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-indigo-400 shrink-0" /> {platformSettings.commissionPercent}% عمولة نهائياً على المبيعات</li>
                 <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-indigo-400 shrink-0" /> أولوية في الدعم الفني المخصص</li>
               </ul>
             </div>
@@ -639,7 +694,7 @@ export default function InstructorJoinPage() {
               <div className="flex justify-between items-center">
                 <h3 className="text-base font-black text-white">باقة المحاضر الطالب</h3>
                 <span className="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 text-[10px] font-black">
-                  شهر مجاناً
+                  {platformSettings.studentTrialDays} يوم مجاناً
                 </span>
               </div>
               <p className="text-xs text-zinc-300 leading-relaxed">
@@ -648,17 +703,17 @@ export default function InstructorJoinPage() {
               
               <div className="py-2">
                 <div className="flex items-baseline gap-1">
-                  <span className="text-3xl font-black text-amber-400">120</span>
+                  <span className="text-3xl font-black text-amber-400">{platformSettings.studentPrice}</span>
                   <span className="text-xs font-bold text-zinc-400">ج.م / شهرياً</span>
                 </div>
-                <div className="text-[11px] text-zinc-400 mt-0.5">بإثبات دراسي (كارنيه/جدول) - سن 22 فأقل</div>
+                <div className="text-[11px] text-zinc-400 mt-0.5">بإثبات دراسي ({platformSettings.studentProofText}) - سن {platformSettings.studentMaxAge} فأقل</div>
               </div>
 
               <ul className="space-y-2 text-xs text-zinc-300 font-medium">
-                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-amber-400 shrink-0" /> 30 يوماً تجربة مجانية أولاً</li>
+                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-amber-400 shrink-0" /> {platformSettings.studentTrialDays} يوماً تجربة مجانية أولاً</li>
                 <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-amber-400 shrink-0" /> رفع ونشر الكورسات والدروس</li>
                 <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-amber-400 shrink-0" /> شارة طالب محاضر معتمد</li>
-                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-amber-400 shrink-0" /> مخصص لسن 22 سنة فأقل</li>
+                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-amber-400 shrink-0" /> مخصص لسن {platformSettings.studentMaxAge} سنة فأقل</li>
               </ul>
             </div>
 
@@ -666,11 +721,11 @@ export default function InstructorJoinPage() {
               href="/register?role=instructor&track=student"
               className="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 font-black text-xs text-center transition-all shadow-md cursor-pointer"
             >
-              اشترك كمحاضر طالب (120 ج.م)
+              اشترك كمحاضر طالب ({platformSettings.studentPrice} ج.م)
             </Link>
           </div>
 
-          {/* Plan 4: Academic 14-day Trial */}
+          {/* Plan 4: Academic Trial */}
           <div className="p-6 rounded-3xl bg-[#0f1426] border border-zinc-800 shadow-md flex flex-col justify-between space-y-5">
             <div className="space-y-4">
               <div className="flex justify-between items-center">
@@ -685,12 +740,12 @@ export default function InstructorJoinPage() {
               
               <div className="py-2">
                 <span className="text-3xl font-black text-white">0</span>
-                <span className="text-xs font-bold text-zinc-400 mr-1">ج.م / 14 يوماً</span>
+                <span className="text-xs font-bold text-zinc-400 mr-1">ج.م / {platformSettings.instructorTrialDays} يوماً</span>
                 <div className="text-[11px] text-zinc-500 mt-0.5">بدون بطاقة ائتمان</div>
               </div>
 
               <ul className="space-y-2 text-xs text-zinc-300 font-medium">
-                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /> تجربة كاملة لمدة 14 يوماً</li>
+                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /> تجربة كاملة لمدة {platformSettings.instructorTrialDays} يوماً</li>
                 <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /> رفع ونشر الكورسات</li>
                 <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /> ربط بيانات إنستاباي والمحافظ</li>
               </ul>
@@ -700,7 +755,7 @@ export default function InstructorJoinPage() {
               href="/register?role=instructor&track=expert"
               className="w-full py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-xs text-center transition-all cursor-pointer"
             >
-              بدء الـ 14 يوماً مجاناً
+              بدء الـ {platformSettings.instructorTrialDays} يوماً مجاناً
             </Link>
           </div>
 
@@ -731,7 +786,7 @@ export default function InstructorJoinPage() {
               className="w-full sm:w-auto px-7 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-lg shadow-indigo-600/30 transition-all hover:scale-105 flex items-center justify-center gap-2 cursor-pointer"
             >
               <Building className="w-4 h-4" />
-              <span>انضم كمدرس أو دكتور جامعي (14 يوماً مجاناً)</span>
+              <span>انضم كمدرس أو دكتور ({platformSettings.instructorTrialDays} يوماً مجاناً)</span>
             </Link>
 
             <Link
@@ -739,7 +794,7 @@ export default function InstructorJoinPage() {
               className="w-full sm:w-auto px-7 py-3.5 rounded-2xl bg-amber-500 hover:bg-amber-400 text-zinc-950 font-black text-xs shadow-lg shadow-amber-500/30 transition-all hover:scale-105 flex items-center justify-center gap-2 cursor-pointer"
             >
               <GraduationCap className="w-4 h-4 text-zinc-950" />
-              <span>اشترك كمحاضر طالب (30 يوماً مجاناً)</span>
+              <span>اشترك كمحاضر طالب ({platformSettings.studentTrialDays} يوماً مجاناً)</span>
             </Link>
           </div>
         </div>
