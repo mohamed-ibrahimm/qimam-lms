@@ -24,7 +24,18 @@ async function getHomeData() {
         where: { status: 'PUBLISHED' },
         orderBy: { createdAt: 'desc' },
         include: {
-          instructor: { select: { officialFullName: true, avatarUrl: true } },
+          instructor: {
+            select: {
+              officialFullName: true,
+              firstName: true,
+              lastName: true,
+              avatarUrl: true,
+              isStudentInstructor: true,
+              studentUniversity: true,
+              studentFaculty: true,
+              role: true,
+            },
+          },
           category: true,
           _count: { select: { sections: true, enrollments: true } },
         },

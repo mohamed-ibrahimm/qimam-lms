@@ -8,6 +8,7 @@ interface Props {
     category?: string;
     level?: string;
     sort?: string;
+    type?: string;
   };
 }
 
@@ -16,6 +17,7 @@ export const dynamic = 'force-dynamic';
 export default async function CoursesPage({ searchParams }: Props) {
   const q = searchParams.q || '';
   const categorySlug = searchParams.category || '';
+  const courseType = (searchParams.type as any) || 'all';
 
   let courses: any[] = [];
   let categories: any[] = [];
@@ -28,7 +30,18 @@ export default async function CoursesPage({ searchParams }: Props) {
         },
         orderBy: { createdAt: 'desc' },
         include: {
-          instructor: { select: { officialFullName: true, avatarUrl: true } },
+          instructor: {
+            select: {
+              officialFullName: true,
+              firstName: true,
+              lastName: true,
+              avatarUrl: true,
+              isStudentInstructor: true,
+              studentUniversity: true,
+              studentFaculty: true,
+              role: true,
+            },
+          },
           category: { select: { id: true, name: true, slug: true } },
           _count: { select: { sections: true, enrollments: true } },
         },
@@ -50,6 +63,7 @@ export default async function CoursesPage({ searchParams }: Props) {
       categories={categories}
       initialCategory={categorySlug}
       initialQuery={q}
+      initialType={courseType}
     />
   );
 }

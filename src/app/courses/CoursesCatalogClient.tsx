@@ -25,7 +25,8 @@ import {
   ChevronLeft,
   TrendingUp,
   Crown,
-  Sparkle
+  Sparkle,
+  Video
 } from 'lucide-react';
 import { formatPrice, formatDuration } from '@/lib/utils';
 
@@ -47,7 +48,13 @@ interface Course {
   hasFinalExam: boolean;
   instructor: {
     officialFullName: string;
+    firstName?: string;
+    lastName?: string;
     avatarUrl: string | null;
+    isStudentInstructor?: boolean;
+    studentUniversity?: string | null;
+    studentFaculty?: string | null;
+    role?: string;
   };
   category: {
     id: string;
@@ -72,6 +79,7 @@ interface Props {
   categories: Category[];
   initialCategory?: string;
   initialQuery?: string;
+  initialType?: string;
 }
 
 export default function CoursesCatalogClient({
@@ -79,8 +87,12 @@ export default function CoursesCatalogClient({
   categories,
   initialCategory = '',
   initialQuery = '',
+  initialType = 'all',
 }: Props) {
   // State
+  const [selectedType, setSelectedType] = useState<'ALL' | 'STUDENT' | 'EXPERT'>(
+    initialType === 'students' ? 'STUDENT' : initialType === 'instructors' ? 'EXPERT' : 'ALL'
+  );
   const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
   const [selectedLevel, setSelectedLevel] = useState<string>('ALL');
@@ -136,6 +148,14 @@ export default function CoursesCatalogClient({
         if (!matchTitle && !matchDesc && !matchInstructor) return false;
       }
 
+      // Track Filter (All / Students / Instructors)
+      if (selectedType === 'STUDENT' && !course.instructor?.isStudentInstructor) {
+        return false;
+      }
+      if (selectedType === 'EXPERT' && course.instructor?.isStudentInstructor) {
+        return false;
+      }
+
       // Category
       if (selectedCategory && course.category?.slug !== selectedCategory) {
         return false;
@@ -188,6 +208,7 @@ export default function CoursesCatalogClient({
     });
   }, [
     initialCourses,
+    selectedType,
     searchQuery,
     selectedCategory,
     selectedLevel,
@@ -205,12 +226,14 @@ export default function CoursesCatalogClient({
     setSelectedPriceFilter('ALL');
     setSelectedDuration('ALL');
     setOnlyCertified(false);
+    setSelectedType('ALL');
     setSortBy('POPULAR');
   };
 
   const hasActiveFilters = Boolean(
     searchQuery ||
     selectedCategory ||
+    selectedType !== 'ALL' ||
     selectedLevel !== 'ALL' ||
     selectedPriceFilter !== 'ALL' ||
     selectedDuration !== 'ALL' ||
@@ -412,59 +435,47 @@ export default function CoursesCatalogClient({
               </div>
             )}
 
-            {/* Quick Filter Picks Horizontal Bar */}
+            {/* 3-Way Track Switcher Bar */}
             <div className="flex flex-wrap items-center justify-center gap-2 pt-6 border-t border-slate-200/90 dark:border-purple-900/40 relative z-10">
-              <span className="text-xs font-bold text-slate-500 dark:text-zinc-400">تصفح سريع:</span>
+              <span className="text-xs font-bold text-slate-500 dark:text-zinc-400">مسار الكورسات:</span>
 
               <button
                 type="button"
-                onClick={() => { setSelectedPriceFilter('ALL'); setSelectedCategory(''); }}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  selectedPriceFilter === 'ALL' && !selectedCategory
-                    ? 'bg-amber-500 text-zinc-950 shadow-sm shadow-amber-500/20'
-                    : 'bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-zinc-300 hover:bg-slate-200 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10'
+                onClick={() => setSelectedType('ALL')}
+                className={`px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
+                  selectedType === 'ALL'
+                    ? 'bg-white dark:bg-zinc-800 text-blue-700 dark:text-white shadow-md border border-slate-200 dark:border-zinc-700 ring-2 ring-blue-500/20'
+                    : 'bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-zinc-300 hover:bg-slate-200 dark:hover:bg-white/10'
                 }`}
               >
-                جميع الكورسات ({initialCourses.length})
+                <BookOpen className="w-3.5 h-3.5" />
+                <span>جميع الكورسات ({initialCourses.length})</span>
               </button>
 
               <button
                 type="button"
-                onClick={() => setSelectedPriceFilter('DISCOUNTED')}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
-                  selectedPriceFilter === 'DISCOUNTED'
-                    ? 'bg-rose-600 text-white shadow-sm shadow-rose-600/30'
-                    : 'bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 hover:bg-rose-100 dark:hover:bg-rose-900/40 border border-rose-200 dark:border-rose-800/40'
+                onClick={() => setSelectedType('STUDENT')}
+                className={`px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
+                  selectedType === 'STUDENT'
+                    ? 'bg-amber-500 text-zinc-950 shadow-md shadow-amber-500/25 ring-2 ring-amber-400/50 scale-105'
+                    : 'bg-amber-500/10 text-amber-800 dark:text-amber-300 hover:bg-amber-500/20 border border-amber-500/30'
                 }`}
               >
-                <Percent className="w-3.5 h-3.5" />
-                <span>عروض وتخفيضات خاصة</span>
+                <GraduationCap className="w-4 h-4" />
+                <span>كورسات الطلاب ({initialCourses.filter(c => c.instructor?.isStudentInstructor).length})</span>
               </button>
 
               <button
                 type="button"
-                onClick={() => setSortBy('POPULAR')}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
-                  sortBy === 'POPULAR' && selectedPriceFilter !== 'DISCOUNTED'
-                    ? 'bg-purple-600 text-white shadow-sm shadow-purple-600/30'
-                    : 'bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 hover:bg-purple-100 dark:hover:bg-purple-900/40 border border-purple-200 dark:border-purple-800/40'
+                onClick={() => setSelectedType('EXPERT')}
+                className={`px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
+                  selectedType === 'EXPERT'
+                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/25 ring-2 ring-indigo-400/50 scale-105'
+                    : 'bg-indigo-500/10 text-indigo-800 dark:text-indigo-300 hover:bg-indigo-500/20 border border-indigo-500/30'
                 }`}
               >
-                <Flame className="w-3.5 h-3.5 text-amber-500" />
-                <span>الأكثر طلباً ورواجاً</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setOnlyCertified(!onlyCertified)}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
-                  onlyCertified
-                    ? 'bg-emerald-600 text-white shadow-sm shadow-emerald-600/30'
-                    : 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 border border-emerald-200 dark:border-emerald-800/40'
-                }`}
-              >
-                <BadgeCheck className="w-3.5 h-3.5" />
-                <span>شهادات معتمدة</span>
+                <Video className="w-4 h-4" />
+                <span>كورسات المحاضرين والدكاترة ({initialCourses.filter(c => !c.instructor?.isStudentInstructor).length})</span>
               </button>
             </div>
           </div>
@@ -490,6 +501,61 @@ export default function CoursesCatalogClient({
             {/* Sidebar Container */}
             <div className={`${mobileFilterOpen ? 'block' : 'hidden'} lg:block space-y-6`}>
               
+              {/* Filter Group: Track (All / Student / Expert) */}
+              <div className="p-6 rounded-3xl bg-white/90 dark:bg-[#120e24]/90 border border-slate-200/90 dark:border-purple-900/50 shadow-xl space-y-4 backdrop-blur-xl">
+                <h3 className="text-xs sm:text-sm font-black text-slate-900 dark:text-white flex items-center gap-2">
+                  <BookOpen className="w-4 h-4 text-amber-500" />
+                  <span>مسار الكورس ونوع المحاضر</span>
+                </h3>
+
+                <div className="space-y-1.5">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedType('ALL')}
+                    className={`w-full py-2.5 px-3 rounded-2xl text-xs font-bold text-right flex items-center justify-between transition-all cursor-pointer ${
+                      selectedType === 'ALL'
+                        ? 'bg-blue-600 text-white shadow-md'
+                        : 'text-slate-600 dark:text-zinc-400 hover:bg-slate-100 dark:hover:bg-white/5'
+                    }`}
+                  >
+                    <span>جميع الكورسات (الكل)</span>
+                    <span className="text-[11px] font-mono">{initialCourses.length}</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setSelectedType('STUDENT')}
+                    className={`w-full py-2.5 px-3 rounded-2xl text-xs font-bold text-right flex items-center justify-between transition-all cursor-pointer ${
+                      selectedType === 'STUDENT'
+                        ? 'bg-amber-500 text-zinc-950 shadow-md font-black'
+                        : 'text-amber-700 dark:text-amber-300 hover:bg-amber-500/10'
+                    }`}
+                  >
+                    <span className="flex items-center gap-1.5">
+                      <GraduationCap className="w-3.5 h-3.5" />
+                      <span>كورسات الطلاب</span>
+                    </span>
+                    <span className="text-[11px] font-mono">{initialCourses.filter(c => c.instructor?.isStudentInstructor).length}</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setSelectedType('EXPERT')}
+                    className={`w-full py-2.5 px-3 rounded-2xl text-xs font-bold text-right flex items-center justify-between transition-all cursor-pointer ${
+                      selectedType === 'EXPERT'
+                        ? 'bg-indigo-600 text-white shadow-md font-black'
+                        : 'text-indigo-700 dark:text-indigo-300 hover:bg-indigo-500/10'
+                    }`}
+                  >
+                    <span className="flex items-center gap-1.5">
+                      <Video className="w-3.5 h-3.5" />
+                      <span>كورسات المحاضرين والدكاترة</span>
+                    </span>
+                    <span className="text-[11px] font-mono">{initialCourses.filter(c => !c.instructor?.isStudentInstructor).length}</span>
+                  </button>
+                </div>
+              </div>
+
               {/* Filter Group: Categories */}
               <div className="p-6 rounded-3xl bg-white/90 dark:bg-[#120e24]/90 border border-slate-200/90 dark:border-purple-900/50 shadow-xl space-y-4 backdrop-blur-xl">
                 <div className="flex items-center justify-between">
@@ -843,21 +909,35 @@ export default function CoursesCatalogClient({
                         </div>
 
                         {/* Instructor Info Centered */}
-                        <div className="flex items-center justify-center gap-2.5 pt-1">
-                          {course.instructor.avatarUrl ? (
-                            <img
-                              src={course.instructor.avatarUrl}
-                              alt={course.instructor.officialFullName}
-                              className="w-7 h-7 rounded-full object-cover border border-purple-500/40"
-                            />
+                        <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
+                          <div className="flex items-center gap-1.5">
+                            {course.instructor.avatarUrl ? (
+                              <img
+                                src={course.instructor.avatarUrl}
+                                alt={course.instructor.officialFullName}
+                                className="w-6 h-6 rounded-full object-cover border border-purple-500/40"
+                              />
+                            ) : (
+                              <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-amber-500 to-purple-600 flex items-center justify-center text-[10px] font-black text-white">
+                                {course.instructor.officialFullName[0]}
+                              </div>
+                            )}
+                            <span className="text-xs font-bold text-slate-700 dark:text-zinc-300">
+                              {course.instructor.officialFullName}
+                            </span>
+                          </div>
+
+                          {course.instructor.isStudentInstructor ? (
+                            <span className="text-[9.5px] px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-300 font-black border border-amber-500/30 flex items-center gap-1">
+                              <GraduationCap className="w-3 h-3" />
+                              طالب محاضر
+                            </span>
                           ) : (
-                            <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-500 to-purple-600 flex items-center justify-center text-xs font-black text-white">
-                              {course.instructor.officialFullName[0]}
-                            </div>
+                            <span className="text-[9.5px] px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 font-bold border border-indigo-500/20 flex items-center gap-1">
+                              <Video className="w-3 h-3 text-indigo-400" />
+                              مدرس / دكتور معتمد
+                            </span>
                           )}
-                          <span className="text-xs font-bold text-slate-700 dark:text-zinc-300">
-                            {course.instructor.officialFullName}
-                          </span>
                         </div>
                       </div>
 
