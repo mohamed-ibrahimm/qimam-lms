@@ -86,25 +86,25 @@ export default function MobileHero({
           </div>
         )}
 
-        {/* 2. CENTER: Large, Broad, Elegant Headline & Subtitle */}
-        <div className="flex-1 flex flex-col justify-center items-center text-center my-auto px-2 py-1 space-y-2.5 shrink-0 relative">
+        {/* 2. CENTER: Large, Broad, Spacious Headline & Subtitle */}
+        <div className="flex-1 flex flex-col justify-center items-center text-center my-auto px-2 py-1.5 space-y-2.5 xs:space-y-3 shrink-0 relative">
 
-          <h1 className="font-black tracking-tight w-full mb-1 text-center">
-            <span className="text-slate-950 dark:text-white block font-black text-[26px] xs:text-[31px] sm:text-4xl leading-[1.24] mb-1.5 tracking-tight">
+          <h1 className="font-black tracking-tight w-full mb-1 text-center space-y-1.5">
+            <span className="text-slate-950 dark:text-white block font-black text-[27px] xs:text-[33px] sm:text-4xl leading-[1.22] tracking-tight">
               {settings.HERO_TITLE || 'بوابتك الذكية لاحتراف'}
             </span>
-            <span className="block font-black text-[18px] xs:text-[22px] sm:text-2xl leading-snug bg-gradient-to-r from-blue-700 via-indigo-600 to-purple-600 dark:from-amber-400 dark:via-yellow-300 dark:to-amber-500 bg-clip-text text-transparent">
-              {settings.HERO_TITLE_HIGHLIGHT || 'البرمجة والذكاء الاصطناعي'}
+            <span className="block font-black text-[19px] xs:text-[23px] sm:text-2xl leading-snug bg-gradient-to-r from-blue-700 via-indigo-600 to-purple-600 dark:from-amber-400 dark:via-yellow-300 dark:to-amber-500 bg-clip-text text-transparent">
+              {settings.HERO_TITLE_HIGHLIGHT || 'البرمجة وهندسة النظم والذكاء الاصطناعي'}
             </span>
           </h1>
 
-          <p className="text-xs xs:text-sm text-slate-700 dark:text-zinc-200 max-w-[340px] xs:max-w-sm mx-auto leading-relaxed font-medium px-2">
-            {settings.HERO_SUBTITLE || `${cleanPlatformName} — مسارات تدريبية ودبلومات معتمدة تؤهلك لسوق العمل بثقة واحتراف.`}
+          <p className="text-xs xs:text-sm text-slate-700 dark:text-zinc-200 max-w-[360px] xs:max-w-md mx-auto leading-relaxed font-medium px-1 mt-0.5">
+            {settings.HERO_SUBTITLE || 'أكاديمية م / محمد ابراهيم — مسارات تدريبية هندسية متكاملة، دبلومات برمجية معتمدة، ومشاريع إنتاج واقعية تؤهلك لسوق العمل بثقة واحتراف.'}
           </p>
         </div>
 
-        {/* 3. BOTTOM: 4 Action Buttons with clearance above floating icons */}
-        <div className="w-full max-w-[340px] xs:max-w-sm mx-auto flex flex-col gap-2.5 pb-1.5 px-1.5 shrink-0 mt-auto">
+        {/* 3. BOTTOM: 4 Action Buttons pushed down directly to the very bottom */}
+        <div className="w-full max-w-[360px] xs:max-w-md mx-auto flex flex-col gap-1.5 xs:gap-2 pb-1 px-1 shrink-0 mt-auto">
           
           {/* Button 1: Diploma */}
           <a href="#trending-diploma" className="shimmer-border-wrapper group w-full">
@@ -159,16 +159,16 @@ export default function MobileHero({
 
       {/* 
         ========================================================================
-        SCREEN 2: DEDICATED SECOND FULL SCREEN (BELOW THE FOLD)
-        Dedicated, spacious second screen for Quick Contacts & Academy Highlights.
+        SCREEN 2: BELOW THE FOLD
+        Dedicated, spacious section for Quick Contacts and Official Badges.
         ========================================================================
       */}
-      <section className="min-h-[100svh] flex flex-col justify-center items-center py-24 px-4 bg-slate-100/40 dark:bg-zinc-950/60 space-y-8 text-center shrink-0 border-t border-slate-200/60 dark:border-white/5">
+      <section className="pt-16 pb-20 px-4 bg-slate-100/40 dark:bg-zinc-950/40 space-y-7 text-center">
         
         {/* Quick Contacts */}
         {hasAnySocial && (
-          <div className="space-y-4 max-w-sm mx-auto w-full">
-            <span className="text-sm text-slate-800 dark:text-zinc-200 font-bold block">تواصل مباشر وسريع مع الأكاديمية:</span>
+          <div className="space-y-4 max-w-sm mx-auto">
+            <span className="text-sm text-slate-700 dark:text-zinc-300 font-bold block">تواصل مباشر وسريع مع الأكاديمية:</span>
             <div className="flex flex-wrap items-center justify-center gap-2.5">
               {whatsappUrl && (
                 <a
