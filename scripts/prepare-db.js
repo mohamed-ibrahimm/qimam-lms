@@ -25,21 +25,34 @@ const schemaPath = path.join(__dirname, '..', 'prisma', 'schema.prisma');
 let schema = fs.readFileSync(schemaPath, 'utf8');
 
 const rawDb = (process.env.DATABASE_URL || '').trim();
-const isDbValid = rawDb.startsWith('postgresql://') || rawDb.startsWith('postgres://') || rawDb.startsWith('file:');
+let isDbValid = rawDb.startsWith('postgresql://') || rawDb.startsWith('postgres://') || rawDb.startsWith('file:') || rawDb.startsWith('prisma+postgres://');
 
-const dbUrl = isDbValid
+let dbUrl = isDbValid
   ? rawDb
   : (
       process.env.POSTGRES_PRISMA_URL ||
       process.env.POSTGRES_URL ||
       process.env.STORAGE_URL ||
       process.env.STORAGE_PRISMA_URL ||
+      process.env.STORAGE_POSTGRES_URL ||
+      process.env.STORAGE_DATABASE_URL ||
       process.env.NEON_DATABASE_URL ||
       process.env.NEON_URL ||
       process.env.SUPABASE_DATABASE_URL ||
       process.env.DATABASE_URL ||
       ''
     ).trim();
+
+// Fallback: search all process.env keys for any valid PostgreSQL URL
+if (!dbUrl) {
+  for (const [key, val] of Object.entries(process.env)) {
+    if (typeof val === 'string' && (val.startsWith('postgresql://') || val.startsWith('postgres://') || val.startsWith('prisma+postgres://'))) {
+      dbUrl = val.trim();
+      console.log(`🔍 [Database Auto-Detect] Found PostgreSQL URL in environment variable: ${key}`);
+      break;
+    }
+  }
+}
 
 if (dbUrl) {
   process.env.DATABASE_URL = dbUrl;
@@ -48,9 +61,10 @@ if (!process.env.DIRECT_URL) {
   process.env.DIRECT_URL =
     process.env.POSTGRES_URL_NON_POOLING ||
     process.env.STORAGE_URL_NON_POOLING ||
+    process.env.STORAGE_POSTGRES_URL_NON_POOLING ||
     dbUrl;
 }
-const isPostgres = dbUrl.startsWith('postgresql://') || dbUrl.startsWith('postgres://');
+const isPostgres = dbUrl.startsWith('postgresql://') || dbUrl.startsWith('postgres://') || dbUrl.startsWith('prisma+postgres://');
 
 if (isPostgres) {
   schema = schema.replace(/datasource db\s*\{[\s\S]*?\}/, `datasource db {
