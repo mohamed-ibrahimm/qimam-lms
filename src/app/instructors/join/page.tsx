@@ -166,44 +166,44 @@ export default function InstructorJoinPage() {
         
         {/* Dynamic Rotating Shimmer Badge Switcher */}
         <div className="mb-2 sm:mb-3 inline-block max-w-full px-1">
-          <div className="inline-flex p-1 rounded-2xl bg-white/95 dark:bg-[#16122d]/90 border border-slate-200 dark:border-purple-800/80 shadow-md backdrop-blur-md gap-1 flex-wrap sm:flex-nowrap justify-center w-full sm:w-auto">
+          <div className="inline-flex p-1 rounded-2xl bg-white/95 dark:bg-[#16122d]/90 border border-slate-200 dark:border-purple-800/80 shadow-md backdrop-blur-md gap-1 flex-row justify-center w-auto max-w-full overflow-x-auto">
             <button
               type="button"
               onClick={() => setActiveTrack('all')}
-              className={`px-3 py-1.5 rounded-xl text-[11px] sm:text-xs font-black transition-all flex items-center justify-center gap-1 cursor-pointer ${
+              className={`px-2.5 sm:px-3.5 py-1.5 rounded-xl text-[10.5px] sm:text-xs font-black transition-all flex items-center justify-center gap-1 shrink-0 cursor-pointer ${
                 activeTrack === 'all'
                   ? 'bg-slate-900 text-white dark:bg-white dark:text-zinc-950 shadow-sm'
                   : 'text-slate-600 dark:text-zinc-400 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10'
               }`}
             >
-              <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-              <span>عرض كل المسارات</span>
+              <Sparkles className="w-3 h-3 text-amber-500" />
+              <span>الكل</span>
             </button>
 
             <button
               type="button"
               onClick={() => setActiveTrack('expert')}
-              className={`px-3 py-1.5 rounded-xl text-[11px] sm:text-xs font-black transition-all flex items-center justify-center gap-1 cursor-pointer ${
+              className={`px-2.5 sm:px-3.5 py-1.5 rounded-xl text-[10.5px] sm:text-xs font-black transition-all flex items-center justify-center gap-1 shrink-0 cursor-pointer ${
                 activeTrack === 'expert'
                   ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-600/30'
                   : 'text-slate-600 dark:text-zinc-400 hover:text-purple-600 dark:hover:text-purple-300 hover:bg-purple-50 dark:hover:bg-white/10'
               }`}
             >
-              <Building className="w-3.5 h-3.5 text-purple-500 dark:text-purple-400" />
-              <span>باقة المدرسين والدكاترة ({platformSettings.instructorTrialDays} يوم مجاناً)</span>
+              <Building className="w-3 h-3 text-purple-500 dark:text-purple-400" />
+              <span>المدرسين (14 يوم مجاناً)</span>
             </button>
 
             <button
               type="button"
               onClick={() => setActiveTrack('student')}
-              className={`px-3 py-1.5 rounded-xl text-[11px] sm:text-xs font-black transition-all flex items-center justify-center gap-1 cursor-pointer ${
+              className={`px-2.5 sm:px-3.5 py-1.5 rounded-xl text-[10.5px] sm:text-xs font-black transition-all flex items-center justify-center gap-1 shrink-0 cursor-pointer ${
                 activeTrack === 'student'
                   ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-zinc-950 shadow-md shadow-amber-500/30'
                   : 'text-slate-600 dark:text-zinc-400 hover:text-amber-600 dark:hover:text-amber-300 hover:bg-amber-50 dark:hover:bg-white/10'
               }`}
             >
-              <GraduationCap className="w-3.5 h-3.5 text-amber-500" />
-              <span>باقة المحاضر الطالب ({platformSettings.studentTrialDays} يوم مجاناً)</span>
+              <GraduationCap className="w-3 h-3 text-amber-500" />
+              <span>الطلاب (30 يوم مجاناً)</span>
             </button>
           </div>
         </div>
