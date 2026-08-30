@@ -103,8 +103,8 @@ export default function MobileHero({
           </p>
         </div>
 
-        {/* 3. BOTTOM: 4 Action Buttons pushed down directly to the very bottom */}
-        <div className="w-full max-w-[360px] xs:max-w-md mx-auto flex flex-col gap-2 pb-1 px-1 shrink-0 mt-auto">
+        {/* 3. BOTTOM: 4 Action Buttons lifted smoothly by 2-3 notches above bottom bar */}
+        <div className="w-full max-w-[360px] xs:max-w-md mx-auto flex flex-col gap-2 pb-3 xs:pb-3.5 px-1 shrink-0 mt-auto">
           
           {/* Button 1: Diploma */}
           <a href="#trending-diploma" className="shimmer-border-wrapper group w-full">

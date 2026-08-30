@@ -37,7 +37,7 @@ export default function FloatingWhatsApp({ settings = {} }: FloatingWhatsAppProp
       <aside aria-label="الدعم الفني المباشر">
         <Link
           href="/support"
-          className="fixed bottom-1.5 sm:bottom-5 right-2 sm:right-6 z-50 flex items-center gap-2 p-2 sm:px-4 sm:py-2.5 rounded-full bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-zinc-950 shadow-xl shadow-amber-500/35 hover:shadow-2xl hover:scale-105 active:scale-95 transition-all group border border-amber-300/60 backdrop-blur-sm cursor-pointer"
+          className="fixed bottom-3.5 sm:bottom-6 right-2 sm:right-6 z-50 flex items-center gap-2 p-2 sm:px-4 sm:py-2.5 rounded-full bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-zinc-950 shadow-xl shadow-amber-500/35 hover:shadow-2xl hover:scale-105 active:scale-95 transition-all group border border-amber-300/60 backdrop-blur-sm cursor-pointer"
           title="تذاكر ومساعدة الدعم الفني"
         >
           <div className="relative flex items-center justify-center shrink-0">
@@ -62,7 +62,7 @@ export default function FloatingWhatsApp({ settings = {} }: FloatingWhatsAppProp
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="fixed bottom-1.5 sm:bottom-5 left-2 sm:left-6 z-50 flex items-center gap-2 p-2 sm:px-4 sm:py-2.5 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-xl shadow-emerald-600/35 hover:shadow-2xl hover:scale-105 active:scale-95 transition-all group border border-white/40 backdrop-blur-sm cursor-pointer"
+          className="fixed bottom-3.5 sm:bottom-6 left-2 sm:left-6 z-50 flex items-center gap-2 p-2 sm:px-4 sm:py-2.5 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-xl shadow-emerald-600/35 hover:shadow-2xl hover:scale-105 active:scale-95 transition-all group border border-white/40 backdrop-blur-sm cursor-pointer"
           title="تحدث مباشرة مع إدارة الأكاديمية عبر الواتساب"
         >
           <div className="relative flex items-center justify-center shrink-0">
