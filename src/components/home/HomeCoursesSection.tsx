@@ -182,13 +182,13 @@ export default function HomeCoursesSection({
             <span>جميع الكورسات ({initialCourses.length})</span>
           </button>
 
-          {/* Option 2: Digital Notes & Books Marketplace (New) */}
+          {/* Option 2: Digital Notes & Books Marketplace */}
           <Link
             href="/books"
             className="flex-1 min-w-[130px] sm:min-w-[140px] py-2.5 px-3.5 sm:px-4 rounded-full text-xs sm:text-sm font-black transition-all flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer bg-gradient-to-r from-emerald-500/15 via-teal-500/20 to-emerald-500/15 text-emerald-800 dark:text-emerald-300 hover:bg-emerald-500/25 border border-emerald-500/40 hover:border-emerald-400 hover:scale-105 shadow-sm"
           >
             <FileText className="w-4 h-4 text-emerald-500" />
-            <span>المكتبة والمذكرات (جديد)</span>
+            <span>المكتبة والمذكرات الرقمية</span>
           </Link>
 
           {/* Option 3: Student Courses */}

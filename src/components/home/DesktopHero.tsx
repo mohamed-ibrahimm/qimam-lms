@@ -82,13 +82,12 @@ export default function DesktopHero({
         {/* 4 Premium Action Pillars on a Single Unified Horizontal Row */}
         <div className="flex flex-wrap lg:flex-nowrap items-center justify-center gap-2.5 lg:gap-3.5 w-full mx-auto px-1 max-w-[1360px] pt-1">
           
-          {/* 1. Diploma Button (Shimmer Molten Gold) */}
+          {/* 1. Diploma Button (Shimmer Molten Gold - Perfectly Centered) */}
           <a href="#trending-diploma" className="shimmer-border-wrapper group shrink-0">
             <div className="shimmer-beam-gold" />
-            <div className="shimmer-button-content px-4 lg:px-5 py-2.5 lg:py-3 text-xs lg:text-[13px] font-black text-white dark:text-amber-300 group-hover:opacity-95 flex items-center justify-center gap-1.5 rounded-full shadow-lg">
+            <div className="shimmer-button-content px-4 lg:px-5 py-2.5 lg:py-3 text-xs lg:text-[13px] font-black text-white dark:text-amber-300 group-hover:opacity-95 flex items-center justify-center gap-2 rounded-full shadow-lg">
               <Flame className="w-4 h-4 text-amber-400 animate-bounce shrink-0" />
               <span className="whitespace-nowrap">{settings.FEATURED_DIPLOMA_BADGE || 'الدبلومة الأكثر طلباً (خصم 51%)'}</span>
-              <ArrowLeft className="w-3.5 h-3.5 text-white dark:text-amber-400 group-hover:-translate-x-1 transition-transform shrink-0" />
             </div>
           </a>
 
