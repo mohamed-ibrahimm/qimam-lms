@@ -29,23 +29,19 @@ export default async function AdminLayout({
   const adminName = user.officialFullName || `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'المدير';
 
   return (
-    <div className="min-h-screen relative flex flex-col md:flex-row">
-      {/* Dynamic Ambient Mesh in Background */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
-        <div className="dynamic-drift-1 absolute top-[5%] right-[15%] w-[550px] h-[550px] bg-blue-400/15 dark:bg-amber-500/10 rounded-full blur-[130px]" />
-        <div className="dynamic-drift-2 absolute bottom-[10%] right-[40%] w-[500px] h-[500px] bg-indigo-500/15 dark:bg-purple-600/10 rounded-full blur-[140px]" />
-        <div className="dynamic-drift-3 absolute top-[35%] left-[5%] w-[450px] h-[450px] bg-fuchsia-400/10 dark:bg-pink-600/10 rounded-full blur-[120px]" />
-        <div className="dynamic-drift-4 absolute bottom-[25%] left-[25%] w-[480px] h-[480px] bg-emerald-400/10 dark:bg-teal-600/10 rounded-full blur-[125px]" />
-      </div>
+    <div className="min-h-screen pt-20 sm:pt-24 relative flex flex-col md:flex-row bg-slate-50 dark:bg-[#07050e] text-slate-900 dark:text-slate-100 antialiased transition-colors">
+      
+      {/* Crisp Solid Ambient Lighting (Zero Blur Glitch) */}
+      <div className="fixed inset-0 pointer-events-none -z-10 bg-radial from-amber-500/5 via-transparent to-transparent opacity-60" />
 
-      {/* Comprehensive Admin Sidebar with live search across every page in the platform */}
+      {/* Streamlined Admin Sidebar */}
       <AdminSidebarClient
         platformName={platformName}
         adminName={adminName}
       />
 
-      {/* Main Admin View Area with smooth responsive mobile padding */}
-      <main className="flex-1 p-3 sm:p-6 md:p-8 max-w-7xl relative z-10 w-full min-w-0">
+      {/* Main Admin Content View */}
+      <main className="flex-1 p-3.5 sm:p-6 md:p-8 max-w-7xl relative z-10 w-full min-w-0">
         {children}
       </main>
     </div>

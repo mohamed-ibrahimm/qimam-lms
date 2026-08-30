@@ -12,27 +12,13 @@ import {
   BookOpen,
   Star,
   Tag,
-  KeyRound,
   Award,
-  MessageSquare,
-  HelpCircle,
   Settings,
   ShieldAlert,
-  Mail,
   Search,
-  ExternalLink,
-  Layers,
-  Compass,
-  ShieldCheck,
-  Home,
-  UserCheck,
-  User,
-  ShoppingBag,
   SlidersHorizontal,
   DollarSign,
   X,
-  ChevronLeft,
-  ChevronDown,
   Menu,
 } from 'lucide-react';
 
@@ -41,94 +27,29 @@ interface Props {
   adminName: string;
 }
 
-interface NavItem {
-  name: string;
-  href: string;
-  icon: any;
-  badge?: string;
-  isExternal?: boolean;
-}
-
-interface NavGroup {
-  groupName: string;
-  items: NavItem[];
-}
-
 export default function AdminSidebarClient({ platformName, adminName }: Props) {
   const pathname = usePathname();
-  const [searchQuery, setSearchQuery] = useState('');
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const navGroups: NavGroup[] = useMemo(() => [
-    {
-      groupName: 'لوحة التحكم',
-      items: [
-        { name: 'نظرة عامة والتحليلات', href: '/admin', icon: LayoutDashboard },
-      ],
-    },
-    {
-      groupName: 'الإعدادات والأسعار (VIP)',
-      items: [
-        { name: 'أسعار باقات المحاضرين (SaaS)', href: '/admin/settings?tab=pricing', icon: DollarSign, badge: 'أسعار' },
-        { name: 'محرر نصوص المنصة (CMS)', href: '/admin/settings?tab=content', icon: Sparkles, badge: 'محرر' },
-        { name: 'حسابات الدفع والمحافظ', href: '/admin/settings?tab=payments', icon: CreditCard, badge: 'دفع' },
-        { name: 'الهوية وقنوات التواصل', href: '/admin/settings?tab=contacts', icon: Settings },
-        { name: 'الحماية والعلامة المائية', href: '/admin/settings?tab=workflow', icon: ShieldCheck },
-        { name: 'كافة الإعدادات المتقدمة', href: '/admin/settings?tab=all', icon: SlidersHorizontal },
-      ],
-    },
-    {
-      groupName: 'المحاضرون والاشتراكات',
-      items: [
-        { name: 'إدارة المحاضرين والباقات', href: '/admin/instructors', icon: GraduationCap, badge: 'SaaS' },
-        { name: 'توثيق المحاضرين الطلبة', href: '/admin/student-verifications', icon: Award, badge: 'منحة 30 يوم' },
-      ],
-    },
-    {
-      groupName: 'الكورسات والمحتوى',
-      items: [
-        { name: 'إدارة الكورسات والدروس', href: '/admin/courses', icon: BookOpen },
-        { name: 'الدبلومات الشاملة', href: '/diplomas', icon: Layers, isExternal: true },
-      ],
-    },
-    {
-      groupName: 'الطلاب والمالية',
-      items: [
-        { name: 'إدارة الطلاب والمستخدمين', href: '/admin/users', icon: Users },
-        { name: 'المدفوعات والتحويلات', href: '/admin/payments', icon: CreditCard },
-        { name: 'كوبونات الخصم والعروض', href: '/admin/coupons', icon: Tag },
-        { name: 'مصمم الشهادات الرقمية', href: '/admin/certificates/designer', icon: Award },
-      ],
-    },
-    {
-      groupName: 'الدعم والمجتمع',
-      items: [
-        { name: 'تقييمات ومراجعات الطلاب', href: '/admin/reviews', icon: Star },
-        { name: 'تذاكر الدعم الفني', href: '/support', icon: HelpCircle },
-        { name: 'سجلات النظام (Logs)', href: '/admin/audit-logs', icon: ShieldAlert },
-      ],
-    },
+  // Essential, Clean Admin Navigation Links (No Clutter, No Redundant Items)
+  const navItems = useMemo(() => [
+    { name: 'لوحة التحكم والتحليلات', href: '/admin', icon: LayoutDashboard },
+    { name: 'إعدادات المنصة والأسعار (VIP)', href: '/admin/settings', icon: SlidersHorizontal, badge: 'VIP' },
+    { name: 'إدارة المحاضرين والباقات', href: '/admin/instructors', icon: GraduationCap, badge: 'SaaS' },
+    { name: 'توثيق المحاضرين الطلبة', href: '/admin/student-verifications', icon: Award, badge: 'منحة' },
+    { name: 'إدارة الكورسات والدروس', href: '/admin/courses', icon: BookOpen },
+    { name: 'إدارة الطلاب والمستخدمين', href: '/admin/users', icon: Users },
+    { name: 'المدفوعات والتحصيلات', href: '/admin/payments', icon: CreditCard },
+    { name: 'كوبونات الخصم والعروض', href: '/admin/coupons', icon: Tag },
+    { name: 'تقييمات ومراجعات الطلاب', href: '/admin/reviews', icon: Star },
+    { name: 'سجلات النظام والأمان', href: '/admin/audit-logs', icon: ShieldAlert },
   ], []);
 
-  // Filtered by search query
-  const filteredGroups = useMemo(() => {
-    if (!searchQuery.trim()) return navGroups;
-    const q = searchQuery.toLowerCase().trim();
-
-    return navGroups.map((group) => ({
-      ...group,
-      items: group.items.filter(
-        (item) =>
-          item.name.toLowerCase().includes(q) ||
-          group.groupName.toLowerCase().includes(q)
-      ),
-    })).filter((group) => group.items.length > 0);
-  }, [navGroups, searchQuery]);
-
   const renderContent = (isDrawer = false) => (
-    <div className="flex flex-col h-full bg-white dark:bg-[#0c0918] text-slate-900 dark:text-slate-100">
-      {/* Header & Identity */}
-      <div className="p-4 border-b border-slate-200/80 dark:border-zinc-800/80 space-y-3 shrink-0">
+    <div className="flex flex-col h-full bg-white dark:bg-[#0d091a] text-slate-900 dark:text-slate-100 rounded-2xl md:rounded-3xl border border-slate-200/90 dark:border-amber-500/25 shadow-xl">
+      
+      {/* Header Info */}
+      <div className="p-4 border-b border-slate-200 dark:border-zinc-800 space-y-1 shrink-0">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-500 to-yellow-400 flex items-center justify-center text-zinc-950 font-black text-xs shadow-md shadow-amber-500/20">
@@ -143,115 +64,77 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
               </h2>
             </div>
           </div>
+
           {isDrawer && (
             <button
               type="button"
               onClick={() => setMobileOpen(false)}
-              className="p-1.5 rounded-xl bg-slate-100 dark:bg-white/10 text-slate-500 hover:text-slate-900 dark:text-zinc-300 dark:hover:text-white cursor-pointer"
+              className="p-1.5 rounded-xl bg-slate-100 dark:bg-zinc-800 text-slate-500 hover:text-slate-900 dark:text-zinc-300 dark:hover:text-white cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
           )}
         </div>
-
-        {/* Quick Search */}
-        <div className="relative">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="بحث سريع بالأقسام..."
-            className="w-full h-8.5 pr-8 pl-7 rounded-xl bg-slate-50 dark:bg-[#151026] border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-xs focus:outline-none focus:border-amber-400"
-          />
-          <Search className="w-3.5 h-3.5 text-slate-400 dark:text-zinc-500 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-          {searchQuery && (
-            <button
-              type="button"
-              onClick={() => setSearchQuery('')}
-              className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 dark:hover:text-white"
-            >
-              <X className="w-3 h-3" />
-            </button>
-          )}
-        </div>
       </div>
 
-      {/* Navigation Items (Scrollable) */}
-      <div className="flex-1 overflow-y-auto p-2.5 space-y-3.5">
-        {filteredGroups.map((group) => {
-          const isVipGroup = group.groupName.includes('VIP');
+      {/* Streamlined Links List (Fits in one screen with zero scrollbar on desktop) */}
+      <div className="flex-1 p-3 space-y-1.5 overflow-y-auto">
+        {navItems.map((item) => {
+          const isActive = pathname === item.href || (item.href !== '/admin' && pathname.startsWith(item.href));
+          const Icon = item.icon;
 
           return (
-            <div key={group.groupName} className="space-y-1">
-              <div className="px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider text-slate-400 dark:text-zinc-400 flex items-center justify-between">
-                <span>{group.groupName}</span>
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={() => setMobileOpen(false)}
+              className={`flex items-center justify-between px-3 py-2.5 rounded-2xl text-xs font-bold transition-all ${
+                isActive
+                  ? 'bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-zinc-950 shadow-md shadow-amber-500/25 font-black scale-[1.02]'
+                  : 'text-slate-700 dark:text-zinc-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5'
+              }`}
+            >
+              <div className="flex items-center gap-2.5 min-w-0">
+                <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-zinc-950' : 'text-amber-600 dark:text-amber-400'}`} />
+                <span className="truncate">{item.name}</span>
               </div>
 
-              <div className="space-y-0.5">
-                {group.items.map((item) => {
-                  const isActive = pathname === item.href || (item.href.includes('?') && pathname + (typeof window !== 'undefined' ? window.location.search : '') === item.href);
-                  const Icon = item.icon;
-
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setMobileOpen(false)}
-                      className={`flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-all ${
-                        isActive
-                          ? 'bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-zinc-950 shadow-md shadow-amber-500/20 font-black'
-                          : 'text-slate-700 dark:text-zinc-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2.5 min-w-0">
-                        <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-zinc-950' : 'text-amber-600 dark:text-amber-400'}`} />
-                        <span className="truncate">{item.name}</span>
-                      </div>
-
-                      <div className="flex items-center gap-1.5 shrink-0 mr-1">
-                        {item.badge && (
-                          <span className={`text-[9px] font-black px-1.5 py-0.5 rounded-md ${
-                            isActive
-                              ? 'bg-zinc-950 text-amber-400'
-                              : 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/20'
-                          }`}>
-                            {item.badge}
-                          </span>
-                        )}
-                        {item.isExternal && (
-                          <ExternalLink className="w-3 h-3 opacity-60" />
-                        )}
-                      </div>
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
+              {item.badge && (
+                <span className={`text-[9px] font-black px-1.5 py-0.5 rounded-md shrink-0 mr-1 ${
+                  isActive
+                    ? 'bg-zinc-950 text-amber-400'
+                    : 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30'
+                }`}>
+                  {item.badge}
+                </span>
+              )}
+            </Link>
           );
         })}
       </div>
 
-      {/* Footer Info */}
-      <div className="p-3 border-t border-slate-200/80 dark:border-zinc-800/80 shrink-0 bg-slate-50/50 dark:bg-black/30">
-        <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-zinc-400 font-bold">
-          <span>المسؤول: {adminName}</span>
-          <span className="text-emerald-600 dark:text-emerald-400 flex items-center gap-1 font-black">
+      {/* Footer Status */}
+      <div className="p-3 border-t border-slate-200 dark:border-zinc-800 shrink-0 bg-slate-50/60 dark:bg-black/40 rounded-b-2xl md:rounded-b-3xl">
+        <div className="flex items-center justify-between text-[11px] text-slate-600 dark:text-zinc-400 font-bold">
+          <span>{adminName}</span>
+          <span className="text-emerald-600 dark:text-emerald-400 font-black flex items-center gap-1">
             ● متصل
           </span>
         </div>
       </div>
+
     </div>
   );
 
   return (
     <>
-      {/* Desktop Persistent Luxury Sidebar */}
-      <aside className="hidden md:flex flex-col w-64 lg:w-72 shrink-0 border-l border-slate-200/80 dark:border-zinc-800/80 sticky top-0 h-screen z-30 shadow-lg shadow-slate-900/5">
+      {/* Desktop Persistent Compact Sidebar (Clean fit, No scrollbar) */}
+      <aside className="hidden md:block w-64 lg:w-72 shrink-0 sticky top-24 h-[calc(100vh-7rem)] mr-3.5 sm:mr-6 z-20">
         {renderContent(false)}
       </aside>
 
-      {/* Mobile Sticky Action Bar */}
-      <div className="md:hidden flex items-center justify-between p-3 bg-white dark:bg-[#0c0918] border-b border-slate-200/80 dark:border-zinc-800/80 sticky top-0 z-40">
+      {/* Mobile Sticky Top Header */}
+      <div className="md:hidden flex items-center justify-between p-3 bg-white dark:bg-[#0c0918] border-b border-slate-200 dark:border-zinc-800 sticky top-16 z-30 shadow-sm">
         <div className="flex items-center gap-2">
           <button
             type="button"
@@ -281,7 +164,7 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
             className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity"
             onClick={() => setMobileOpen(false)}
           />
-          <div className="relative w-72 max-w-[85vw] h-full shadow-2xl z-10 animate-in slide-in-from-right duration-200">
+          <div className="relative w-72 max-w-[85vw] h-full shadow-2xl z-10 p-3 animate-in slide-in-from-right duration-200">
             {renderContent(true)}
           </div>
         </div>
