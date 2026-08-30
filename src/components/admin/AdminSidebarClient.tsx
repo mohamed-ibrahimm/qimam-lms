@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -8,20 +8,29 @@ import {
   Users,
   GraduationCap,
   CreditCard,
+  Sparkles,
   BookOpen,
   Star,
   Tag,
+  KeyRound,
   Award,
+  MessageSquare,
+  HelpCircle,
+  Settings,
   ShieldAlert,
-  SlidersHorizontal,
-  X,
+  Mail,
   Search,
-  Sparkles,
-  Zap,
-  Globe,
-  Command,
-  LayoutGrid,
-  ChevronLeft,
+  ExternalLink,
+  Layers,
+  Compass,
+  ShieldCheck,
+  Home,
+  UserCheck,
+  User,
+  ShoppingBag,
+  SlidersHorizontal,
+  DollarSign,
+  X
 } from 'lucide-react';
 
 interface Props {
@@ -31,325 +40,295 @@ interface Props {
 
 interface NavItem {
   name: string;
-  description: string;
   href: string;
   icon: any;
   badge?: string;
-  badgeColor?: string;
-  accent: string;
+  isExternal?: boolean;
+}
+
+interface NavGroup {
+  groupName: string;
+  items: NavItem[];
 }
 
 export default function AdminSidebarClient({ platformName, adminName }: Props) {
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  // 10 Essential Admin Links with rich descriptions & high-impact visual themes
-  const allNavItems: NavItem[] = useMemo(() => [
+  const navGroups: NavGroup[] = useMemo(() => [
     {
-      name: 'لوحة التحكم والتحليلات',
-      description: 'نظرة عامة على المبيعات، الطلاب، المشاهدات والتقارير الفورية',
-      href: '/admin',
-      icon: LayoutDashboard,
-      accent: 'from-blue-500 to-indigo-600',
+      groupName: '👑 أهم قسم: إعدادات وأسعار ومحرر المنصة (VIP)',
+      items: [
+        { name: 'التحكم الشامل بأسعار باقات المحاضرين (SaaS)', href: '/admin/settings?tab=pricing', icon: DollarSign, badge: '⭐ أسعار' },
+        { name: 'التحكم بكلام ونصوص صفحات المنصة (CMS)', href: '/admin/settings?tab=content', icon: Sparkles, badge: '⭐ محرر' },
+        { name: 'حسابات الدفع (InstaPay وفودافون كاش)', href: '/admin/settings?tab=payments', icon: CreditCard, badge: 'دفع' },
+        { name: 'الهوية وقنوات التواصل والسوشيال ميديا', href: '/admin/settings?tab=contacts', icon: Settings },
+        { name: 'مسار التعلم والحماية والعلامة المائية', href: '/admin/settings?tab=workflow', icon: ShieldCheck },
+        { name: 'عرض وتعديل كافة الإعدادات في صفحة واحدة', href: '/admin/settings?tab=all', icon: SlidersHorizontal },
+      ],
     },
     {
-      name: 'إعدادات المنصة والأسعار (VIP)',
-      description: 'التحكم بأسعار باقات الـ SaaS، نصوص الصفحات وحسابات الدفع',
-      href: '/admin/settings',
-      icon: SlidersHorizontal,
-      badge: 'VIP',
-      badgeColor: 'bg-amber-500 text-zinc-950 shadow-amber-500/20',
-      accent: 'from-amber-400 to-yellow-500',
+      groupName: 'الرئيسية والتحليلات',
+      items: [
+        { name: 'نظرة عامة والتحليلات', href: '/admin', icon: LayoutDashboard },
+      ],
     },
     {
-      name: 'إدارة المحاضرين والباقات',
-      description: 'متابعة حسابات المدرسين والدكاترة واشتراكات نظام الـ SaaS',
-      href: '/admin/instructors',
-      icon: GraduationCap,
-      badge: 'SaaS',
-      badgeColor: 'bg-blue-500/20 text-blue-300 border border-blue-500/30',
-      accent: 'from-indigo-500 to-purple-600',
+      groupName: 'المحاضرون والاشتراكات',
+      items: [
+        { name: 'المحاضرون واشتراكات SaaS', href: '/admin/instructors', icon: GraduationCap, badge: 'SaaS' },
+        { name: 'توثيق الطلاب المحاضرين', href: '/admin/student-verifications', icon: Award, badge: 'منحة 30 يوم' },
+        { name: 'صفحة انضم كمحاضر والباقات', href: '/instructors/join', icon: Star, isExternal: true },
+        { name: 'استوديو تدريس المحاضر', href: '/instructor', icon: SlidersHorizontal, isExternal: true },
+      ],
     },
     {
-      name: 'توثيق المحاضرين الطلبة',
-      description: 'مراجعة وتفعيل منح الـ 30 يوماً المجانية للطلاب المتميزين',
-      href: '/admin/student-verifications',
-      icon: Award,
-      badge: 'منحة',
-      badgeColor: 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30',
-      accent: 'from-emerald-400 to-teal-500',
+      groupName: 'المناهج والدورات',
+      items: [
+        { name: 'إدارة الكورسات والدروس', href: '/admin/courses', icon: BookOpen },
+        { name: 'دليل الدبلومات والمسارات', href: '/diplomas', icon: Layers, isExternal: true },
+        { name: 'كتالوج الكورسات العام', href: '/courses', icon: Compass, isExternal: true },
+      ],
     },
     {
-      name: 'إدارة الكورسات والدروس',
-      description: 'إضافة وتعديل المسارات، الدبلومات، الفيديوهات والملحقات',
-      href: '/admin/courses',
-      icon: BookOpen,
-      accent: 'from-cyan-500 to-blue-600',
+      groupName: 'الطلاب والمستخدمون',
+      items: [
+        { name: 'إدارة الطلاب والمستخدمين', href: '/admin/users', icon: Users },
+        { name: 'منح الوصول اليدوي والتسجيل', href: '/admin/manual-access', icon: KeyRound },
+        { name: 'لوحة تحكم الطالب', href: '/dashboard', icon: UserCheck, isExternal: true },
+        { name: 'كورسات الطالب المسجلة', href: '/dashboard/my-courses', icon: BookOpen, isExternal: true },
+      ],
     },
     {
-      name: 'إدارة الطلاب والمستخدمين',
-      description: 'سجل الطلاب، منح الصلاحيات، وتعديل الحسابات وبياناتهم',
-      href: '/admin/users',
-      icon: Users,
-      accent: 'from-violet-500 to-purple-600',
+      groupName: 'المالية والمدفوعات',
+      items: [
+        { name: 'المدفوعات والتحويلات البنكية', href: '/admin/payments', icon: CreditCard, badge: 'جديد' },
+        { name: 'كوبونات الخصم والعروض', href: '/admin/coupons', icon: Tag },
+        { name: 'صفحة إتمام الدفع (Checkout)', href: '/checkout', icon: ShoppingBag, isExternal: true },
+      ],
     },
     {
-      name: 'المدفوعات والتحصيلات',
-      description: 'مراجعة تحويلات إنستاباي وفودافون كاش وتأكيد الاشتراكات',
-      href: '/admin/payments',
-      icon: CreditCard,
-      accent: 'from-emerald-500 to-green-600',
+      groupName: 'الشهادات والتحقق',
+      items: [
+        { name: 'مصمم الشهادات الرقمية', href: '/admin/certificates/designer', icon: Award },
+        { name: 'بوابة فحص وتوثيق الشهادات', href: '/verify', icon: ShieldCheck, isExternal: true },
+      ],
     },
     {
-      name: 'كوبونات الخصم والعروض',
-      description: 'إنشاء قسائم تخفيض بنسبة مئوية أو قيمة ثابتة للمسارات',
-      href: '/admin/coupons',
-      icon: Tag,
-      accent: 'from-rose-500 to-pink-600',
+      groupName: 'الدعم والمجتمع',
+      items: [
+        { name: 'تقييمات ومراجعات الطلاب', href: '/admin/reviews', icon: Star },
+        { name: 'تذاكر الدعم الفني والشكاوى', href: '/support', icon: HelpCircle },
+        { name: 'المحادثات المباشرة والشات', href: '/chat', icon: MessageSquare },
+      ],
     },
     {
-      name: 'تقييمات ومراجعات الطلاب',
-      description: 'مراقبة آراء وتقييمات الطلاب للكورسات واعتمادها',
-      href: '/admin/reviews',
-      icon: Star,
-      accent: 'from-amber-400 to-orange-500',
-    },
-    {
-      name: 'سجلات النظام والأمان',
-      description: 'سجل العمليات الدقيقة وحركات تسجيل الدخول والأمان',
-      href: '/admin/audit-logs',
-      icon: ShieldAlert,
-      accent: 'from-slate-500 to-zinc-600',
+      groupName: 'السجلات والأمان',
+      items: [
+        { name: 'سجلات التدقيق (Audit Logs)', href: '/admin/audit-logs', icon: ShieldAlert },
+        { name: 'سجلات البريد (Email Logs)', href: '/admin/email-logs', icon: Mail },
+      ],
     },
   ], []);
 
-  // Keyboard Shortcut: Cmd+K or Ctrl+K or Escape
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-        e.preventDefault();
-        setIsOpen((prev) => !prev);
-      } else if (e.key === 'Escape' && isOpen) {
-        setIsOpen(false);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen]);
-
-  // Filter items by search query
-  const filteredItems = useMemo(() => {
-    if (!searchQuery.trim()) return allNavItems;
+  // Filtered by search query
+  const filteredGroups = useMemo(() => {
+    if (!searchQuery.trim()) return navGroups;
     const q = searchQuery.toLowerCase().trim();
-    return allNavItems.filter(
-      (item) => item.name.toLowerCase().includes(q) || item.description.toLowerCase().includes(q)
-    );
-  }, [allNavItems, searchQuery]);
 
-  // Get current active item info for the top bar
-  const currentItem = useMemo(() => {
-    return allNavItems.find((item) => item.href === pathname || (item.href !== '/admin' && pathname.startsWith(item.href))) || allNavItems[0];
-  }, [allNavItems, pathname]);
+    return navGroups.map((group) => ({
+      ...group,
+      items: group.items.filter(
+        (item) =>
+          item.name.toLowerCase().includes(q) ||
+          group.groupName.toLowerCase().includes(q)
+      ),
+    })).filter((group) => group.items.length > 0);
+  }, [navGroups, searchQuery]);
 
-  return (
-    <>
-      {/* =========================================================================
-          1. SLIM & ELEGANT TOP STATUS BAR (No space wasted, 100% full width layout)
-         ========================================================================= */}
-      <div className="w-full bg-white/80 dark:bg-[#0c0918]/85 border-b border-slate-200/80 dark:border-amber-500/20 backdrop-blur-xl px-4 sm:px-8 py-3 flex items-center justify-between z-20 sticky top-14 sm:top-16 shadow-xs">
-        <div className="flex items-center gap-2.5">
-          <div className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse shadow-sm shadow-amber-400/50" />
-          <span className="text-xs sm:text-sm font-black text-slate-900 dark:text-white">
-            {currentItem?.name || 'لوحة الإدارة'}
+  const renderContent = (isDrawer = false) => (
+    <div className="flex flex-col h-full">
+      {/* Header & Identity */}
+      <div className="p-4 border-b border-slate-200/80 dark:border-purple-900/40 space-y-3 shrink-0">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] font-black px-2.5 py-1 rounded-full bg-amber-500/15 text-amber-800 dark:text-amber-300 border border-amber-500/30">
+            لوحة الإدارة الشاملة
           </span>
-          <span className="hidden md:inline-block text-[11px] text-slate-500 dark:text-zinc-400 font-medium">
-            • {platformName}
-          </span>
+          {isDrawer && (
+            <button
+              type="button"
+              onClick={() => setMobileOpen(false)}
+              className="p-1.5 rounded-xl bg-slate-100 dark:bg-white/10 text-slate-500 hover:text-slate-900 dark:text-zinc-300 dark:hover:text-white cursor-pointer"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
         </div>
 
-        <div className="flex items-center gap-2 sm:gap-3">
-          {/* Quick Launcher Trigger Button */}
-          <button
-            type="button"
-            onClick={() => { setIsOpen(true); setSearchQuery(''); }}
-            className="flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15 text-slate-800 dark:text-white text-xs font-black transition-all border border-slate-200 dark:border-white/10 shadow-xs cursor-pointer active:scale-95 group"
-          >
-            <LayoutGrid className="w-3.5 h-3.5 text-amber-500 group-hover:rotate-90 transition-transform duration-300" />
-            <span>أقسام الإدارة</span>
-            <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.2 rounded bg-black/10 dark:bg-black/40 text-[10px] font-mono text-slate-500 dark:text-zinc-400 border border-black/5 dark:border-white/10">
-              ⌘K
-            </kbd>
-          </button>
+        <div>
+          <h2 className="text-sm font-black text-slate-900 dark:text-white truncate">
+            {platformName}
+          </h2>
+          <p className="text-[11px] text-slate-500 dark:text-zinc-400 font-medium">
+            المسؤول: {adminName}
+          </p>
+        </div>
 
-          {/* Home Link */}
-          <Link
-            href="/"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500/15 hover:bg-amber-500/25 text-amber-800 dark:text-amber-300 text-xs font-bold transition-all border border-amber-500/30 shrink-0"
-            title="العودة للموقع العام"
-          >
-            <Globe className="w-3.5 h-3.5" />
-            <span className="hidden xs:inline">الموقع العام</span>
-          </Link>
+        {/* Quick Search */}
+        <div className="relative">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="ابحث في أي قسم بالمنصة..."
+            className="w-full h-9 pr-8 pl-7 rounded-xl bg-slate-50 dark:bg-[#181330] border border-slate-200 dark:border-purple-900/50 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-xs focus:outline-none focus:border-amber-400"
+          />
+          <Search className="w-3.5 h-3.5 text-slate-400 dark:text-zinc-500 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+          {searchQuery && (
+            <button
+              type="button"
+              onClick={() => setSearchQuery('')}
+              className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 dark:hover:text-white"
+            >
+              <X className="w-3 h-3" />
+            </button>
+          )}
         </div>
       </div>
 
-      {/* =========================================================================
-          2. FLOATING CIRCULAR COMMAND TRIGGER (Bottom-Left Luxury Floating Button)
-         ========================================================================= */}
-      <button
-        type="button"
-        onClick={() => { setIsOpen(true); setSearchQuery(''); }}
-        className="fixed bottom-6 left-6 z-[9999] group flex items-center gap-2 p-1.5 pr-4 rounded-full bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 text-zinc-950 shadow-[0_10px_35px_rgba(245,158,11,0.45)] hover:shadow-[0_15px_45px_rgba(245,158,11,0.6)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer ring-4 ring-amber-400/20"
-        title="فتح القائمة السريعة (Ctrl+K)"
-        aria-label="أقسام الإدارة السريعة"
-      >
-        <span className="text-xs font-black tracking-wide whitespace-nowrap hidden sm:inline-block">
-          أقسام الإدارة
-        </span>
-        <div className="w-9 h-9 rounded-full bg-zinc-950 text-amber-400 flex items-center justify-center shadow-md group-hover:rotate-180 transition-transform duration-500">
-          <LayoutGrid className="w-4 h-4" />
-        </div>
-      </button>
+      {/* Navigation Items (Scrollable) */}
+      <div className="flex-1 overflow-y-auto p-3 space-y-4">
+        {filteredGroups.map((group) => {
+          const isVipGroup = group.groupName.includes('VIP');
 
-      {/* =========================================================================
-          3. LUXURY QUICK COMMAND PALETTE MODAL (Fast, Beautiful & Searchable)
-         ========================================================================= */}
-      {isOpen && (
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-150">
-          {/* Backdrop Blur */}
-          <div
-            className="fixed inset-0 bg-black/80 backdrop-blur-md"
-            onClick={() => setIsOpen(false)}
-          />
-
-          {/* Modal Card */}
-          <div className="relative z-10 w-full max-w-2xl rounded-3xl bg-[#0e0a1f]/95 dark:bg-[#0c0918]/95 border-2 border-amber-500/40 shadow-[0_25px_70px_rgba(0,0,0,0.9)] backdrop-blur-3xl p-4 sm:p-6 space-y-4 animate-in zoom-in-95 duration-200 text-right">
-            
-            {/* Modal Header & Search */}
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400">
-                    <Sparkles className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h3 className="text-sm sm:text-base font-black text-white">
-                      القائمة السريعة للوحة الإدارة
-                    </h3>
-                    <p className="text-[11px] text-zinc-400">
-                      انتقل لأي قسم في المنصة بضغطة زر واحدة
-                    </p>
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => setIsOpen(false)}
-                  className="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-zinc-300 hover:text-white transition-colors cursor-pointer"
-                >
-                  <X className="w-4 h-4" />
-                </button>
+          return (
+            <div
+              key={group.groupName}
+              className={
+                isVipGroup
+                  ? 'p-2.5 rounded-2xl bg-gradient-to-br from-amber-500/15 via-purple-600/10 to-indigo-600/10 border-2 border-amber-500/40 shadow-lg shadow-amber-500/5 space-y-1.5 animate-pulse-subtle'
+                  : 'space-y-1'
+              }
+            >
+              <div className={`px-2.5 py-1 text-[10px] font-black uppercase tracking-wider flex items-center justify-between ${
+                isVipGroup ? 'text-amber-600 dark:text-amber-300' : 'text-slate-500 dark:text-zinc-400'
+              }`}>
+                <span>{group.groupName}</span>
+                {isVipGroup && (
+                  <span className="px-1.5 py-0.2 rounded-full bg-amber-500 text-zinc-950 text-[9px] font-black">
+                    VIP
+                  </span>
+                )}
               </div>
 
-              {/* Instant Search Bar */}
-              <div className="relative">
-                <input
-                  type="text"
-                  autoFocus
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="ابحث عن قسم (مثل: الأسعار، الكورسات، المحاضرين، المدفوعات)..."
-                  className="w-full h-11 pr-10 pl-4 rounded-2xl bg-white/[0.06] border border-white/10 text-white placeholder:text-zinc-500 text-xs sm:text-sm focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 transition-all"
-                />
-                <Search className="w-4 h-4 text-zinc-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-              </div>
-            </div>
+              <div className="space-y-0.5">
+              {group.items.map((item) => {
+                const isActive = pathname === item.href;
+                const Icon = item.icon;
 
-            {/* Interactive Grid of Navigation Cards */}
-            <div className="max-h-[60vh] overflow-y-auto pr-1 pl-1 space-y-2 scrollbar-thin">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                {filteredItems.map((item) => {
-                  const isActive = pathname === item.href || (item.href !== '/admin' && pathname.startsWith(item.href));
-                  const Icon = item.icon;
-
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setIsOpen(false)}
-                      className={`group flex items-start gap-3 p-3 rounded-2xl border transition-all duration-200 ${
-                        isActive
-                          ? 'bg-amber-500 text-zinc-950 border-amber-400 shadow-lg shadow-amber-500/25 font-black scale-[1.01]'
-                          : 'bg-white/[0.03] hover:bg-white/[0.08] text-white border-white/[0.06] hover:border-amber-500/40 hover:-translate-y-0.5'
-                      }`}
-                    >
-                      <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-110 shadow-sm ${
-                        isActive
-                          ? 'bg-zinc-950 text-amber-400'
-                          : `bg-gradient-to-tr ${item.accent} text-white`
-                      }`}>
-                        <Icon className="w-4 h-4" />
-                      </div>
-
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between gap-1 mb-0.5">
-                          <span className={`text-xs font-black truncate ${isActive ? 'text-zinc-950' : 'text-white group-hover:text-amber-300'}`}>
-                            {item.name}
-                          </span>
-                          {item.badge && (
-                            <span className={`text-[9px] font-black px-1.5 py-0.2 rounded-full shrink-0 ${
-                              isActive
-                                ? 'bg-zinc-950 text-amber-400'
-                                : item.badgeColor || 'bg-amber-500/20 text-amber-300'
-                            }`}>
-                              {item.badge}
-                            </span>
-                          )}
-                        </div>
-                        <p className={`text-[10.5px] leading-snug line-clamp-1 ${
-                          isActive ? 'text-zinc-900 font-medium' : 'text-zinc-400 group-hover:text-zinc-300'
-                        }`}>
-                          {item.description}
-                        </p>
-                      </div>
-
-                      <ChevronLeft className={`w-4 h-4 shrink-0 mt-2 transition-transform group-hover:-translate-x-1 ${
-                        isActive ? 'text-zinc-950' : 'text-zinc-500 group-hover:text-amber-400'
-                      }`} />
-                    </Link>
-                  );
-                })}
-              </div>
-
-              {filteredItems.length === 0 && (
-                <div className="p-8 text-center text-zinc-400 space-y-2">
-                  <p className="text-xs">لم يتم العثور على قسم يطابق بحثك</p>
-                  <button
-                    type="button"
-                    onClick={() => setSearchQuery('')}
-                    className="text-xs text-amber-400 font-black hover:underline cursor-pointer"
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setMobileOpen(false)}
+                    className={`flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-all ${
+                      isActive
+                        ? 'bg-amber-500 text-zinc-950 shadow-md shadow-amber-500/20 font-black'
+                        : 'text-slate-700 dark:text-zinc-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5'
+                    }`}
                   >
-                    عرض كافة الأقسام
-                  </button>
-                </div>
-              )}
-            </div>
+                    <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                      <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-zinc-950' : 'text-amber-600 dark:text-amber-400'}`} />
+                      <span className="leading-snug text-right">{item.name}</span>
+                    </div>
 
-            {/* Modal Footer */}
-            <div className="pt-3 border-t border-white/[0.08] flex items-center justify-between text-[11px] text-zinc-400">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-zinc-300 font-bold">المسؤول: {adminName}</span>
-              </div>
-              <span className="hidden sm:inline text-zinc-500">
-                اضغط <kbd className="px-1 py-0.5 rounded bg-white/10 text-[10px] text-zinc-300 font-mono">ESC</kbd> للإغلاق
-              </span>
+                    <div className="flex items-center gap-1.5 shrink-0 mr-1">
+                      {item.badge && (
+                        <span className={`text-[9px] font-black px-1.5 py-0.5 rounded-md ${
+                          isActive
+                            ? 'bg-zinc-950 text-amber-400'
+                            : 'bg-purple-500/15 text-purple-700 dark:text-purple-300 border border-purple-500/30'
+                        }`}>
+                          {item.badge}
+                        </span>
+                      )}
+                      {item.isExternal && (
+                        <ExternalLink className={`w-3 h-3 ${isActive ? 'text-zinc-950' : 'text-slate-400 dark:text-zinc-500'}`} />
+                      )}
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
-
           </div>
+        );
+      })}
+
+        {filteredGroups.length === 0 && (
+          <div className="py-8 text-center text-xs text-slate-500 dark:text-zinc-400 space-y-1">
+            <p>لا يوجد قسم يطابق بحثك</p>
+            <button
+              type="button"
+              onClick={() => setSearchQuery('')}
+              className="text-amber-600 dark:text-amber-400 font-bold hover:underline"
+            >
+              مسح البحث
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Footer Navigation */}
+      <div className="p-3 border-t border-slate-200/80 dark:border-purple-900/40 space-y-2 shrink-0 bg-slate-50/50 dark:bg-black/20">
+        <Link
+          href="/"
+          className="w-full py-2 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 text-slate-800 dark:text-zinc-300 text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-xs cursor-pointer"
+        >
+          <Home className="w-3.5 h-3.5 text-amber-500" />
+          <span>العودة للموقع العام</span>
+        </Link>
+      </div>
+    </div>
+  );
+
+  return (
+    <>
+      {/* Mobile Top Controls Bar (Below Fixed Header) */}
+      <div className="md:hidden relative z-20 flex items-center justify-between p-3.5 bg-white/95 dark:bg-[#120e24]/95 border-b border-slate-200 dark:border-purple-900/50 backdrop-blur-xl shadow-xs">
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="text-xs font-black text-slate-900 dark:text-white truncate">{platformName}</span>
+          <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-800 dark:text-amber-300 font-bold border border-amber-500/30 shrink-0">
+            لوحة الإدارة
+          </span>
+        </div>
+        <button
+          type="button"
+          onClick={() => setMobileOpen(true)}
+          className="py-1.5 px-3 rounded-xl bg-amber-500 text-zinc-950 text-xs font-black flex items-center gap-1.5 shadow-sm active:scale-95 transition-all shrink-0 cursor-pointer"
+        >
+          <SlidersHorizontal className="w-3.5 h-3.5" />
+          <span>أقسام المنصة</span>
+        </button>
+      </div>
+
+      {/* Mobile Slide-in Drawer with Backdrop */}
+      {mobileOpen && (
+        <div className="md:hidden fixed inset-0 z-[100] flex justify-end animate-in fade-in duration-150">
+          <div
+            className="fixed inset-0 bg-black/75 backdrop-blur-xs"
+            onClick={() => setMobileOpen(false)}
+          />
+          <aside className="relative z-10 w-full max-w-[92vw] sm:max-w-sm h-full bg-white dark:bg-[#120e24] shadow-2xl flex flex-col border-l border-slate-200 dark:border-purple-900/50 animate-in slide-in-from-right duration-200">
+            {renderContent(true)}
+          </aside>
         </div>
       )}
+
+      {/* Desktop Persistent Sidebar */}
+      <aside className="hidden md:flex w-72 bg-white/95 dark:bg-[#120e24]/95 border-l border-slate-200/90 dark:border-purple-900/40 flex-col justify-between shrink-0 backdrop-blur-2xl shadow-xl shadow-slate-900/5 min-h-screen">
+        {renderContent(false)}
+      </aside>
     </>
   );
 }

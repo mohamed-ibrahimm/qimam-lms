@@ -29,7 +29,7 @@ export default async function AdminLayout({
   const adminName = user.officialFullName || `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'المدير';
 
   return (
-    <div className="min-h-screen relative flex flex-col">
+    <div className="min-h-screen relative flex flex-col md:flex-row">
       {/* Dynamic Ambient Mesh in Background */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
         <div className="dynamic-drift-1 absolute top-[5%] right-[15%] w-[550px] h-[550px] bg-blue-400/15 dark:bg-amber-500/10 rounded-full blur-[130px]" />
@@ -38,14 +38,14 @@ export default async function AdminLayout({
         <div className="dynamic-drift-4 absolute bottom-[25%] left-[25%] w-[480px] h-[480px] bg-emerald-400/10 dark:bg-teal-600/10 rounded-full blur-[125px]" />
       </div>
 
-      {/* Modern Slim Status Bar & Floating Command Palette Launcher */}
+      {/* Comprehensive Admin Sidebar with live search across every page in the platform */}
       <AdminSidebarClient
         platformName={platformName}
         adminName={adminName}
       />
 
-      {/* Main Admin View Area (Full Width & Pristine Margin) */}
-      <main className="flex-1 p-3 sm:p-6 md:p-8 max-w-7xl mx-auto relative z-10 w-full min-w-0">
+      {/* Main Admin View Area with smooth responsive mobile padding */}
+      <main className="flex-1 p-3 sm:p-6 md:p-8 max-w-7xl relative z-10 w-full min-w-0">
         {children}
       </main>
     </div>

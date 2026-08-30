@@ -171,20 +171,23 @@ export default function Header({
       <nav className="dynamic-navbar-aura max-w-[1536px] w-full sm:w-[98%] mx-auto flex items-center justify-between min-h-[3.5rem] sm:min-h-[4.5rem] px-3 sm:px-6 md:px-8 rounded-full bg-white/95 dark:bg-[#0c0918]/95 border border-slate-200/90 dark:border-amber-500/25 backdrop-blur-2xl shadow-xl shadow-slate-900/5 dark:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.8)] relative gap-2 sm:gap-4">
         
         {/* =========================================================================
-            1. RIGHT: LOGO & PLATFORM TITLE (Clean, Prestigious & Single-Line)
+            1. RIGHT: LOGO & PLATFORM TITLE WITH ROTATING GOLD HALO
            ========================================================================= */}
         <Link href="/" className="flex items-center gap-2.5 sm:gap-3 shrink-0 group py-1 min-w-0">
-          <div className="dynamic-logo-emblem w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl p-[2px] shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform shrink-0">
+          <div className="dynamic-logo-emblem w-10 h-10 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl p-[2px] shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform shrink-0">
             <div className="w-full h-full bg-white dark:bg-[#0c0918] rounded-[10px] sm:rounded-[14px] flex items-center justify-center border border-amber-400/40 dark:border-amber-500/40 shadow-xs">
-              <GraduationCap className="w-4 h-4 sm:w-5 sm:h-5 text-amber-500 dark:text-amber-400" />
+              <GraduationCap className="w-5 h-5 text-amber-500 dark:text-amber-400" />
             </div>
           </div>
-          <div className="flex items-center gap-1.5 min-w-0">
-            <span className="text-xs sm:text-base font-black text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-amber-300 transition-colors tracking-tight whitespace-nowrap leading-none drop-shadow-xs">
+          <div className="flex flex-col text-right justify-center min-w-0">
+            <span className="text-[8.5px] sm:text-[10px] font-black text-amber-500 dark:text-amber-400 flex items-center gap-1 leading-none mb-0.5 whitespace-nowrap">
+              ★ منصة تعليمية معتمدة
+            </span>
+            <span className="text-sm sm:text-base md:text-lg font-black text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-amber-300 transition-colors tracking-tight whitespace-nowrap leading-tight drop-shadow-xs">
               {platformName}
             </span>
-            <span className="hidden sm:inline-flex items-center text-[9.5px] font-black text-amber-500 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
-              ★ معتمدة
+            <span className="text-[8px] sm:text-[9.5px] text-slate-500 dark:text-amber-200/80 font-medium whitespace-nowrap leading-none mt-0.5 block">
+              {platformTagline}
             </span>
           </div>
         </Link>
