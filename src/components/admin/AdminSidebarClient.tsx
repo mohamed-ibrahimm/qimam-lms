@@ -58,9 +58,29 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
 
   const navGroups: NavGroup[] = useMemo(() => [
     {
+      groupName: '👑 أهم قسم: إعدادات وأسعار ومحرر المنصة (VIP)',
+      items: [
+        { name: 'التحكم الشامل بأسعار باقات المحاضرين (SaaS)', href: '/admin/settings?tab=pricing', icon: DollarSign, badge: '⭐ أسعار' },
+        { name: 'التحكم بكلام ونصوص صفحات المنصة (CMS)', href: '/admin/settings?tab=content', icon: Sparkles, badge: '⭐ محرر' },
+        { name: 'حسابات الدفع (InstaPay وفودافون كاش)', href: '/admin/settings?tab=payments', icon: CreditCard, badge: 'دفع' },
+        { name: 'الهوية وقنوات التواصل والسوشيال ميديا', href: '/admin/settings?tab=contacts', icon: Settings },
+        { name: 'مسار التعلم والحماية والعلامة المائية', href: '/admin/settings?tab=workflow', icon: ShieldCheck },
+        { name: 'عرض وتعديل كافة الإعدادات في صفحة واحدة', href: '/admin/settings?tab=all', icon: SlidersHorizontal },
+      ],
+    },
+    {
       groupName: 'الرئيسية والتحليلات',
       items: [
         { name: 'نظرة عامة والتحليلات', href: '/admin', icon: LayoutDashboard },
+      ],
+    },
+    {
+      groupName: 'المحاضرون والاشتراكات',
+      items: [
+        { name: 'المحاضرون واشتراكات SaaS', href: '/admin/instructors', icon: GraduationCap, badge: 'SaaS' },
+        { name: 'توثيق الطلاب المحاضرين', href: '/admin/student-verifications', icon: Award, badge: 'منحة 30 يوم' },
+        { name: 'صفحة انضم كمحاضر والباقات', href: '/instructors/join', icon: Star, isExternal: true },
+        { name: 'استوديو تدريس المحاضر', href: '/instructor', icon: SlidersHorizontal, isExternal: true },
       ],
     },
     {
@@ -69,16 +89,6 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
         { name: 'إدارة الكورسات والدروس', href: '/admin/courses', icon: BookOpen },
         { name: 'دليل الدبلومات والمسارات', href: '/diplomas', icon: Layers, isExternal: true },
         { name: 'كتالوج الكورسات العام', href: '/courses', icon: Compass, isExternal: true },
-      ],
-    },
-    {
-      groupName: 'المحاضرون والاشتراكات',
-      items: [
-        { name: 'المحاضرون واشتراكات SaaS', href: '/admin/instructors', icon: GraduationCap, badge: 'SaaS' },
-        { name: 'التحكم بأسعار باقات المحاضرين', href: '/admin/settings?tab=pricing', icon: DollarSign, badge: 'أسعار' },
-        { name: 'توثيق الطلاب المحاضرين', href: '/admin/student-verifications', icon: Award, badge: 'منحة 30 يوم' },
-        { name: 'صفحة انضم كمحاضر والباقات', href: '/instructors/join', icon: Star, isExternal: true },
-        { name: 'استوديو تدريس المحاضر', href: '/instructor', icon: SlidersHorizontal, isExternal: true },
       ],
     },
     {
@@ -111,15 +121,6 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
         { name: 'تقييمات ومراجعات الطلاب', href: '/admin/reviews', icon: Star },
         { name: 'تذاكر الدعم الفني والشكاوى', href: '/support', icon: HelpCircle },
         { name: 'المحادثات المباشرة والشات', href: '/chat', icon: MessageSquare },
-      ],
-    },
-    {
-      groupName: 'التخصيص ومظهر المنصة',
-      items: [
-        { name: 'التحكم بنصوص وصفحات الموقع (CMS)', href: '/admin/settings?tab=content', icon: Sparkles, badge: 'نصوص' },
-        { name: 'إعدادات المنصة وطرق الدفع والـ SEO', href: '/admin/settings', icon: Settings },
-        { name: 'الملف الشخصي والحساب', href: '/profile', icon: User, isExternal: true },
-        { name: 'الصفحة الرئيسية للموقع', href: '/', icon: Home, isExternal: true },
       ],
     },
     {
@@ -198,13 +199,30 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
 
       {/* Navigation Items (Scrollable) */}
       <div className="flex-1 overflow-y-auto p-3 space-y-4">
-        {filteredGroups.map((group) => (
-          <div key={group.groupName} className="space-y-1">
-            <div className="px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-slate-500 dark:text-zinc-400">
-              {group.groupName}
-            </div>
+        {filteredGroups.map((group) => {
+          const isVipGroup = group.groupName.includes('VIP');
 
-            <div className="space-y-0.5">
+          return (
+            <div
+              key={group.groupName}
+              className={
+                isVipGroup
+                  ? 'p-2.5 rounded-2xl bg-gradient-to-br from-amber-500/15 via-purple-600/10 to-indigo-600/10 border-2 border-amber-500/40 shadow-lg shadow-amber-500/5 space-y-1.5 animate-pulse-subtle'
+                  : 'space-y-1'
+              }
+            >
+              <div className={`px-2.5 py-1 text-[10px] font-black uppercase tracking-wider flex items-center justify-between ${
+                isVipGroup ? 'text-amber-600 dark:text-amber-300' : 'text-slate-500 dark:text-zinc-400'
+              }`}>
+                <span>{group.groupName}</span>
+                {isVipGroup && (
+                  <span className="px-1.5 py-0.2 rounded-full bg-amber-500 text-zinc-950 text-[9px] font-black">
+                    VIP
+                  </span>
+                )}
+              </div>
+
+              <div className="space-y-0.5">
               {group.items.map((item) => {
                 const isActive = pathname === item.href;
                 const Icon = item.icon;
@@ -244,7 +262,8 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
               })}
             </div>
           </div>
-        ))}
+        );
+      })}
 
         {filteredGroups.length === 0 && (
           <div className="py-8 text-center text-xs text-slate-500 dark:text-zinc-400 space-y-1">
