@@ -50,7 +50,7 @@ export default function MobileHero({
         - Bottom: Anchored action buttons at the bottom of the fold.
         ========================================================================
       */}
-      <section className="min-h-[calc(100svh-4.5rem)] flex flex-col justify-center items-center gap-4 sm:gap-6 pt-16 sm:pt-20 pb-10 px-3.5 text-center relative overflow-hidden">
+      <section className="min-h-[100dvh] flex flex-col justify-center items-center gap-4 sm:gap-6 pt-14 sm:pt-20 pb-20 px-3.5 text-center relative overflow-hidden">
         
         {/* 1. TOP: Dynamic Shimmer Banner */}
         <div className="w-full flex justify-center pt-1 px-1 shrink-0">
