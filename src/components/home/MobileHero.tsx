@@ -53,8 +53,18 @@ export default function MobileHero({
       */}
       <section className="h-[100dvh] min-h-[600px] flex flex-col justify-between pt-16 px-4 relative">
         
-        {/* Soft spherical golden & purple ambient glow matching desktop and instructor view */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[340px] bg-gradient-to-tr from-amber-500/16 via-purple-600/12 to-indigo-600/14 rounded-full blur-[80px] pointer-events-none -z-10" />
+        {/* Exact Desktop-Matched Ambient Lighting & Multi-Colored Radiant Blooms */}
+        {/* 1. Top central imperial gold & violet dome */}
+        <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-[140%] max-w-lg h-[420px] bg-[radial-gradient(ellipse_at_top,_rgba(245,158,11,0.22),_rgba(124,58,237,0.18)_40%,_transparent_75%)] dark:bg-[radial-gradient(ellipse_at_top,_rgba(245,158,11,0.2),_rgba(124,58,237,0.16)_40%,_transparent_75%)] blur-[75px] pointer-events-none -z-10" />
+        
+        {/* 2. Right warm amber-solar flare */}
+        <div className="absolute top-1/4 -right-16 w-[320px] h-[320px] bg-[radial-gradient(circle,_rgba(245,158,11,0.18),_rgba(251,146,60,0.12)_50%,_transparent_65%)] dark:bg-[radial-gradient(circle,_rgba(245,158,11,0.16),_rgba(217,119,6,0.1)_50%,_transparent_65%)] blur-[80px] rounded-full pointer-events-none -z-10" />
+        
+        {/* 3. Left royal purple-indigo aurora bloom */}
+        <div className="absolute top-1/3 -left-16 w-[340px] h-[340px] bg-[radial-gradient(circle,_rgba(147,51,234,0.2),_rgba(99,102,241,0.15)_50%,_transparent_70%)] dark:bg-[radial-gradient(circle,_rgba(168,85,247,0.15),_rgba(99,102,241,0.12)_50%,_transparent_70%)] blur-[85px] rounded-full pointer-events-none -z-10" />
+        
+        {/* 4. Center luminous golden spotlight */}
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[350px] h-[280px] bg-[radial-gradient(ellipse,_rgba(251,191,36,0.14),_transparent_65%)] dark:bg-[radial-gradient(ellipse,_rgba(251,191,36,0.12),_transparent_65%)] blur-[70px] pointer-events-none -z-10" />
 
         {/* 1. TOP: Dynamic Promotional Shimmer Announcement */}
         {settings.BANNER_ENABLED !== 'false' && (
