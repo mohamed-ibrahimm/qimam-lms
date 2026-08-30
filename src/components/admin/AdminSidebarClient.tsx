@@ -238,9 +238,9 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
                         : 'text-slate-700 dark:text-zinc-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5'
                     }`}
                   >
-                    <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                    <div className="flex items-center gap-2.5 min-w-0">
                       <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-zinc-950' : 'text-amber-600 dark:text-amber-400'}`} />
-                      <span className="leading-snug text-right">{item.name}</span>
+                      <span className="truncate">{item.name}</span>
                     </div>
 
                     <div className="flex items-center gap-1.5 shrink-0 mr-1">
@@ -319,7 +319,7 @@ export default function AdminSidebarClient({ platformName, adminName }: Props) {
             className="fixed inset-0 bg-black/75 backdrop-blur-xs"
             onClick={() => setMobileOpen(false)}
           />
-          <aside className="relative z-10 w-full max-w-[92vw] sm:max-w-sm h-full bg-white dark:bg-[#120e24] shadow-2xl flex flex-col border-l border-slate-200 dark:border-purple-900/50 animate-in slide-in-from-right duration-200">
+          <aside className="relative z-10 w-80 max-w-[85vw] h-full bg-white dark:bg-[#120e24] shadow-2xl flex flex-col border-l border-slate-200 dark:border-purple-900/50 animate-in slide-in-from-right duration-200">
             {renderContent(true)}
           </aside>
         </div>
