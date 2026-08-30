@@ -51,7 +51,7 @@ export default function MobileHero({
         Dedicated 100% Full-Screen Showcase. Contains exclusively Headline + CTAs.
         ========================================================================
       */}
-      <section className="h-[100dvh] min-h-[560px] flex flex-col justify-between pt-16 xs:pt-18 pb-3 xs:pb-4 px-3 relative overflow-hidden">
+      <section className="h-[100dvh] min-h-[560px] flex flex-col justify-between pt-16 pb-1 px-3 relative overflow-hidden">
         
         {/* Exact Desktop-Matched Ambient Lighting & Multi-Colored Radiant Blooms */}
         {/* 1. Top central imperial gold & violet dome */}
@@ -68,7 +68,7 @@ export default function MobileHero({
 
         {/* 1. TOP: Dynamic Promotional Shimmer Announcement */}
         {settings.BANNER_ENABLED !== 'false' && (
-          <div className="pt-2 px-1 w-full shrink-0 max-w-sm mx-auto">
+          <div className="pt-1.5 px-1 w-full shrink-0 max-w-sm mx-auto">
             <a href="#trending-diploma" className="shimmer-border-wrapper group w-full block">
               <div className="shimmer-beam-gold dark:block hidden" />
               <div className="shimmer-beam-blue dark:hidden block" />
@@ -87,7 +87,7 @@ export default function MobileHero({
         )}
 
         {/* 2. CENTER: Large, Broad, Spacious Headline & Subtitle */}
-        <div className="flex-1 flex flex-col justify-center items-center text-center my-auto px-2 py-3 space-y-3.5 shrink-0 relative">
+        <div className="flex-1 flex flex-col justify-center items-center text-center my-auto px-2 py-1.5 space-y-3 shrink-0 relative">
 
           <h1 className="font-black tracking-tight w-full mb-1 text-center space-y-1.5">
             <span className="text-slate-950 dark:text-white block font-black text-[28px] xs:text-[34px] sm:text-4xl leading-[1.22] tracking-tight">
@@ -98,13 +98,13 @@ export default function MobileHero({
             </span>
           </h1>
 
-          <p className="text-xs xs:text-sm text-slate-700 dark:text-zinc-200 max-w-[360px] xs:max-w-md mx-auto leading-relaxed font-medium px-1 mt-1">
+          <p className="text-xs xs:text-sm text-slate-700 dark:text-zinc-200 max-w-[360px] xs:max-w-md mx-auto leading-relaxed font-medium px-1 mt-0.5">
             {settings.HERO_SUBTITLE || 'أكاديمية م / محمد ابراهيم — مسارات تدريبية هندسية متكاملة، دبلومات برمجية معتمدة، ومشاريع إنتاج واقعية تؤهلك لسوق العمل بثقة واحتراف.'}
           </p>
         </div>
 
-        {/* 3. BOTTOM: 4 Action Buttons pushed down to bottom edge comfortably */}
-        <div className="w-full max-w-[360px] xs:max-w-md mx-auto flex flex-col gap-2 pb-2 xs:pb-3 px-1 shrink-0 mt-auto">
+        {/* 3. BOTTOM: 4 Action Buttons pushed down directly to the very bottom */}
+        <div className="w-full max-w-[360px] xs:max-w-md mx-auto flex flex-col gap-2 pb-1 px-1 shrink-0 mt-auto">
           
           {/* Button 1: Diploma */}
           <a href="#trending-diploma" className="shimmer-border-wrapper group w-full">
