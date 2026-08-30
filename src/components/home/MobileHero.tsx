@@ -51,7 +51,10 @@ export default function MobileHero({
         Dedicated full-screen showcase. Contains exclusively Headline + CTAs.
         ========================================================================
       */}
-      <section className="h-[100dvh] min-h-[580px] flex flex-col justify-between pt-16 px-4 relative">
+      <section className="h-[100dvh] min-h-[600px] flex flex-col justify-between pt-16 px-4 relative">
+        
+        {/* Soft spherical golden & purple ambient glow matching desktop and instructor view */}
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[340px] bg-gradient-to-tr from-amber-500/16 via-purple-600/12 to-indigo-600/14 rounded-full blur-[80px] pointer-events-none -z-10" />
 
         {/* 1. TOP: Dynamic Promotional Shimmer Announcement */}
         {settings.BANNER_ENABLED !== 'false' && (
@@ -73,23 +76,20 @@ export default function MobileHero({
           </div>
         )}
 
-        {/* 2. CENTER: Large, Broad, Elegant Headline */}
-        <div className="flex-1 flex flex-col justify-center items-center text-center my-auto px-2 py-1 space-y-2.5 shrink-0 relative">
-          
-          {/* Soft spherical golden ambient glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[260px] h-[260px] bg-amber-500/15 dark:bg-amber-500/18 rounded-full blur-[65px] pointer-events-none -z-10" />
+        {/* 2. CENTER: Large, Broad, Spacious Headline & Subtitle */}
+        <div className="flex-1 flex flex-col justify-center items-center text-center my-auto px-2 py-2 space-y-3 shrink-0 relative">
 
-          <h1 className="font-black tracking-tight w-full mb-1 text-center">
-            <span className="text-slate-950 dark:text-white block font-black text-[25px] xs:text-[30px] sm:text-4xl leading-[1.24] mb-1.5 tracking-tight">
+          <h1 className="font-black tracking-tight w-full mb-1 text-center space-y-1.5">
+            <span className="text-slate-950 dark:text-white block font-black text-[27px] xs:text-[33px] sm:text-4xl leading-[1.22] tracking-tight">
               {settings.HERO_TITLE || 'بوابتك الذكية لاحتراف'}
             </span>
-            <span className="block font-black text-[17px] xs:text-[21px] sm:text-2xl leading-snug bg-gradient-to-r from-blue-700 via-indigo-600 to-purple-600 dark:from-amber-400 dark:via-yellow-300 dark:to-amber-500 bg-clip-text text-transparent">
-              {settings.HERO_TITLE_HIGHLIGHT || 'البرمجة والذكاء الاصطناعي'}
+            <span className="block font-black text-[19px] xs:text-[23px] sm:text-2xl leading-snug bg-gradient-to-r from-blue-700 via-indigo-600 to-purple-600 dark:from-amber-400 dark:via-yellow-300 dark:to-amber-500 bg-clip-text text-transparent">
+              {settings.HERO_TITLE_HIGHLIGHT || 'البرمجة وهندسة النظم والذكاء الاصطناعي'}
             </span>
           </h1>
 
-          <p className="text-xs xs:text-sm text-slate-700 dark:text-zinc-200 max-w-[340px] xs:max-w-sm mx-auto leading-relaxed font-medium px-2">
-            {settings.HERO_SUBTITLE || `${cleanPlatformName} — مسارات تدريبية ودبلومات معتمدة تؤهلك لسوق العمل بثقة واحتراف.`}
+          <p className="text-xs xs:text-sm text-slate-700 dark:text-zinc-200 max-w-[360px] xs:max-w-md mx-auto leading-relaxed font-medium px-1 mt-1">
+            {settings.HERO_SUBTITLE || 'أكاديمية م / محمد ابراهيم — مسارات تدريبية هندسية متكاملة، دبلومات برمجية معتمدة، ومشاريع إنتاج واقعية تؤهلك لسوق العمل بثقة واحتراف.'}
           </p>
         </div>
 
