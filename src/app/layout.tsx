@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Cairo, Tajawal } from 'next/font/google';
+import { Cairo } from 'next/font/google';
 import './globals.css';
 import AppShell from '@/components/layout/AppShell';
 import { ThemeProvider } from '@/components/ThemeProvider';
@@ -12,14 +12,6 @@ const cairo = Cairo({
   weight: ['400', '500', '600', '700', '800', '900'],
   display: 'swap',
   variable: '--font-cairo',
-  preload: true,
-});
-
-const tajawal = Tajawal({
-  subsets: ['arabic', 'latin'],
-  weight: ['400', '500', '700', '800'],
-  display: 'swap',
-  variable: '--font-tajawal',
   preload: true,
 });
 
@@ -140,7 +132,7 @@ export default async function RootLayout({
   } catch (e) {}
 
   return (
-    <html lang="ar" dir="rtl" className={`${cairo.variable} ${tajawal.variable} font-sans dark`} suppressHydrationWarning>
+    <html lang="ar" dir="rtl" className={`${cairo.variable} font-sans dark`} suppressHydrationWarning>
       <head>
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="alternate icon" href="/favicon.ico" />
