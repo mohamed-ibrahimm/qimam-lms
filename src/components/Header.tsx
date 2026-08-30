@@ -53,8 +53,8 @@ export default function Header({
   const cleanInitialName = (initialPlatformName || 'أكاديمية م / محمد إبراهيم').replace(/سنجر/g, '').trim();
   const [platformName, setPlatformName] = useState(cleanInitialName || 'أكاديمية م / محمد إبراهيم');
   const [platformTagline, setPlatformTagline] = useState(initialPlatformTagline || 'بوابتك الاحترافية لاحتراف البرمجة والذكاء الاصطناعي والتصميم');
-  const [navExpertBtnText, setNavExpertBtnText] = useState('مدرس أو دكتور');
-  const [navStudentBtnText, setNavStudentBtnText] = useState('محاضر طالب');
+  const [navExpertBtnText, setNavExpertBtnText] = useState('انضم كـ محاضر');
+  const [navStudentBtnText, setNavStudentBtnText] = useState('انضم كـ محاضر طالب');
 
   // Sync if prop updates from server
   useEffect(() => {
@@ -665,7 +665,7 @@ export default function Header({
                     className="py-2.5 px-2 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/40 text-purple-700 dark:text-purple-300 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"
                   >
                     <Video className="w-4 h-4 text-purple-600 dark:text-purple-400" />
-                    <span>مدرس أو دكتور</span>
+                    <span>انضم كـ محاضر</span>
                   </Link>
                   <Link
                     href="/instructors/join?track=student"
@@ -673,7 +673,7 @@ export default function Header({
                     className="py-2.5 px-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-700 dark:text-amber-300 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"
                   >
                     <GraduationCap className="w-4 h-4 text-amber-500" />
-                    <span>محاضر طالب</span>
+                    <span>انضم كـ محاضر طالب</span>
                   </Link>
                 </div>
               </div>
