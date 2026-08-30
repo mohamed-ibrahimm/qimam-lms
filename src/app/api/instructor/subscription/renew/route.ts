@@ -32,9 +32,9 @@ export async function POST(req: Request) {
         let age = today.getFullYear() - b.getFullYear();
         const m = today.getMonth() - b.getMonth();
         if (m < 0 || (m === 0 && today.getDate() < b.getDate())) age--;
-        if (age > 23) {
+        if (age > 22) {
           return NextResponse.json({
-            error: `عفواً، باقة الطالب مخصصة لمن هم بسن 23 سنة فأقل. بما أن عمرك (${age} سنة) أكبر من 23 سنة، يرجى الاشتراك في باقة المحاضر العادية (الشهري 290 ج.م أو السنوي).`
+            error: `عفواً، باقة الطالب مخصصة لمن هم بسن 22 سنة فأقل. بما أن عمرك (${age} سنة) أكبر من 22 سنة، يرجى الاشتراك في باقة المدرسين والدكاترة العادية (الشهري 290 ج.م أو السنوي).`
           }, { status: 400 });
         }
       }

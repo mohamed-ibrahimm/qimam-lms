@@ -67,14 +67,14 @@ export default function StudentVerificationModal({
   };
 
   const currentAge = calculateAge(birthDate);
-  const isAgeValid = currentAge !== null && currentAge >= 16 && currentAge <= 23;
+  const isAgeValid = currentAge !== null && currentAge >= 16 && currentAge <= 22;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (submitting) return;
 
     if (!isAgeValid) {
-      setError('هذا العرض مخصص حصرياً للطلاب حتى سن 23 سنة فقط.');
+      setError('هذه المنحة مخصصة حصرياً للطلاب حتى سن 22 سنة فقط. إذا كان عمرك أكبر من ذلك، يمكنك الاشتراك في إحدى باقات المدرسين والدكاترة العادية.');
       return;
     }
 
@@ -130,7 +130,7 @@ export default function StudentVerificationModal({
           <div className="space-y-0.5">
             <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-black inline-flex items-center gap-1">
               <GraduationCap className="w-3.5 h-3.5 text-amber-400" />
-              منحة تمكين الطلاب المحاضرين (سن 23 سنة فأقل)
+              منحة تمكين طلبة الجامعات (سن 22 سنة فأقل)
             </span>
             <h3 className="text-base font-black text-white">توثيق هوية طالب جامعي وتفعيل شهر كامل مجاناً</h3>
           </div>
@@ -228,7 +228,7 @@ export default function StudentVerificationModal({
 
               <div>
                 <label className="block text-xs font-bold text-zinc-300 mb-1">
-                  تاريخ الميلاد (شرط السن: حتى 23 سنة) *
+                  تاريخ الميلاد (شرط السن: حتى 22 سنة) *
                 </label>
                 <input
                   type="date"
@@ -243,7 +243,7 @@ export default function StudentVerificationModal({
                   }`}>
                     {isAgeValid
                       ? `عمرك المحسوب: ${currentAge} سنة (مؤهل لمنحة الطلاب)`
-                      : `عمرك المحسوب: ${currentAge} سنة (يتجاوز شرط الحد الأقصى 23 سنة - يجب الاشتراك في باقة المحاضر العادية)`}
+                      : `عمرك المحسوب: ${currentAge} سنة (يتجاوز شرط الحد الأقصى 22 سنة - يجب الاشتراك في باقة المدرسين والدكاترة العادية)`}
                   </span>
                 )}
               </div>

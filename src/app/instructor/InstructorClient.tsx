@@ -1209,13 +1209,13 @@ export default function InstructorClient({
               </div>
             </div>
 
-            {/* Rule Note: Age 23 vs Normal Subscription */}
+            {/* Rule Note: Age 22 vs Normal Subscription */}
             <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-xs flex items-start gap-3">
               <GraduationCap className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
               <div className="space-y-1">
                 <span className="font-black text-white block">قواعد وضوابط الاشتراكات:</span>
                 <p className="text-zinc-300 leading-relaxed">
-                  إذا كان عمر المحاضر <strong>أكبر من 23 سنة</strong>، فإنه يشترك في <strong>الباقة العادية للمحاضر</strong> (الاشتراك الشهري 290 ج.م أو السنوي 2,900 ج.م). أما <strong>باقة المحاضر الطالب (120 ج.م)</strong> فهي منحة مخصصة حصرياً لطلبة الجامعات حتى سن 23 سنة فقط بموجب إثبات قيد بكارنيه الكلية للعام الدراسي الحالي.
+                  إذا كان عمر المحاضر <strong>أكبر من 22 سنة</strong>، فإنه يشترك في <strong>الباقة العادية للمحاضر</strong> (الاشتراك الشهري 290 ج.م أو السنوي 2,900 ج.م). أما <strong>باقة المحاضر الطالب (120 ج.م)</strong> فهي منحة مخصصة لطلبة الجامعات حتى سن 22 سنة فقط بموجب إثبات قيد بكارنيه الكلية للعام الدراسي الحالي.
                 </p>
               </div>
             </div>
@@ -1276,7 +1276,7 @@ export default function InstructorClient({
               {/* Plan 3: Student Plan */}
               <div className="p-5 rounded-2xl border-2 border-purple-800/60 bg-purple-950/20 space-y-3 flex flex-col justify-between relative">
                 <span className="absolute top-3 left-3 px-2 py-0.5 rounded-full bg-purple-500/30 text-purple-300 border border-purple-500/40 text-[10px] font-black">
-                  سن 23 فأقل فقط
+                  سن 22 فأقل فقط
                 </span>
                 <div className="space-y-2 pt-3">
                   <span className="text-xs font-bold text-purple-300">باقة المحاضر الطالب (مدعومة)</span>
@@ -1285,16 +1285,16 @@ export default function InstructorClient({
                     <span className="text-xs text-zinc-400 font-bold">ج.م / شهرياً</span>
                   </div>
                   <p className="text-xs text-zinc-400">
-                    منحة مدعومة لطلبة الجامعات حتى سن 23 سنة لشرح المناهج لزملائهم (بإثبات الكارنيه).
+                    منحة مدعومة لطلبة الجامعات حتى سن 22 سنة لشرح المناهج لزملائهم (بإثبات الكارنيه).
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={() => {
-                    if (userAge !== null && userAge > 23) {
+                    if (userAge !== null && userAge > 22) {
                       setMessage({
                         type: 'error',
-                        text: `عمرك المسجل (${userAge} سنة) يتجاوز الحد الأقصى لباقة الطلاب (23 سنة). يرجى اختيار إحدى باقات المحاضر العادية.`
+                        text: `عمرك المسجل (${userAge} سنة) يتجاوز الحد الأقصى لباقة الطلاب (22 سنة). يرجى اختيار إحدى باقات المحاضر العادية.`
                       });
                       return;
                     }
@@ -1468,10 +1468,10 @@ export default function InstructorClient({
               <button
                 type="button"
                 onClick={() => {
-                  if (userAge !== null && userAge > 23) {
+                  if (userAge !== null && userAge > 22) {
                     setMessage({
                       type: 'error',
-                      text: `عمرك المسجل (${userAge} سنة) يتجاوز الحد الأقصى لباقة الطلاب (23 سنة). يجب الاشتراك في إحدى باقات المحاضر العادية.`
+                      text: `عمرك المسجل (${userAge} سنة) يتجاوز الحد الأقصى لباقة الطلاب (22 سنة). يجب الاشتراك في إحدى باقات المحاضر العادية.`
                     });
                     setRenewPlan('MONTHLY');
                     return;
@@ -1485,7 +1485,7 @@ export default function InstructorClient({
                 }`}
               >
                 <span className="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[9px] font-black inline-block mb-1">
-                  سن 23 فأقل فقط
+                  سن 22 فأقل فقط
                 </span>
                 <span className="text-xs font-bold text-white block">باقة المحاضر الطالب</span>
                 <span className="text-lg font-black text-purple-300 block">120 ج.م</span>
@@ -1501,8 +1501,8 @@ export default function InstructorClient({
                   <span className="font-bold text-white">ضوابط باقة الطالب (120 ج.م):</span>
                 </div>
                 <p className="text-[11px] text-zinc-300 leading-relaxed">
-                  هذه الباقة مخصصة حصرياً لمن هم بسن <strong>23 سنة أو أقل</strong> وتتطلب إثبات قيد بكارنيه الكلية للعام الحالي. 
-                  إذا كان عمرك أكبر من 23 سنة، يرجى اختيار الباقة العادية (الشهري 290 ج.م أو السنوي 2,900 ج.م).
+                  هذه الباقة مخصصة لمن هم بسن <strong>22 سنة أو أقل</strong> وتتطلب إثبات قيد بكارنيه الكلية للعام الحالي. 
+                  إذا كان عمرك أكبر من 22 سنة، يرجى اختيار الباقة العادية (الشهري 290 ج.م أو السنوي 2,900 ج.م).
                 </p>
                 {(!user.isStudentInstructor || user.studentVerificationStatus !== 'APPROVED') && (
                   <button

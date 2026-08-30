@@ -158,7 +158,7 @@ export default function RegisterPage() {
                 <div className="flex items-center gap-2.5">
                   <GraduationCap className="w-5 h-5 text-amber-400 shrink-0" />
                   <div>
-                    <span className="font-black text-amber-300 block">باقة المحاضر الطالب (سن 23 سنة فأقل)</span>
+                    <span className="font-black text-amber-300 block">باقة المحاضر الطالب</span>
                     <span className="text-[11px] text-zinc-300">منحة تمكين: شهر كامل مجاناً (30 يوماً) + باقة 120 ج.م</span>
                   </div>
                 </div>

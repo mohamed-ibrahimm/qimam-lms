@@ -461,10 +461,10 @@ export default function Header({
               <Link
                 href="/instructors/join?track=student"
                 className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-700 dark:text-amber-300 transition-all flex items-center gap-1.5 shrink-0 shadow-xs"
-                title="منحة الطلاب - شهر كامل 30 يوماً مجاناً لسن 23 فأقل"
+                title="منحة الطلاب - شهر كامل مجاناً لطلبة الجامعات"
               >
                 <GraduationCap className="w-3.5 h-3.5 text-amber-500" />
-                <span>محاضر طالب (سن 23 فأقل)</span>
+                <span>محاضر طالب</span>
               </Link>
             </div>
           )}
@@ -652,7 +652,7 @@ export default function Header({
                     className="py-2.5 px-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-700 dark:text-amber-300 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"
                   >
                     <GraduationCap className="w-4 h-4 text-amber-500" />
-                    <span>محاضر طالب (سن 23)</span>
+                    <span>محاضر طالب</span>
                   </Link>
                 </div>
               </div>

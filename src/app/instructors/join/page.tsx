@@ -161,7 +161,7 @@ export default function InstructorJoinPage() {
             }`}
           >
             <GraduationCap className="w-4 h-4" />
-            <span>مسار المحاضر الطالب (سن 23 فأقل - 30 يوماً مجاناً)</span>
+            <span>مسار المحاضر الطالب (شهر كامل مجاناً)</span>
           </button>
         </div>
 
@@ -171,7 +171,7 @@ export default function InstructorJoinPage() {
             <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
             <span>
               {activeTrack === 'student'
-                ? 'منحة تمكين طلبة الجامعات والمعاهد حتى سن 23 سنة'
+                ? 'منحة تمكين وإطلاق طلبة الجامعات والمعاهد'
                 : activeTrack === 'expert'
                 ? 'برنامج السحابة الأكاديمية للمدرسين والأساتذة الجامعيين'
                 : 'المنصة السحابية المتكاملة للتعليم الجامعي والأكاديمي'}
@@ -202,7 +202,7 @@ export default function InstructorJoinPage() {
         {/* Subtitle */}
         <p className="text-sm sm:text-base lg:text-lg text-slate-600 dark:text-zinc-300 max-w-3xl mx-auto leading-relaxed">
           {activeTrack === 'student'
-            ? 'إذا كنت طالباً جامعياً (سن 23 سنة أو أقل) وتريد تقديم الشروحات والمناهج لزملائك، نوفر لك منحة 30 يوماً مجاناً بالكامل مع باقة اشتراك مدعومة بعد انتهاء الشهر بموجب كارنيه الكلية.'
+            ? 'إذا كنت طالباً جامعياً وتريد تقديم الشروحات والمناهج لزملائك، نوفر لك منحة 30 يوماً مجاناً بالكامل مع باقة اشتراك مدعومة بعد انتهاء الشهر بموجب كارنيه الكلية.'
             : 'استوديو تدريس سحابي متكامل يمنح المدرسين والدكاترة الجامعيين استقلالية تامة، مع تحويل أرباحك فورياً إلى حسابك الشخصي عبر إنستاباي والمحافظ بدون اقتطاع أي عمولة.'}
         </p>
 
@@ -251,8 +251,8 @@ export default function InstructorJoinPage() {
                   <span className="text-slate-900 dark:text-white">InstaPay وفودافون كاش مباشرة</span>
                 </div>
                 <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-indigo-200">
-                  <span>شرط السن:</span>
-                  <span className="text-slate-900 dark:text-white">متاح لكافة الأعمار (أو أكبر من 23 سنة)</span>
+                  <span>الفئة المستهدفة:</span>
+                  <span className="text-slate-900 dark:text-white">المدرسون والأساتذة والدكاترة الجامعيون</span>
                 </div>
               </div>
             </div>
@@ -266,7 +266,7 @@ export default function InstructorJoinPage() {
             </Link>
           </div>
 
-          {/* Card 2: Student Instructors (Age <= 23) */}
+          {/* Card 2: Student Instructors */}
           <div
             className={`p-6 sm:p-7 rounded-3xl border-2 transition-all duration-300 flex flex-col justify-between space-y-6 relative overflow-hidden ${
               activeTrack === 'student' || activeTrack === 'all'
@@ -274,12 +274,7 @@ export default function InstructorJoinPage() {
                 : 'bg-white/60 dark:bg-zinc-900/40 border-slate-200 dark:border-zinc-800 opacity-60'
             }`}
           >
-            {/* Top Distinction Pill */}
-            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-0.5 rounded-full bg-amber-500 text-zinc-950 text-[10px] font-black shadow-md whitespace-nowrap">
-              منحة خاصة لطلبة الجامعات حتى سن 23 سنة
-            </div>
-
-            <div className="space-y-4 pt-1">
+            <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <span className="px-3 py-1 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30 text-xs font-bold inline-flex items-center gap-1.5">
                   <GraduationCap className="w-4 h-4 text-amber-500" />
@@ -308,11 +303,11 @@ export default function InstructorJoinPage() {
                 </div>
                 <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-amber-200">
                   <span>شرط الاستحقاق:</span>
-                  <span className="text-slate-900 dark:text-white">كارنيه كلية ساري + سن 23 سنة كحد أقصى</span>
+                  <span className="text-slate-900 dark:text-white">كارنيه كلية ساري (حتى سن 22 سنة)</span>
                 </div>
                 <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-amber-200">
-                  <span>إذا كان السن أكبر من 23:</span>
-                  <span className="text-slate-500 dark:text-zinc-400">يتم الاشتراك في باقة المدرس العادية</span>
+                  <span>إذا كان السن أكبر من 22:</span>
+                  <span className="text-slate-500 dark:text-zinc-400">الاشتراك متاح في باقة المدرسين العادية</span>
                 </div>
               </div>
             </div>
@@ -412,7 +407,7 @@ export default function InstructorJoinPage() {
             مقارنة واضحة: أي المسارين أنسب لك؟
           </h2>
           <p className="text-xs text-slate-500 dark:text-zinc-400">
-            صممنا باقات مخصصة تناسب الأساتذة والدكاترة، وباقات مدعومة للطلبة حتى سن 23 سنة.
+            صممنا باقات مخصصة تناسب الأساتذة والدكاترة، وباقات مدعومة للطلبة.
           </p>
         </div>
 
@@ -422,14 +417,14 @@ export default function InstructorJoinPage() {
               <tr>
                 <th className="p-4 sm:p-5">الميزة والوجه المقارن</th>
                 <th className="p-4 sm:p-5 text-indigo-700 dark:text-indigo-300">مسار المدرس أو الدكتور الجامعي</th>
-                <th className="p-4 sm:p-5 text-amber-700 dark:text-amber-300">مسار المحاضر الطالب (سن 23 فأقل)</th>
+                <th className="p-4 sm:p-5 text-amber-700 dark:text-amber-300">مسار المحاضر الطالب</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-zinc-800/60 text-slate-700 dark:text-zinc-300">
               <tr>
                 <td className="p-4 font-bold text-slate-900 dark:text-white">الفئة المستهدفة</td>
                 <td className="p-4">المدرسون، الدكاترة، والأساتذة من كافة الأعمار</td>
-                <td className="p-4 font-bold text-amber-600 dark:text-amber-300">طلبة الجامعات والمعاهد حتى سن 23 سنة</td>
+                <td className="p-4 font-bold text-amber-600 dark:text-amber-300">طلبة الجامعات والمعاهد (حتى سن 22 سنة)</td>
               </tr>
               <tr>
                 <td className="p-4 font-bold text-slate-900 dark:text-white">فترة التجربة المجانية</td>
@@ -541,7 +536,7 @@ export default function InstructorJoinPage() {
           <div className="space-y-1 text-right">
             <span className="font-bold text-slate-900 dark:text-white block">ملاحظة تنظيمية هامة بشأن الاشتراكات:</span>
             <p className="text-slate-600 dark:text-zinc-300 leading-relaxed">
-              إذا كان عمر المحاضر <strong>أكبر من 23 سنة</strong>، فإنه يشترك في <strong>باقة المدرسين والدكاترة العادية</strong> (الاشتراك الشهري 290 ج.م أو السنوي 1,499 ج.م). أما <strong>باقة المحاضر الطالب (120 ج.م)</strong> فهي منحة مخصصة حصرياً لطلبة الجامعات والمعاهد حتى سن 23 سنة فقط بإثبات كارنيه الكلية.
+              إذا كان عمر المحاضر <strong>أكبر من 22 سنة</strong>، فإنه يشترك في <strong>باقة المدرسين والدكاترة العادية</strong> (الاشتراك الشهري 290 ج.م أو السنوي 1,499 ج.م). أما <strong>باقة المحاضر الطالب (120 ج.م)</strong> فهي منحة مخصصة لطلبة الجامعات والمعاهد حتى سن 22 سنة بإثبات كارنيه الكلية.
             </p>
           </div>
         </div>
@@ -624,11 +619,7 @@ export default function InstructorJoinPage() {
 
           {/* Plan 3: Student-Instructor Plan */}
           <div className="p-6 rounded-3xl bg-white dark:bg-gradient-to-b dark:from-[#251a10] dark:to-[#14101e] border-2 border-amber-500/80 shadow-xl flex flex-col justify-between space-y-5 relative">
-            <div className="absolute -top-3.5 right-1/2 translate-x-1/2 px-3 py-0.5 rounded-full bg-amber-500 text-zinc-950 text-[10px] font-black shadow-md whitespace-nowrap">
-              منحة سن 23 فأقل فقط
-            </div>
-
-            <div className="space-y-4 pt-1">
+            <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <h3 className="text-base font-black text-slate-900 dark:text-white">باقة المحاضر الطالب</h3>
                 <span className="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-700 dark:text-amber-300 text-[10px] font-black">
@@ -644,14 +635,14 @@ export default function InstructorJoinPage() {
                   <span className="text-3xl font-black text-amber-600 dark:text-amber-400">120</span>
                   <span className="text-xs font-bold text-slate-500 dark:text-zinc-400">ج.م / شهرياً</span>
                 </div>
-                <div className="text-[11px] text-slate-400 dark:text-zinc-500 mt-0.5">بإثبات كارنيه الكلية وسن 23 فأقل</div>
+                <div className="text-[11px] text-slate-400 dark:text-zinc-500 mt-0.5">بإثبات كارنيه الكلية (سن 22 فأقل)</div>
               </div>
 
               <ul className="space-y-2 text-xs text-slate-700 dark:text-zinc-300 font-medium">
                 <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-amber-500 shrink-0" /> 30 يوماً تجربة مجانية أولاً</li>
                 <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-amber-500 shrink-0" /> رفع ونشر الكورسات والدروس</li>
                 <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-amber-500 shrink-0" /> شارة طالب محاضر معتمد</li>
-                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-amber-500 shrink-0" /> 0% عمولة على المبيعات</li>
+                <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-amber-500 shrink-0" /> مخصص لسن 22 سنة فأقل</li>
               </ul>
             </div>
 
