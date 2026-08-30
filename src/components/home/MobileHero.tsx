@@ -81,10 +81,6 @@ export default function MobileHero({
 
         {/* 2. CENTER: Main Typography Showcase (High-contrast Dual Mode) */}
         <div className="flex-1 flex flex-col justify-center items-center text-center my-auto px-1 space-y-3 shrink-0">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-[10.5px] font-bold text-slate-700 dark:text-zinc-300 shadow-xs">
-            <Sparkles className="w-3 h-3 text-amber-500 animate-pulse" />
-            <span>منصة تعليمية هندسية معتمدة 2026</span>
-          </div>
 
           <h1 className="font-black tracking-tight leading-tight space-y-1 w-full max-w-sm mx-auto">
             <span className="text-slate-950 dark:text-white block font-black text-2xl xs:text-3xl leading-snug drop-shadow-sm">

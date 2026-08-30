@@ -64,11 +64,6 @@ export default function DesktopHero({
             </a>
           </div>
         )}
-        {/* Top Badges */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-bold text-slate-700 dark:text-zinc-300 shadow-xs">
-          <Sparkles className="w-4 h-4 text-amber-500 animate-pulse" />
-          <span>منصة تعليمية هندسية معتمدة • أحدث المناهج وسوق العمل 2026</span>
-        </div>
 
         {/* Headlines */}
         <div className="space-y-4 max-w-4xl mx-auto">
