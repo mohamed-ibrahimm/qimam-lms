@@ -97,13 +97,13 @@ export default function MobileHero({
           </p>
         </div>
 
-        {/* 3. BOTTOM: Action Buttons Anchored to Bottom of Screen */}
-        <div className="w-full max-w-sm mx-auto flex flex-col gap-2.5 pb-2 px-2 shrink-0 mt-auto">
+        {/* 3. BOTTOM: Action Buttons with clearance above floating icons */}
+        <div className="w-full max-w-sm mx-auto flex flex-col gap-2 pb-14 sm:pb-4 px-2 shrink-0 mt-auto">
           {/* Button 1: Diploma (Royal Indigo in Light Mode, Molten Gold in Dark Mode) */}
           <a href="#trending-diploma" className="shimmer-border-wrapper group w-full">
             <div className="shimmer-beam-gold dark:block hidden" />
             <div className="shimmer-beam-blue dark:hidden block" />
-            <div className="shimmer-button-content w-full px-4 py-3 text-xs xs:text-sm font-black text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 dark:bg-none dark:text-amber-300 group-hover:opacity-95 flex items-center justify-center gap-2 rounded-xl shadow-lg">
+            <div className="shimmer-button-content w-full px-4 py-2.5 text-xs xs:text-sm font-black text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 dark:bg-none dark:text-amber-300 group-hover:opacity-95 flex items-center justify-center gap-2 rounded-xl shadow-lg">
               <Flame className="w-4 h-4 text-amber-300 dark:text-amber-400 animate-bounce shrink-0" />
               <span className="whitespace-nowrap">{settings.FEATURED_DIPLOMA_BADGE || 'الدبلومة الأكثر طلباً (خصم 51%)'}</span>
               <ArrowLeft className="w-4 h-4 text-white dark:text-amber-400 group-hover:-translate-x-1.5 transition-transform duration-300 shrink-0" />
