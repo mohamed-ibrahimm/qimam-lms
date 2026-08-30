@@ -126,9 +126,9 @@ export default function BookDetailClient({
               {book.rating.toFixed(1)} تقييم الطلاب
             </span>
             <span>•</span>
-            <span>📄 {book.pageCount} صفحة</span>
+            <span>{book.pageCount} صفحة</span>
             <span>•</span>
-            <span>👥 {book.salesCount} طالب مشترك</span>
+            <span>{book.salesCount} طالب مشترك</span>
             <span>•</span>
             <span className="text-emerald-500 flex items-center gap-1 font-bold">
               <Shield className="w-3.5 h-3.5" />
@@ -144,7 +144,7 @@ export default function BookDetailClient({
               <span className="text-[11px] text-zinc-400 block font-bold">سعر المذكرة:</span>
               {book.isFree || book.price === 0 ? (
                 <span className="text-2xl font-black text-emerald-500 font-mono">
-                  مجاناً 🎁
+                  مجاناً
                 </span>
               ) : (
                 <div className="flex items-baseline gap-2">
@@ -239,7 +239,7 @@ export default function BookDetailClient({
               {book.instructor.avatarUrl ? (
                 <img src={book.instructor.avatarUrl} alt="" className="w-full h-full object-cover" />
               ) : (
-                '✍️'
+                ''
               )}
             </div>
           </div>

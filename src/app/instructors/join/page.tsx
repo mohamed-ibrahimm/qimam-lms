@@ -430,7 +430,7 @@ export default function InstructorJoinPage() {
                 </div>
                 <div className="flex items-center justify-between text-xs font-bold text-emerald-600 dark:text-emerald-400">
                   <span>المبلغ الذي وفرته معنا:</span>
-                  <span className="font-mono">+{traditionalCut.toLocaleString('ar-EG')} ج.م 🔥</span>
+                  <span className="font-mono">+{traditionalCut.toLocaleString('ar-EG')} ج.م</span>
                 </div>
               </div>
             </div>

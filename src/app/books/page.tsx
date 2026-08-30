@@ -40,7 +40,7 @@ export default async function BooksPage() {
   }
 
   return (
-    <div className="min-h-screen pt-20 sm:pt-24 pb-20">
+    <div className="min-h-screen pt-4 sm:pt-6 pb-16">
       <BooksCatalogClient
         initialBooks={books}
         purchasedBookIds={purchasedBookIds}

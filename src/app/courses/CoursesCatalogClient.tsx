@@ -317,19 +317,19 @@ export default function CoursesCatalogClient({
                     badgeBg: 'bg-gradient-to-r from-amber-500 to-yellow-400 text-zinc-950 shadow-amber-500/30',
                     borderHover: 'hover:border-amber-500/80 hover:shadow-amber-500/20',
                     icon: Flame,
-                    highlightText: '🔥 إقبال هائل هذا الأسبوع',
+                    highlightText: 'إقبال هائل هذا الأسبوع',
                   } : idx === 1 ? {
                     label: '#2 الأكثر بحثاً ورواجاً',
                     badgeBg: 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-cyan-500/30',
                     borderHover: 'hover:border-cyan-500/80 hover:shadow-cyan-500/20',
                     icon: Zap,
-                    highlightText: '⚡ الأعلى نمواً في سوق العمل',
+                    highlightText: 'الأعلى نمواً في سوق العمل',
                   } : {
                     label: '#3 العرض الذهبي الأقوى',
                     badgeBg: 'bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-rose-500/30',
                     borderHover: 'hover:border-rose-500/80 hover:shadow-rose-500/20',
                     icon: Sparkles,
-                    highlightText: '💎 خصم استثنائي لفترة محدودة',
+                    highlightText: 'خصم استثنائي لفترة محدودة',
                   };
 
                   const RankIcon = rankConfig.icon;

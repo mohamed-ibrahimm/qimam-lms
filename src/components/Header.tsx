@@ -183,7 +183,7 @@ export default function Header({
           </div>
           <div className="flex flex-col text-right justify-center min-w-0">
             <span className="text-[8.5px] sm:text-[10px] font-black text-amber-500 dark:text-amber-400 flex items-center gap-1 leading-none mb-0.5 whitespace-nowrap">
-              ★ منصة تعليمية معتمدة
+              منصة تعليمية معتمدة
             </span>
             <span className="text-sm sm:text-base md:text-lg font-black text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-amber-300 transition-colors tracking-tight whitespace-nowrap leading-tight drop-shadow-xs">
               {platformName}
@@ -387,10 +387,10 @@ export default function Header({
                           : 'bg-blue-500/15 border-blue-500/30 text-blue-600 dark:text-blue-300'
                       }`}>
                         {currentUser.role === 'ADMIN'
-                          ? '👑 المشرف العام'
+                          ? 'المشرف العام'
                           : currentUser.role === 'INSTRUCTOR'
-                          ? '👨‍🏫 محاضر معتمد'
-                          : '🎓 طالب بالأكاديمية'}
+                          ? '‍محاضر معتمد'
+                          : 'طالب بالأكاديمية'}
                       </span>
                     </div>
                     <p className="text-sm font-black text-slate-900 dark:text-white truncate">
@@ -598,7 +598,7 @@ export default function Header({
                 </div>
                 <div className="text-right">
                   <p className="text-xs font-black text-slate-900 dark:text-white leading-tight">{platformName}</p>
-                  <p className="text-[10px] text-amber-500 dark:text-amber-400 font-bold">★ منصة تعليمية معتمدة</p>
+                  <p className="text-[10px] text-amber-500 dark:text-amber-400 font-bold">منصة تعليمية معتمدة</p>
                 </div>
               </div>
               <button
@@ -636,7 +636,7 @@ export default function Header({
                       ? 'bg-purple-500/15 border-purple-500/30 text-purple-600 dark:text-purple-300'
                       : 'bg-blue-500/15 border-blue-500/30 text-blue-600 dark:text-blue-300'
                   }`}>
-                    {currentUser.role === 'ADMIN' ? '👑 مشرف عام' : currentUser.role === 'INSTRUCTOR' ? '👨‍🏫 محاضر' : '🎓 طالب'}
+                    {currentUser.role === 'ADMIN' ? 'مشرف عام' : currentUser.role === 'INSTRUCTOR' ? '‍محاضر' : 'طالب'}
                   </span>
                 </div>
 

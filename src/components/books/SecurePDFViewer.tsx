@@ -89,7 +89,7 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
       if (e.key === 'PrintScreen' || e.code === 'PrintScreen') {
         setIsWindowBlurred(true);
         try {
-          navigator.clipboard.writeText('⚠️ المحتوى محمي بنظام DRM ضد التصوير والنسخ.');
+          navigator.clipboard.writeText('️ المحتوى محمي بنظام DRM ضد التصوير والنسخ.');
         } catch (err) {}
         setTimeout(() => setIsWindowBlurred(false), 1500);
       }
@@ -190,14 +190,14 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
       style={{ userSelect: 'none', WebkitUserSelect: 'none' }}
     >
       
-      {/* 🔒 ANTI-SCREENSHOT PRIVACY SHIELD (Activates when screen capture / window blur is detected) */}
+      {/* ANTI-SCREENSHOT PRIVACY SHIELD (Activates when screen capture / window blur is detected) */}
       {isWindowBlurred && (
         <div className="absolute inset-0 z-50 bg-[#0c0918]/95 backdrop-blur-3xl flex flex-col items-center justify-center p-6 text-center space-y-3 animate-in fade-in duration-100">
           <div className="w-16 h-16 rounded-3xl bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center text-2xl shadow-xl">
             <Shield className="w-8 h-8 text-amber-400 animate-pulse" />
           </div>
           <h4 className="text-base font-black text-white">
-            🛡️ حماية المحتوى الرقمي المشفر مفعلة
+            حماية المحتوى الرقمي المشفر مفعلة
           </h4>
           <p className="text-xs text-zinc-400 max-w-sm">
             تم حجب الصفحة مؤقتاً لحماية حقوق الملكية الفكرية. انقر في أي مكان داخل المتصفح للمتابعة.
@@ -316,7 +316,7 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
               }`}
               title="الوضع الورقي الكلاسيكي (مريح للعين)"
             >
-              <span className="text-[11px] font-black leading-none px-0.5">📜</span>
+              <span className="text-[11px] font-black leading-none px-0.5"></span>
             </button>
 
             <button
@@ -410,7 +410,7 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
                 {currentPage === 1 ? (
                   <div className="text-center space-y-6 py-12">
                     <div className="w-24 h-24 rounded-3xl bg-gradient-to-tr from-amber-500 to-yellow-400 text-zinc-950 flex items-center justify-center mx-auto text-4xl shadow-2xl shadow-amber-500/30">
-                      📖
+                     
                     </div>
                     <div className="space-y-3">
                       <span className="px-3.5 py-1.5 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-300 text-xs font-black border border-amber-500/30">
@@ -426,10 +426,10 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
 
                     <div className="flex items-center justify-center gap-3 pt-4 text-xs font-bold">
                       <span className="px-3 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-inherit/20">
-                        📚 {book.academicSubject || 'المسار الهندسي'}
+                        {book.academicSubject || 'المسار الهندسي'}
                       </span>
                       <span className="px-3 py-1 rounded-xl bg-black/5 dark:bg-white/5 border border-inherit/20">
-                        🎓 {book.academicLevel || 'كافة المستويات'}
+                        {book.academicLevel || 'كافة المستويات'}
                       </span>
                     </div>
 
@@ -465,7 +465,7 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
                     </div>
 
                     <p className="text-xs sm:text-sm leading-loose opacity-95">
-                      <strong>💡 إرشادات المذاكرة:</strong> راجع الخطوات التفصيلية بدقة، وتأكد من تطبيق القواعد على المسائل الإضافية المرفقة في نهاية هذا الفصل لضمان تثبيت المعلومة بنسبة 100%.
+                      <strong>إرشادات المذاكرة:</strong> راجع الخطوات التفصيلية بدقة، وتأكد من تطبيق القواعد على المسائل الإضافية المرفقة في نهاية هذا الفصل لضمان تثبيت المعلومة بنسبة 100%.
                     </p>
 
                     {/* Highlights Grid */}
@@ -517,7 +517,7 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
 
             {/* Dynamic Moving Security Capsule Badge (Anti-Leak Traceability) */}
             <div className="absolute bottom-4 left-4 pointer-events-none z-20 px-3 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-[9.5px] font-mono text-zinc-400 opacity-60">
-              🔒 ID: {book.id.substring(0, 8)} • {currentUser?.username || 'GUEST-PREVIEW'}
+              ID: {book.id.substring(0, 8)} • {currentUser?.username || 'GUEST-PREVIEW'}
             </div>
 
           </div>
@@ -532,7 +532,7 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
 
             <div className="space-y-2">
               <span className="text-[11px] font-black px-3.5 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40">
-                🔒 نهاية المعاينة المجانية
+                نهاية المعاينة المجانية
               </span>
               <h4 className="text-lg sm:text-xl font-black text-white">
                 لقد استمتعت بـ {book.previewPagesCount} صفحات مجانية من المذكرة

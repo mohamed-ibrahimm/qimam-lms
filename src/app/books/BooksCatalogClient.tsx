@@ -149,24 +149,24 @@ export default function BooksCatalogClient({
   };
 
   return (
-    <div className="max-w-[1536px] w-full mx-auto px-4 sm:px-6 lg:px-10 space-y-12 sm:space-y-16">
+    <div className="max-w-[1536px] w-full mx-auto px-4 sm:px-6 lg:px-10 space-y-8 sm:space-y-10">
       
       {/* =========================================================================
           1. CENTERED WORLD-CLASS HERO BANNER (Full-width, Symmetrical Glassmorphism)
          ========================================================================= */}
-      <div className="relative rounded-[40px] overflow-hidden p-8 sm:p-14 md:p-20 border-2 border-amber-500/30 bg-gradient-to-br from-[#0c081e] via-[#140e2b] to-[#0a0618] shadow-[0_25px_70px_rgba(0,0,0,0.8)] text-center">
+      <div className="relative rounded-[40px] overflow-hidden p-6 sm:p-10 md:p-12 border-2 border-amber-500/30 bg-gradient-to-br from-[#0c081e] via-[#140e2b] to-[#0a0618] shadow-[0_25px_70px_rgba(0,0,0,0.8)] text-center">
         
         {/* Dynamic Glowing Ambiance */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[850px] h-[450px] bg-gradient-to-b from-amber-500/20 via-purple-600/15 to-transparent rounded-full blur-[140px] pointer-events-none" />
         <div className="absolute -bottom-16 right-10 w-96 h-96 bg-emerald-500/15 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute -bottom-16 left-10 w-96 h-96 bg-blue-500/15 rounded-full blur-[120px] pointer-events-none" />
 
-        <div className="relative z-10 max-w-4xl mx-auto space-y-6">
+        <div className="relative z-10 max-w-4xl mx-auto space-y-4">
           
           {/* Top Pill Badge */}
           <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-amber-500/15 border border-amber-500/50 text-amber-300 text-xs sm:text-sm font-black shadow-lg shadow-amber-500/10">
             <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
-            <span>★ سوق ومكتبة المذكرات والمراجع الرقمية المشفرة 2026</span>
+            <span>سوق ومكتبة المذكرات والمراجع الرقمية المشفرة</span>
           </div>
 
           {/* Main Headline */}
@@ -249,7 +249,7 @@ export default function BooksCatalogClient({
             </div>
 
             <span className="text-xs font-black px-3 py-1 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/30 self-start sm:self-auto">
-              🔥 إقبال استثنائي
+              إقبال استثنائي
             </span>
           </div>
 
@@ -294,10 +294,10 @@ export default function BooksCatalogClient({
 
                     <div className="absolute bottom-3 right-3 left-3 flex items-center justify-between text-xs font-bold text-white">
                       <span className="px-2.5 py-1 rounded-xl bg-black/70 backdrop-blur-md text-[11px]">
-                        📄 {book.pageCount} صفحة
+                        {book.pageCount} صفحة
                       </span>
                       <span className="px-2.5 py-1 rounded-xl bg-amber-500 text-zinc-950 font-black text-[11px]">
-                        👁️ معاينة {book.previewPagesCount} صفحات
+                        معاينة {book.previewPagesCount} صفحات
                       </span>
                     </div>
                   </div>
@@ -311,7 +311,7 @@ export default function BooksCatalogClient({
                           {book.category}
                         </span>
                         <span className="text-zinc-500 text-[11px] font-mono">
-                          👥 {book.salesCount} طالب اشترى
+                          {book.salesCount} طالب اشترى
                         </span>
                       </div>
 
@@ -358,7 +358,7 @@ export default function BooksCatalogClient({
                     <div className="pt-3.5 border-t border-slate-100 dark:border-zinc-800 flex items-center justify-between gap-2">
                       <div>
                         {book.isFree || book.price === 0 ? (
-                          <span className="text-base sm:text-lg font-black text-emerald-500 font-mono">مجاناً 🎁</span>
+                          <span className="text-base sm:text-lg font-black text-emerald-500 font-mono">مجاناً </span>
                         ) : (
                           <div className="flex items-baseline gap-1.5">
                             <span className="text-xl font-black text-slate-900 dark:text-amber-400 font-mono">
@@ -474,7 +474,7 @@ export default function BooksCatalogClient({
                     : 'text-slate-600 dark:text-zinc-400 hover:text-white'
                 }`}
               >
-                مدفوعة 💎
+                مدفوعة 
               </button>
               <button
                 type="button"
@@ -485,7 +485,7 @@ export default function BooksCatalogClient({
                     : 'text-slate-600 dark:text-zinc-400 hover:text-white'
                 }`}
               >
-                مجانية 🎁
+                مجانية 
               </button>
             </div>
 
@@ -495,10 +495,10 @@ export default function BooksCatalogClient({
               onChange={(e: any) => setSortBy(e.target.value)}
               className="px-4 py-3 rounded-2xl bg-white dark:bg-[#130e28] border border-slate-200 dark:border-zinc-800 text-xs font-bold text-slate-800 dark:text-zinc-200 focus:outline-hidden focus:border-amber-500 cursor-pointer shadow-xs"
             >
-              <option value="POPULAR">🔥 الأكثر مبيعاً ورواجاً</option>
-              <option value="RATING">⭐ الأعلى تقييماً</option>
-              <option value="NEWEST">⚡ الأحدث نزولاً</option>
-              <option value="PRICE_ASC">💵 السعر: من الأقل للأعلى</option>
+              <option value="POPULAR">الأكثر مبيعاً ورواجاً</option>
+              <option value="RATING">الأعلى تقييماً</option>
+              <option value="NEWEST">الأحدث نزولاً</option>
+              <option value="PRICE_ASC">السعر: من الأقل للأعلى</option>
             </select>
           </div>
 
@@ -598,10 +598,10 @@ export default function BooksCatalogClient({
                     {/* Bottom Stats: Pages & Preview Limit */}
                     <div className="absolute bottom-3.5 right-3.5 left-3.5 flex items-center justify-between text-xs font-bold text-white">
                       <span className="px-2.5 py-1 rounded-xl bg-black/80 backdrop-blur-xs font-mono text-[11px] border border-white/10">
-                        📄 {book.pageCount} صفحة
+                        {book.pageCount} صفحة
                       </span>
                       <span className="px-2.5 py-1 rounded-xl bg-amber-500 text-zinc-950 font-black text-[11px] shadow-sm">
-                        👁️ معاينة {book.previewPagesCount} صفحات
+                        معاينة {book.previewPagesCount} صفحات
                       </span>
                     </div>
                   </div>
@@ -658,7 +658,7 @@ export default function BooksCatalogClient({
                       <div>
                         {book.isFree || book.price === 0 ? (
                           <span className="text-base font-black text-emerald-500 font-mono">
-                            مجاناً 🎁
+                            مجاناً 
                           </span>
                         ) : (
                           <div className="flex items-baseline gap-1.5">
@@ -723,7 +723,7 @@ export default function BooksCatalogClient({
         ) : (
           <div className="p-14 text-center rounded-[32px] bg-white dark:bg-[#120d28] border border-slate-200 dark:border-zinc-800 space-y-4">
             <div className="w-16 h-16 rounded-3xl bg-amber-500/15 text-amber-400 flex items-center justify-center mx-auto text-3xl">
-              🔍
+              
             </div>
             <h3 className="text-lg font-black text-slate-900 dark:text-white">
               لا توجد مذكرات مطابقة لخيارات البحث
@@ -825,7 +825,7 @@ export default function BooksCatalogClient({
                   <span>•</span>
                   <span>{previewModalBook.pageCount} صفحة</span>
                   <span>•</span>
-                  <span className="text-amber-400 font-bold">⭐ {previewModalBook.rating.toFixed(1)}</span>
+                  <span className="text-amber-400 font-bold">{previewModalBook.rating.toFixed(1)}</span>
                 </div>
               </div>
             </div>
@@ -855,7 +855,7 @@ export default function BooksCatalogClient({
               <div className="text-center sm:text-right">
                 <span className="text-xs text-zinc-400 block">السعر المطلوب:</span>
                 <span className="text-xl font-black text-amber-400 font-mono">
-                  {previewModalBook.isFree || previewModalBook.price === 0 ? 'مجاناً 🎁' : `${previewModalBook.price} ج.م`}
+                  {previewModalBook.isFree || previewModalBook.price === 0 ? 'مجاناً ' : `${previewModalBook.price} ج.م`}
                 </span>
               </div>
 

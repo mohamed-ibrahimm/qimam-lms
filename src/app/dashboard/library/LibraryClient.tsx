@@ -165,7 +165,7 @@ export default function LibraryClient({
                 </div>
                 <div className="absolute bottom-3 right-3 left-3 text-[11px] font-bold text-white flex items-center justify-between">
                   <span className="px-2 py-0.5 rounded-md bg-black/70">
-                    📄 {book.pageCount} صفحة
+                    {book.pageCount} صفحة
                   </span>
                   <span className="text-amber-400">{book.category}</span>
                 </div>
@@ -203,7 +203,7 @@ export default function LibraryClient({
       ) : (
         <div className="p-12 text-center rounded-3xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 space-y-3">
           <div className="w-16 h-16 rounded-2xl bg-amber-500/15 text-amber-400 flex items-center justify-center mx-auto text-2xl font-bold">
-            📚
+           
           </div>
           <h3 className="text-base font-black text-slate-900 dark:text-white">
             {activeTab === 'PURCHASED' ? 'لم تقم بشراء أي مذكرات بعد' : 'لا توجد مذكرات مجانية مطابقة'}

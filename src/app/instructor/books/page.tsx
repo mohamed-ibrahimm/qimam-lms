@@ -130,8 +130,8 @@ export default async function InstructorBooksPage() {
                 </div>
 
                 <div className="pt-3 border-t border-slate-100 dark:border-zinc-800 flex items-center justify-between text-xs font-bold text-zinc-400">
-                  <span>👥 {book.salesCount} مبيعة</span>
-                  <span>📄 {book.pageCount} صفحة</span>
+                  <span>{book.salesCount} مبيعة</span>
+                  <span>{book.pageCount} صفحة</span>
                   <Link
                     href={`/books/${book.slug}`}
                     className="text-amber-500 hover:text-amber-400 flex items-center gap-1 font-black"
@@ -146,7 +146,7 @@ export default async function InstructorBooksPage() {
         ) : (
           <div className="p-12 text-center rounded-3xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 space-y-4">
             <div className="w-16 h-16 rounded-3xl bg-amber-500/15 text-amber-400 flex items-center justify-center mx-auto text-2xl">
-              ✍️
+             
             </div>
             <h3 className="text-base font-black text-slate-900 dark:text-white">
               لم تقم بنشر أي مذكرات أو كتب حتى الآن

@@ -267,7 +267,7 @@ export default async function CourseDetailPage({ params }: Props) {
                 <div className="absolute top-3 right-3 left-3 flex items-center justify-between pointer-events-none">
                   <span className="px-3 py-1 rounded-full text-[11px] font-black bg-black/75 backdrop-blur-md text-amber-300 border border-amber-500/30 flex items-center gap-1.5 shadow-sm">
                     <PlayCircle className="w-3.5 h-3.5 text-amber-400" />
-                    <span>معاينة مجانية 🎥</span>
+                    <span>معاينة مجانية</span>
                   </span>
 
                   <span className="px-3 py-1 rounded-full text-[11px] font-black bg-rose-500/90 backdrop-blur-md text-white border border-rose-400/40 flex items-center gap-1 shadow-sm">
@@ -451,7 +451,7 @@ export default async function CourseDetailPage({ params }: Props) {
 
               {course.reviews.length === 0 ? (
                 <p className="text-xs text-slate-500 dark:text-zinc-400 text-center py-4">
-                  كن أول من يقيم هذا الكورس بعد إتمام الدرس الأول! 🌟
+                  كن أول من يقيم هذا الكورس بعد إتمام الدرس الأول!
                 </p>
               ) : (
                 <div className="divide-y divide-slate-100 dark:divide-zinc-800/60">
@@ -506,7 +506,7 @@ export default async function CourseDetailPage({ params }: Props) {
                       {formatPrice(originalPrice)}
                     </span>
                     <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 font-black border border-emerald-500/25">
-                      وفر {discountPercent}% ({formatPrice(discountAmount)}) 🎉
+                      وفر {discountPercent}% ({formatPrice(discountAmount)})
                     </span>
                   </div>
 
@@ -529,7 +529,7 @@ export default async function CourseDetailPage({ params }: Props) {
                     className="w-full py-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-sm sm:text-base shadow-xl shadow-emerald-900/30 flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-98"
                   >
                     <PlayCircle className="w-5 h-5" />
-                    <span>{isOwner ? 'أنت محاضر الدورة • دخول قاعة الدرس' : 'أنت مشترك بالفعل • استكمال التعلم 🚀'}</span>
+                    <span>{isOwner ? 'أنت محاضر الدورة • دخول قاعة الدرس' : 'أنت مشترك بالفعل • استكمال التعلم'}</span>
                   </Link>
                 ) : (
                   <div className="space-y-3">
@@ -555,26 +555,26 @@ export default async function CourseDetailPage({ params }: Props) {
 
                     <div className="pt-1 text-center space-y-2">
                       <p className="text-center text-xs text-slate-500 dark:text-zinc-400 font-medium">
-                        🔒 دفع مباشر ومشفر وتفعيل فوري عبر الوسائل المعتمدة:
+                        دفع مباشر ومشفر وتفعيل فوري عبر الوسائل المعتمدة:
                       </p>
                       <div className="flex flex-wrap items-center justify-center gap-1.5">
                         <span className="px-2.5 py-1 rounded-lg bg-purple-500/10 text-purple-700 dark:text-purple-300 border border-purple-500/25 text-[11px] font-black shadow-xs">
-                          ⚡ إنستاباي InstaPay
+                          إنستاباي InstaPay
                         </span>
                         <span className="px-2.5 py-1 rounded-lg bg-red-500/10 text-red-700 dark:text-red-300 border border-red-500/25 text-[11px] font-black shadow-xs">
-                          🔴 فودافون كاش
+                          فودافون كاش
                         </span>
                         <span className="px-2.5 py-1 rounded-lg bg-orange-500/10 text-orange-700 dark:text-orange-300 border border-orange-500/25 text-[11px] font-black shadow-xs">
-                          🟠 أورنج كاش
+                          أورنج كاش
                         </span>
                         <span className="px-2.5 py-1 rounded-lg bg-blue-500/10 text-blue-700 dark:text-blue-300 border border-blue-500/25 text-[11px] font-black shadow-xs">
-                          💳 Visa & Mastercard
+                          Visa & Mastercard
                         </span>
                         <span className="px-2.5 py-1 rounded-lg bg-teal-500/10 text-teal-700 dark:text-teal-400 border border-teal-500/25 text-[11px] font-black shadow-xs">
-                          🛡️ كارت ميزة
+                          كارت ميزة
                         </span>
                         <span className="px-2.5 py-1 rounded-lg bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/25 text-[11px] font-black shadow-xs">
-                          🟡 فوري Pay
+                          فوري Pay
                         </span>
                       </div>
                     </div>

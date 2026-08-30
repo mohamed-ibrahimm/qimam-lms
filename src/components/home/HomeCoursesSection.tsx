@@ -39,7 +39,7 @@ const THEME_STYLES = [
     btnDark: 'bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-400 hover:to-indigo-400 text-white shadow-blue-500/25',
     avatarRing: 'from-blue-500 to-cyan-400',
     fallbackImg: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800',
-    badgeText: '🔥 الأكثر طلباً',
+    badgeText: 'الأكثر طلباً',
   },
   {
     name: 'purple',
@@ -53,7 +53,7 @@ const THEME_STYLES = [
     btnDark: 'bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-400 hover:to-indigo-400 text-white shadow-purple-500/25',
     avatarRing: 'from-purple-500 to-pink-500',
     fallbackImg: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800',
-    badgeText: '⚡ تأهيل مهني متقدم',
+    badgeText: 'تأهيل مهني متقدم',
   },
   {
     name: 'amber',
@@ -67,7 +67,7 @@ const THEME_STYLES = [
     btnDark: 'bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-300 hover:to-yellow-300 text-zinc-950 shadow-amber-500/25',
     avatarRing: 'from-amber-400 to-yellow-300',
     fallbackImg: 'https://images.unsplash.com/photo-1677442136019-21780efad99a?w=800',
-    badgeText: '🌟 ذكاء اصطناعي وهندسة',
+    badgeText: 'ذكاء اصطناعي وهندسة',
   },
   {
     name: 'emerald',
@@ -81,7 +81,7 @@ const THEME_STYLES = [
     btnDark: 'bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-emerald-500/25',
     avatarRing: 'from-emerald-400 to-teal-400',
     fallbackImg: 'https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800',
-    badgeText: '💼 معتمد لسوق العمل',
+    badgeText: 'معتمد لسوق العمل',
   },
 ];
 
@@ -450,7 +450,7 @@ export default function HomeCoursesSection({
                           {formatPrice(originalPrice)}
                         </span>
                         <span className="text-[10.5px] px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400 font-black border border-emerald-200 dark:border-emerald-500/25">
-                          وفر 35% 🔥
+                          وفر 35%
                         </span>
                       </div>
 
