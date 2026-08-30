@@ -135,6 +135,20 @@ export default async function InstructorStudioPage() {
     });
   } catch (e) {}
 
+  // Fetch instructor's digital books
+  let books: any[] = [];
+  try {
+    books = await prisma.digitalBook.findMany({
+      where: dbUser.role === 'ADMIN' ? {} : { instructorId: dbUser.id },
+      orderBy: { createdAt: 'desc' },
+      include: {
+        purchases: {
+          select: { id: true, amountPaid: true, createdAt: true }
+        }
+      }
+    });
+  } catch (e) {}
+
   // Fetch platform settings for subscription renewal instructions
   let platformSettings: Record<string, string> = {};
   try {
@@ -146,6 +160,7 @@ export default async function InstructorStudioPage() {
     <InstructorClient
       user={dbUser}
       initialCourses={courses as any}
+      initialBooks={books as any}
       totalStudents={totalStudents}
       subscriptionState={subscriptionState}
       initialCoupons={coupons as any}

@@ -19,10 +19,13 @@ import {
   SlidersHorizontal,
   Star,
   User,
-  X
+  X,
+  FileText,
+  DollarSign,
+  ShoppingBag,
 } from 'lucide-react';
 
-export type InstructorTabType = 'overview' | 'courses' | 'payments' | 'orders' | 'coupons' | 'subscription';
+export type InstructorTabType = 'overview' | 'courses' | 'pricing' | 'payments' | 'orders' | 'coupons' | 'subscription' | 'books';
 
 interface Props {
   instructorName: string;
@@ -80,7 +83,7 @@ export default function InstructorSidebarClient({
       ],
     },
     {
-      groupName: 'الكورسات والمحتوى التعليمي',
+      groupName: 'الكورسات والدورات التدريبية',
       items: [
         {
           id: 'courses',
@@ -111,8 +114,47 @@ export default function InstructorSidebarClient({
       ],
     },
     {
-      groupName: 'المالية والتحويلات المباشرة',
+      groupName: 'المكتبة والمذكرات الرقمية (DRM Shield)',
       items: [
+        {
+          name: 'مذكراتي وكتبي الرقمية',
+          href: '/instructor/books',
+          icon: FileText,
+          badge: 'DRM',
+          badgeType: 'purple',
+        },
+        {
+          name: 'نشر مذكرة / كتاب جديد',
+          href: '/instructor/books/new',
+          icon: Plus,
+          badge: 'أرباح 85%',
+          badgeType: 'amber',
+        },
+        {
+          name: 'تصفح المكتبة العامة',
+          href: '/books',
+          icon: BookOpen,
+          isExternal: true,
+        },
+      ],
+    },
+    {
+      groupName: 'التسعير والكوبونات والأرباح',
+      items: [
+        {
+          id: 'pricing',
+          name: 'تعديل أسعار الكورسات والكتب',
+          icon: SlidersHorizontal,
+          badge: 'سريع',
+          badgeType: 'emerald',
+        },
+        {
+          id: 'coupons',
+          name: 'كوبونات وأكواد الخصم',
+          icon: Tag,
+          badge: couponsCount > 0 ? String(couponsCount) : undefined,
+          badgeType: 'purple',
+        },
         {
           id: 'orders',
           name: 'طلبات الطلاب والإيصالات',
@@ -124,18 +166,6 @@ export default function InstructorSidebarClient({
           id: 'payments',
           name: 'بيانات استلام أرباحي المباشرة',
           icon: CreditCard,
-        },
-      ],
-    },
-    {
-      groupName: 'التسويق والتفاعل مع الطلاب',
-      items: [
-        {
-          id: 'coupons',
-          name: 'كوبونات وأكواد الخصم',
-          icon: Tag,
-          badge: couponsCount > 0 ? String(couponsCount) : undefined,
-          badgeType: 'purple',
         },
       ],
     },
@@ -158,19 +188,12 @@ export default function InstructorSidebarClient({
         {
           name: 'تصفح صفحتي كمحاضر',
           href: publicProfileSlug ? `/instructors/${publicProfileSlug}` : '/courses',
-          icon: GraduationCap,
+          icon: User,
           isExternal: true,
         },
       ],
     },
-  ], [
-    coursesCount,
-    pendingOrdersCount,
-    couponsCount,
-    subscriptionPlan,
-    onNewCourseClick,
-    publicProfileSlug,
-  ]);
+  ], [coursesCount, pendingOrdersCount, couponsCount, onNewCourseClick, publicProfileSlug, subscriptionPlan]);
 
   // Filtered by live search query
   const filteredGroups = useMemo(() => {

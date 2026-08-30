@@ -46,6 +46,7 @@ import {
 interface InstructorClientProps {
   user: any;
   initialCourses: any[];
+  initialBooks?: any[];
   totalStudents: number;
   subscriptionState: any;
   initialCoupons: any[];
@@ -56,6 +57,7 @@ interface InstructorClientProps {
 export default function InstructorClient({
   user,
   initialCourses,
+  initialBooks,
   totalStudents,
   subscriptionState,
   initialCoupons,
@@ -65,8 +67,11 @@ export default function InstructorClient({
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<InstructorTabType>('overview');
   const [courses, setCourses] = useState<any[]>(initialCourses);
+  const [books, setBooks] = useState<any[]>(initialBooks || []);
   const [coupons, setCoupons] = useState<any[]>(initialCoupons || []);
   const [payments, setPayments] = useState<any[]>(initialPayments || []);
+  const [editingPrices, setEditingPrices] = useState<{ [id: string]: { price: number; compareAtPrice?: number; status?: string; isFree?: boolean } }>({});
+  const [savingPriceId, setSavingPriceId] = useState<string | null>(null);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [mounted, setMounted] = useState(false);
 
@@ -254,6 +259,64 @@ export default function InstructorClient({
     }
   };
 
+  const handleSaveCoursePrice = async (courseId: string) => {
+    const editData = editingPrices[courseId];
+    if (!editData) return;
+    setSavingPriceId(courseId);
+    try {
+      const res = await fetch('/api/admin/courses', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: courseId,
+          price: editData.price,
+          status: editData.status,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setCourses((prev) => prev.map((c) => (c.id === courseId ? { ...c, ...data.course } : c)));
+        setMessage({ type: 'success', text: 'تم تحديث سعر وحالة الكورس بنجاح!' });
+      } else {
+        setMessage({ type: 'error', text: data.error || 'فشل تحديث سعر الكورس' });
+      }
+    } catch (e) {
+      setMessage({ type: 'error', text: 'حدث خطأ أثناء حفظ السعر' });
+    } finally {
+      setSavingPriceId(null);
+    }
+  };
+
+  const handleSaveBookPrice = async (bookId: string) => {
+    const editData = editingPrices[bookId];
+    if (!editData) return;
+    setSavingPriceId(bookId);
+    try {
+      const res = await fetch('/api/instructor/books', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: bookId,
+          price: editData.price,
+          compareAtPrice: editData.compareAtPrice,
+          isFree: editData.isFree,
+          status: editData.status,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setBooks((prev) => prev.map((b) => (b.id === bookId ? { ...b, ...data.book } : b)));
+        setMessage({ type: 'success', text: 'تم تحديث سعر وحالة المذكرة بنجاح!' });
+      } else {
+        setMessage({ type: 'error', text: data.error || 'فشل تحديث سعر المذكرة' });
+      }
+    } catch (e) {
+      setMessage({ type: 'error', text: 'حدث خطأ أثناء حفظ السعر' });
+    } finally {
+      setSavingPriceId(null);
+    }
+  };
+
   const handleSavePaymentSettings = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSavingPayments(true);
@@ -434,6 +497,7 @@ export default function InstructorClient({
               <span className="font-bold text-slate-900 dark:text-white">
                 {activeTab === 'overview' && 'نظرة عامة والتحليلات'}
                 {activeTab === 'courses' && 'دوراتي التدريبية'}
+                {activeTab === 'pricing' && 'تعديل أسعار الكورسات والكتب'}
                 {activeTab === 'orders' && 'طلبات وإيصالات الطلاب'}
                 {activeTab === 'payments' && 'بيانات استلام أرباحي'}
                 {activeTab === 'coupons' && 'كوبونات الخصم'}
@@ -446,7 +510,8 @@ export default function InstructorClient({
             </h1>
           </div>
 
-          <div className="flex items-center gap-2.5 flex-wrap w-full sm:w-auto">
+          <div className="flex items-center gap-2 flex-wrap w-full sm:w-auto">
+            {/* 1. Add Course Button */}
             <button
               type="button"
               onClick={() => {
@@ -457,19 +522,61 @@ export default function InstructorClient({
                 setModalError(null);
                 setShowAddModal(true);
               }}
-              className="flex-1 sm:flex-initial px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 font-black text-xs shadow-md shadow-amber-500/20 flex items-center justify-center gap-1.5 transition-all hover:scale-105 cursor-pointer"
+              className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 text-zinc-950 font-black text-xs shadow-md shadow-amber-500/20 flex items-center justify-center gap-1.5 transition-all hover:scale-105 cursor-pointer"
             >
               <Plus className="w-4 h-4" />
               <span>إضافة كورس جديد</span>
             </button>
 
+            {/* 2. Add Book / Note Button */}
+            <Link
+              href="/instructor/books/new"
+              className="px-3.5 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-black text-xs shadow-md shadow-purple-600/20 flex items-center justify-center gap-1.5 transition-all hover:scale-105"
+            >
+              <BookOpen className="w-4 h-4" />
+              <span>نشر مذكرة / كتاب</span>
+            </Link>
+
+            {/* 3. Pricing Editor Button */}
+            <button
+              type="button"
+              onClick={() => setActiveTab('pricing')}
+              className={`px-3.5 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
+                activeTab === 'pricing'
+                  ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/25 scale-[1.02]'
+                  : 'bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-200 border border-slate-200 dark:border-zinc-700'
+              }`}
+            >
+              <SlidersHorizontal className="w-4 h-4 text-emerald-500" />
+              <span>تعديل الأسعار والعروض</span>
+            </button>
+
+            {/* 4. Coupons Button */}
+            <button
+              type="button"
+              onClick={() => setActiveTab('coupons')}
+              className={`px-3.5 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
+                activeTab === 'coupons'
+                  ? 'bg-purple-600 text-white shadow-md shadow-purple-600/25 scale-[1.02]'
+                  : 'bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-200 border border-slate-200 dark:border-zinc-700'
+              }`}
+            >
+              <Tag className="w-4 h-4 text-amber-400" />
+              <span>إدارة الكوبونات</span>
+            </button>
+
+            {/* 5. Payments Button */}
             <button
               type="button"
               onClick={() => setActiveTab('payments')}
-              className="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-200 text-xs font-bold border border-slate-200 dark:border-zinc-700 transition-colors flex items-center gap-1.5 cursor-pointer"
+              className={`px-3.5 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
+                activeTab === 'payments'
+                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/25 scale-[1.02]'
+                  : 'bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-200 border border-slate-200 dark:border-zinc-700'
+              }`}
             >
-              <CreditCard className="w-4 h-4 text-emerald-500" />
-              <span className="hidden sm:inline">بيانات أرباحي</span>
+              <CreditCard className="w-4 h-4 text-blue-500" />
+              <span>بيانات أرباحي</span>
             </button>
 
             {user.isStudentInstructor && user.studentVerificationStatus === 'APPROVED' && (
@@ -958,6 +1065,325 @@ export default function InstructorClient({
         </div>
       )}
 
+      {/* TAB: PRICING & DISCOUNTS MANAGER (تعديل أسعار الكورسات والكتب) */}
+      {activeTab === 'pricing' && (
+        <div className="space-y-8">
+          
+          {/* Header */}
+          <div className="p-6 sm:p-8 rounded-3xl bg-white/90 dark:bg-zinc-900/90 border border-slate-200/80 dark:border-purple-900/40 shadow-xl space-y-3">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2 text-xs font-bold text-emerald-600 dark:text-emerald-400">
+                  <SlidersHorizontal className="w-4 h-4" />
+                  <span>مركز التحكم السريع في الأسعار والعروض</span>
+                </div>
+                <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
+                  إدارة وتعديل أسعار الكورسات والمذكرات الرقمية
+                </h2>
+                <p className="text-xs text-slate-600 dark:text-zinc-400">
+                  عدّل أسعار دوراتك وكتبك لحظياً، حدد نسب التخفيض، وفعّل المذكرات المجانية بضغطة زر واحدة.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2.5">
+                <Link
+                  href="/instructor/books/new"
+                  className="px-4 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-black text-xs shadow-md shadow-purple-600/20 flex items-center gap-1.5"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>نشر مذكرة جديدة</span>
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => setShowAddModal(true)}
+                  className="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 font-black text-xs shadow-md shadow-amber-500/20 flex items-center gap-1.5"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>إضافة كورس</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* 1. COURSES PRICING SECTION */}
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="text-base font-black text-slate-900 dark:text-white flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-amber-500" />
+                <span>تسعير الكورسات التدريبية ({courses.length})</span>
+              </h3>
+              <span className="text-xs text-slate-500 dark:text-zinc-400 font-bold">
+                احفظ السعر الجديد ليظهر للطلاب فوراً
+              </span>
+            </div>
+
+            {courses.length === 0 ? (
+              <div className="p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-center text-xs text-slate-500">
+                لا توجد كورسات مضافة بعد.
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {courses.map((course) => {
+                  const currentEdit = editingPrices[course.id] || {
+                    price: course.price,
+                    status: course.status || 'PUBLISHED',
+                  };
+                  const isSaving = savingPriceId === course.id;
+
+                  return (
+                    <div
+                      key={course.id}
+                      className="p-5 rounded-3xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 shadow-md space-y-4 flex flex-col justify-between"
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="space-y-1 min-w-0">
+                          <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                            currentEdit.status === 'PUBLISHED'
+                              ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-300'
+                              : 'bg-zinc-500/15 text-zinc-400'
+                          }`}>
+                            {currentEdit.status === 'PUBLISHED' ? 'منشور للطلاب' : 'مسودة غير منشورة'}
+                          </span>
+                          <h4 className="text-sm font-black text-slate-900 dark:text-white truncate">
+                            {course.title}
+                          </h4>
+                          <p className="text-xs text-slate-500 dark:text-zinc-400">
+                            {course._count?.sections || 0} وحدات • {course._count?.enrollments || 0} طالب
+                          </p>
+                        </div>
+
+                        <span className="text-lg font-black text-amber-600 dark:text-amber-400 font-mono shrink-0">
+                          {formatPrice(course.price)}
+                        </span>
+                      </div>
+
+                      {/* Pricing Inputs */}
+                      <div className="grid grid-cols-2 gap-3 pt-3 border-t border-slate-100 dark:border-zinc-800">
+                        <div className="space-y-1">
+                          <label className="text-[11px] font-bold text-slate-600 dark:text-zinc-400">
+                            السعر الجديد (ج.م):
+                          </label>
+                          <input
+                            type="number"
+                            min="0"
+                            value={currentEdit.price}
+                            onChange={(e) => {
+                              const val = parseFloat(e.target.value) || 0;
+                              setEditingPrices((prev) => ({
+                                ...prev,
+                                [course.id]: { ...currentEdit, price: val },
+                              }));
+                            }}
+                            className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-white text-xs font-black font-mono focus:outline-none focus:border-amber-500"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-[11px] font-bold text-slate-600 dark:text-zinc-400">
+                            حالة النشر:
+                          </label>
+                          <select
+                            value={currentEdit.status}
+                            onChange={(e) => {
+                              setEditingPrices((prev) => ({
+                                ...prev,
+                                [course.id]: { ...currentEdit, status: e.target.value },
+                              }));
+                            }}
+                            className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-white text-xs font-bold focus:outline-none focus:border-amber-500"
+                          >
+                            <option value="PUBLISHED">منشور للبيع</option>
+                            <option value="DRAFT">مسودة (إخفاء)</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      {/* Save Action */}
+                      <div className="flex items-center gap-2 pt-2">
+                        <button
+                          type="button"
+                          onClick={() => handleSaveCoursePrice(course.id)}
+                          disabled={isSaving}
+                          className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 text-zinc-950 font-black text-xs shadow-md shadow-amber-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 cursor-pointer text-center"
+                        >
+                          {isSaving ? 'جاري الحفظ...' : 'حفظ السعر الجديد'}
+                        </button>
+
+                        <Link
+                          href={`/instructor/courses/${course.id}/curriculum`}
+                          className="px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 text-xs font-bold transition-colors"
+                        >
+                          المنهاج
+                        </Link>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* 2. BOOKS & DIGITAL NOTES PRICING SECTION */}
+          <div className="space-y-4 pt-4 border-t border-slate-200 dark:border-zinc-800">
+            <div className="flex items-center justify-between">
+              <h3 className="text-base font-black text-slate-900 dark:text-white flex items-center gap-2">
+                <FileText className="w-5 h-5 text-purple-500" />
+                <span>تسعير وعروض المذكرات والكتب الرقمية ({books.length})</span>
+              </h3>
+              <Link
+                href="/instructor/books"
+                className="text-xs text-amber-600 dark:text-amber-400 font-bold hover:underline"
+              >
+                إدارة كافة المذكرات
+              </Link>
+            </div>
+
+            {books.length === 0 ? (
+              <div className="p-10 rounded-3xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-center space-y-3">
+                <FileText className="w-10 h-10 text-purple-400 mx-auto" />
+                <h4 className="text-sm font-black text-slate-900 dark:text-white">لم تنشر أي مذكرات رقمية بعد</h4>
+                <p className="text-xs text-slate-500 dark:text-zinc-400">
+                  ارفع مذكراتك المحمية بنظام DRM وحدد سعرها واربح 85% من المبيعات فورياً.
+                </p>
+                <Link
+                  href="/instructor/books/new"
+                  className="inline-flex items-center gap-1.5 px-5 py-2 rounded-xl bg-purple-600 text-white font-black text-xs shadow-md"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>نشر مذكرة جديدة الآن</span>
+                </Link>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {books.map((book) => {
+                  const currentEdit = editingPrices[book.id] || {
+                    price: book.price || 0,
+                    compareAtPrice: book.compareAtPrice || 0,
+                    isFree: !!book.isFree,
+                    status: book.status || 'PUBLISHED',
+                  };
+                  const isSaving = savingPriceId === book.id;
+
+                  return (
+                    <div
+                      key={book.id}
+                      className="p-5 rounded-3xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 shadow-md space-y-4 flex flex-col justify-between"
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="space-y-1 min-w-0">
+                          <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/15 text-purple-600 dark:text-purple-300">
+                            {book.category || 'ملخصات'} • {book.pageCount} صفحة
+                          </span>
+                          <h4 className="text-sm font-black text-slate-900 dark:text-white truncate">
+                            {book.title}
+                          </h4>
+                          <p className="text-xs text-slate-500 dark:text-zinc-400">
+                            {book.purchases?.length || book.salesCount || 0} عملية شراء وقراءة
+                          </p>
+                        </div>
+
+                        <span className="text-lg font-black text-purple-600 dark:text-purple-400 font-mono shrink-0">
+                          {book.isFree || book.price === 0 ? 'مجاناً' : `${book.price} ج.م`}
+                        </span>
+                      </div>
+
+                      {/* Pricing Inputs */}
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-slate-100 dark:border-zinc-800">
+                        <div className="space-y-1">
+                          <label className="text-[11px] font-bold text-slate-600 dark:text-zinc-400">
+                            مجانية / مدفوعة:
+                          </label>
+                          <select
+                            value={currentEdit.isFree ? 'FREE' : 'PAID'}
+                            onChange={(e) => {
+                              const isFree = e.target.value === 'FREE';
+                              setEditingPrices((prev) => ({
+                                ...prev,
+                                [book.id]: {
+                                  ...currentEdit,
+                                  isFree,
+                                  price: isFree ? 0 : (currentEdit.price || 35),
+                                },
+                              }));
+                            }}
+                            className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-white text-xs font-bold focus:outline-none focus:border-purple-500"
+                          >
+                            <option value="PAID">مدفوعة</option>
+                            <option value="FREE">مجانية بالكامل</option>
+                          </select>
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-[11px] font-bold text-slate-600 dark:text-zinc-400">
+                            السعر (ج.م):
+                          </label>
+                          <input
+                            type="number"
+                            min="0"
+                            disabled={currentEdit.isFree}
+                            value={currentEdit.price}
+                            onChange={(e) => {
+                              const val = parseFloat(e.target.value) || 0;
+                              setEditingPrices((prev) => ({
+                                ...prev,
+                                [book.id]: { ...currentEdit, price: val },
+                              }));
+                            }}
+                            className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-white text-xs font-black font-mono focus:outline-none focus:border-purple-500 disabled:opacity-40"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-[11px] font-bold text-slate-600 dark:text-zinc-400">
+                            السعر قبل الخصم:
+                          </label>
+                          <input
+                            type="number"
+                            min="0"
+                            disabled={currentEdit.isFree}
+                            value={currentEdit.compareAtPrice || ''}
+                            placeholder="اختياري"
+                            onChange={(e) => {
+                              const val = parseFloat(e.target.value) || 0;
+                              setEditingPrices((prev) => ({
+                                ...prev,
+                                [book.id]: { ...currentEdit, compareAtPrice: val },
+                              }));
+                            }}
+                            className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-white text-xs font-mono focus:outline-none focus:border-purple-500 disabled:opacity-40"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Save Action */}
+                      <div className="flex items-center gap-2 pt-2">
+                        <button
+                          type="button"
+                          onClick={() => handleSaveBookPrice(book.id)}
+                          disabled={isSaving}
+                          className="flex-1 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-black text-xs shadow-md shadow-purple-600/20 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 cursor-pointer text-center"
+                        >
+                          {isSaving ? 'جاري الحفظ...' : 'حفظ تسعير المذكرة'}
+                        </button>
+
+                        <Link
+                          href={`/books/${book.slug}`}
+                          target="_blank"
+                          className="px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 text-xs font-bold transition-colors"
+                        >
+                          معاينة
+                        </Link>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+        </div>
+      )}
+
       {/* TAB 2: DIRECT PAYMENT SETTINGS */}
       {activeTab === 'payments' && (
         <div className="p-6 sm:p-8 rounded-3xl bg-surface border border-border space-y-6 max-w-3xl">
@@ -1343,30 +1769,32 @@ export default function InstructorClient({
       {/* TAB 4: COUPONS */}
       {activeTab === 'coupons' && (
         <div className="space-y-6">
-          <div className="p-6 rounded-3xl bg-surface border border-border space-y-4">
-            <h2 className="text-base font-black text-white flex items-center gap-2">
-              <Tag className="w-5 h-5 text-amber-400" />
-              إنشاء كود خصم جديد لطلابك
-            </h2>
-            <p className="text-xs text-zinc-400">
-              الكوبونات التي تنشئها هنا تطبق حصرياً على كورساتك الخاصة ولا تنطبق على كورسات المحاضرين الآخرين.
-            </p>
+          <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 shadow-xl space-y-4">
+            <div className="space-y-1">
+              <h2 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-2">
+                <Tag className="w-5 h-5 text-amber-500" />
+                <span>إنشاء كود خصم ترويجي جديد لطلابك</span>
+              </h2>
+              <p className="text-xs text-slate-600 dark:text-zinc-400">
+                الكوبونات التي تنشئها هنا تُطبق حصرياً على كورساتك الخاصة وتمنح طلابك تخفيضاً فورياً عند الشراء.
+              </p>
+            </div>
 
-            <form onSubmit={handleCreateCoupon} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+            <form onSubmit={handleCreateCoupon} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 pt-2">
               <div className="space-y-1">
-                <label className="text-xs text-zinc-400">كود الخصم (مثال: SUMMER30):</label>
+                <label className="text-xs font-bold text-slate-600 dark:text-zinc-400">كود الخصم (مثال: PRO20):</label>
                 <input
                   type="text"
                   required
                   value={newCoupon.code}
                   onChange={(e) => setNewCoupon({ ...newCoupon, code: e.target.value })}
-                  placeholder="CODE20"
-                  className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs font-mono font-bold uppercase focus:outline-none focus:border-primary-500"
+                  placeholder="PRO20"
+                  className="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-white text-xs font-mono font-black uppercase focus:outline-none focus:border-amber-500"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs text-zinc-400">نسبة الخصم (%):</label>
+                <label className="text-xs font-bold text-slate-600 dark:text-zinc-400">نسبة الخصم (%):</label>
                 <input
                   type="number"
                   required
@@ -1374,19 +1802,19 @@ export default function InstructorClient({
                   max="100"
                   value={newCoupon.discountValue}
                   onChange={(e) => setNewCoupon({ ...newCoupon, discountValue: parseInt(e.target.value) || 0 })}
-                  className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500"
+                  className="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-white text-xs font-black font-mono focus:outline-none focus:border-amber-500"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs text-zinc-400">أقصى عدد استخدامات:</label>
+                <label className="text-xs font-bold text-slate-600 dark:text-zinc-400">أقصى عدد استخدامات:</label>
                 <input
                   type="number"
                   required
                   min="1"
                   value={newCoupon.maxUses}
                   onChange={(e) => setNewCoupon({ ...newCoupon, maxUses: parseInt(e.target.value) || 100 })}
-                  className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500"
+                  className="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-white text-xs font-black font-mono focus:outline-none focus:border-amber-500"
                 />
               </div>
 
@@ -1394,40 +1822,62 @@ export default function InstructorClient({
                 <button
                   type="submit"
                   disabled={isCreatingCoupon}
-                  className="w-full py-2.5 rounded-xl bg-primary-600 hover:bg-primary-500 text-white font-black text-xs shadow-md shadow-primary-950/50 transition-all hover:scale-105 disabled:opacity-50"
+                  className="w-full py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 text-zinc-950 font-black text-xs shadow-md shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all disabled:opacity-50 cursor-pointer"
                 >
-                  {isCreatingCoupon ? 'جاري الإنشاء...' : 'إضافة الكوبون'}
+                  {isCreatingCoupon ? 'جاري الإنشاء...' : 'إضافة وتفعيل الكوبون'}
                 </button>
               </div>
             </form>
           </div>
 
-          <div className="space-y-3">
-            <h3 className="text-sm font-bold text-white">كوبونات الخصم النشطة ({coupons.length})</h3>
+          <div className="space-y-4">
+            <h3 className="text-base font-black text-slate-900 dark:text-white">
+              كوبونات الخصم النشطة ({coupons.length})
+            </h3>
             {coupons.length === 0 ? (
-              <p className="text-xs text-zinc-500">لم تقم بإنشاء أي كوبونات حتى الآن.</p>
+              <div className="p-8 text-center rounded-2xl bg-slate-50 dark:bg-zinc-800/40 border border-slate-200 dark:border-zinc-800 text-xs text-slate-500 dark:text-zinc-400">
+                لم تقم بإنشاء أي كوبونات حتى الآن. استخدم النموذج أعلاه لإضافة أول كود خصم.
+              </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {coupons.map((c) => (
-                  <div key={c.id} className="p-4 rounded-2xl bg-surface border border-border space-y-2 relative group">
+                  <div
+                    key={c.id}
+                    className="p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 shadow-md space-y-3 relative group"
+                  >
                     <div className="flex items-center justify-between">
-                      <span className="px-3 py-1 rounded-lg bg-primary-950 border border-primary-800 text-primary-300 font-mono font-black text-sm">
+                      <span className="px-3.5 py-1.5 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-700 dark:text-amber-300 font-mono font-black text-sm">
                         {c.code}
                       </span>
-                      <button
-                        type="button"
-                        onClick={() => handleDeleteCoupon(c.id)}
-                        className="text-zinc-500 hover:text-rose-400 p-1 transition-colors"
-                        title="حذف الكوبون"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
+                      <div className="flex items-center gap-1.5">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (typeof window !== 'undefined') {
+                              navigator.clipboard.writeText(c.code);
+                              setMessage({ type: 'success', text: `تم نسخ كود الكوبون: ${c.code}` });
+                            }
+                          }}
+                          className="p-1.5 rounded-lg bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 hover:text-amber-500 transition-colors"
+                          title="نسخ الكود"
+                        >
+                          <Copy className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteCoupon(c.id)}
+                          className="p-1.5 rounded-lg bg-rose-500/10 text-rose-500 hover:bg-rose-500 hover:text-white transition-colors"
+                          title="حذف الكوبون"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
                     </div>
-                    <div className="text-xs text-zinc-300">
-                      خصم: <span className="font-bold text-white">{c.discountValue}%</span>
-                    </div>
-                    <div className="text-[11px] text-zinc-500">
-                      مرات الاستخدام: {c._count?.usages || c.usedCount || 0} من أصل {c.maxUses}
+                    <div className="text-xs text-slate-700 dark:text-zinc-300 flex items-center justify-between">
+                      <span>نسبة الخصم: <strong className="text-slate-900 dark:text-white font-black">{c.discountValue}%</strong></span>
+                      <span className="text-[11px] text-slate-500 dark:text-zinc-400">
+                        الاستخدام: {c._count?.usages || c.usedCount || 0} / {c.maxUses}
+                      </span>
                     </div>
                   </div>
                 ))}

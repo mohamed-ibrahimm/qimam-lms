@@ -1,4 +1,4 @@
-﻿import { NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { getCurrentUser } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { evaluateInstructorSubscription } from '@/lib/instructor-subscription';
@@ -104,5 +104,46 @@ export async function DELETE(req: Request) {
   } catch (error) {
     console.error('Failed to delete coupon:', error);
     return NextResponse.json({ error: 'حدث خطأ أثناء حذف الكوبون' }, { status: 500 });
+  }
+}
+
+export async function PATCH(req: Request) {
+  try {
+    const user = await getCurrentUser();
+    if (!user || (user.role !== 'INSTRUCTOR' && user.role !== 'ADMIN')) {
+      return NextResponse.json({ error: 'غير مصرح لك بالوصول' }, { status: 401 });
+    }
+
+    const body = await req.json();
+    const { id, discountValue, discountType, maxUses, validUntil, isActive } = body;
+
+    if (!id) {
+      return NextResponse.json({ error: 'معرف الكوبون مطلوب' }, { status: 400 });
+    }
+
+    const coupon = await prisma.coupon.findUnique({ where: { id } });
+    if (!coupon) {
+      return NextResponse.json({ error: 'الكوبون غير موجود' }, { status: 404 });
+    }
+
+    if (user.role !== 'ADMIN' && coupon.instructorId !== user.id) {
+      return NextResponse.json({ error: 'ليس لديك صلاحية لتعديل هذا الكوبون' }, { status: 403 });
+    }
+
+    const updated = await prisma.coupon.update({
+      where: { id },
+      data: {
+        ...(discountValue !== undefined && { discountValue: parseFloat(discountValue) }),
+        ...(discountType && { discountType }),
+        ...(maxUses !== undefined && { maxUses: parseInt(maxUses) }),
+        ...(validUntil !== undefined && { validUntil: validUntil ? new Date(validUntil) : null }),
+        ...(isActive !== undefined && { isActive: !!isActive }),
+      },
+    });
+
+    return NextResponse.json({ success: true, coupon: updated, message: 'تم تحديث الكوبون بنجاح' });
+  } catch (e: any) {
+    console.error('Failed to update coupon:', e);
+    return NextResponse.json({ error: 'فشل تحديث الكوبون' }, { status: 500 });
   }
 }

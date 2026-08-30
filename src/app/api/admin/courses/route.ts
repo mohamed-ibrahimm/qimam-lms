@@ -240,3 +240,47 @@ export async function DELETE(req: Request) {
     return NextResponse.json({ error: 'فشل حذف الكورس' }, { status: 500 });
   }
 }
+
+export async function PATCH(req: Request) {
+  try {
+    const user = await requireAuth(['ADMIN', 'INSTRUCTOR']);
+    const body = await req.json();
+    const { id, price, title, shortDescription, description, level, status } = body;
+
+    if (!id) {
+      return NextResponse.json({ error: 'معرف الكورس مطلوب' }, { status: 400 });
+    }
+
+    const course = await prisma.course.findUnique({ where: { id } });
+    if (!course) {
+      return NextResponse.json({ error: 'الكورس غير موجود' }, { status: 404 });
+    }
+
+    if (user.role === 'INSTRUCTOR' && course.instructorId !== user.id) {
+      return NextResponse.json({ error: 'غير مصرح لك بتعديل هذا الكورس' }, { status: 403 });
+    }
+
+    const updated = await prisma.course.update({
+      where: { id },
+      data: {
+        ...(price !== undefined && { price: parseFloat(price) || 0 }),
+        ...(title && { title: title.trim() }),
+        ...(shortDescription !== undefined && { shortDescription }),
+        ...(description !== undefined && { description }),
+        ...(level && { level }),
+        ...(status && { status }),
+      },
+    });
+
+    try {
+      revalidatePath('/instructor');
+      revalidatePath('/courses');
+      revalidatePath(`/courses/${updated.slug}`);
+    } catch (e) {}
+
+    return NextResponse.json({ success: true, course: updated });
+  } catch (e: any) {
+    console.error('Course update error:', e);
+    return NextResponse.json({ error: 'فشل تحديث بيانات وسعر الكورس' }, { status: 500 });
+  }
+}
