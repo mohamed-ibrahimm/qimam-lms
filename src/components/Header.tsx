@@ -175,8 +175,8 @@ export default function Header({
            ========================================================================= */}
         <Link href="/" className="flex items-center gap-2.5 sm:gap-3 shrink-0 group py-1 min-w-0">
           <div className="dynamic-logo-emblem w-10 h-10 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl p-[2px] shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform shrink-0">
-            <div className="w-full h-full bg-[#0c0918] dark:bg-[#0c0918] rounded-[10px] sm:rounded-[14px] flex items-center justify-center border border-amber-500/40">
-              <GraduationCap className="w-5 h-5 text-amber-400" />
+            <div className="w-full h-full bg-gradient-to-br from-amber-500 to-amber-600 dark:bg-[#0c0918] rounded-[10px] sm:rounded-[14px] flex items-center justify-center border border-amber-400/60 dark:border-amber-500/40 shadow-xs">
+              <GraduationCap className="w-5 h-5 text-white dark:text-amber-400" />
             </div>
           </div>
           <div className="flex flex-col text-right justify-center min-w-0">
@@ -186,7 +186,7 @@ export default function Header({
             <span className="text-sm sm:text-base md:text-lg font-black text-slate-900 dark:text-white dark:bg-gradient-to-r dark:from-white dark:via-amber-100 dark:to-amber-300 dark:bg-clip-text dark:text-transparent group-hover:text-blue-600 dark:group-hover:text-amber-300 transition-colors tracking-tight whitespace-nowrap leading-tight drop-shadow-xs">
               {platformName}
             </span>
-            <span className="text-[8px] sm:text-[9.5px] text-slate-600 dark:text-amber-200/80 font-medium whitespace-nowrap leading-none mt-0.5 block">
+            <span className="text-[8px] sm:text-[9.5px] text-slate-600 dark:text-amber-200/80 font-semibold whitespace-nowrap leading-none mt-0.5 block">
               {platformTagline}
             </span>
           </div>
