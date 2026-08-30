@@ -2,16 +2,18 @@ import { NextResponse } from 'next/server';
 import { getCurrentUser } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
-// GET reviews for a course or diploma
+// GET reviews for a course, diploma, or digital book
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
     const courseId = searchParams.get('courseId');
     const diplomaId = searchParams.get('diplomaId');
+    const bookId = searchParams.get('bookId');
 
     const where: any = { isHidden: false };
     if (courseId) where.courseId = courseId;
     if (diplomaId) where.diplomaId = diplomaId;
+    if (bookId) where.bookId = bookId;
 
     const reviews = await prisma.review.findMany({
       where,
@@ -37,7 +39,7 @@ export async function GET(req: Request) {
   }
 }
 
-// POST: Student submits a review (or forced review)
+// POST: Student submits a review or comment
 export async function POST(req: Request) {
   try {
     const user = await getCurrentUser();
@@ -45,7 +47,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'غير مصرح لك بالتقييم قبل تسجيل الدخول' }, { status: 401 });
     }
 
-    const { courseId, diplomaId, rating, comment } = await req.json();
+    const { courseId, diplomaId, bookId, rating, comment } = await req.json();
 
     if (!rating || rating < 1 || rating > 5) {
       return NextResponse.json({ error: 'يرجى اختيار تقييم صحيح من 1 إلى 5 نجوم' }, { status: 400 });
@@ -59,7 +61,7 @@ export async function POST(req: Request) {
     const existingReview = await prisma.review.findFirst({
       where: {
         userId: user.id,
-        ...(courseId ? { courseId } : { diplomaId }),
+        ...(courseId ? { courseId } : diplomaId ? { diplomaId } : { bookId }),
       }
     });
 
@@ -71,6 +73,17 @@ export async function POST(req: Request) {
           rating: Number(rating),
           comment: comment.trim(),
           isApproved: true,
+        },
+        include: {
+          user: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true,
+              officialFullName: true,
+              avatarUrl: true,
+            }
+          }
         }
       });
     } else {
@@ -79,10 +92,22 @@ export async function POST(req: Request) {
           userId: user.id,
           courseId: courseId || null,
           diplomaId: diplomaId || null,
+          bookId: bookId || null,
           rating: Number(rating),
           comment: comment.trim(),
           isApproved: true,
           isHidden: false,
+        },
+        include: {
+          user: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true,
+              officialFullName: true,
+              avatarUrl: true,
+            }
+          }
         }
       });
     }
@@ -90,7 +115,7 @@ export async function POST(req: Request) {
     return NextResponse.json({
       success: true,
       review,
-      message: 'شكراً لك! تم تسجيل تقييمك بنجاح وسماح بمواصلة التعلم 🌟',
+      message: 'شكراً لك! تم تسجيل رأيك وتقييمك بنجاح 🌟',
     });
   } catch (error: any) {
     console.error('Submit review error:', error);

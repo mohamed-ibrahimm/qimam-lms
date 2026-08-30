@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { notFound } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import { getCurrentUser } from '@/lib/auth';
@@ -28,6 +28,21 @@ export default async function BookDetailPage({ params }: Props) {
           bio: true,
           isStudentInstructor: true,
         }
+      },
+      reviews: {
+        where: { isApproved: true },
+        include: {
+          user: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true,
+              officialFullName: true,
+              avatarUrl: true,
+            }
+          }
+        },
+        orderBy: { createdAt: 'desc' },
       }
     }
   });

@@ -22,6 +22,7 @@ import {
   UserCheck,
   Check,
 } from 'lucide-react';
+import ItemReviewsSection from '@/components/reviews/ItemReviewsSection';
 
 interface Props {
   params: { slug: string };
@@ -432,47 +433,18 @@ export default async function CourseDetailPage({ params }: Props) {
               </div>
             </div>
 
-            {/* Student Reviews (تقييمات وآراء الطلاب) */}
-            <div className="p-6 sm:p-7 rounded-2xl bg-white/95 dark:bg-zinc-900/70 border border-slate-200/90 dark:border-zinc-800/80 shadow-md space-y-5">
-              <div className="flex items-center justify-between">
-                <h2 className="text-base sm:text-lg font-black text-slate-900 dark:text-white flex items-center gap-2">
-                  <Star className="w-5 h-5 text-amber-400 fill-amber-400" />
-                  <span>تقييمات ومراجعات الطلاب ({reviewsCount})</span>
-                </h2>
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center">
-                    {[1, 2, 3, 4, 5].map((s) => (
-                      <Star key={s} className="w-4 h-4 fill-amber-400 text-amber-400" />
-                    ))}
-                  </div>
-                  <span className="text-sm font-bold text-slate-900 dark:text-white">{avgRating} من 5</span>
-                </div>
-              </div>
-
-              {course.reviews.length === 0 ? (
-                <p className="text-xs text-slate-500 dark:text-zinc-400 text-center py-4">
-                  كن أول من يقيم هذا الكورس بعد إتمام الدرس الأول!
-                </p>
-              ) : (
-                <div className="divide-y divide-slate-100 dark:divide-zinc-800/60">
-                  {course.reviews.map((rev: any) => (
-                    <div key={rev.id} className="py-3.5 space-y-1.5">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold text-slate-900 dark:text-white">
-                          {rev.user?.officialFullName || 'طالب مجهول'}
-                        </span>
-                        <div className="flex items-center gap-1">
-                          {[...Array(rev.rating)].map((_, i) => (
-                            <Star key={i} className="w-3 h-3 fill-amber-400 text-amber-400" />
-                          ))}
-                        </div>
-                      </div>
-                      <p className="text-xs text-slate-600 dark:text-zinc-300 leading-relaxed">{rev.comment}</p>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+            {/* Student Reviews & Comments (تقييمات وتعليقات الطلاب التفاعلية) */}
+            <ItemReviewsSection
+              courseId={course.id}
+              itemTitle={`دورة: ${course.title}`}
+              initialReviews={course.reviews}
+              currentUser={user ? {
+                id: user.id,
+                officialFullName: user.officialFullName,
+                firstName: user.firstName,
+                avatarUrl: user.avatarUrl,
+              } : null}
+            />
 
           </div>
 

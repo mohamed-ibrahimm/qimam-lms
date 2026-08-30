@@ -15,6 +15,7 @@ import {
   ArrowRight,
   BookOpen
 } from 'lucide-react';
+import ItemReviewsSection from '@/components/reviews/ItemReviewsSection';
 
 interface Props {
   params: { slug: string };
@@ -55,7 +56,22 @@ export default async function DiplomaDetailPage({ params }: Props) {
             }
           }
         },
-        finalExam: true
+        finalExam: true,
+        reviews: {
+          where: { isApproved: true },
+          include: {
+            user: {
+              select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                officialFullName: true,
+                avatarUrl: true,
+              }
+            }
+          },
+          orderBy: { createdAt: 'desc' },
+        },
       }
     });
   } catch (e) {
@@ -250,6 +266,22 @@ export default async function DiplomaDetailPage({ params }: Props) {
           })}
         </div>
       </div>
+
+      {/* Diploma Reviews & Comments (تقييمات وتعليقات الطلاب التفاعلية) */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <ItemReviewsSection
+          diplomaId={diploma.id}
+          itemTitle={`دبلومة: ${diploma.title}`}
+          initialReviews={diploma.reviews}
+          currentUser={user ? {
+            id: user.id,
+            officialFullName: user.officialFullName,
+            firstName: user.firstName,
+            avatarUrl: user.avatarUrl,
+          } : null}
+        />
+      </div>
+
     </div>
   );
 }

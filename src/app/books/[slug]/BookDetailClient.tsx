@@ -30,8 +30,10 @@ import {
   BookMarked,
   Download,
   Info,
+  MessageSquare,
 } from 'lucide-react';
 import SecurePDFViewer from '@/components/books/SecurePDFViewer';
+import ItemReviewsSection from '@/components/reviews/ItemReviewsSection';
 
 interface BookItem {
   id: string;
@@ -53,6 +55,7 @@ interface BookItem {
   salesCount: number;
   viewsCount: number;
   rating: number;
+  reviews?: any[];
   instructor?: {
     id: string;
     officialFullName: string;
@@ -83,7 +86,7 @@ export default function BookDetailClient({
   relatedBooks,
   currentUser,
 }: Props) {
-  const [activeTab, setActiveTab] = useState<'READER' | 'CONTENTS' | 'AUTHOR' | 'SECURITY'>('READER');
+  const [activeTab, setActiveTab] = useState<'READER' | 'CONTENTS' | 'AUTHOR' | 'SECURITY' | 'REVIEWS'>('READER');
   const [copiedLink, setCopiedLink] = useState(false);
 
   const discount = book.compareAtPrice && book.compareAtPrice > book.price
@@ -482,6 +485,19 @@ export default function BookDetailClient({
             <Shield className="w-4 h-4" />
             <span>نظام الحماية DRM</span>
           </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('REVIEWS')}
+            className={`px-6 py-3.5 rounded-2xl text-xs sm:text-sm font-black transition-all flex items-center gap-2 cursor-pointer ${
+              activeTab === 'REVIEWS'
+                ? 'bg-amber-500 text-zinc-950 shadow-lg shadow-amber-500/25 scale-[1.02]'
+                : 'bg-white dark:bg-[#130e28] text-slate-700 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-200 dark:border-zinc-800'
+            }`}
+          >
+            <MessageSquare className="w-4 h-4" />
+            <span>التقييمات والتعليقات ({book.reviews?.length || 0})</span>
+          </button>
         </div>
 
         {/* =========================================================
@@ -601,6 +617,9 @@ export default function BookDetailClient({
         {/* =========================================================
             TAB 4: SECURITY & DRM
            ========================================================= */}
+        {/* =========================================================
+            TAB 4: SECURITY DRM
+           ========================================================= */}
         {activeTab === 'SECURITY' && (
           <div className="p-8 rounded-3xl bg-white dark:bg-[#120d28] border border-slate-200 dark:border-zinc-800 space-y-6 text-right">
             <div className="flex items-center gap-3">
@@ -641,7 +660,33 @@ export default function BookDetailClient({
           </div>
         )}
 
+        {/* =========================================================
+            TAB 5: STUDENT REVIEWS & COMMENTS
+           ========================================================= */}
+        {activeTab === 'REVIEWS' && (
+          <ItemReviewsSection
+            bookId={book.id}
+            itemTitle={`مذكرة: ${book.title}`}
+            initialReviews={book.reviews || []}
+            currentUser={currentUser}
+          />
+        )}
+
       </div>
+
+      {/* =========================================================================
+          4. PERMANENT REVIEWS SECTION (When not in REVIEWS tab, displayed as section)
+         ========================================================================= */}
+      {activeTab !== 'REVIEWS' && (
+        <div className="pt-2">
+          <ItemReviewsSection
+            bookId={book.id}
+            itemTitle={`مذكرة: ${book.title}`}
+            initialReviews={book.reviews || []}
+            currentUser={currentUser}
+          />
+        </div>
+      )}
 
       {/* =========================================================================
           4. RELATED BOOKS & NOTES CAROUSEL

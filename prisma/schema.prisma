@@ -370,19 +370,21 @@ model Wishlist {
 }
 
 model Review {
-  id         String   @id @default(cuid())
+  id         String       @id @default(cuid())
   userId     String
   courseId   String?
   diplomaId  String?
-  rating     Int      @default(5)
+  bookId     String?
+  rating     Int          @default(5)
   comment    String
-  isApproved Boolean  @default(true)
-  isHidden   Boolean  @default(false)
-  createdAt  DateTime @default(now())
+  isApproved Boolean      @default(true)
+  isHidden   Boolean      @default(false)
+  createdAt  DateTime     @default(now())
 
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  course     Course?  @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  diploma    Diploma? @relation(fields: [diplomaId], references: [id], onDelete: Cascade)
+  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course     Course?      @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  diploma    Diploma?     @relation(fields: [diplomaId], references: [id], onDelete: Cascade)
+  book       DigitalBook? @relation(fields: [bookId], references: [id], onDelete: Cascade)
 }
 
 model Order {
@@ -704,6 +706,7 @@ model DigitalBook {
   instructor        User              @relation("InstructorBooks", fields: [instructorId], references: [id])
   purchases         BookPurchase[]
   orders            Order[]
+  reviews           Review[]
 }
 
 model BookPurchase {
