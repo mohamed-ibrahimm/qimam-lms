@@ -193,9 +193,9 @@ export default function Header({
         </Link>
 
         {/* =========================================================================
-            2. CENTER: CLASSIC, CLEAN & DYNAMIC NAVIGATION WITH ROTATING BEAM ON "جميع الكورسات"
+            2. CENTER: DEAD-CENTERED DYNAMIC NAVIGATION WITH ROTATING BEAM ON "جميع الكورسات"
            ========================================================================= */}
-        <div className="hidden lg:flex items-center gap-2 bg-slate-100/90 dark:bg-black/60 p-1.5 rounded-full border border-slate-200/90 dark:border-white/10 shadow-inner shrink-0 relative">
+        <div className="hidden lg:flex items-center gap-2 bg-slate-100/90 dark:bg-black/60 p-1.5 rounded-full border border-slate-200/90 dark:border-white/10 shadow-inner absolute left-1/2 -translate-x-1/2 z-20">
           
           {/* Link: الرئيسية */}
           <Link

@@ -157,7 +157,7 @@ export default function InstructorJoinPage() {
   ];
 
   return (
-    <div className="min-h-screen pt-28 sm:pt-36 pb-20 px-3.5 sm:px-6 lg:px-8 relative overflow-hidden bg-slate-50 dark:bg-[#090714] text-slate-900 dark:text-slate-100 selection:bg-amber-500 selection:text-zinc-950 transition-colors duration-300">
+    <div className="min-h-screen pt-20 sm:pt-24 pb-12 px-3.5 sm:px-6 lg:px-8 relative overflow-hidden bg-slate-50 dark:bg-[#090714] text-slate-900 dark:text-slate-100 selection:bg-amber-500 selection:text-zinc-950 transition-colors duration-300">
       
       {/* =========================================================================
           SOPHISTICATED DYNAMIC AMBIENT DRIFT ORBS (RICH LUXURY VELVET GLOW)
@@ -170,18 +170,18 @@ export default function InstructorJoinPage() {
       </div>
 
       {/* =========================================================================
-          1. HERO & TRACK NAVIGATION
+          1. HERO & TRACK NAVIGATION (RAISED UP & TIGHTLY COMPOSED)
          ========================================================================= */}
-      <section className="max-w-5xl mx-auto text-center space-y-6 sm:space-y-7">
+      <section className="max-w-5xl mx-auto text-center space-y-3.5 sm:space-y-4">
         
         {/* Track Segmented Switcher (Luxury Capsule) */}
-        <div className="inline-flex p-1.5 rounded-2xl sm:rounded-full bg-white/90 dark:bg-[#130f24]/95 border border-slate-200 dark:border-amber-500/30 shadow-lg shadow-slate-900/5 dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)] backdrop-blur-2xl gap-1.5 flex-col sm:flex-row justify-center w-full sm:w-auto">
+        <div className="inline-flex p-1 rounded-2xl sm:rounded-full bg-white/90 dark:bg-[#130f24]/95 border border-slate-200 dark:border-amber-500/30 shadow-md shadow-slate-900/5 dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)] backdrop-blur-2xl gap-1 flex-col sm:flex-row justify-center w-full sm:w-auto">
           <button
             type="button"
             onClick={() => setActiveTrack('all')}
-            className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl sm:rounded-full text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
+            className={`px-4 sm:px-4.5 py-1.5 sm:py-2 rounded-xl sm:rounded-full text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
               activeTrack === 'all'
-                ? 'bg-slate-900 text-white dark:bg-white dark:text-zinc-950 shadow-md'
+                ? 'bg-slate-900 text-white dark:bg-white dark:text-zinc-950 shadow-sm'
                 : 'text-slate-600 dark:text-zinc-400 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10'
             }`}
           >
@@ -192,7 +192,7 @@ export default function InstructorJoinPage() {
           <button
             type="button"
             onClick={() => setActiveTrack('expert')}
-            className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl sm:rounded-full text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
+            className={`px-4 sm:px-4.5 py-1.5 sm:py-2 rounded-xl sm:rounded-full text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
               activeTrack === 'expert'
                 ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-600/30'
                 : 'text-slate-600 dark:text-zinc-400 hover:text-purple-600 dark:hover:text-purple-300 hover:bg-purple-50 dark:hover:bg-white/10'
@@ -205,7 +205,7 @@ export default function InstructorJoinPage() {
           <button
             type="button"
             onClick={() => setActiveTrack('student')}
-            className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl sm:rounded-full text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
+            className={`px-4 sm:px-4.5 py-1.5 sm:py-2 rounded-xl sm:rounded-full text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
               activeTrack === 'student'
                 ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-zinc-950 shadow-md shadow-amber-500/30'
                 : 'text-slate-600 dark:text-zinc-400 hover:text-amber-600 dark:hover:text-amber-300 hover:bg-amber-50 dark:hover:bg-white/10'
@@ -218,8 +218,8 @@ export default function InstructorJoinPage() {
 
         {/* Dynamic Tag */}
         <div className="flex justify-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 dark:bg-amber-500/15 border border-amber-500/30 text-amber-700 dark:text-amber-300 text-xs font-bold backdrop-blur-md shadow-xs">
-            <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-amber-500/10 dark:bg-amber-500/15 border border-amber-500/30 text-amber-700 dark:text-amber-300 text-[11px] sm:text-xs font-bold backdrop-blur-md shadow-xs">
+            <Sparkles className="w-3 h-3 text-amber-500" />
             <span>
               {activeTrack === 'student'
                 ? 'منحة تمكين وإطلاق طلبة الكليات والمدارس والمعاهد'
@@ -231,7 +231,7 @@ export default function InstructorJoinPage() {
         </div>
 
         {/* Main Headline */}
-        <h1 className="text-2xl xs:text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.25] max-w-4xl mx-auto">
+        <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.2] max-w-4xl mx-auto">
           {platformSettings.joinPageTitle ? (
             platformSettings.joinPageTitle
           ) : activeTrack === 'student' ? (
@@ -253,7 +253,7 @@ export default function InstructorJoinPage() {
         </h1>
 
         {/* Subtitle */}
-        <p className="text-xs sm:text-base lg:text-lg text-slate-600 dark:text-zinc-300 max-w-3xl mx-auto leading-relaxed px-2">
+        <p className="text-xs sm:text-sm lg:text-base text-slate-600 dark:text-zinc-300 max-w-3xl mx-auto leading-relaxed px-2">
           {platformSettings.joinPageSubtitle ? (
             platformSettings.joinPageSubtitle
           ) : activeTrack === 'student'
@@ -262,13 +262,13 @@ export default function InstructorJoinPage() {
         </p>
 
         {/* =========================================================================
-            DUAL TRACK HERO CARDS (VELVET OBSIDIAN & GOLD MASTER CARDS)
+            DUAL TRACK HERO CARDS (IMMEDIATELY VISIBLE & NICELY PROPORTIONED)
            ========================================================================= */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 pt-4 sm:pt-6 text-right">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 pt-2 sm:pt-3 text-right">
           
           {/* Card 1: Teachers & University Professors */}
           <div
-            className={`p-5 sm:p-8 rounded-3xl border transition-all duration-300 flex flex-col justify-between space-y-6 relative overflow-hidden group ${
+            className={`p-5 sm:p-6 rounded-3xl border transition-all duration-300 flex flex-col justify-between space-y-4 relative overflow-hidden group ${
               activeTrack === 'expert' || activeTrack === 'all'
                 ? 'bg-white dark:bg-gradient-to-b dark:from-[#18132e]/95 dark:via-[#100c22]/95 dark:to-[#0a0718]/95 border-purple-200 dark:border-purple-500/40 shadow-xl shadow-purple-500/5 dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.7),0_0_30px_-5px_rgba(147,51,234,0.2)] ring-1 ring-purple-500/20'
                 : 'bg-slate-50/50 dark:bg-[#120e24]/50 border-slate-200 dark:border-zinc-800/70 opacity-70'
@@ -326,7 +326,7 @@ export default function InstructorJoinPage() {
 
           {/* Card 2: Student Instructors (GOLD SHINE VIP) */}
           <div
-            className={`p-5 sm:p-8 rounded-3xl border-2 transition-all duration-300 flex flex-col justify-between space-y-6 relative overflow-hidden group ${
+            className={`p-5 sm:p-6 rounded-3xl border-2 transition-all duration-300 flex flex-col justify-between space-y-4 relative overflow-hidden group ${
               activeTrack === 'student' || activeTrack === 'all'
                 ? 'bg-gradient-to-b from-amber-50/80 via-white to-amber-50/40 dark:from-[#261b0c]/95 dark:via-[#181220]/95 dark:to-[#0d0918]/95 border-amber-400 dark:border-amber-500/60 shadow-xl shadow-amber-500/10 dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.7),0_0_40px_-5px_rgba(245,158,11,0.25)] ring-1 ring-amber-400/40'
                 : 'bg-slate-50/50 dark:bg-[#120e24]/50 border-slate-200 dark:border-zinc-800/70 opacity-70'
