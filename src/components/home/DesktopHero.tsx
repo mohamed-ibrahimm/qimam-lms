@@ -73,11 +73,11 @@ export default function DesktopHero({
             <div className="dynamic-drift-3 absolute top-1/4 left-1/2 -translate-x-1/2 w-[380px] h-[280px] bg-indigo-400/20 dark:bg-yellow-500/10 rounded-full blur-[100px]" />
           </div>
 
-          <h1 className="font-black tracking-tight mb-5 max-w-4xl mx-auto">
-            <span className="text-slate-900 dark:text-white block font-black text-3xl sm:text-4xl lg:text-[3.25rem] leading-[1.22] mb-2.5">
+          <h1 className="font-black tracking-tight mb-6 max-w-5xl mx-auto">
+            <span className="text-slate-900 dark:text-white block font-black text-4xl lg:text-6xl leading-[1.18] mb-3">
               {settings.HERO_TITLE || 'نحو مستقبل برمجي وهندسي احترافي'}
             </span>
-            <span className="bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-600 dark:from-amber-300 dark:via-yellow-400 dark:to-amber-500 bg-clip-text text-transparent block font-black text-xl sm:text-2xl lg:text-[2.2rem] leading-snug">
+            <span className="bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-600 dark:from-amber-300 dark:via-yellow-400 dark:to-amber-500 bg-clip-text text-transparent block font-black text-2xl lg:text-4xl leading-snug">
               {(settings.PLATFORM_TAGLINE && !settings.PLATFORM_TAGLINE.includes('?')) ? settings.PLATFORM_TAGLINE : 'دبلومات تطبيقية ومشاريع واقعية تؤهلك لسوق العمل'}
             </span>
           </h1>

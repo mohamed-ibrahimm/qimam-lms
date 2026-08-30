@@ -67,7 +67,7 @@ export default async function AdminOverviewPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-slate-200/80 dark:border-border">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">نظرة عامة والتحليلات</h1>
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">نظرة عامة والتحليلات الأكاديمية</h1>
           <p className="text-xs text-slate-500 dark:text-zinc-400 mt-1 font-medium">متابعة فورية للمبيعات، الطلاب، المدفوعات، وسير المنصة</p>
         </div>
 

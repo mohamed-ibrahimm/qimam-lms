@@ -167,26 +167,26 @@ export default function Header({
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 p-1 sm:p-3 md:p-4 w-full max-w-full overflow-hidden transition-all">
-      <nav className="dynamic-navbar-aura max-w-[1536px] w-full mx-auto flex items-center justify-between min-h-[3.25rem] sm:min-h-[4.5rem] px-2.5 sm:px-6 md:px-8 rounded-full bg-white/95 dark:bg-[#0c0918]/95 border border-slate-200/90 dark:border-amber-500/25 backdrop-blur-2xl shadow-xl shadow-slate-900/5 dark:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.8)] relative gap-1.5 sm:gap-4">
+    <header className="fixed top-0 left-0 right-0 z-50 p-1.5 sm:p-3 md:p-4 transition-all">
+      <nav className="dynamic-navbar-aura max-w-[1536px] w-full sm:w-[98%] mx-auto flex items-center justify-between min-h-[3.5rem] sm:min-h-[4.5rem] px-3 sm:px-6 md:px-8 rounded-full bg-white/95 dark:bg-[#0c0918]/95 border border-slate-200/90 dark:border-amber-500/25 backdrop-blur-2xl shadow-xl shadow-slate-900/5 dark:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.8)] relative gap-2 sm:gap-4">
         
         {/* =========================================================================
             1. RIGHT: LOGO & PLATFORM TITLE WITH ROTATING GOLD HALO
            ========================================================================= */}
-        <Link href="/" className="flex items-center gap-1.5 sm:gap-3 shrink min-w-0 group py-1 max-w-[65%] sm:max-w-none">
-          <div className="dynamic-logo-emblem w-7 h-7 sm:w-11 sm:h-11 rounded-lg sm:rounded-2xl p-[2px] shadow-md shadow-amber-500/20 group-hover:scale-105 transition-transform shrink-0">
-            <div className="w-full h-full bg-[#0c0918] dark:bg-[#0c0918] rounded-[6px] sm:rounded-[14px] flex items-center justify-center border border-amber-500/40">
-              <GraduationCap className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-amber-400" />
+        <Link href="/" className="flex items-center gap-2.5 sm:gap-3 shrink-0 group py-1">
+          <div className="dynamic-logo-emblem w-10 h-10 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl p-[2px] shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform shrink-0">
+            <div className="w-full h-full bg-[#0c0918] dark:bg-[#0c0918] rounded-[10px] sm:rounded-[14px] flex items-center justify-center border border-amber-500/40">
+              <GraduationCap className="w-5 h-5 text-amber-400" />
             </div>
           </div>
-          <div className="flex flex-col text-right justify-center min-w-0">
-            <span className="hidden sm:flex text-[8px] sm:text-[10px] font-black text-amber-500 dark:text-amber-400 items-center gap-1 leading-none mb-0.5 whitespace-nowrap">
+          <div className="flex flex-col text-right justify-center shrink-0">
+            <span className="text-[9px] sm:text-[10px] font-black text-amber-500 dark:text-amber-400 flex items-center gap-1 leading-none mb-0.5 whitespace-nowrap">
               ★ منصة تعليمية معتمدة
             </span>
-            <span className="text-[11.5px] xs:text-xs sm:text-base md:text-lg font-black text-slate-900 dark:text-white dark:bg-gradient-to-r dark:from-white dark:via-amber-100 dark:to-amber-300 dark:bg-clip-text dark:text-transparent group-hover:text-blue-600 dark:group-hover:text-amber-300 transition-colors tracking-tight truncate leading-tight drop-shadow-xs">
+            <span className="text-sm xs:text-base sm:text-lg font-black text-slate-900 dark:text-white dark:bg-gradient-to-r dark:from-white dark:via-amber-100 dark:to-amber-300 dark:bg-clip-text dark:text-transparent group-hover:text-blue-600 dark:group-hover:text-amber-300 transition-colors tracking-tight whitespace-nowrap leading-tight drop-shadow-xs">
               {platformName}
             </span>
-            <span className="hidden sm:block text-[8.5px] xs:text-[9px] sm:text-[10px] text-slate-500 dark:text-amber-200/80 font-medium truncate leading-none mt-0.5">
+            <span className="text-[8.5px] xs:text-[9px] sm:text-[10px] text-slate-500 dark:text-amber-200/80 font-medium whitespace-nowrap leading-none mt-0.5 block">
               {platformTagline}
             </span>
           </div>
@@ -459,25 +459,35 @@ export default function Header({
               )}
             </div>
           ) : (
-            /* Auth + Streamlined Single Instructor Join Pill */
-            <div className="hidden lg:flex items-center gap-2 shrink-0">
+            /* Auth + Compact Dual Instructor Join Pills */
+            <div className="hidden lg:flex items-center gap-1.5 shrink-0">
               
-              {/* Join: انضم كـ محاضر (VIP) */}
+              {/* Join: انضم كـ محاضر */}
               <Link
-                href="/instructors/join"
-                className="px-3.5 py-1.5 rounded-full text-xs font-black bg-gradient-to-r from-amber-500/15 via-purple-500/15 to-indigo-500/15 hover:from-amber-500/25 hover:to-indigo-500/25 border border-amber-500/40 hover:border-amber-400 text-slate-900 dark:text-amber-300 transition-all flex items-center gap-1.5 shadow-sm"
-                title="انضم كـ مدرس أو محاضر طالب (0% عمولة - شهر تجريبي مجاناً)"
+                href="/instructors/join?track=expert"
+                className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 text-purple-700 dark:text-purple-300 hover:border-purple-400 transition-all flex items-center gap-1 shrink-0 shadow-xs"
+                title="سجل كمدرس أو دكتور جامعي (0% عمولة - 14 يوماً مجاناً)"
               >
-                <Sparkles className="w-3.5 h-3.5 text-amber-500 animate-pulse" />
-                <span>انضم كـ محاضر</span>
+                <Video className="w-3 h-3 text-purple-600 dark:text-purple-400" />
+                <span>{navExpertBtnText}</span>
+              </Link>
+
+              {/* Join: انضم كـ محاضر طالب */}
+              <Link
+                href="/instructors/join?track=student"
+                className="px-2.5 py-1 rounded-full text-[11px] font-black bg-gradient-to-r from-amber-500/15 via-yellow-500/20 to-amber-500/15 hover:from-amber-500/25 hover:to-yellow-500/30 border border-amber-500/40 hover:border-amber-400 text-amber-800 dark:text-amber-300 transition-all flex items-center gap-1 shrink-0 shadow-sm shadow-amber-500/10"
+                title="منحة المحاضر الطالب لطلبة الجامعات والمدارس (شهر كامل مجاناً)"
+              >
+                <GraduationCap className="w-3 h-3 text-amber-500" />
+                <span>{navStudentBtnText}</span>
               </Link>
 
               {/* Login Button */}
               <Link
                 href="/login"
-                className="px-3.5 py-1.5 rounded-full text-xs font-bold text-slate-700 hover:text-slate-950 bg-slate-100 hover:bg-slate-200 dark:text-zinc-200 dark:hover:text-white dark:bg-zinc-800/80 dark:hover:bg-zinc-700 transition-all shadow-xs flex items-center gap-1.5 shrink-0"
+                className="px-3 py-1 rounded-full text-[11px] font-bold text-slate-700 hover:text-slate-950 bg-slate-100 hover:bg-slate-200 dark:text-zinc-200 dark:hover:text-white dark:bg-zinc-800/80 dark:hover:bg-zinc-700 transition-all shadow-xs flex items-center gap-1 shrink-0"
               >
-                <LogIn className="w-3.5 h-3.5 text-slate-600 dark:text-amber-400" />
+                <LogIn className="w-3 h-3 text-slate-600 dark:text-amber-400" />
                 <span>دخول</span>
               </Link>
 
