@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { prisma } from '@/lib/prisma';
 import { getCurrentUser } from '@/lib/auth';
 import BooksCatalogClient from './BooksCatalogClient';
@@ -17,8 +17,12 @@ export default async function BooksPage() {
           id: true,
           officialFullName: true,
           firstName: true,
+          lastName: true,
           avatarUrl: true,
           isStudentInstructor: true,
+          studentUniversity: true,
+          studentFaculty: true,
+          role: true,
         }
       }
     },
