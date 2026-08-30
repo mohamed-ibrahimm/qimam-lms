@@ -117,11 +117,15 @@ export default function Header({
     }
   };
 
-  // Fetch user and settings once on mount
+  // Fetch user and settings only if not provided by server SSR
   useEffect(() => {
     setMounted(true);
-    fetchUser();
-    fetchSettings();
+    if (initialUser === undefined) {
+      fetchUser();
+    }
+    if (!initialPlatformName) {
+      fetchSettings();
+    }
 
     const handleSettingsUpdated = (e: any) => {
       const name = e.detail?.PLATFORM_NAME || e.detail?.settings?.PLATFORM_NAME;
