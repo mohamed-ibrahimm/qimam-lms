@@ -48,10 +48,10 @@ export default function MobileHero({
       {/* 
         ========================================================================
         SCREEN 1: ABOVE THE FOLD
-        Dedicated full-screen showcase. Contains exclusively Headline + CTAs.
+        Dedicated 100% Full-Screen Showcase. Contains exclusively Headline + CTAs.
         ========================================================================
       */}
-      <section className="h-[100dvh] min-h-[600px] flex flex-col justify-between pt-20 xs:pt-24 px-4 relative">
+      <section className="h-[100dvh] min-h-[560px] flex flex-col justify-between pt-16 xs:pt-18 pb-3 xs:pb-4 px-3 relative overflow-hidden">
         
         {/* Exact Desktop-Matched Ambient Lighting & Multi-Colored Radiant Blooms */}
         {/* 1. Top central imperial gold & violet dome */}
@@ -87,13 +87,13 @@ export default function MobileHero({
         )}
 
         {/* 2. CENTER: Large, Broad, Spacious Headline & Subtitle */}
-        <div className="flex-1 flex flex-col justify-center items-center text-center my-auto px-2 py-2 space-y-3 shrink-0 relative">
+        <div className="flex-1 flex flex-col justify-center items-center text-center my-auto px-2 py-3 space-y-3.5 shrink-0 relative">
 
           <h1 className="font-black tracking-tight w-full mb-1 text-center space-y-1.5">
-            <span className="text-slate-950 dark:text-white block font-black text-[27px] xs:text-[33px] sm:text-4xl leading-[1.22] tracking-tight">
+            <span className="text-slate-950 dark:text-white block font-black text-[28px] xs:text-[34px] sm:text-4xl leading-[1.22] tracking-tight">
               {settings.HERO_TITLE || 'بوابتك الذكية لاحتراف'}
             </span>
-            <span className="block font-black text-[19px] xs:text-[23px] sm:text-2xl leading-snug bg-gradient-to-r from-blue-700 via-indigo-600 to-purple-600 dark:from-amber-400 dark:via-yellow-300 dark:to-amber-500 bg-clip-text text-transparent">
+            <span className="block font-black text-[20px] xs:text-[24px] sm:text-2xl leading-snug bg-gradient-to-r from-blue-700 via-indigo-600 to-purple-600 dark:from-amber-400 dark:via-yellow-300 dark:to-amber-500 bg-clip-text text-transparent">
               {settings.HERO_TITLE_HIGHLIGHT || 'البرمجة وهندسة النظم والذكاء الاصطناعي'}
             </span>
           </h1>
@@ -103,8 +103,8 @@ export default function MobileHero({
           </p>
         </div>
 
-        {/* 3. BOTTOM: 4 Action Buttons with clearance above floating icons */}
-        <div className="w-full max-w-[340px] xs:max-w-sm mx-auto flex flex-col gap-2.5 pb-[78px] sm:pb-8 px-1.5 shrink-0 mt-auto">
+        {/* 3. BOTTOM: 4 Action Buttons pushed down to bottom edge comfortably */}
+        <div className="w-full max-w-[360px] xs:max-w-md mx-auto flex flex-col gap-2 pb-2 xs:pb-3 px-1 shrink-0 mt-auto">
           
           {/* Button 1: Diploma */}
           <a href="#trending-diploma" className="shimmer-border-wrapper group w-full">
