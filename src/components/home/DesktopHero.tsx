@@ -42,50 +42,50 @@ export default function DesktopHero({
   hasAnySocial,
 }: DesktopHeroProps) {
   return (
-    <section className="hidden md:flex flex-col justify-center items-center min-h-[calc(100vh-4.5rem)] pt-6 sm:pt-8 lg:pt-10 pb-12 relative">
-      <div className="max-w-7xl mx-auto px-4 lg:px-8 text-center my-auto w-full space-y-6 lg:space-y-7">
+    <section className="hidden md:flex flex-col justify-center items-center min-h-[calc(100vh-4.5rem)] pt-8 sm:pt-10 lg:pt-12 pb-14 relative">
+      <div className="max-w-[1500px] mx-auto px-4 lg:px-8 text-center my-auto w-full space-y-8 lg:space-y-10">
         
         {/* Promotional Dynamic Rotating Shimmer Banner */}
         {settings.BANNER_ENABLED !== 'false' && (
           <div className="inline-block max-w-full px-2">
             <a href="#trending-diploma" className="shimmer-border-wrapper group inline-block max-w-full">
               <div className="shimmer-beam-gold" />
-              <div className="shimmer-button-content px-5 py-2 text-xs text-slate-800 dark:text-zinc-200 flex items-center gap-2.5 flex-nowrap justify-center">
+              <div className="shimmer-button-content px-6 py-2.5 text-xs lg:text-sm text-slate-800 dark:text-zinc-200 flex items-center gap-3 flex-nowrap justify-center">
                 <div className="flex items-center gap-1.5 shrink-0">
-                  <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-amber-400 animate-pulse" />
+                  <Sparkles className="w-4 h-4 text-blue-600 dark:text-amber-400 animate-pulse" />
                   <span className="text-blue-700 dark:text-amber-300 font-black">{settings.HERO_BADGE || 'جديد!'}</span>
                 </div>
-                <div className="h-3.5 w-px bg-slate-300 dark:bg-amber-500/40 shrink-0" />
-                <span className="group-hover:text-blue-700 dark:group-hover:text-amber-200 transition-colors font-semibold text-xs leading-normal">
+                <div className="h-4 w-px bg-slate-300 dark:bg-amber-500/40 shrink-0" />
+                <span className="group-hover:text-blue-700 dark:group-hover:text-amber-200 transition-colors font-bold text-xs lg:text-sm leading-normal">
                   {settings.BANNER_TEXT || 'خصم استثنائي 50% لفترة محدودة على جميع المسارات الهندسية'}
                 </span>
-                <ArrowLeft className="w-3.5 h-3.5 text-blue-600 dark:text-amber-400 group-hover:-translate-x-1 transition-transform shrink-0" />
+                <ArrowLeft className="w-4 h-4 text-blue-600 dark:text-amber-400 group-hover:-translate-x-1.5 transition-transform shrink-0" />
               </div>
             </a>
           </div>
         )}
 
-        {/* Headlines with balanced scale and 2 clean lines */}
-        <div className="space-y-3 max-w-5xl mx-auto px-2">
-          <h1 className="text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px] font-black text-slate-950 dark:text-white leading-[1.25] tracking-tight">
+        {/* Headlines with expansive scale and magnificent presence */}
+        <div className="space-y-4 max-w-6xl mx-auto px-2">
+          <h1 className="text-4xl sm:text-5xl lg:text-[54px] xl:text-[62px] font-black text-slate-950 dark:text-white leading-[1.22] tracking-tight">
             {settings.HERO_TITLE || 'بوابتك الذكية لاحتراف'} <br className="hidden sm:inline" />
             <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-amber-400 dark:via-yellow-300 dark:to-amber-500 bg-clip-text text-transparent">
               {settings.HERO_TITLE_HIGHLIGHT || 'البرمجة وهندسة النظم والذكاء الاصطناعي'}
             </span>
           </h1>
 
-          <p className="text-sm sm:text-base lg:text-lg text-slate-600 dark:text-zinc-300 max-w-3xl mx-auto leading-relaxed font-normal pt-1">
+          <p className="text-base sm:text-lg lg:text-xl text-slate-600 dark:text-zinc-200 max-w-4xl mx-auto leading-relaxed font-medium pt-2">
             {settings.HERO_SUBTITLE || `${cleanPlatformName} — مسارات تدريبية هندسية متكاملة، دبلومات برمجية معتمدة، ومشاريع إنتاج واقعية تؤهلك لسوق العمل بثقة واحتراف.`}
           </p>
         </div>
 
         {/* 4 Premium Action Pillars on a Single Unified Horizontal Row */}
-        <div className="flex flex-wrap lg:flex-nowrap items-center justify-center gap-2.5 lg:gap-3.5 w-full mx-auto px-1 max-w-[1360px] pt-1">
+        <div className="flex flex-wrap lg:flex-nowrap items-center justify-center gap-3 lg:gap-4 w-full mx-auto px-1 max-w-[1480px] pt-2">
           
           {/* 1. Diploma Button (Shimmer Molten Gold - Perfectly Centered) */}
           <a href="#trending-diploma" className="shimmer-border-wrapper group shrink-0">
             <div className="shimmer-beam-gold" />
-            <div className="shimmer-button-content px-4 lg:px-5 py-2.5 lg:py-3 text-xs lg:text-[13px] font-black text-white dark:text-amber-300 group-hover:opacity-95 flex items-center justify-center gap-2 rounded-full shadow-lg">
+            <div className="shimmer-button-content px-5 lg:px-6 py-3 lg:py-3.5 text-xs lg:text-[13.5px] font-black text-white dark:text-amber-300 group-hover:opacity-95 flex items-center justify-center gap-2 rounded-full shadow-lg">
               <Flame className="w-4 h-4 text-amber-400 animate-bounce shrink-0" />
               <span className="whitespace-nowrap">{settings.FEATURED_DIPLOMA_BADGE || 'الدبلومة الأكثر طلباً (خصم 51%)'}</span>
             </div>
@@ -95,7 +95,7 @@ export default function DesktopHero({
           <Link
             href="/books"
             prefetch={true}
-            className="group flex items-center justify-center gap-1.5 px-4 lg:px-5 py-2.5 lg:py-3 text-xs lg:text-[13px] font-black text-emerald-900 dark:text-emerald-300 transition-all rounded-full border-2 border-emerald-500/80 hover:border-emerald-400 bg-gradient-to-r from-emerald-500/15 via-teal-500/20 to-emerald-500/15 hover:from-emerald-500/25 hover:to-teal-500/30 shadow-md shadow-emerald-500/15 hover:shadow-emerald-500/30 hover:scale-105 backdrop-blur-md shrink-0"
+            className="group flex items-center justify-center gap-2 px-5 lg:px-6 py-3 lg:py-3.5 text-xs lg:text-[13.5px] font-black text-emerald-900 dark:text-emerald-300 transition-all rounded-full border-2 border-emerald-500/80 hover:border-emerald-400 bg-gradient-to-r from-emerald-500/15 via-teal-500/20 to-emerald-500/15 hover:from-emerald-500/25 hover:to-teal-500/30 shadow-md shadow-emerald-500/15 hover:shadow-emerald-500/30 hover:scale-105 backdrop-blur-md shrink-0"
           >
             <FileText className="w-4 h-4 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform shrink-0" />
             <span className="whitespace-nowrap">{settings.HERO_BTN_BOOKS || 'سوق المذكرات والكتب (خصم 50% ومعاينة)'}</span>
@@ -105,7 +105,7 @@ export default function DesktopHero({
           <Link
             href="/instructors/join?track=expert"
             prefetch={true}
-            className="group flex items-center justify-center gap-1.5 px-4 lg:px-5 py-2.5 lg:py-3 text-xs lg:text-[13px] font-black text-purple-900 dark:text-purple-300 transition-all rounded-full border-2 border-purple-500/80 hover:border-purple-400 bg-gradient-to-r from-purple-600/15 via-indigo-600/20 to-purple-600/15 hover:from-purple-600/25 hover:to-indigo-600/30 shadow-md shadow-purple-500/15 hover:shadow-purple-500/30 hover:scale-105 backdrop-blur-md shrink-0"
+            className="group flex items-center justify-center gap-2 px-5 lg:px-6 py-3 lg:py-3.5 text-xs lg:text-[13.5px] font-black text-purple-900 dark:text-purple-300 transition-all rounded-full border-2 border-purple-500/80 hover:border-purple-400 bg-gradient-to-r from-purple-600/15 via-indigo-600/20 to-purple-600/15 hover:from-purple-600/25 hover:to-indigo-600/30 shadow-md shadow-purple-500/15 hover:shadow-purple-500/30 hover:scale-105 backdrop-blur-md shrink-0"
           >
             <Video className="w-4 h-4 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform shrink-0" />
             <span className="whitespace-nowrap">
@@ -119,9 +119,9 @@ export default function DesktopHero({
           <Link
             href="/instructors/join?track=student"
             prefetch={true}
-            className="group flex items-center justify-center gap-1.5 px-4 lg:px-5 py-2.5 lg:py-3 text-xs lg:text-[13px] font-black text-amber-950 dark:text-amber-300 transition-all rounded-full border-2 border-amber-500/80 hover:border-amber-400 bg-gradient-to-r from-amber-500/15 via-yellow-500/20 to-amber-500/15 hover:from-amber-500/25 hover:to-yellow-500/30 shadow-md shadow-amber-500/15 hover:shadow-amber-500/30 hover:scale-105 backdrop-blur-md shrink-0"
+            className="group flex items-center justify-center gap-2 px-5 lg:px-6 py-3 lg:py-3.5 text-xs lg:text-[13.5px] font-black text-amber-950 dark:text-amber-300 transition-all rounded-full border-2 border-amber-500/80 hover:border-amber-400 bg-gradient-to-r from-amber-500/15 via-yellow-500/20 to-amber-500/15 hover:from-amber-500/25 hover:to-yellow-500/30 shadow-md shadow-amber-500/15 hover:shadow-amber-500/30 hover:scale-105 backdrop-blur-md shrink-0"
           >
-            <GraduationCap className="w-4 h-4 text-amber-500 group-hover:scale-110 transition-transform shrink-0" />
+            <GraduationCap className="w-4.5 h-4.5 text-amber-500 group-hover:scale-110 transition-transform shrink-0" />
             <span className="whitespace-nowrap">
               {settings.HERO_BTN_STUDENT
                 ? settings.HERO_BTN_STUDENT.replace(/30\s*يوماً|30\s*يوم/g, `${settings.STUDENT_TRIAL_DAYS || '14'} يوماً`)
@@ -132,14 +132,14 @@ export default function DesktopHero({
         </div>
 
         {hasAnySocial && (
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-8 pb-2">
+          <div className="flex flex-wrap items-center justify-center gap-3.5 pt-10 pb-2">
             <span className="text-sm text-slate-500 dark:text-zinc-400 font-semibold ml-1">تواصل مباشر وسريع:</span>
             {whatsappUrl && (
               <a
                 href={whatsappUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-500/10 dark:hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/30 text-sm font-bold transition-all hover:scale-105 shadow-xs"
+                className="inline-flex items-center gap-2 px-4.5 py-2.5 rounded-full bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-500/15 dark:hover:bg-emerald-500/25 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/30 text-sm font-bold transition-all hover:scale-105 shadow-xs"
                 title="محادثة واتساب مباشرة"
               >
                 <MessageCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
@@ -148,7 +148,7 @@ export default function DesktopHero({
             )}
             <Link
               href="/support"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-50 hover:bg-amber-100 dark:bg-amber-500/10 dark:hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-500/30 text-sm font-bold transition-all hover:scale-105 shadow-xs"
+              className="inline-flex items-center gap-2 px-4.5 py-2.5 rounded-full bg-amber-50 hover:bg-amber-100 dark:bg-amber-500/15 dark:hover:bg-amber-500/25 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-500/30 text-sm font-bold transition-all hover:scale-105 shadow-xs"
               title="الدعم الفني والمساعدة"
             >
               <Headphones className="w-4 h-4 text-amber-600 dark:text-amber-400" />
@@ -157,7 +157,7 @@ export default function DesktopHero({
             {contactEmail && (
               <a
                 href={`mailto:${contactEmail}`}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 hover:bg-blue-100 dark:bg-blue-500/10 dark:hover:bg-blue-500/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-500/30 text-sm font-semibold transition-all hover:scale-105 shadow-xs"
+                className="inline-flex items-center gap-2 px-4.5 py-2.5 rounded-full bg-blue-50 hover:bg-blue-100 dark:bg-blue-500/15 dark:hover:bg-blue-500/25 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-500/30 text-sm font-semibold transition-all hover:scale-105 shadow-xs"
                 title="راسلنا عبر البريد"
               >
                 <Mail className="w-4 h-4 text-blue-600 dark:text-blue-400" />
@@ -169,7 +169,7 @@ export default function DesktopHero({
                 href={facebookUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 hover:bg-indigo-100 dark:bg-blue-600/10 dark:hover:bg-blue-600/20 text-indigo-700 dark:text-blue-400 border border-indigo-200 dark:border-blue-500/30 text-sm font-semibold transition-all hover:scale-105 shadow-xs"
+                className="inline-flex items-center gap-2 px-4.5 py-2.5 rounded-full bg-indigo-50 hover:bg-indigo-100 dark:bg-blue-600/15 dark:hover:bg-blue-600/25 text-indigo-700 dark:text-blue-400 border border-indigo-200 dark:border-blue-500/30 text-sm font-semibold transition-all hover:scale-105 shadow-xs"
                 title="صفحة الفيسبوك الرسمية"
               >
                 <Facebook className="w-4 h-4 text-indigo-600 dark:text-blue-400" />
@@ -181,7 +181,7 @@ export default function DesktopHero({
                 href={telegramUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-50 hover:bg-sky-100 dark:bg-sky-500/10 dark:hover:bg-sky-500/20 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-500/30 text-sm font-semibold transition-all hover:scale-105 shadow-xs"
+                className="inline-flex items-center gap-2 px-4.5 py-2.5 rounded-full bg-sky-50 hover:bg-sky-100 dark:bg-sky-500/15 dark:hover:bg-sky-500/25 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-500/30 text-sm font-semibold transition-all hover:scale-105 shadow-xs"
                 title="قناة التيليجرام"
               >
                 <Send className="w-4 h-4 text-sky-600 dark:text-sky-400" />
@@ -193,7 +193,7 @@ export default function DesktopHero({
                 href={youtubeUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-50 hover:bg-red-100 dark:bg-red-500/10 dark:hover:bg-red-500/20 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-500/30 text-sm font-semibold transition-all hover:scale-105 shadow-xs"
+                className="inline-flex items-center gap-2 px-4.5 py-2.5 rounded-full bg-red-50 hover:bg-red-100 dark:bg-red-500/15 dark:hover:bg-red-500/25 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-500/30 text-sm font-semibold transition-all hover:scale-105 shadow-xs"
                 title="قناة اليوتيوب"
               >
                 <Youtube className="w-4 h-4 text-red-600 dark:text-red-400" />
@@ -205,7 +205,7 @@ export default function DesktopHero({
                 href={linkedinUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 hover:bg-blue-100 dark:bg-indigo-500/10 dark:hover:bg-indigo-500/20 text-blue-700 dark:text-indigo-300 border border-blue-200 dark:border-indigo-500/30 text-sm font-semibold transition-all hover:scale-105 shadow-xs"
+                className="inline-flex items-center gap-2 px-4.5 py-2.5 rounded-full bg-blue-50 hover:bg-blue-100 dark:bg-indigo-500/15 dark:hover:bg-indigo-500/25 text-blue-700 dark:text-indigo-300 border border-blue-200 dark:border-indigo-500/30 text-sm font-semibold transition-all hover:scale-105 shadow-xs"
                 title="حساب لينكد إن"
               >
                 <Linkedin className="w-4 h-4 text-blue-600 dark:text-indigo-400" />

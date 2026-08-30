@@ -51,7 +51,6 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
   const [zoomLevel, setZoomLevel] = useState(100);
   const [readingTheme, setReadingTheme] = useState<'DARK' | 'SEPIA' | 'LIGHT'>('DARK');
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [isWindowBlurred, setIsWindowBlurred] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const totalPages = book.pageCount || 38;
@@ -65,42 +64,20 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
     return `${name}${phone} • ملكية خاصة مشفرة`;
   }, [currentUser]);
 
-  // Anti-Screenshot & Focus-Loss Blur + Anti-Copy Lockdown
+  // DRM Protection Engine: Anti-Copy, Anti-Print, Anti-Inspect, Clipboard Protection
   useEffect(() => {
-    // 1. Instant Synchronous Hardware Blocker (Zero Render Latency)
-    const handleBlur = () => {
-      setIsWindowBlurred(true);
-      document.body.classList.add('drm-shield-active');
-    };
-
-    const handleFocus = () => {
-      setIsWindowBlurred(false);
-      document.body.classList.remove('drm-shield-active');
-    };
-
-    const handleVisibilityChange = () => {
-      if (document.hidden) {
-        setIsWindowBlurred(true);
-        document.body.classList.add('drm-shield-active');
-      } else {
-        setIsWindowBlurred(false);
-        document.body.classList.remove('drm-shield-active');
-      }
+    // 1. Synchronize Fullscreen state
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
     };
 
     // 2. Anti-PrintScreen & Shortcut Blocker
     const handleKeyDown = (e: KeyboardEvent) => {
-      // PrintScreen / Snipping keys (Win+Shift+S, PrintScreen, etc.)
-      if (e.key === 'PrintScreen' || e.code === 'PrintScreen' || (e.key === 's' && (e.metaKey || e.ctrlKey) && e.shiftKey)) {
-        setIsWindowBlurred(true);
-        document.body.classList.add('drm-shield-active');
+      // PrintScreen key
+      if (e.key === 'PrintScreen' || e.code === 'PrintScreen') {
         try {
-          navigator.clipboard.writeText('🔒 المحتوى محمي بنظام DRM ضد التصوير والنسخ.');
+          navigator.clipboard.writeText('🔒 محتوى المذكرة محمي بنظام DRM الرقمي ضد النسخ والالتقاط.');
         } catch (err) {}
-        setTimeout(() => {
-          setIsWindowBlurred(false);
-          document.body.classList.remove('drm-shield-active');
-        }, 2500);
       }
 
       // Block Print: Ctrl+P / Cmd+P
@@ -142,31 +119,20 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
 
     const handleKeyUp = (e: KeyboardEvent) => {
       if (e.key === 'PrintScreen' || e.code === 'PrintScreen') {
-        setIsWindowBlurred(true);
-        document.body.classList.add('drm-shield-active');
         try {
-          navigator.clipboard.writeText('🔒 المحتوى محمي بنظام DRM ضد التصوير والنسخ.');
+          navigator.clipboard.writeText('🔒 محتوى المذكرة محمي بنظام DRM الرقمي ضد النسخ والالتقاط.');
         } catch (err) {}
-        setTimeout(() => {
-          setIsWindowBlurred(false);
-          document.body.classList.remove('drm-shield-active');
-        }, 2500);
       }
     };
 
-    window.addEventListener('blur', handleBlur);
-    window.addEventListener('focus', handleFocus);
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
 
     return () => {
-      window.removeEventListener('blur', handleBlur);
-      window.removeEventListener('focus', handleFocus);
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      document.body.classList.remove('drm-shield-active');
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
     };
   }, [currentPage, totalPages, isAccessible]);
 
@@ -209,21 +175,6 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
       style={{ userSelect: 'none', WebkitUserSelect: 'none' }}
     >
       
-      {/* ANTI-SCREENSHOT PRIVACY SHIELD (Activates when screen capture / window blur is detected) */}
-      {isWindowBlurred && (
-        <div className="absolute inset-0 z-50 bg-[#0c0918]/95 backdrop-blur-3xl flex flex-col items-center justify-center p-6 text-center space-y-3 animate-in fade-in duration-100">
-          <div className="w-16 h-16 rounded-3xl bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center text-2xl shadow-xl">
-            <Shield className="w-8 h-8 text-amber-400 animate-pulse" />
-          </div>
-          <h4 className="text-base font-black text-white">
-            حماية المحتوى الرقمي المشفر مفعلة
-          </h4>
-          <p className="text-xs text-zinc-400 max-w-sm">
-            تم حجب الصفحة مؤقتاً لحماية حقوق الملكية الفكرية. انقر في أي مكان داخل المتصفح للمتابعة.
-          </p>
-        </div>
-      )}
-
       {/* =========================================================================
           1. LUXURY TOP TOOLBAR (Apple Books / Kindle Style)
          ========================================================================= */}
@@ -521,23 +472,6 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
             <div className="absolute bottom-3 left-4 pointer-events-none z-20 px-3 py-1 rounded-full bg-black/30 dark:bg-white/5 backdrop-blur-md text-[9.5px] font-mono text-zinc-500 dark:text-zinc-400 opacity-50 border border-white/5">
               DRM-PROTECTED • {currentUser?.username || 'STUDENT'} • ID: {book.id.substring(0, 8)}
             </div>
-
-            {/* =====================================================================
-                ACTIVE ANTI-SCREENSHOT & SNIPPING BLACKOUT SHIELD
-               ===================================================================== */}
-            {isWindowBlurred && (
-              <div className="absolute inset-0 z-50 bg-[#080612]/98 backdrop-blur-2xl flex flex-col items-center justify-center text-center p-6 space-y-3 select-none animate-in fade-in duration-100">
-                <div className="w-14 h-14 rounded-3xl bg-amber-500/15 border border-amber-500/30 text-amber-400 flex items-center justify-center text-xl shadow-lg shadow-amber-500/15">
-                  <Shield className="w-7 h-7 text-amber-400 animate-pulse" />
-                </div>
-                <div className="space-y-1">
-                  <h4 className="text-base sm:text-lg font-black text-white">المحتوى محمي بنظام DRM ضد لقطات الشاشة</h4>
-                  <p className="text-xs text-zinc-400 max-w-sm mx-auto leading-relaxed">
-                    تم حجب المذكرة مؤقتاً أثناء نشاط أدوات التصوير أو فقدان تركيز النافذة. انقر هنا لاستئناف القراءة.
-                  </p>
-                </div>
-              </div>
-            )}
 
           </div>
         ) : (

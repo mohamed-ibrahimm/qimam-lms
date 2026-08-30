@@ -1236,27 +1236,15 @@ html.dark .hero-focal-gradient,
 }
 
 /* =========================================================================
-   MILITARY-GRADE DRM & ZERO-LATENCY ANTI-SCREENSHOT ENGINE
+   DRM CONTENT INTEGRITY ENGINE
    ========================================================================= */
 
 .drm-secure-canvas {
-  transition: filter 0.05s linear, opacity 0.05s linear;
   user-select: none !important;
   -webkit-user-select: none !important;
   -moz-user-select: none !important;
   -ms-user-select: none !important;
   -webkit-touch-callout: none !important;
-}
-
-/* Instant Hardware/Compositor-level Blackout when Snipping tool or OS takes screenshot */
-html:not(:focus-within) .drm-secure-canvas,
-body:not(:focus-within) .drm-secure-canvas,
-body.drm-shield-active .drm-secure-canvas,
-.drm-captured .drm-secure-canvas {
-  filter: blur(60px) brightness(0.02) contrast(3) !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
 }
 
 /* Complete destruction on Print / PDF export / Save */
