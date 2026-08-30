@@ -50,7 +50,7 @@ export default function MobileHero({
         - Bottom: Anchored action buttons at the bottom of the fold.
         ========================================================================
       */}
-      <section className="min-h-[100dvh] flex flex-col justify-center items-center gap-4 sm:gap-6 pt-14 sm:pt-20 pb-20 px-3.5 text-center relative overflow-hidden">
+      <section className="min-h-[calc(100dvh-4rem)] flex flex-col justify-between items-center pt-14 pb-4 px-3.5 text-center relative overflow-hidden">
         
         {/* 1. TOP: Dynamic Shimmer Banner */}
         <div className="w-full flex justify-center pt-1 px-1 shrink-0">
@@ -74,7 +74,7 @@ export default function MobileHero({
         </div>
 
         {/* 2. MIDDLE: Headline */}
-        <div className="w-full max-w-lg mx-auto flex flex-col items-center px-2 py-1 relative shrink-0">
+        <div className="w-full max-w-lg mx-auto flex flex-col items-center px-2 py-1 my-auto relative shrink-0">
           
           {/* Soft ambient glow without bounding-box clipping */}
           <div className="absolute -inset-4 pointer-events-none -z-10 bg-radial-gradient from-amber-500/15 via-purple-600/8 to-transparent blur-2xl" />
@@ -97,8 +97,8 @@ export default function MobileHero({
           </p>
         </div>
 
-        {/* 3. BOTTOM: Action Buttons with Dark/Light Mode Precision */}
-        <div className="w-full max-w-sm mx-auto flex flex-col gap-2.5 pb-2 px-2 shrink-0">
+        {/* 3. BOTTOM: Action Buttons Anchored to Bottom of Screen */}
+        <div className="w-full max-w-sm mx-auto flex flex-col gap-2.5 pb-2 px-2 shrink-0 mt-auto">
           {/* Button 1: Diploma (Royal Indigo in Light Mode, Molten Gold in Dark Mode) */}
           <a href="#trending-diploma" className="shimmer-border-wrapper group w-full">
             <div className="shimmer-beam-gold dark:block hidden" />
