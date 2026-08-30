@@ -33,19 +33,26 @@ export default function FloatingWhatsApp({ settings = {} }: FloatingWhatsAppProp
 
   return (
     <>
-      {/* Floating Support Button (Small, on the RIGHT side) */}
+      {/* Floating Support Button (Small, on the RIGHT side with symmetrical luxury pulse) */}
       <aside aria-label="الدعم الفني المباشر">
         <Link
           href="/support"
-          className="fixed bottom-1.5 sm:bottom-5 right-2 sm:right-6 z-50 flex items-center gap-1.5 p-2 sm:px-3 sm:py-2 rounded-full bg-slate-900/95 hover:bg-slate-800 dark:bg-zinc-900/95 dark:hover:bg-zinc-800 text-white shadow-xl shadow-slate-900/40 border border-slate-700/80 dark:border-amber-500/30 backdrop-blur-md hover:scale-105 active:scale-95 transition-all group cursor-pointer"
+          className="fixed bottom-1.5 sm:bottom-5 right-2 sm:right-6 z-50 flex items-center gap-2 p-2 sm:px-4 sm:py-2.5 rounded-full bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-zinc-950 shadow-xl shadow-amber-500/35 hover:shadow-2xl hover:scale-105 active:scale-95 transition-all group border border-amber-300/60 backdrop-blur-sm cursor-pointer"
           title="تذاكر ومساعدة الدعم الفني"
         >
-          <div className="w-6 h-6 sm:w-6.5 sm:h-6.5 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
-            <Headphones className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 group-hover:rotate-12 transition-transform" />
+          <div className="relative flex items-center justify-center shrink-0">
+            <span className="absolute -inset-1 rounded-full bg-amber-300/50 animate-ping pointer-events-none" />
+            <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-zinc-950 text-amber-400 flex items-center justify-center shadow-xs">
+              <Headphones className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 group-hover:rotate-12 transition-transform" />
+            </div>
           </div>
-          <span className="hidden sm:inline-block text-xs font-bold text-slate-200 dark:text-zinc-200 group-hover:text-white whitespace-nowrap">
-            الدعم الفني
-          </span>
+          <div className="hidden sm:flex flex-col text-right">
+            <div className="flex items-center gap-1 leading-none">
+              <span className="w-1.5 h-1.5 rounded-full bg-zinc-950 animate-pulse" />
+              <span className="text-[10px] text-zinc-900 font-bold leading-none">دعم فوري</span>
+            </div>
+            <span className="text-xs font-black leading-tight mt-0.5 whitespace-nowrap text-zinc-950">الدعم الفني</span>
+          </div>
         </Link>
       </aside>
 
