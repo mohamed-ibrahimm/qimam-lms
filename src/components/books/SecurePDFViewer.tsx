@@ -67,7 +67,7 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
 
   // Anti-Screenshot & Focus-Loss Blur + Anti-Copy Lockdown
   useEffect(() => {
-    // 1. Anti-Snipping / Window Blur Defense (Blurs document when screenshot tool or outside app is active)
+    // 1. Anti-Snipping / Window Blur Defense (Blacks out when screenshot tool or outside app is active)
     const handleBlur = () => {
       setIsWindowBlurred(true);
     };
@@ -87,12 +87,12 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
     // 2. Anti-PrintScreen & Shortcut Blocker
     const handleKeyDown = (e: KeyboardEvent) => {
       // PrintScreen / Snipping keys
-      if (e.key === 'PrintScreen' || e.code === 'PrintScreen') {
+      if (e.key === 'PrintScreen' || e.code === 'PrintScreen' || (e.key === 's' && (e.metaKey || e.ctrlKey) && e.shiftKey)) {
         setIsWindowBlurred(true);
         try {
-          navigator.clipboard.writeText('️ المحتوى محمي بنظام DRM ضد التصوير والنسخ.');
+          navigator.clipboard.writeText('🔒 المحتوى محمي بنظام DRM ضد التصوير والنسخ.');
         } catch (err) {}
-        setTimeout(() => setIsWindowBlurred(false), 1500);
+        setTimeout(() => setIsWindowBlurred(false), 2000);
       }
 
       // Block Print: Ctrl+P / Cmd+P
@@ -132,23 +132,28 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
       }
     };
 
-    const handleContextMenu = (e: MouseEvent) => {
-      e.preventDefault();
-      return false;
+    const handleKeyUp = (e: KeyboardEvent) => {
+      if (e.key === 'PrintScreen' || e.code === 'PrintScreen') {
+        setIsWindowBlurred(true);
+        try {
+          navigator.clipboard.writeText('🔒 المحتوى محمي بنظام DRM ضد التصوير والنسخ.');
+        } catch (err) {}
+        setTimeout(() => setIsWindowBlurred(false), 2000);
+      }
     };
 
     window.addEventListener('blur', handleBlur);
     window.addEventListener('focus', handleFocus);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
     window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('contextmenu', handleContextMenu);
+    window.addEventListener('keyup', handleKeyUp);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     return () => {
       window.removeEventListener('blur', handleBlur);
       window.removeEventListener('focus', handleFocus);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('contextmenu', handleContextMenu);
+      window.removeEventListener('keyup', handleKeyUp);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, [currentPage, totalPages, isAccessible]);
 
@@ -502,24 +507,40 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
             {/* =====================================================================
                 3. SUBTLE, NON-INTRUSIVE ELEGANT WATERMARK (Zero Readability Interference)
                ===================================================================== */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden flex flex-col justify-around opacity-[0.06] dark:opacity-[0.08] select-none">
-              {[1, 2, 3, 4].map((row) => (
+            <div className="absolute inset-0 pointer-events-none overflow-hidden flex flex-col justify-around opacity-[0.02] dark:opacity-[0.035] select-none">
+              {[1, 2].map((row) => (
                 <div
                   key={row}
-                  className="flex justify-around items-center whitespace-nowrap transform -rotate-15 text-[11px] sm:text-xs font-bold text-slate-800 dark:text-white tracking-widest"
+                  className="flex justify-around items-center whitespace-nowrap transform -rotate-12 text-[10px] sm:text-xs font-medium text-slate-900 dark:text-white tracking-widest"
                   style={{ userSelect: 'none' }}
                 >
                   <span>{watermarkText}</span>
                   <span className="hidden sm:inline">{watermarkText}</span>
-                  <span>{watermarkText}</span>
                 </div>
               ))}
             </div>
 
-            {/* Dynamic Moving Security Capsule Badge (Anti-Leak Traceability) */}
-            <div className="absolute bottom-4 left-4 pointer-events-none z-20 px-3 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-[9.5px] font-mono text-zinc-400 opacity-60">
-              ID: {book.id.substring(0, 8)} • {currentUser?.username || 'GUEST-PREVIEW'}
+            {/* Subtle Security Footprint Badge */}
+            <div className="absolute bottom-3 left-4 pointer-events-none z-20 px-2.5 py-0.5 rounded-full bg-black/20 dark:bg-white/5 backdrop-blur-xs text-[9px] font-mono text-zinc-500 dark:text-zinc-400 opacity-40">
+              DRM-ID: {book.id.substring(0, 6)} • {currentUser?.username || 'PREVIEW'}
             </div>
+
+            {/* =====================================================================
+                ACTIVE ANTI-SCREENSHOT & SNIPPING BLACKOUT SHIELD
+               ===================================================================== */}
+            {isWindowBlurred && (
+              <div className="absolute inset-0 z-50 bg-[#080612]/98 backdrop-blur-2xl flex flex-col items-center justify-center text-center p-6 space-y-3 select-none animate-in fade-in duration-100">
+                <div className="w-14 h-14 rounded-3xl bg-amber-500/15 border border-amber-500/30 text-amber-400 flex items-center justify-center text-xl shadow-lg shadow-amber-500/15">
+                  <Shield className="w-7 h-7 text-amber-400 animate-pulse" />
+                </div>
+                <div className="space-y-1">
+                  <h4 className="text-base sm:text-lg font-black text-white">المحتوى محمي بنظام DRM ضد لقطات الشاشة</h4>
+                  <p className="text-xs text-zinc-400 max-w-sm mx-auto leading-relaxed">
+                    تم حجب المذكرة مؤقتاً أثناء نشاط أدوات التصوير أو فقدان تركيز النافذة. انقر هنا لاستئناف القراءة.
+                  </p>
+                </div>
+              </div>
+            )}
 
           </div>
         ) : (

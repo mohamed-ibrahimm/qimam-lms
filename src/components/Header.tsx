@@ -169,26 +169,29 @@ export default function Header({
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 p-1.5 sm:p-3 md:p-4 transition-all">
-      <nav className="dynamic-navbar-aura max-w-[1536px] w-full sm:w-[98%] mx-auto flex items-center justify-between min-h-[3.5rem] sm:min-h-[4.5rem] px-3 sm:px-6 md:px-8 rounded-full bg-white/95 dark:bg-[#0c0918]/95 border border-slate-200/90 dark:border-amber-500/25 backdrop-blur-2xl shadow-xl shadow-slate-900/5 dark:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.8)] relative gap-2 sm:gap-4">
+    <header className="fixed top-0 left-0 right-0 z-50 p-2 sm:p-3.5 md:p-4 transition-all">
+      {/* Dynamic Radiant Aura that casts smooth gold & purple glow onto the background */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-6xl h-24 bg-gradient-to-r from-amber-500/25 via-yellow-400/30 to-purple-600/25 dark:from-amber-500/35 dark:via-yellow-300/25 dark:to-purple-600/35 blur-[50px] pointer-events-none -z-10 rounded-full" />
+
+      <nav className="dynamic-navbar-aura max-w-[1536px] w-full sm:w-[98%] mx-auto flex items-center justify-between min-h-[3.75rem] sm:min-h-[4.75rem] px-4 sm:px-6 md:px-8 rounded-full bg-white/95 dark:bg-[#0c0918]/95 border border-slate-200/90 dark:border-amber-500/30 backdrop-blur-2xl shadow-xl shadow-slate-900/5 dark:shadow-[0_15px_50px_-10px_rgba(245,158,11,0.25)] relative gap-3 sm:gap-6">
         
         {/* =========================================================================
             1. RIGHT: LOGO & PLATFORM TITLE WITH ROTATING GOLD HALO
            ========================================================================= */}
-        <Link href="/" className="flex items-center gap-2.5 sm:gap-3 shrink-0 group py-1 min-w-0">
-          <div className="dynamic-logo-emblem w-10 h-10 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl p-[2px] shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform shrink-0">
+        <Link href="/" className="flex items-center gap-3 sm:gap-3.5 shrink-0 group py-1 min-w-0">
+          <div className="dynamic-logo-emblem w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl p-[2px] shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform shrink-0">
             <div className="w-full h-full bg-white dark:bg-[#0c0918] rounded-[10px] sm:rounded-[14px] flex items-center justify-center border border-amber-400/40 dark:border-amber-500/40 shadow-xs">
-              <GraduationCap className="w-5 h-5 text-amber-500 dark:text-amber-400" />
+              <GraduationCap className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500 dark:text-amber-400" />
             </div>
           </div>
           <div className="flex flex-col text-right justify-center min-w-0">
-            <span className="text-[8.5px] sm:text-[10px] font-black text-amber-500 dark:text-amber-400 flex items-center gap-1 leading-none mb-0.5 whitespace-nowrap">
+            <span className="text-[9px] sm:text-[10.5px] font-black text-amber-500 dark:text-amber-400 flex items-center gap-1 leading-none mb-0.5 whitespace-nowrap">
               منصة تعليمية معتمدة
             </span>
-            <span className="text-sm sm:text-base md:text-lg font-black text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-amber-300 transition-colors tracking-tight whitespace-nowrap leading-tight drop-shadow-xs">
+            <span className="text-sm sm:text-base md:text-lg font-black text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-amber-300 transition-colors tracking-normal whitespace-nowrap leading-relaxed drop-shadow-xs">
               {platformName}
             </span>
-            <span className="text-[8px] sm:text-[9.5px] text-slate-500 dark:text-amber-200/80 font-medium whitespace-nowrap leading-none mt-0.5 block">
+            <span className="text-[8.5px] sm:text-[10px] text-slate-500 dark:text-amber-200/80 font-medium whitespace-nowrap leading-relaxed mt-0.5 block">
               {platformTagline}
             </span>
           </div>
@@ -197,15 +200,15 @@ export default function Header({
         {/* =========================================================================
             2. CENTER: CLEAN FLEXIBLE CENTERED NAVIGATION (ZERO OVERLAP)
            ========================================================================= */}
-        <div className="hidden lg:flex items-center gap-1 xl:gap-1.5 bg-slate-100/90 dark:bg-black/60 p-1 xl:p-1.5 rounded-full border border-slate-200/90 dark:border-white/10 shadow-inner shrink-0 mx-auto">
+        <div className="hidden lg:flex items-center gap-2 xl:gap-2.5 bg-slate-100/90 dark:bg-black/60 p-1.5 xl:p-2 rounded-full border border-slate-200/90 dark:border-white/10 shadow-inner shrink-0 mx-auto">
           
           {/* Link: الرئيسية */}
           <Link
             href="/"
             prefetch={true}
-            className={`px-3 xl:px-4 py-1.5 xl:py-2 text-xs font-bold rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
+            className={`px-4 xl:px-4.5 py-2 text-xs sm:text-[13px] font-bold rounded-full transition-all inline-flex items-center gap-2 shrink-0 ${
               pathname === '/'
-                ? 'bg-white dark:bg-zinc-800 text-blue-700 dark:text-white border border-slate-200 dark:border-zinc-700 shadow-xs'
+                ? 'bg-white dark:bg-zinc-800 text-blue-700 dark:text-white border border-slate-200 dark:border-zinc-700 shadow-xs font-black'
                 : 'text-slate-600 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-white hover:bg-white/70 dark:hover:bg-zinc-800/60'
             }`}
           >
@@ -223,7 +226,7 @@ export default function Header({
               href="/courses"
               prefetch={true}
               onClick={() => setCoursesMenuOpen(false)}
-              className={`px-5 py-2 text-xs sm:text-[13.5px] font-black rounded-full transition-all inline-flex items-center gap-2 shrink-0 cursor-pointer shadow-lg ${
+              className={`px-5 py-2.5 text-xs sm:text-[13.5px] font-black rounded-full transition-all inline-flex items-center gap-2 shrink-0 cursor-pointer shadow-lg ${
                 pathname.startsWith('/courses')
                   ? 'diploma-luxury-pill scale-105 ring-2 ring-amber-400/60 shadow-amber-500/25'
                   : 'diploma-luxury-pill hover:scale-105'
@@ -316,7 +319,7 @@ export default function Header({
           <Link
             href="/books"
             prefetch={true}
-            className={`px-4 py-2 text-xs font-bold rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
+            className={`px-4.5 py-2 text-xs sm:text-[13px] font-bold rounded-full transition-all inline-flex items-center gap-2 shrink-0 ${
               pathname.startsWith('/books')
                 ? 'bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-zinc-950 font-black shadow-lg shadow-amber-500/25 scale-[1.03] border border-amber-300'
                 : 'text-slate-700 dark:text-zinc-300 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-slate-100/80 dark:hover:bg-zinc-800/70 border border-transparent'
@@ -330,9 +333,9 @@ export default function Header({
           <Link
             href="/diplomas"
             prefetch={true}
-            className={`px-4 py-2 text-xs font-bold rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
+            className={`px-4.5 py-2 text-xs sm:text-[13px] font-bold rounded-full transition-all inline-flex items-center gap-2 shrink-0 ${
               pathname.startsWith('/diplomas')
-                ? 'bg-purple-600 text-white shadow-md shadow-purple-600/20'
+                ? 'bg-purple-600 text-white shadow-md shadow-purple-600/20 font-black'
                 : 'text-slate-600 dark:text-zinc-300 hover:text-purple-600 dark:hover:text-white hover:bg-white/70 dark:hover:bg-zinc-800/60'
             }`}
           >
