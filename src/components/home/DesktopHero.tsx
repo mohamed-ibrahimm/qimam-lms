@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import Link from 'next/link';
@@ -74,10 +74,10 @@ export default function DesktopHero({
             </p>
           </div>
 
-          {/* Left: Pure Chromatic Motion Animation (Lifted & Clean) */}
+          {/* Left: Pure Chromatic Motion Animation Emerging Directly from Background */}
           <div className="lg:col-span-4 flex items-center justify-center relative pointer-events-none select-none">
-            {/* Ambient Radial Glow behind animation */}
-            <div className="absolute w-64 h-64 lg:w-80 lg:h-80 bg-amber-500/15 rounded-full blur-[90px] pointer-events-none -z-10" />
+            {/* Ambient Multi-colored Glow behind the particles */}
+            <div className="absolute w-72 h-72 lg:w-96 lg:h-96 bg-[radial-gradient(circle,_rgba(245,158,11,0.22),_rgba(147,51,234,0.18)_50%,_transparent_75%)] rounded-full blur-[90px] pointer-events-none -z-10" />
             
             <div className="relative w-full max-w-[280px] lg:max-w-[320px] xl:max-w-[360px] aspect-square flex items-center justify-center">
               <video
@@ -87,7 +87,7 @@ export default function DesktopHero({
                 loop
                 muted
                 playsInline
-                className="w-full h-full object-contain pointer-events-none filter contrast-125 brightness-110 drop-shadow-[0_0_35px_rgba(245,158,11,0.2)] rounded-3xl"
+                className="w-full h-full object-contain pointer-events-none mix-blend-screen [mask-image:radial-gradient(circle_at_center,black_45%,transparent_80%)] [-webkit-mask-image:radial-gradient(circle_at_center,black_45%,transparent_80%)] filter contrast-125 brightness-110 drop-shadow-[0_0_40px_rgba(245,158,11,0.3)]"
               />
             </div>
           </div>
