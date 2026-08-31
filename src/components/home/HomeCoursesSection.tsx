@@ -363,8 +363,8 @@ export default function HomeCoursesSection({
                           </span>
                         )}
 
-                        <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-600 backdrop-blur-md text-white border border-emerald-400/50 flex items-center gap-1 shadow-md">
-                          <CheckCircle2 className="w-3 h-3" />
+                        <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-700 backdrop-blur-md text-white border border-emerald-500/60 flex items-center gap-1 shadow-md">
+                          <CheckCircle2 className="w-3 h-3 text-emerald-200" />
                           <span>معتمد</span>
                         </span>
                       </div>

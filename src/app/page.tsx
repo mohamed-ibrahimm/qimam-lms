@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { prisma } from '@/lib/prisma';
 import { formatPrice, formatDuration } from '@/lib/utils';
 import DesktopHero from '@/components/home/DesktopHero';
@@ -311,12 +312,16 @@ export default async function HomePage() {
 
                   <div className="lg:col-span-5 relative">
                     <div className="relative rounded-2xl overflow-hidden aspect-video bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 shadow-2xl group">
-                      <img
+                      <Image
                         src={trendingDiploma.thumbnail || 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800'}
                         alt={trendingDiploma.title}
+                        width={540}
+                        height={360}
+                        sizes="(max-width: 768px) 100vw, 540px"
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        priority
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
                       <div className="absolute inset-0 flex items-center justify-center">
                         <div className="w-14 h-14 rounded-full bg-white/90 dark:bg-zinc-900/90 border border-indigo-300 dark:border-amber-500/40 text-indigo-600 dark:text-amber-400 flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
                           <PlayCircle className="w-7 h-7" />
@@ -326,7 +331,7 @@ export default async function HomePage() {
                         <span className="px-2.5 py-1 rounded bg-black/80 border border-white/20 text-white font-bold backdrop-blur-sm">
                           {trendingDiploma.diplomaCourses?.length || 4} كورسات مدمجة
                         </span>
-                        <span className="px-2.5 py-1 rounded bg-emerald-600/90 text-white font-bold backdrop-blur-sm">
+                        <span className="px-2.5 py-1 rounded bg-emerald-700/95 text-white font-bold backdrop-blur-sm">
                           تأهيل وظيفي كامل
                         </span>
                       </div>
@@ -372,7 +377,7 @@ export default async function HomePage() {
                     أ
                   </div>
                   <div>
-                    <h5 className="text-xs font-black text-slate-900 dark:text-zinc-200">أحمد حسام</h5>
+                    <div className="text-xs font-black text-slate-900 dark:text-zinc-200">أحمد حسام</div>
                     <p className="text-[11px] text-slate-500 dark:text-zinc-400">مطور Full-Stack • خريج دبلوم Next.js</p>
                   </div>
                 </div>
@@ -392,7 +397,7 @@ export default async function HomePage() {
                     م
                   </div>
                   <div>
-                    <h5 className="text-xs font-black text-slate-900 dark:text-zinc-200">مريم الكردي</h5>
+                    <div className="text-xs font-black text-slate-900 dark:text-zinc-200">مريم الكردي</div>
                     <p className="text-[11px] text-slate-500 dark:text-zinc-400">مطورة واجهات أمامية وتطبيقات</p>
                   </div>
                 </div>
@@ -412,7 +417,7 @@ export default async function HomePage() {
                     خ
                   </div>
                   <div>
-                    <h5 className="text-xs font-black text-slate-900 dark:text-zinc-200">خالد عبد الله</h5>
+                    <div className="text-xs font-black text-slate-900 dark:text-zinc-200">خالد عبد الله</div>
                     <p className="text-[11px] text-slate-500 dark:text-zinc-400">مستقل معتمد (Top Rated)</p>
                   </div>
                 </div>

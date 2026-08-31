@@ -268,9 +268,9 @@ export default function Footer({ initialSettings }: FooterProps) {
       </div>
 
       {/* Copyright Bar */}
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-6 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-6 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4 text-[11.5px] text-slate-400 dark:text-zinc-300 font-medium">
         <p>جميع الحقوق محفوظة © {new Date().getFullYear()} {platformName}. صُممت المنصة بأحدث معايير الأمان وتطوير البرمجيات الحديثة.</p>
-        <p className="flex items-center gap-1 text-slate-400">
+        <p className="flex items-center gap-1 text-slate-300 dark:text-zinc-200">
           <span>بإشراف وقيادة</span>
           <strong className="text-amber-400 font-bold">{platformName}</strong>
         </p>
