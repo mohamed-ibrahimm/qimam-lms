@@ -107,7 +107,7 @@ export default async function LiveDirectoryPage() {
   });
 
   return (
-    <div className="pt-24 sm:pt-28 md:pt-32 pb-16">
+    <div className="w-full pb-16">
       <LiveDirectoryClient
         sessions={sessions}
         currentUser={currentUser}

@@ -118,7 +118,7 @@ export default async function BookDetailPage({ params }: Props) {
   }
 
   return (
-    <div className="min-h-screen pt-20 sm:pt-24 pb-20">
+    <div className="w-full pb-20">
       <BookDetailClient
         book={book}
         isPurchased={isPurchased}

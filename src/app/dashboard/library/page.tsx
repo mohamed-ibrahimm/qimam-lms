@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import { getCurrentUser } from '@/lib/auth';
@@ -56,7 +56,7 @@ export default async function StudentLibraryPage() {
   });
 
   return (
-    <div className="min-h-screen pt-20 sm:pt-24 pb-20">
+    <div className="w-full pb-20">
       <LibraryClient
         purchasedBooks={books}
         freeBooks={freeBooks}
