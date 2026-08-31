@@ -91,10 +91,6 @@ export default async function LiveDirectoryPage() {
       roomId: c.id,
       courseId: c.id,
       courseTitle: c.title,
-      coursePrice: c.price,
-      courseDiscountPrice: null,
-      courseCategory: c.category?.name || 'مسار تدريبي معتمد',
-      courseThumbnail: c.thumbnail,
       topic: isLiveNow
         ? `بث مباشر حي: شرح وتطبيق عملي تفاعلي مع حل كويزات ومناقشة أسئلة الطلاب`
         : `جلسة مراجعة مجدولة: التحضير العملي ومشاريع سوق العمل`,
@@ -107,7 +103,6 @@ export default async function LiveDirectoryPage() {
         isStudentInstructor: c.instructor.isStudentInstructor,
         university: c.instructor.studentUniversity,
       },
-      isEnrolled,
     };
   });
 
