@@ -243,18 +243,18 @@ export default function InstructorSidebarClient({
           )}
         </div>
 
-        {/* Instructor Avatar & Name */}
+        {/* Instructor Avatar & Full Name */}
         <div className="flex items-center gap-3">
-          <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-amber-400 via-purple-600 to-indigo-600 p-[2px] shadow-md shadow-purple-900/20 shrink-0">
-            <div className="w-full h-full rounded-2xl bg-slate-900 dark:bg-zinc-950 flex items-center justify-center text-sm font-black text-amber-400">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-400 via-purple-600 to-rose-500 p-[2px] shadow-lg shadow-purple-950/30 shrink-0">
+            <div className="w-full h-full rounded-2xl bg-slate-900 dark:bg-[#080612] flex items-center justify-center text-base font-black text-amber-400">
               {instructorName[0] || 'م'}
             </div>
           </div>
-          <div className="min-w-0">
-            <h2 className="text-sm font-black text-slate-950 dark:text-white truncate">
+          <div className="min-w-0 flex-1">
+            <h2 className="text-sm font-black text-slate-950 dark:text-white leading-tight break-words">
               {instructorName}
             </h2>
-            <p className="text-[11px] text-slate-500 dark:text-zinc-400 font-medium truncate font-mono">
+            <p className="text-[11px] text-slate-500 dark:text-zinc-400 font-medium truncate font-mono mt-0.5">
               {instructorEmail}
             </p>
           </div>
@@ -425,8 +425,8 @@ export default function InstructorSidebarClient({
         </div>
       )}
 
-      {/* Desktop Persistent Sidebar */}
-      <aside className="hidden md:flex w-72 bg-white/95 dark:bg-[#120e24]/95 border-l border-slate-200/90 dark:border-purple-900/40 flex-col justify-between shrink-0 backdrop-blur-2xl shadow-xl shadow-slate-900/5 min-h-screen">
+      {/* Desktop Persistent Floating Sidebar */}
+      <aside className="hidden lg:flex w-76 xl:w-84 rounded-3xl border border-slate-200/90 dark:border-purple-900/40 bg-white/95 dark:bg-[#0e0a1f]/95 flex-col justify-between shrink-0 backdrop-blur-2xl shadow-2xl shadow-slate-900/5 self-start sticky top-28 max-h-[calc(100vh-8.5rem)] overflow-hidden">
         {renderContent(false)}
       </aside>
     </>

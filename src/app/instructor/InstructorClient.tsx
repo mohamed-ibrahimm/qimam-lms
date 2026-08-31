@@ -459,7 +459,7 @@ export default function InstructorClient({
   }, 0);
 
   return (
-    <div className="min-h-screen relative flex flex-col md:flex-row">
+    <div className="min-h-screen relative pt-24 sm:pt-28 pb-16 px-4 sm:px-6 md:px-8 max-w-[1600px] mx-auto">
       {/* Dynamic Ambient Mesh in Background */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
         <div className="dynamic-drift-1 absolute top-[5%] right-[15%] w-[550px] h-[550px] bg-amber-500/10 rounded-full blur-[130px]" />
@@ -468,139 +468,97 @@ export default function InstructorClient({
         <div className="dynamic-drift-4 absolute bottom-[25%] left-[25%] w-[480px] h-[480px] bg-emerald-500/10 rounded-full blur-[125px]" />
       </div>
 
-      {/* Instructor Persistent Luxury Sidebar */}
-      <InstructorSidebarClient
-        instructorName={user.officialFullName || `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'محاضر قمم'}
-        instructorEmail={user.email}
-        subscriptionPlan={user.subscriptionPlan || 'FREE_TRIAL'}
-        coursesCount={courses.length}
-        pendingOrdersCount={pendingPaymentsCount}
-        couponsCount={coupons.length}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        onNewCourseClick={() => {
-          if (isExpired) {
-            setMessage({ type: 'error', text: 'انتهت الفترة التجريبية، يرجى تجديد الاشتراك أولاً لإضافة دورات جديدة' });
-            return;
-          }
-          setModalError(null);
-          setShowAddModal(true);
-        }}
-        publicProfileSlug={user.username || user.id}
-      />
+      <div className="flex flex-col lg:flex-row items-start gap-6 w-full">
+        {/* Instructor Persistent Luxury Sidebar */}
+        <InstructorSidebarClient
+          instructorName={user.officialFullName || `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'محاضر قمم'}
+          instructorEmail={user.email}
+          subscriptionPlan={user.subscriptionPlan || 'FREE_TRIAL'}
+          coursesCount={courses.length}
+          pendingOrdersCount={pendingPaymentsCount}
+          couponsCount={coupons.length}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          onNewCourseClick={() => {
+            if (isExpired) {
+              setMessage({ type: 'error', text: 'انتهت الفترة التجريبية، يرجى تجديد الاشتراك أولاً لإضافة دورات جديدة' });
+              return;
+            }
+            setModalError(null);
+            setShowAddModal(true);
+          }}
+          publicProfileSlug={user.username || user.id}
+        />
 
-      {/* Main Studio View Area matching Admin Layout */}
-      <main className="flex-1 p-3 sm:p-6 md:p-8 max-w-7xl relative z-10 w-full min-w-0 space-y-6">
-        {/* Studio Top Control Bar */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-slate-200/80 dark:border-zinc-800">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-zinc-400">
-              <Link href="/" className="hover:text-amber-500 transition-colors">الرئيسية</Link>
-              <span>/</span>
-              <span className="text-amber-600 dark:text-amber-400 font-bold">استوديو المحاضر السحابي</span>
-              <span>/</span>
-              <span className="font-bold text-slate-900 dark:text-white">
-                {activeTab === 'overview' && 'نظرة عامة والتحليلات'}
-                {activeTab === 'courses' && 'دوراتي التدريبية'}
-                {activeTab === 'pricing' && 'تعديل أسعار الكورسات والكتب'}
-                {activeTab === 'orders' && 'طلبات وإيصالات الطلاب'}
-                {activeTab === 'payments' && 'بيانات استلام أرباحي'}
-                {activeTab === 'coupons' && 'كوبونات الخصم'}
-                {activeTab === 'subscription' && 'باقة اشتراك الاستوديو'}
-              </span>
+        {/* Main Studio View Area */}
+        <main className="flex-1 w-full min-w-0 space-y-6 relative z-10">
+          {/* Studio Top Control Card */}
+          <div className="p-5 sm:p-6 rounded-3xl bg-white/90 dark:bg-[#0e0a1f]/90 border border-slate-200/90 dark:border-purple-900/40 shadow-xl backdrop-blur-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div className="space-y-1.5">
+              <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-zinc-400">
+                <Link href="/" className="hover:text-amber-500 transition-colors">الرئيسية</Link>
+                <span>/</span>
+                <span className="text-amber-600 dark:text-amber-400 font-bold">استوديو المحاضر السحابي</span>
+                <span>/</span>
+                <span className="font-bold text-slate-900 dark:text-white">
+                  {activeTab === 'overview' && 'نظرة عامة والتحليلات'}
+                  {activeTab === 'courses' && 'دوراتي التدريبية'}
+                  {activeTab === 'pricing' && 'تعديل أسعار الكورسات والكتب'}
+                  {activeTab === 'orders' && 'طلبات وإيصالات الطلاب'}
+                  {activeTab === 'payments' && 'بيانات استلام أرباحي'}
+                  {activeTab === 'coupons' && 'كوبونات الخصم'}
+                  {activeTab === 'subscription' && 'باقة اشتراك الاستوديو'}
+                  {activeTab === 'live' && 'أستوديو البث المباشر (VIP Live Studio)'}
+                </span>
+              </div>
+              <h1 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+                <GraduationCap className="w-6 h-6 text-amber-500" />
+                <span>أكاديمية المحاضر: {user.officialFullName}</span>
+                {user.isStudentInstructor && user.studentVerificationStatus === 'APPROVED' && (
+                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 text-[11px] font-bold">
+                    طالب معتمد 🎓
+                  </span>
+                )}
+              </h1>
             </div>
-            <h1 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white flex items-center gap-2">
-              <GraduationCap className="w-6 h-6 text-amber-500" />
-              <span>أكاديمية المحاضر: {user.officialFullName}</span>
-            </h1>
+
+            <div className="flex items-center gap-2.5 flex-wrap w-full md:w-auto">
+              {/* 1. Live Broadcast Studio Button */}
+              <Link
+                href="/live/instant-room"
+                className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-rose-600 via-rose-500 to-amber-500 text-white font-black text-xs sm:text-sm shadow-lg shadow-rose-600/30 flex items-center justify-center gap-2 transition-all hover:scale-105 cursor-pointer active:scale-95"
+              >
+                <Radio className="w-4 h-4 text-white animate-pulse" />
+                <span>بث مباشر فوري (Live HD)</span>
+              </Link>
+
+              {/* 2. Add Course Button */}
+              <button
+                type="button"
+                onClick={() => {
+                  if (isExpired) {
+                    setMessage({ type: 'error', text: 'انتهت الفترة التجريبية، يرجى تجديد الاشتراك أولاً لإضافة دورات جديدة' });
+                    return;
+                  }
+                  setModalError(null);
+                  setShowAddModal(true);
+                }}
+                className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 text-zinc-950 font-black text-xs sm:text-sm shadow-lg shadow-amber-500/25 flex items-center justify-center gap-1.5 transition-all hover:scale-105 cursor-pointer active:scale-95"
+              >
+                <Plus className="w-4 h-4" />
+                <span>إضافة كورس</span>
+              </button>
+
+              {/* 3. Add Book / Note Button */}
+              <Link
+                href="/instructor/books/new"
+                className="px-4 py-2.5 rounded-2xl bg-purple-600 hover:bg-purple-500 text-white font-black text-xs sm:text-sm shadow-lg shadow-purple-600/25 flex items-center justify-center gap-1.5 transition-all hover:scale-105"
+              >
+                <BookOpen className="w-4 h-4" />
+                <span>نشر مذكرة</span>
+              </Link>
+            </div>
           </div>
-
-          <div className="flex items-center gap-2 flex-wrap w-full sm:w-auto">
-            {/* 0. Live Broadcast Studio Button */}
-            <Link
-              href="/live/instant-room"
-              className="px-4 py-2 rounded-xl bg-gradient-to-r from-rose-600 via-rose-500 to-amber-500 text-white font-black text-xs shadow-md shadow-rose-600/30 flex items-center justify-center gap-1.5 transition-all hover:scale-105 cursor-pointer"
-            >
-              <Radio className="w-4 h-4 text-white animate-pulse" />
-              <span>أستوديو البث المباشر (Live)</span>
-            </Link>
-
-            {/* 1. Add Course Button */}
-            <button
-              type="button"
-              onClick={() => {
-                if (isExpired) {
-                  setMessage({ type: 'error', text: 'انتهت الفترة التجريبية، يرجى تجديد الاشتراك أولاً لإضافة دورات جديدة' });
-                  return;
-                }
-                setModalError(null);
-                setShowAddModal(true);
-              }}
-              className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 text-zinc-950 font-black text-xs shadow-md shadow-amber-500/20 flex items-center justify-center gap-1.5 transition-all hover:scale-105 cursor-pointer"
-            >
-              <Plus className="w-4 h-4" />
-              <span>إضافة كورس جديد</span>
-            </button>
-
-            {/* 2. Add Book / Note Button */}
-            <Link
-              href="/instructor/books/new"
-              className="px-3.5 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-black text-xs shadow-md shadow-purple-600/20 flex items-center justify-center gap-1.5 transition-all hover:scale-105"
-            >
-              <BookOpen className="w-4 h-4" />
-              <span>نشر مذكرة / كتاب</span>
-            </Link>
-
-            {/* 3. Pricing Editor Button */}
-            <button
-              type="button"
-              onClick={() => setActiveTab('pricing')}
-              className={`px-3.5 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
-                activeTab === 'pricing'
-                  ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/25 scale-[1.02]'
-                  : 'bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-200 border border-slate-200 dark:border-zinc-700'
-              }`}
-            >
-              <SlidersHorizontal className="w-4 h-4 text-emerald-500" />
-              <span>تعديل الأسعار والعروض</span>
-            </button>
-
-            {/* 4. Coupons Button */}
-            <button
-              type="button"
-              onClick={() => setActiveTab('coupons')}
-              className={`px-3.5 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
-                activeTab === 'coupons'
-                  ? 'bg-purple-600 text-white shadow-md shadow-purple-600/25 scale-[1.02]'
-                  : 'bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-200 border border-slate-200 dark:border-zinc-700'
-              }`}
-            >
-              <Tag className="w-4 h-4 text-amber-400" />
-              <span>إدارة الكوبونات</span>
-            </button>
-
-            {/* 5. Payments Button */}
-            <button
-              type="button"
-              onClick={() => setActiveTab('payments')}
-              className={`px-3.5 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
-                activeTab === 'payments'
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/25 scale-[1.02]'
-                  : 'bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-200 border border-slate-200 dark:border-zinc-700'
-              }`}
-            >
-              <CreditCard className="w-4 h-4 text-blue-500" />
-              <span>بيانات أرباحي</span>
-            </button>
-
-            {user.isStudentInstructor && user.studentVerificationStatus === 'APPROVED' && (
-              <span className="px-3.5 py-2 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 text-xs font-bold flex items-center gap-1.5">
-                <GraduationCap className="w-4 h-4 text-amber-400" />
-                <span>طالب محاضر معتمد</span>
-              </span>
-            )}
-          </div>
-        </div>
 
         {/* Subscription Status Callout Banner */}
         {user.role !== 'ADMIN' && (
@@ -2102,6 +2060,7 @@ export default function InstructorClient({
           </div>
         )}
       </main>
+      </div>
 
       {/* RENEWAL / UPGRADE MODAL */}
       {showRenewModal && mounted && createPortal(
