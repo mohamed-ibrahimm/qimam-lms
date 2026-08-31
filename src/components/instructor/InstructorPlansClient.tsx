@@ -18,8 +18,7 @@ import {
   Sparkles,
   Zap,
   Lock,
-  Layers,
-  HelpCircle,
+  CheckCircle,
 } from 'lucide-react';
 import FileUploadInput from '@/components/FileUploadInput';
 
@@ -118,14 +117,14 @@ export default function InstructorPlansClient({
   };
 
   return (
-    <div className="min-h-screen text-right pb-24 space-y-12 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+    <div className="text-right space-y-8 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      {/* Back to studio button if logged in */}
+      {/* Top Bar: Navigation link */}
       {user && (
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between pb-2">
           <Link
             href="/instructor"
-            className="inline-flex items-center gap-2 text-xs font-semibold text-zinc-400 hover:text-white transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-zinc-400 hover:text-amber-400 transition-colors"
           >
             <ArrowRight className="w-4 h-4" />
             <span>العودة إلى لوحة المحاضر</span>
@@ -134,184 +133,67 @@ export default function InstructorPlansClient({
       )}
 
       {/* =========================================================================
-          1. HERO HEADER SECTION
+          1. COMPACT HERO & TRACK SWITCHER
          ========================================================================= */}
-      <div className="text-center space-y-3 max-w-3xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-semibold text-zinc-300">
-          <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-          <span>باقات واشتراكات استوديو المحاضرين</span>
-        </div>
-
-        <h1 className="text-2xl sm:text-4xl font-bold text-white tracking-tight">
-          اختر الباقة المناسبة لإطلاق مسارك التعليمي
+      <div className="text-center space-y-3 max-w-2xl mx-auto">
+        <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+          باقات واشتراكات المحاضرين
         </h1>
-
         <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed font-normal">
-          أنشئ دوراتك، انشر مذكراتك المحمية بالـ DRM، وافتح قاعات بث مباشر لطلابك مع تحصيل 100% لأموالك على محفظتك الخاصة وبدون أي عمولة.
+          أنشئ دوراتك ومذكراتك أو افتح قاعات بث مباشر لطلابك مع تحصيل مباشر 100% لأموالك وبدون أي عمولة على المبيعات.
         </p>
 
-        {/* Feature Badges */}
-        <div className="flex flex-wrap items-center justify-center gap-4 text-[11px] text-zinc-400 pt-2">
-          <span className="flex items-center gap-1.5">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-            <span>0% عمولة على المبيعات</span>
-          </span>
-          <span>•</span>
-          <span className="flex items-center gap-1.5">
-            <Radio className="w-3.5 h-3.5 text-rose-400" />
-            <span>بث مباشر 1080p وكويزات تفاعلية</span>
-          </span>
-          <span>•</span>
-          <span className="flex items-center gap-1.5">
-            <Lock className="w-3.5 h-3.5 text-amber-400" />
-            <span>حماية المذكرات والكتب الرقمية</span>
-          </span>
-        </div>
-      </div>
-
-      {/* =========================================================================
-          2. TRACK SELECTOR (EXPERT PROFESSORS VS STUDENT INSTRUCTOR)
-         ========================================================================= */}
-      <div className="space-y-3 max-w-4xl mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          
-          {/* Expert Track */}
-          <button
-            type="button"
-            onClick={() => {
-              setSelectedTrack('EXPERT');
-              if (selectedPlan === 'STUDENT_PRO' || selectedPlan === 'STUDENT_LIVE_PRO') {
-                setSelectedPlan('LIVE_STUDIO_PRO');
-              }
-            }}
-            className={`p-5 rounded-2xl border text-right transition-all flex items-start justify-between cursor-pointer ${
-              selectedTrack === 'EXPERT'
-                ? 'bg-zinc-900 border-amber-500/90 shadow-lg ring-1 ring-amber-500/30 text-white'
-                : 'bg-zinc-950/60 border-zinc-800 text-zinc-400 hover:border-zinc-700'
-            }`}
-          >
-            <div className="flex items-start gap-3.5">
-              <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
-                <Video className="w-5 h-5" />
-              </div>
-              <div className="space-y-1">
-                <span className="text-sm font-bold block text-white">المحاضرين والدكاترة المعتمدين</span>
-                <span className="text-xs text-zinc-400 block leading-relaxed">
-                  للمعلمين وأعضاء هيئة التدريس والمراكز التعليمية
-                </span>
-              </div>
-            </div>
-            {selectedTrack === 'EXPERT' && <CheckCircle2 className="w-5 h-5 text-amber-400 shrink-0" />}
-          </button>
-
-          {/* Student Track */}
-          <button
-            type="button"
-            onClick={() => {
-              setSelectedTrack('STUDENT');
-              setSelectedPlan('STUDENT_PRO');
-            }}
-            className={`p-5 rounded-2xl border text-right transition-all flex items-start justify-between cursor-pointer ${
-              selectedTrack === 'STUDENT'
-                ? 'bg-zinc-900 border-amber-500/90 shadow-lg ring-1 ring-amber-500/30 text-white'
-                : 'bg-zinc-950/60 border-zinc-800 text-zinc-400 hover:border-zinc-700'
-            }`}
-          >
-            <div className="flex items-start gap-3.5">
-              <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
-                <GraduationCap className="w-5 h-5" />
-              </div>
-              <div className="space-y-1">
-                <span className="text-sm font-bold block text-white">المحاضر الطالب (سن {platformPricing.studentMaxAge} فأقل)</span>
-                <span className="text-xs text-zinc-400 block leading-relaxed">
-                  منحة دعم دراسي لطلبة الجامعات بخصم 60%
-                </span>
-              </div>
-            </div>
-            {selectedTrack === 'STUDENT' && <CheckCircle2 className="w-5 h-5 text-amber-400 shrink-0" />}
-          </button>
-
-        </div>
-      </div>
-
-      {/* =========================================================================
-          3. PRICING TIERS GRID
-         ========================================================================= */}
-      <div className="space-y-4 max-w-5xl mx-auto">
-        <div className="text-xs font-semibold text-zinc-400">الباقات المتاحة:</div>
-
-        {selectedTrack === 'EXPERT' ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            
-            {/* 1. Live Studio Pro (Featured) */}
-            <div
-              onClick={() => setSelectedPlan('LIVE_STUDIO_PRO')}
-              className={`p-6 rounded-2xl border text-right transition-all flex flex-col justify-between gap-6 cursor-pointer relative ${
-                selectedPlan === 'LIVE_STUDIO_PRO'
-                  ? 'bg-zinc-900 border-amber-500 shadow-xl ring-2 ring-amber-500/30'
-                  : 'bg-zinc-950 border-zinc-800 text-zinc-400 hover:border-zinc-700'
+        {/* Track Selector (Segmented Pill Switcher) */}
+        <div className="pt-2 flex items-center justify-center">
+          <div className="inline-flex p-1 rounded-xl bg-zinc-900 border border-zinc-800 gap-1 shadow-inner">
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedTrack('EXPERT');
+                if (selectedPlan === 'STUDENT_PRO' || selectedPlan === 'STUDENT_LIVE_PRO') {
+                  setSelectedPlan('LIVE_STUDIO_PRO');
+                }
+              }}
+              className={`px-5 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                selectedTrack === 'EXPERT'
+                  ? 'bg-zinc-800 text-white shadow-sm border border-zinc-700'
+                  : 'text-zinc-400 hover:text-white'
               }`}
             >
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-bold text-amber-400 flex items-center gap-2">
-                    <Radio className="w-4 h-4" />
-                    <span>باقة البث والأستوديو</span>
-                  </span>
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                    الأكثر اختياراً
-                  </span>
-                </div>
+              <Video className="w-3.5 h-3.5 text-amber-400" />
+              <span>المحاضرين والدكاترة المعتمدين</span>
+            </button>
 
-                <div>
-                  <span className="text-3xl font-bold text-white font-mono">{liveStudioPrice}</span>
-                  <span className="text-xs text-zinc-400"> ج.م / شهر</span>
-                </div>
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedTrack('STUDENT');
+                setSelectedPlan('STUDENT_PRO');
+              }}
+              className={`px-5 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                selectedTrack === 'STUDENT'
+                  ? 'bg-zinc-800 text-white shadow-sm border border-zinc-700'
+                  : 'text-zinc-400 hover:text-white'
+              }`}
+            >
+              <GraduationCap className="w-3.5 h-3.5 text-amber-400" />
+              <span>المحاضر الطالب (سن {platformPricing.studentMaxAge} فأقل)</span>
+            </button>
+          </div>
+        </div>
+      </div>
 
-                <p className="text-xs text-zinc-400 leading-relaxed">
-                  الحل الشامل للتدريس التفاعلي والبثوث المباشرة مع مسابقات الطلاب.
-                </p>
-
-                <ul className="text-xs text-zinc-300 space-y-2.5 pt-3 border-t border-zinc-800">
-                  <li className="flex items-center gap-2 text-amber-300 font-medium">
-                    <Check className="w-4 h-4 text-amber-400 shrink-0" />
-                    <span>قاعات بث مباشر 1080p غير محدودة</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-zinc-400 shrink-0" />
-                    <span>فتح المايك ومشاركة الشاشة</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-zinc-400 shrink-0" />
-                    <span>كويزات ومسابقات تفاعلية للطلاب</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-zinc-400 shrink-0" />
-                    <span>كورسات مسجلة ومذكرات DRM</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-zinc-400 shrink-0" />
-                    <span>تحصيل 100% بدون عمولة</span>
-                  </li>
-                </ul>
-              </div>
-
-              <button
-                type="button"
-                className={`w-full py-2.5 rounded-xl font-bold text-xs transition-all ${
-                  selectedPlan === 'LIVE_STUDIO_PRO'
-                    ? 'bg-amber-500 text-zinc-950 shadow-md'
-                    : 'bg-zinc-900 text-zinc-300 border border-zinc-800'
-                }`}
-              >
-                {selectedPlan === 'LIVE_STUDIO_PRO' ? 'الباقة المحددة' : 'اختيار هذه الباقة'}
-              </button>
-            </div>
-
-            {/* 2. Standard Monthly */}
+      {/* =========================================================================
+          2. PRICING CARDS (IMMEDIATELY VISIBLE & COHESIVE)
+         ========================================================================= */}
+      <div className="max-w-5xl mx-auto">
+        {selectedTrack === 'EXPERT' ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 items-stretch">
+            
+            {/* 1. Standard Monthly */}
             <div
               onClick={() => setSelectedPlan('MONTHLY')}
-              className={`p-6 rounded-2xl border text-right transition-all flex flex-col justify-between gap-6 cursor-pointer relative ${
+              className={`p-6 rounded-2xl border text-right transition-all flex flex-col justify-between gap-5 cursor-pointer relative ${
                 selectedPlan === 'MONTHLY'
                   ? 'bg-zinc-900 border-amber-500 shadow-xl ring-2 ring-amber-500/30'
                   : 'bg-zinc-950 border-zinc-800 text-zinc-400 hover:border-zinc-700'
@@ -323,33 +205,36 @@ export default function InstructorPlansClient({
                     <Video className="w-4 h-4 text-zinc-400" />
                     <span>الباقة الأساسية</span>
                   </span>
+                  {selectedPlan === 'MONTHLY' && (
+                    <span className="w-2 h-2 rounded-full bg-amber-400 ring-4 ring-amber-400/20" />
+                  )}
                 </div>
 
                 <div>
-                  <span className="text-3xl font-bold text-white font-mono">{platformPricing.monthlyPrice}</span>
-                  <span className="text-xs text-zinc-400"> ج.م / شهر</span>
+                  <span className="text-3xl font-black text-white font-mono">{platformPricing.monthlyPrice}</span>
+                  <span className="text-xs text-zinc-400 font-bold"> ج.م / شهر</span>
                 </div>
 
                 <p className="text-xs text-zinc-400 leading-relaxed">
-                  مخصصة لنشر الكورسات المسجلة والمذكرات الرقمية وتتبع الطلاب.
+                  مخصصة لنشر الدورات المسجلة والمذكرات الرقمية المحمية وتتبع الطلاب.
                 </p>
 
-                <ul className="text-xs text-zinc-300 space-y-2.5 pt-3 border-t border-zinc-800">
+                <ul className="text-xs text-zinc-300 space-y-2 pt-3 border-t border-zinc-800/80">
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-zinc-400 shrink-0" />
-                    <span>رفع كورسات مسجلة غير محدودة</span>
+                    <Check className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
+                    <span>رفع ونشر كورسات مسجلة غير محدودة</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-zinc-400 shrink-0" />
+                    <Check className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
                     <span>مذكرات رقمية محمية بالـ DRM</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-zinc-400 shrink-0" />
+                    <Check className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
                     <span>بنك أسئلة واختبارات إلكترونية</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-zinc-400 shrink-0" />
-                    <span>تحصيل مباشر على حسابك الخاص</span>
+                    <Check className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
+                    <span>تحصيل مباشر 100% بدون عمولة</span>
                   </li>
                 </ul>
               </div>
@@ -358,7 +243,7 @@ export default function InstructorPlansClient({
                 type="button"
                 className={`w-full py-2.5 rounded-xl font-bold text-xs transition-all ${
                   selectedPlan === 'MONTHLY'
-                    ? 'bg-amber-500 text-zinc-950 shadow-md'
+                    ? 'bg-amber-500 text-zinc-950 shadow-md font-black'
                     : 'bg-zinc-900 text-zinc-300 border border-zinc-800'
                 }`}
               >
@@ -366,10 +251,75 @@ export default function InstructorPlansClient({
               </button>
             </div>
 
+            {/* 2. Live Studio Pro (Featured VIP) */}
+            <div
+              onClick={() => setSelectedPlan('LIVE_STUDIO_PRO')}
+              className={`p-6 rounded-2xl border text-right transition-all flex flex-col justify-between gap-5 cursor-pointer relative ${
+                selectedPlan === 'LIVE_STUDIO_PRO'
+                  ? 'bg-zinc-900 border-amber-500 shadow-2xl ring-2 ring-amber-500/40 md:-translate-y-1'
+                  : 'bg-zinc-950 border-zinc-800 text-zinc-400 hover:border-zinc-700'
+              }`}
+            >
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-bold text-amber-400 flex items-center gap-2">
+                    <Radio className="w-4 h-4" />
+                    <span>باقة البث والأستوديو</span>
+                  </span>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                    الأكثر اختياراً
+                  </span>
+                </div>
+
+                <div>
+                  <span className="text-3xl font-black text-white font-mono">{liveStudioPrice}</span>
+                  <span className="text-xs text-zinc-400 font-bold"> ج.م / شهر</span>
+                </div>
+
+                <p className="text-xs text-zinc-400 leading-relaxed">
+                  الحل الشامل للتدريس التفاعلي والبثوث الحية مع مسابقات وكويزات الطلاب.
+                </p>
+
+                <ul className="text-xs text-zinc-200 space-y-2 pt-3 border-t border-zinc-800/80">
+                  <li className="flex items-center gap-2 text-amber-300 font-bold">
+                    <Check className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                    <span>قاعات بث مباشر 1080p غير محدودة</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
+                    <span>فتح المايك للنقاش ومشاركة الشاشة</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
+                    <span>كويزات ومسابقات تفاعلية للطلاب</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
+                    <span>كورسات مسجلة ومذكرات DRM</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
+                    <span>رابط دعوة مباشر للطلاب بدون قيود</span>
+                  </li>
+                </ul>
+              </div>
+
+              <button
+                type="button"
+                className={`w-full py-2.5 rounded-xl font-bold text-xs transition-all ${
+                  selectedPlan === 'LIVE_STUDIO_PRO'
+                    ? 'bg-amber-500 text-zinc-950 shadow-md font-black'
+                    : 'bg-zinc-900 text-zinc-300 border border-zinc-800'
+                }`}
+              >
+                {selectedPlan === 'LIVE_STUDIO_PRO' ? 'الباقة المحددة' : 'اختيار هذه الباقة'}
+              </button>
+            </div>
+
             {/* 3. Annual VIP */}
             <div
               onClick={() => setSelectedPlan('ANNUAL')}
-              className={`p-6 rounded-2xl border text-right transition-all flex flex-col justify-between gap-6 cursor-pointer relative ${
+              className={`p-6 rounded-2xl border text-right transition-all flex flex-col justify-between gap-5 cursor-pointer relative ${
                 selectedPlan === 'ANNUAL'
                   ? 'bg-zinc-900 border-amber-500 shadow-xl ring-2 ring-amber-500/30'
                   : 'bg-zinc-950 border-zinc-800 text-zinc-400 hover:border-zinc-700'
@@ -381,35 +331,35 @@ export default function InstructorPlansClient({
                     <Award className="w-4 h-4 text-zinc-400" />
                     <span>الباقة السنوية الشاملة</span>
                   </span>
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-zinc-800 text-zinc-300 border border-zinc-700">
+                  <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-zinc-800 text-zinc-300 border border-zinc-700">
                     توفير شهرين
                   </span>
                 </div>
 
                 <div>
-                  <span className="text-3xl font-bold text-white font-mono">{platformPricing.annualPrice.toLocaleString('en-US')}</span>
-                  <span className="text-xs text-zinc-400"> ج.م / سنة</span>
+                  <span className="text-3xl font-black text-white font-mono">{platformPricing.annualPrice.toLocaleString('en-US')}</span>
+                  <span className="text-xs text-zinc-400 font-bold"> ج.م / سنة</span>
                 </div>
 
                 <p className="text-xs text-zinc-400 leading-relaxed">
-                  اشتراك سنوي كامل لجميع الخدمات مع توفير 30% من التكلفة.
+                  اشتراك سنوي كامل لجميع الخدمات مع توفير 30% من التكلفة الإجمالية.
                 </p>
 
-                <ul className="text-xs text-zinc-300 space-y-2.5 pt-3 border-t border-zinc-800">
+                <ul className="text-xs text-zinc-300 space-y-2 pt-3 border-t border-zinc-800/80">
                   <li className="flex items-center gap-2 text-amber-300 font-medium">
-                    <Check className="w-4 h-4 text-amber-400 shrink-0" />
+                    <Check className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                     <span>شاملة ميزة البث طوال العام</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-zinc-400 shrink-0" />
-                    <span>شارة دكتور/محاضر معتمد</span>
+                    <Check className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
+                    <span>شارة دكتور/محاضر معتمد موثق</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-zinc-400 shrink-0" />
+                    <Check className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
                     <span>أولوية دعم فني مخصصة</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-zinc-400 shrink-0" />
+                    <Check className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
                     <span>جميع ميزات المنصة بدون حدود</span>
                   </li>
                 </ul>
@@ -419,7 +369,7 @@ export default function InstructorPlansClient({
                 type="button"
                 className={`w-full py-2.5 rounded-xl font-bold text-xs transition-all ${
                   selectedPlan === 'ANNUAL'
-                    ? 'bg-amber-500 text-zinc-950 shadow-md'
+                    ? 'bg-amber-500 text-zinc-950 shadow-md font-black'
                     : 'bg-zinc-900 text-zinc-300 border border-zinc-800'
                 }`}
               >
@@ -430,12 +380,12 @@ export default function InstructorPlansClient({
           </div>
         ) : (
           /* Student Track Plans */
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-3xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-2xl mx-auto">
             
             {/* Student Basic */}
             <div
               onClick={() => setSelectedPlan('STUDENT_PRO')}
-              className={`p-6 rounded-2xl border text-right transition-all flex flex-col justify-between gap-6 cursor-pointer ${
+              className={`p-6 rounded-2xl border text-right transition-all flex flex-col justify-between gap-5 cursor-pointer ${
                 selectedPlan === 'STUDENT_PRO'
                   ? 'bg-zinc-900 border-amber-500 shadow-xl ring-2 ring-amber-500/30'
                   : 'bg-zinc-950 border-zinc-800 text-zinc-400 hover:border-zinc-700'
@@ -450,25 +400,25 @@ export default function InstructorPlansClient({
                 </div>
 
                 <div>
-                  <span className="text-3xl font-bold text-white font-mono">{platformPricing.studentPrice}</span>
-                  <span className="text-xs text-zinc-400"> ج.م / شهر</span>
+                  <span className="text-3xl font-black text-white font-mono">{platformPricing.studentPrice}</span>
+                  <span className="text-xs text-zinc-400 font-bold"> ج.م / شهر</span>
                 </div>
 
                 <p className="text-xs text-zinc-400 leading-relaxed">
                   منحة دراسية لطلاب الجامعات لنشر شروحات المواد والمذكرات.
                 </p>
 
-                <ul className="text-xs text-zinc-300 space-y-2.5 pt-3 border-t border-zinc-800">
+                <ul className="text-xs text-zinc-300 space-y-2 pt-3 border-t border-zinc-800/80">
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-zinc-400 shrink-0" />
-                    <span>نشر كورسات ومذكرات لزملائك</span>
+                    <Check className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
+                    <span>نشر كورسات ومذكرات لزملائك الطلاب</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-zinc-400 shrink-0" />
-                    <span>تحصيل مباشر على حسابك</span>
+                    <Check className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
+                    <span>تحصيل مباشر لأموالك على محفظتك</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-zinc-400 shrink-0" />
+                    <Check className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
                     <span>تتبع درجات واختبارات الطلاب</span>
                   </li>
                 </ul>
@@ -478,7 +428,7 @@ export default function InstructorPlansClient({
                 type="button"
                 className={`w-full py-2.5 rounded-xl font-bold text-xs transition-all ${
                   selectedPlan === 'STUDENT_PRO'
-                    ? 'bg-amber-500 text-zinc-950 shadow-md'
+                    ? 'bg-amber-500 text-zinc-950 shadow-md font-black'
                     : 'bg-zinc-900 text-zinc-300 border border-zinc-800'
                 }`}
               >
@@ -489,7 +439,7 @@ export default function InstructorPlansClient({
             {/* Student Live Pro */}
             <div
               onClick={() => setSelectedPlan('STUDENT_LIVE_PRO')}
-              className={`p-6 rounded-2xl border text-right transition-all flex flex-col justify-between gap-6 cursor-pointer ${
+              className={`p-6 rounded-2xl border text-right transition-all flex flex-col justify-between gap-5 cursor-pointer ${
                 selectedPlan === 'STUDENT_LIVE_PRO'
                   ? 'bg-zinc-900 border-amber-500 shadow-xl ring-2 ring-amber-500/30'
                   : 'bg-zinc-950 border-zinc-800 text-zinc-400 hover:border-zinc-700'
@@ -501,31 +451,31 @@ export default function InstructorPlansClient({
                     <Radio className="w-4 h-4" />
                     <span>باقة الطالب مع البث المباشر</span>
                   </span>
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                  <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
                     بث مباشر
                   </span>
                 </div>
 
                 <div>
-                  <span className="text-3xl font-bold text-white font-mono">{studentLivePrice}</span>
-                  <span className="text-xs text-zinc-400"> ج.م / شهر</span>
+                  <span className="text-3xl font-black text-white font-mono">{studentLivePrice}</span>
+                  <span className="text-xs text-zinc-400 font-bold"> ج.م / شهر</span>
                 </div>
 
                 <p className="text-xs text-zinc-400 leading-relaxed">
                   مخصصة للمراجعات الحية ومناقشة المشاريع بالصوت والشاشة.
                 </p>
 
-                <ul className="text-xs text-zinc-300 space-y-2.5 pt-3 border-t border-zinc-800">
+                <ul className="text-xs text-zinc-300 space-y-2 pt-3 border-t border-zinc-800/80">
                   <li className="flex items-center gap-2 text-amber-300 font-medium">
-                    <Check className="w-4 h-4 text-amber-400 shrink-0" />
+                    <Check className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                     <span>فتح قاعات بث مباشر لمراجعة المواد</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-zinc-400 shrink-0" />
+                    <Check className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
                     <span>مشاركة الشاشة وكويزات تفاعلية</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-zinc-400 shrink-0" />
+                    <Check className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
                     <span>رابط دعوة مباشر لجروبات الدفعة</span>
                   </li>
                 </ul>
@@ -535,7 +485,7 @@ export default function InstructorPlansClient({
                 type="button"
                 className={`w-full py-2.5 rounded-xl font-bold text-xs transition-all ${
                   selectedPlan === 'STUDENT_LIVE_PRO'
-                    ? 'bg-amber-500 text-zinc-950 shadow-md'
+                    ? 'bg-amber-500 text-zinc-950 shadow-md font-black'
                     : 'bg-zinc-900 text-zinc-300 border border-zinc-800'
                 }`}
               >
@@ -548,15 +498,15 @@ export default function InstructorPlansClient({
       </div>
 
       {/* =========================================================================
-          4. PAYMENT & CONFIRMATION SECTION
+          3. PAYMENT & CONFIRMATION CONSOLE
          ========================================================================= */}
-      <div className="max-w-3xl mx-auto p-6 sm:p-8 rounded-2xl bg-zinc-950 border border-zinc-800 shadow-xl space-y-6">
+      <div className="max-w-4xl mx-auto p-6 sm:p-8 rounded-2xl bg-zinc-950 border border-zinc-800 shadow-xl space-y-6">
         <div className="border-b border-zinc-800 pb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
           <div>
             <h3 className="text-base font-bold text-white">بيانات التحويل وتأكيد الاشتراك</h3>
             <p className="text-xs text-zinc-400">قم بتحويل المبلغ المطلوب عبر إنستاباي أو فودافون كاش ثم أرفق الإيصال أدناه</p>
           </div>
-          <div className="px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-700 text-xs font-bold text-amber-400 font-mono">
+          <div className="px-3.5 py-1.5 rounded-lg bg-zinc-900 border border-zinc-700 text-xs font-bold text-amber-400 font-mono">
             المبلغ: {currentPlanInfo.price} ج.م ({currentPlanInfo.period})
           </div>
         </div>

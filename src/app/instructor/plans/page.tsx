@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { Metadata } from 'next';
 import { getCurrentUser } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
@@ -28,7 +28,7 @@ export default async function InstructorPlansPage() {
   };
 
   return (
-    <div className="pt-24 sm:pt-28 pb-16 min-h-screen">
+    <div className="w-full pb-16">
       <InstructorPlansClient
         user={user}
         platformPricing={platformPricing}
