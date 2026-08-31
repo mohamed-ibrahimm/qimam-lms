@@ -283,7 +283,6 @@ async function seedDatabase() {
         compareAtPrice: 5000,
         durationHours: 85,
         status: 'PUBLISHED',
-        instructorId: instructor.id,
       },
     });
 
@@ -392,18 +391,17 @@ async function seedDatabase() {
 
     const firstCourse = await prisma.course.findFirst({ where: { status: 'PUBLISHED' } });
     if (firstCourse) {
-      await prisma.review.createMany({
-        data: [
-          {
+      try {
+        await prisma.review.create({
+          data: {
             courseId: firstCourse.id,
             userId: student.id,
             rating: 5,
             comment: 'شرح ممتاز وتطبيق عملي حقيقي نقل مستواي البرمجي بشكل ملحوظ! أنصح به بشدة.',
             isApproved: true,
           },
-        ],
-        skipDuplicates: true,
-      });
+        });
+      } catch (e) {}
     }
 
     const [userCount, courseCount, diplomaCount, bookCount, categoryCount] = await Promise.all([
