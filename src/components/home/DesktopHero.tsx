@@ -11,6 +11,7 @@ import {
   FileText,
   MessageCircle,
 } from 'lucide-react';
+import LumaKeyMotion from './LumaKeyMotion';
 
 interface DesktopHeroProps {
   settings: Record<string, string>;
@@ -74,22 +75,9 @@ export default function DesktopHero({
             </p>
           </div>
 
-          {/* Left: Pure Chromatic Motion Animation Emerging Directly from Background */}
+          {/* Left: Pure Chromatic Motion Animation Emerging Directly from Background (0 Halo, 0 Square) */}
           <div className="lg:col-span-4 flex items-center justify-center relative pointer-events-none select-none">
-            {/* Ambient Multi-colored Glow behind the particles */}
-            <div className="absolute w-72 h-72 lg:w-96 lg:h-96 bg-[radial-gradient(circle,_rgba(245,158,11,0.22),_rgba(147,51,234,0.18)_50%,_transparent_75%)] rounded-full blur-[90px] pointer-events-none -z-10" />
-            
-            <div className="relative w-full max-w-[280px] lg:max-w-[320px] xl:max-w-[360px] aspect-square flex items-center justify-center">
-              <video
-                src="https://cdn.recent.design/items/nog55iz/0/v0.mp4"
-                poster="https://cdn.recent.design/items/nog55iz/0/poster/1200.webp"
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full h-full object-contain pointer-events-none mix-blend-screen [mask-image:radial-gradient(circle_at_center,black_45%,transparent_80%)] [-webkit-mask-image:radial-gradient(circle_at_center,black_45%,transparent_80%)] filter contrast-125 brightness-110 drop-shadow-[0_0_40px_rgba(245,158,11,0.3)]"
-              />
-            </div>
+            <LumaKeyMotion />
           </div>
 
         </div>
