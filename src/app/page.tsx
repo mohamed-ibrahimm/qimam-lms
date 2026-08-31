@@ -5,6 +5,7 @@ import { formatPrice, formatDuration } from '@/lib/utils';
 import DesktopHero from '@/components/home/DesktopHero';
 import MobileHero from '@/components/home/MobileHero';
 import HomeCoursesSection from '@/components/home/HomeCoursesSection';
+import PlatformFeaturesMatrix from '@/components/home/PlatformFeaturesMatrix';
 
 export const dynamic = 'force-dynamic';
 import {
@@ -339,6 +340,11 @@ export default async function HomePage() {
         )}
 
         <HomeCoursesSection initialCourses={courses} categories={categories} />
+
+        {/* =========================================================================
+            6. PLATFORM FEATURES & COMPARISON MATRIX (جدول مميزات ومقارنة المنصة)
+           ========================================================================= */}
+        <PlatformFeaturesMatrix platformName={cleanPlatformName} whatsappUrl={whatsappUrl} />
 
         {/* =========================================================================
             7. TESTIMONIALS (قصص نجاح وإشادات حقيقية)
