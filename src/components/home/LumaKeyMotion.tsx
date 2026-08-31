@@ -25,35 +25,18 @@ export default function LumaKeyMotion() {
         const data = frame.data;
         const len = data.length;
 
-        // Auto-detect corner background luminance (from top-left pixel)
-        const cornerLuma = (data[0] * 299 + data[1] * 587 + data[2] * 114) / 1000;
-        const isWhiteBg = cornerLuma > 128;
-
         for (let i = 0; i < len; i += 4) {
           const r = data[i];
           const g = data[i + 1];
           const b = data[i + 2];
+          // Pure luminance calculation
           const luma = (r * 299 + g * 587 + b * 114) / 1000;
-
-          if (isWhiteBg) {
-            // White background: key out white, make the Bot lines luminous white/gold
-            const diff = 255 - luma;
-            if (diff < 22) {
-              data[i + 3] = 0; // Transparent background
-            } else {
-              // Glowing clean white-gold Bot icon
-              data[i] = 255;
-              data[i + 1] = 255;
-              data[i + 2] = 255;
-              data[i + 3] = Math.min(255, Math.floor((diff / 180) * 255));
-            }
+          if (luma < 24) {
+            data[i + 3] = 0; // 100% transparent background (0 white box, 0 black box, 0 halo)
+          } else if (luma < 52) {
+            data[i + 3] = Math.floor(((luma - 24) / 28) * 255);
           } else {
-            // Black background: key out dark
-            if (luma < 18) {
-              data[i + 3] = 0;
-            } else if (luma < 45) {
-              data[i + 3] = Math.floor(((luma - 18) / 27) * 255);
-            }
+            data[i + 3] = 255;
           }
         }
         ctx.putImageData(frame, 0, 0);
@@ -68,23 +51,23 @@ export default function LumaKeyMotion() {
   }, []);
 
   return (
-    <div className="relative w-full max-w-[280px] lg:max-w-[320px] xl:max-w-[360px] aspect-square flex items-center justify-center">
-      {/* Local Video Source: Grok Bot Icon Animation */}
+    <div className="relative w-full max-w-[280px] lg:max-w-[320px] xl:max-w-[360px] aspect-square flex items-center justify-center pointer-events-none select-none">
+      {/* Hidden local video source */}
       <video
         ref={videoRef}
-        src="/assets/grok-bot.mp4"
+        src="/assets/motion-art.mp4"
         autoPlay
         loop
         muted
         playsInline
         className="hidden"
       />
-      {/* Crystal Clear Transparent Canvas */}
+      {/* Pure Transparent Canvas */}
       <canvas
         ref={canvasRef}
-        width={400}
-        height={400}
-        className="w-full h-full object-contain pointer-events-none filter drop-shadow-[0_0_30px_rgba(245,158,11,0.25)]"
+        width={360}
+        height={360}
+        className="w-full h-full object-contain pointer-events-none"
       />
     </div>
   );
