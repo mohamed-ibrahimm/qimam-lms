@@ -221,10 +221,10 @@ export default function PlatformFeaturesMatrix({
                 className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-black transition-all cursor-pointer ${
                   isActive
                     ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-zinc-950 shadow-lg shadow-amber-500/25 scale-105 border border-amber-400'
-                    : 'bg-white/70 dark:bg-zinc-900/60 text-slate-700 dark:text-zinc-300 hover:text-slate-950 dark:hover:text-white border border-slate-200 dark:border-zinc-800/80 hover:border-amber-500/40 backdrop-blur-md'
+                    : 'bg-white dark:bg-zinc-900/60 text-slate-800 dark:text-zinc-300 hover:text-slate-950 dark:hover:text-white border border-slate-300 dark:border-zinc-800/80 hover:border-amber-500/60 shadow-sm'
                 }`}
               >
-                <Icon className={`w-4 h-4 ${isActive ? 'text-zinc-950' : 'text-amber-400'}`} />
+                <Icon className={`w-4 h-4 ${isActive ? 'text-zinc-950' : 'text-amber-500 dark:text-amber-400'}`} />
                 <span>{tab.label}</span>
               </button>
             );
@@ -240,10 +240,10 @@ export default function PlatformFeaturesMatrix({
             return (
               <div
                 key={feat.id}
-                className={`group relative rounded-3xl p-7 bg-white/80 dark:bg-zinc-900/40 border border-slate-200/90 dark:border-zinc-800/60 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl ${feat.bgGlow} ${feat.borderGlow} flex flex-col justify-between overflow-hidden`}
+                className={`group relative rounded-3xl p-7 bg-white dark:bg-zinc-900/40 border border-slate-200 dark:border-zinc-800/60 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-2xl ${feat.bgGlow} ${feat.borderGlow} flex flex-col justify-between overflow-hidden`}
               >
                 {/* Top Subtle Ambient Flare */}
-                <div className={`absolute top-0 right-0 left-0 h-1.5 bg-gradient-to-r ${feat.accentColor} opacity-70 group-hover:opacity-100 transition-opacity`} />
+                <div className={`absolute top-0 right-0 left-0 h-1.5 bg-gradient-to-r ${feat.accentColor} opacity-80 group-hover:opacity-100 transition-opacity`} />
                 
                 <div className="space-y-4">
                   {/* Top Bar: Icon + Badge */}
@@ -261,22 +261,22 @@ export default function PlatformFeaturesMatrix({
 
                   {/* Title & Description */}
                   <div className="space-y-2">
-                    <h3 className="text-lg font-black text-slate-900 dark:text-zinc-100 group-hover:text-amber-400 transition-colors">
+                    <h3 className="text-lg font-black text-slate-950 dark:text-zinc-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
                       {feat.title}
                     </h3>
-                    <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 leading-relaxed font-medium">
                       {feat.description}
                     </p>
                   </div>
                 </div>
 
                 {/* Bottom decorative highlight */}
-                <div className="pt-5 mt-4 border-t border-slate-100 dark:border-zinc-800/60 flex items-center justify-between text-xs font-bold text-amber-500 dark:text-amber-400">
-                  <span className="flex items-center gap-1">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                <div className="pt-5 mt-4 border-t border-slate-100 dark:border-zinc-800/60 flex items-center justify-between text-xs font-black text-emerald-600 dark:text-emerald-400">
+                  <span className="flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 fill-emerald-500/20" />
                     مشمول ومفعّل بالكامل
                   </span>
-                  <Sparkles className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <Sparkles className="w-3.5 h-3.5 text-amber-500 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
               </div>
             );
@@ -289,66 +289,66 @@ export default function PlatformFeaturesMatrix({
         <div className="space-y-6 pt-6">
           
           <div className="text-center space-y-2 max-w-2xl mx-auto">
-            <h3 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
-              جدول المقارنة الحصري: <span className="text-amber-400">نحن مقابل الآخرين</span>
+            <h3 className="text-2xl sm:text-3xl font-black text-slate-950 dark:text-white">
+              جدول المقارنة الحصري: <span className="bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-transparent">نحن مقابل الآخرين</span>
             </h3>
-            <p className="text-xs sm:text-sm text-zinc-400">
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 font-medium">
               اكتشف لماذا يثق بنا آلاف المهندسين والطلاب كوجهتهم الأولى لاحتراف البرمجة والذكاء الاصطناعي
             </p>
           </div>
 
-          <div className="rounded-3xl border border-slate-200 dark:border-zinc-800 bg-white/90 dark:bg-zinc-950/70 backdrop-blur-2xl shadow-2xl overflow-hidden">
+          <div className="rounded-3xl border border-slate-200/90 dark:border-zinc-800 bg-white dark:bg-zinc-950/70 backdrop-blur-2xl shadow-xl shadow-slate-200/50 dark:shadow-2xl overflow-hidden">
             
             {/* Desktop Table View */}
             <div className="overflow-x-auto">
               <table className="w-full text-right border-collapse">
                 
                 <thead>
-                  <tr className="border-b border-slate-200 dark:border-zinc-800/80 bg-slate-50 dark:bg-zinc-900/60">
-                    <th className="py-5 px-6 text-sm font-black text-slate-900 dark:text-zinc-200 w-2/5">
+                  <tr className="border-b border-slate-200 dark:border-zinc-800/80 bg-slate-100/80 dark:bg-zinc-900/60">
+                    <th className="py-5 px-6 text-sm font-black text-slate-950 dark:text-zinc-200 w-2/5">
                       الميزة الهندسية / المعيار
                     </th>
-                    <th className="py-5 px-6 text-sm font-black text-amber-600 dark:text-amber-400 w-2/5 bg-amber-500/10 border-x border-amber-500/20">
+                    <th className="py-5 px-6 text-sm font-black text-amber-950 dark:text-amber-400 w-2/5 bg-amber-500/15 border-x border-amber-300 dark:border-amber-500/20">
                       <div className="flex items-center gap-2">
-                        <Crown className="w-4 h-4 text-amber-400 fill-amber-400" />
+                        <Crown className="w-4 h-4 text-amber-500 dark:text-amber-400 fill-amber-400" />
                         <span>{platformName}</span>
                         <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500 text-zinc-950 font-black">الخيار الأفضل</span>
                       </div>
                     </th>
-                    <th className="py-5 px-6 text-sm font-black text-slate-500 dark:text-zinc-400 w-1/5">
+                    <th className="py-5 px-6 text-sm font-black text-slate-600 dark:text-zinc-400 w-1/5">
                       المنصات والدورات الأخرى
                     </th>
                   </tr>
                 </thead>
 
-                <tbody className="divide-y divide-slate-100 dark:divide-zinc-800/50 text-xs sm:text-sm">
+                <tbody className="divide-y divide-slate-200/80 dark:divide-zinc-800/50 text-xs sm:text-sm">
                   {comparisonRows.map((row, idx) => (
                     <tr 
                       key={idx} 
-                      className="hover:bg-slate-50/80 dark:hover:bg-zinc-900/30 transition-colors"
+                      className="hover:bg-slate-50 dark:hover:bg-zinc-900/30 transition-colors"
                     >
                       {/* Feature Title & Description */}
                       <td className="py-4.5 px-6">
-                        <div className="font-black text-slate-900 dark:text-zinc-100 text-sm">
+                        <div className="font-black text-slate-950 dark:text-zinc-100 text-sm">
                           {row.feature}
                         </div>
-                        <div className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">
+                        <div className="text-xs text-slate-600 dark:text-zinc-400 mt-0.5 font-medium">
                           {row.description}
                         </div>
                       </td>
 
                       {/* Our Platform Cell (Highlighted with Gold Glow) */}
-                      <td className="py-4.5 px-6 bg-amber-500/[0.04] border-x border-amber-500/20 font-bold text-slate-900 dark:text-amber-300">
+                      <td className="py-4.5 px-6 bg-amber-500/10 dark:bg-amber-500/[0.04] border-x border-amber-200 dark:border-amber-500/20 font-bold text-slate-950 dark:text-amber-300">
                         <div className="flex items-center gap-2.5">
-                          <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0 fill-emerald-500/20" />
+                          <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-500 shrink-0 fill-emerald-500/20" />
                           <span>{row.us}</span>
                         </div>
                       </td>
 
                       {/* Other Platforms Cell */}
-                      <td className="py-4.5 px-6 text-slate-500 dark:text-zinc-400">
+                      <td className="py-4.5 px-6 text-slate-600 dark:text-zinc-400">
                         <div className="flex items-center gap-2">
-                          <XCircle className="w-4 h-4 text-rose-400 shrink-0" />
+                          <XCircle className="w-4 h-4 text-rose-500 dark:text-rose-400 shrink-0" />
                           <span>{row.others}</span>
                         </div>
                       </td>

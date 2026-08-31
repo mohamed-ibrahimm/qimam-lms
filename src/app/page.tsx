@@ -349,71 +349,71 @@ export default async function HomePage() {
         {/* =========================================================================
             7. TESTIMONIALS (قصص نجاح وإشادات حقيقية)
            ========================================================================= */}
-        <section className="px-4 sm:px-6 py-20 sm:py-24 bg-slate-100/40 dark:bg-zinc-900/20 border-y border-slate-200/80 dark:border-zinc-800/40">
+        <section className="px-4 sm:px-6 py-20 sm:py-24 bg-slate-100/70 dark:bg-zinc-900/20 border-y border-slate-200/90 dark:border-zinc-800/40">
           <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-10">
-              <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">آراء الطلاب</p>
-              <h2 className="font-display text-3xl font-bold text-zinc-100 mb-2">قصص نجاح من قلب سوق العمل</h2>
-              <p className="text-zinc-500 text-sm">تجارب حقيقية لطلاب انطلقوا من الأكاديمية إلى كبرى الشركات والعمل الحر</p>
+            <div className="text-center mb-12 space-y-2">
+              <p className="text-xs font-black text-indigo-600 dark:text-amber-400 uppercase tracking-wider">آراء الطلاب والخريجين</p>
+              <h2 className="font-display text-3xl sm:text-4xl font-black text-slate-950 dark:text-zinc-100">قصص نجاح من قلب سوق العمل</h2>
+              <p className="text-slate-600 dark:text-zinc-400 text-sm max-w-lg mx-auto">تجارب حقيقية لطلاب انطلقوا من الأكاديمية إلى كبرى الشركات والعمل الحر</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              <div className="p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800/50 space-y-4">
-                <div className="flex items-center gap-1 text-amber-400">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="p-6 rounded-3xl bg-white dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800/50 space-y-4 shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-xl transition-all">
+                <div className="flex items-center gap-1 text-amber-500 dark:text-amber-400">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />
+                    <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
                   ))}
                 </div>
-                <p className="text-xs text-zinc-400 leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-700 dark:text-zinc-300 leading-relaxed">
                   "الدبلومة غيرت مساري المهني بالكامل! الشرح كان عملياً على مشاريع إنتاج حقيقية، وحصلت على وظيفة مطور برمجيات بعد تخرجي بشهرين فقط."
                 </p>
-                <div className="pt-2 border-t border-zinc-800 flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-xs font-bold text-amber-400">
+                <div className="pt-3 border-t border-slate-100 dark:border-zinc-800 flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-amber-100 dark:bg-zinc-800 flex items-center justify-center text-xs font-black text-amber-700 dark:text-amber-400">
                     أ
                   </div>
                   <div>
-                    <h5 className="text-xs font-bold text-zinc-200">أحمد حسام</h5>
-                    <p className="text-[10px] text-zinc-500">مطور Full-Stack • خريج دبلوم Next.js</p>
+                    <h5 className="text-xs font-black text-slate-900 dark:text-zinc-200">أحمد حسام</h5>
+                    <p className="text-[11px] text-slate-500 dark:text-zinc-400">مطور Full-Stack • خريج دبلوم Next.js</p>
                   </div>
                 </div>
               </div>
 
-              <div className="p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800/50 space-y-4">
-                <div className="flex items-center gap-1 text-amber-400">
+              <div className="p-6 rounded-3xl bg-white dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800/50 space-y-4 shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-xl transition-all">
+                <div className="flex items-center gap-1 text-amber-500 dark:text-amber-400">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />
+                    <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
                   ))}
                 </div>
-                <p className="text-xs text-zinc-400 leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-700 dark:text-zinc-300 leading-relaxed">
                   "أفضل تجربة تعليمية في الوطن العربي. مشغل الفيديو فائق السرعة والمساعد الذكي يحل أي مشكلة برمجية تواجهك في ثوانٍ معدودة."
                 </p>
-                <div className="pt-2 border-t border-zinc-800 flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-xs font-bold text-purple-400">
+                <div className="pt-3 border-t border-slate-100 dark:border-zinc-800 flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-purple-100 dark:bg-zinc-800 flex items-center justify-center text-xs font-black text-purple-700 dark:text-purple-400">
                     م
                   </div>
                   <div>
-                    <h5 className="text-xs font-bold text-zinc-200">مريم الكردي</h5>
-                    <p className="text-[10px] text-zinc-500">مطورة واجهات أمامية وتطبيقات</p>
+                    <h5 className="text-xs font-black text-slate-900 dark:text-zinc-200">مريم الكردي</h5>
+                    <p className="text-[11px] text-slate-500 dark:text-zinc-400">مطورة واجهات أمامية وتطبيقات</p>
                   </div>
                 </div>
               </div>
 
-              <div className="p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800/50 space-y-4">
-                <div className="flex items-center gap-1 text-amber-400">
+              <div className="p-6 rounded-3xl bg-white dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800/50 space-y-4 shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-xl transition-all">
+                <div className="flex items-center gap-1 text-amber-500 dark:text-amber-400">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />
+                    <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
                   ))}
                 </div>
-                <p className="text-xs text-zinc-400 leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-700 dark:text-zinc-300 leading-relaxed">
                   "الشهادة المعتمدة برمز QR سهلت عليّ إثبات مهاراتي لعملاء الفريلانس الدوليين. الدفع عبر إنستاباي وفودافون كاش جعل الاشتراك فائق السهولة."
                 </p>
-                <div className="pt-2 border-t border-zinc-800 flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-xs font-bold text-emerald-400">
+                <div className="pt-3 border-t border-slate-100 dark:border-zinc-800 flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-emerald-100 dark:bg-zinc-800 flex items-center justify-center text-xs font-black text-emerald-700 dark:text-emerald-400">
                     خ
                   </div>
                   <div>
-                    <h5 className="text-xs font-bold text-zinc-200">خالد عبد الله</h5>
-                    <p className="text-[10px] text-zinc-500">مستقل معتمد (Top Rated)</p>
+                    <h5 className="text-xs font-black text-slate-900 dark:text-zinc-200">خالد عبد الله</h5>
+                    <p className="text-[11px] text-slate-500 dark:text-zinc-400">مستقل معتمد (Top Rated)</p>
                   </div>
                 </div>
               </div>
