@@ -24,6 +24,7 @@ import {
   DollarSign,
   ShoppingBag,
   Video,
+  Radio,
 } from 'lucide-react';
 
 export type InstructorTabType = 'overview' | 'courses' | 'pricing' | 'payments' | 'orders' | 'coupons' | 'subscription' | 'books' | 'live';
@@ -80,6 +81,18 @@ export default function InstructorSidebarClient({
           id: 'overview',
           name: 'نظرة عامة والتحليلات',
           icon: LayoutDashboard,
+        },
+      ],
+    },
+    {
+      groupName: 'أستوديو البث المباشر (VIP Live Studio)',
+      items: [
+        {
+          id: 'live',
+          name: 'غرفة البث المباشر والشاشة',
+          icon: Radio,
+          badge: 'LIVE VIP',
+          badgeType: 'rose',
         },
       ],
     },
@@ -167,18 +180,6 @@ export default function InstructorSidebarClient({
           id: 'payments',
           name: 'بيانات استلام أرباحي المباشرة',
           icon: CreditCard,
-        },
-      ],
-    },
-    {
-      groupName: 'أستوديو البث المباشر التفاعلي (VIP Live Studio)',
-      items: [
-        {
-          id: 'live',
-          name: 'غرف البث المباشر والشاشات',
-          icon: Video,
-          badge: 'جديد VIP',
-          badgeType: 'rose',
         },
       ],
     },

@@ -516,6 +516,15 @@ export default function InstructorClient({
           </div>
 
           <div className="flex items-center gap-2 flex-wrap w-full sm:w-auto">
+            {/* 0. Live Broadcast Studio Button */}
+            <Link
+              href="/live/instant-room"
+              className="px-4 py-2 rounded-xl bg-gradient-to-r from-rose-600 via-rose-500 to-amber-500 text-white font-black text-xs shadow-md shadow-rose-600/30 flex items-center justify-center gap-1.5 transition-all hover:scale-105 cursor-pointer"
+            >
+              <Radio className="w-4 h-4 text-white animate-pulse" />
+              <span>أستوديو البث المباشر (Live)</span>
+            </Link>
+
             {/* 1. Add Course Button */}
             <button
               type="button"
@@ -690,6 +699,53 @@ export default function InstructorClient({
         {/* TAB 0: OVERVIEW (نظرة عامة والتحليلات) */}
         {activeTab === 'overview' && (
           <div className="space-y-6">
+            
+            {/* VIP LIVE BROADCAST STUDIO HERO CARD */}
+            <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-[#180f33] via-[#241347] to-[#120a26] border-2 border-rose-500/40 shadow-xl shadow-purple-950/40 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div className="flex items-center gap-3.5">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-rose-500 to-amber-500 flex items-center justify-center text-white shadow-lg shadow-rose-500/30 shrink-0">
+                  <Radio className="w-6 h-6 animate-pulse" />
+                </div>
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="px-2.5 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40 text-[10px] font-black uppercase">
+                      VIP Live Studio
+                    </span>
+                    <span className="text-xs sm:text-sm font-black text-white">
+                      أستوديو البث المباشر ومشاركة الشاشة (Google Meet Style)
+                    </span>
+                  </div>
+                  <p className="text-xs text-zinc-300 font-medium leading-relaxed">
+                    اشرح لطلابك لحظياً بدقة 1080p، شارك شاشتك، واطلق مسابقات وكويزات تفاعلية حية (Kahoot Mode).
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5 w-full md:w-auto shrink-0">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (typeof window !== 'undefined') {
+                      navigator.clipboard.writeText(`${window.location.origin}/live/instant-room`);
+                      setMessage({ type: 'success', text: 'تم نسخ رابط دعوة الطلاب لغرفة البث المباشر!' });
+                    }
+                  }}
+                  className="flex-1 md:flex-initial px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-zinc-200 text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer border border-white/10"
+                >
+                  <Copy className="w-3.5 h-3.5" />
+                  <span>نسخ رابط الطلاب</span>
+                </button>
+
+                <Link
+                  href="/live/instant-room"
+                  className="flex-1 md:flex-initial px-5 py-2.5 rounded-xl bg-gradient-to-r from-rose-600 via-rose-500 to-amber-500 text-white text-xs font-black shadow-lg shadow-rose-600/30 flex items-center justify-center gap-2 hover:scale-105 transition-all cursor-pointer"
+                >
+                  <Play className="w-4 h-4 text-white" />
+                  <span>بدء البث الآن</span>
+                </Link>
+              </div>
+            </div>
+
             {/* 4 Stat Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {/* Stat 1: Students */}
@@ -765,8 +821,21 @@ export default function InstructorClient({
               </div>
             </div>
 
-            {/* Fast Action Shortcuts */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            {/* Fast Action Shortcuts (6 Cards) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3">
+              {/* Shortcut 1: Live Studio */}
+              <Link
+                href="/live/instant-room"
+                className="p-4 rounded-2xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-right transition-all flex items-center justify-between group cursor-pointer"
+              >
+                <div className="space-y-0.5">
+                  <span className="text-xs font-black text-slate-900 dark:text-white block">غرفة البث المباشر</span>
+                  <span className="text-[11px] text-rose-600 dark:text-rose-400 font-bold block">مشاركة شاشة HD</span>
+                </div>
+                <Radio className="w-5 h-5 text-rose-500 group-hover:scale-110 transition-transform animate-pulse" />
+              </Link>
+
+              {/* Shortcut 2: Add Course */}
               <button
                 type="button"
                 onClick={() => {
@@ -780,47 +849,62 @@ export default function InstructorClient({
               >
                 <div className="space-y-0.5">
                   <span className="text-xs font-black text-slate-900 dark:text-white block">إضافة كورس جديد</span>
-                  <span className="text-[11px] text-slate-500 dark:text-zinc-400 block">رفع فيديوهات ومناهج تعليمية</span>
+                  <span className="text-[11px] text-slate-500 dark:text-zinc-400 block">رفع فيديوهات ومناهج</span>
                 </div>
                 <Plus className="w-5 h-5 text-amber-500 group-hover:scale-110 transition-transform" />
               </button>
 
+              {/* Shortcut 3: Publish Book */}
+              <Link
+                href="/instructor/books/new"
+                className="p-4 rounded-2xl bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 text-right transition-all flex items-center justify-between group cursor-pointer"
+              >
+                <div className="space-y-0.5">
+                  <span className="text-xs font-black text-slate-900 dark:text-white block">نشر مذكرة / كتاب</span>
+                  <span className="text-[11px] text-slate-500 dark:text-zinc-400 block">تشفير DRM كامل</span>
+                </div>
+                <BookOpen className="w-5 h-5 text-purple-500 group-hover:scale-110 transition-transform" />
+              </Link>
+
+              {/* Shortcut 4: Orders */}
               <button
                 type="button"
                 onClick={() => setActiveTab('orders')}
-                className="p-4 rounded-2xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-right transition-all flex items-center justify-between group cursor-pointer"
+                className="p-4 rounded-2xl bg-slate-100 dark:bg-zinc-800/80 hover:bg-slate-200 dark:hover:bg-zinc-700 border border-slate-200 dark:border-zinc-700 text-right transition-all flex items-center justify-between group cursor-pointer"
               >
                 <div className="space-y-0.5">
                   <span className="text-xs font-black text-slate-900 dark:text-white block">
-                    طلبات الطلاب {pendingPaymentsCount > 0 && `(${pendingPaymentsCount} معلق)`}
+                    طلبات الطلاب {pendingPaymentsCount > 0 && `(${pendingPaymentsCount})`}
                   </span>
-                  <span className="text-[11px] text-slate-500 dark:text-zinc-400 block">مراجعة وتأكيد الإيصالات</span>
+                  <span className="text-[11px] text-slate-500 dark:text-zinc-400 block">مراجعة الإيصالات</span>
                 </div>
-                <Receipt className="w-5 h-5 text-rose-500 group-hover:scale-110 transition-transform" />
+                <Receipt className="w-5 h-5 text-slate-600 dark:text-zinc-400 group-hover:scale-110 transition-transform" />
               </button>
 
+              {/* Shortcut 5: Payouts */}
               <button
                 type="button"
                 onClick={() => setActiveTab('payments')}
                 className="p-4 rounded-2xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-right transition-all flex items-center justify-between group cursor-pointer"
               >
                 <div className="space-y-0.5">
-                  <span className="text-xs font-black text-slate-900 dark:text-white block">بيانات استلام أرباحي</span>
-                  <span className="text-[11px] text-slate-500 dark:text-zinc-400 block">InstaPay وفودافون كاش</span>
+                  <span className="text-xs font-black text-slate-900 dark:text-white block">استلام الأرباح</span>
+                  <span className="text-[11px] text-slate-500 dark:text-zinc-400 block">InstaPay وفودافون</span>
                 </div>
                 <CreditCard className="w-5 h-5 text-emerald-500 group-hover:scale-110 transition-transform" />
               </button>
 
+              {/* Shortcut 6: Coupons */}
               <button
                 type="button"
                 onClick={() => setActiveTab('coupons')}
-                className="p-4 rounded-2xl bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 text-right transition-all flex items-center justify-between group cursor-pointer"
+                className="p-4 rounded-2xl bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 text-right transition-all flex items-center justify-between group cursor-pointer"
               >
                 <div className="space-y-0.5">
-                  <span className="text-xs font-black text-slate-900 dark:text-white block">كوبونات وأكواد الخصم</span>
+                  <span className="text-xs font-black text-slate-900 dark:text-white block">كوبونات الخصم</span>
                   <span className="text-[11px] text-slate-500 dark:text-zinc-400 block">{coupons.length} كوبون نشط</span>
                 </div>
-                <Tag className="w-5 h-5 text-purple-500 group-hover:scale-110 transition-transform" />
+                <Tag className="w-5 h-5 text-blue-500 group-hover:scale-110 transition-transform" />
               </button>
             </div>
 
