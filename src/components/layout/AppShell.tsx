@@ -24,8 +24,8 @@ export default function AppShell({
 }: AppShellProps) {
   const pathname = usePathname();
 
-  // Focused learning classroom & Live Studio: NO marketing header, NO footer, full screen
-  const isFocusedRoom = pathname.startsWith('/learn') || pathname.startsWith('/live');
+  // Focused learning classroom & Live Room Studio: NO marketing header, NO footer, full screen
+  const isFocusedRoom = pathname.startsWith('/learn') || (pathname.startsWith('/live/') && pathname !== '/live');
 
   if (isFocusedRoom) {
     return (

@@ -27,6 +27,7 @@ import {
   ArrowLeft,
   Flame,
   FileText,
+  Radio,
 } from 'lucide-react';
 import { useTheme } from '@/components/ThemeProvider';
 
@@ -164,7 +165,7 @@ export default function Header({
   };
 
   const navLinks = [
-    { name: 'الرئيسية', href: '/', icon: Home },
+    { name: 'البثوث المباشرة الآن', href: '/live', icon: Radio, isLive: true },
     { name: 'جميع الكورسات', href: '/courses', icon: BookOpen, isCenterpiece: true },
     { name: 'المكتبة والمذكرات', href: '/books', icon: FileText },
     { name: 'الدبلومات الشاملة', href: '/diplomas', icon: Award },
@@ -203,18 +204,22 @@ export default function Header({
            ========================================================================= */}
         <div className="hidden lg:flex items-center gap-2 xl:gap-2.5 bg-slate-100/90 dark:bg-black/60 p-1.5 xl:p-2 rounded-full border border-slate-200/90 dark:border-white/10 shadow-inner shrink-0 mx-auto">
           
-          {/* Link: الرئيسية */}
+          {/* Link: البثوث المباشرة الآن (Live) */}
           <Link
-            href="/"
+            href="/live"
             prefetch={true}
             className={`px-4 xl:px-4.5 py-2 text-xs sm:text-[13px] font-bold rounded-full transition-all inline-flex items-center gap-2 shrink-0 ${
-              pathname === '/'
-                ? 'bg-white dark:bg-zinc-800 text-blue-700 dark:text-white border border-slate-200 dark:border-zinc-700 shadow-xs font-black'
-                : 'text-slate-600 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-white hover:bg-white/70 dark:hover:bg-zinc-800/60'
+              pathname.startsWith('/live')
+                ? 'bg-gradient-to-r from-rose-600 to-red-600 text-white shadow-md shadow-rose-600/30 font-black scale-105'
+                : 'text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-500/15 font-black hover:scale-105'
             }`}
           >
-            <Home className="w-3.5 h-3.5" />
-            <span>الرئيسية</span>
+            <span className="flex h-2.5 w-2.5 relative shrink-0">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-rose-500"></span>
+            </span>
+            <Radio className="w-3.5 h-3.5 text-rose-500 shrink-0" />
+            <span className="whitespace-nowrap">البثوث المباشرة الآن</span>
           </Link>
 
           {/* THE FEATURED PROMINENT CENTERPIECE: جميع الكورسات مع خط مميز وتدرج ذهبي فخم */}
