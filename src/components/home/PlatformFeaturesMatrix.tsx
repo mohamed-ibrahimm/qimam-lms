@@ -293,7 +293,7 @@ export default function PlatformFeaturesMatrix({
         </div>
 
         {/* =====================================================================
-            4. CREATOR & PUBLISHER COMPARISON TABLE (جدول المقارنة الحصري)
+            4. CREATOR & PUBLISHER COMPARISON MATRIX (جدول وبطاقات المقارنة)
            ===================================================================== */}
         <div className="space-y-6 pt-6">
           
@@ -309,11 +309,66 @@ export default function PlatformFeaturesMatrix({
             </p>
           </div>
 
-          <div className="rounded-3xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-950/80 backdrop-blur-2xl shadow-2xl overflow-hidden">
-            
+          {/* =================================================================
+              A. MOBILE VIEW: STACKED COMPARISON CARDS (فائقة الوضوح على الموبايل)
+             ================================================================= */}
+          <div className="md:hidden space-y-4">
+            {comparisonRows.map((row, idx) => (
+              <div 
+                key={idx} 
+                className="p-5 rounded-3xl bg-white dark:bg-[#120e24]/90 border border-slate-200/90 dark:border-purple-900/40 shadow-lg space-y-3.5"
+              >
+                {/* Feature Header */}
+                <div className="border-b border-slate-100 dark:border-zinc-800/80 pb-3">
+                  <div className="flex items-center gap-2">
+                    <span className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-500 flex items-center justify-center text-xs font-black">
+                      {idx + 1}
+                    </span>
+                    <h4 className="font-black text-sm text-slate-950 dark:text-zinc-100">
+                      {row.feature}
+                    </h4>
+                  </div>
+                  <p className="text-[11.5px] text-slate-600 dark:text-zinc-400 mt-1 font-semibold pr-7">
+                    {row.description}
+                  </p>
+                </div>
+
+                {/* Our Platform Highlighted Card */}
+                <div className="p-3.5 rounded-2xl bg-amber-500/10 dark:bg-amber-500/[0.08] border border-amber-300 dark:border-amber-500/30 space-y-1">
+                  <div className="flex items-center gap-1.5 text-[11px] font-black text-amber-800 dark:text-amber-400">
+                    <Crown className="w-3.5 h-3.5 fill-amber-400 text-amber-500" />
+                    <span>{platformName} (الخيار الأفضل)</span>
+                  </div>
+                  <div className="flex items-start gap-2 pt-0.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5 fill-emerald-500/20" />
+                    <span className="text-xs font-black text-slate-950 dark:text-amber-200 leading-snug">
+                      {row.us}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Other Platforms Muted Card */}
+                <div className="p-3 rounded-2xl bg-slate-50 dark:bg-zinc-950/60 border border-slate-200 dark:border-zinc-800/50 space-y-1">
+                  <div className="text-[10.5px] font-bold text-slate-500 dark:text-zinc-400">
+                    السناتر والمنصات الأخرى:
+                  </div>
+                  <div className="flex items-start gap-2 pt-0.5">
+                    <XCircle className="w-3.5 h-3.5 text-rose-500 dark:text-rose-400 shrink-0 mt-0.5" />
+                    <span className="text-xs text-slate-600 dark:text-zinc-400 font-semibold leading-snug">
+                      {row.others}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* =================================================================
+              B. DESKTOP VIEW: LUXURY TABLE (للشاشات الكبيرة والكمبيوتر)
+             ================================================================= */}
+          <div className="hidden md:block rounded-3xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-950/80 backdrop-blur-2xl shadow-2xl overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-right border-collapse">
-                
                 <thead>
                   <tr className="border-b border-slate-200 dark:border-zinc-800 bg-slate-100/90 dark:bg-zinc-900/80">
                     <th className="py-5 px-6 text-sm font-black text-slate-950 dark:text-zinc-200 w-2/5">
@@ -368,10 +423,8 @@ export default function PlatformFeaturesMatrix({
                     </tr>
                   ))}
                 </tbody>
-
               </table>
             </div>
-
           </div>
 
         </div>
