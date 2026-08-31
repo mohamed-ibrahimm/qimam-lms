@@ -4,7 +4,6 @@ import { prisma } from '@/lib/prisma';
 import { formatPrice, formatDuration } from '@/lib/utils';
 import DesktopHero from '@/components/home/DesktopHero';
 import MobileHero from '@/components/home/MobileHero';
-import FeelItMotionHero from '@/components/home/FeelItMotionHero';
 import HomeCoursesSection from '@/components/home/HomeCoursesSection';
 import PlatformFeaturesMatrix from '@/components/home/PlatformFeaturesMatrix';
 
@@ -190,9 +189,6 @@ export default async function HomePage() {
           linkedinUrl={linkedinUrl}
           hasAnySocial={hasAnySocial}
         />
-
-        {/* 3. Interactive Chromatic RGB Motion Art Suite (Feel It All Around) */}
-        <FeelItMotionHero />
 
         <section className="px-4 sm:px-6 py-20 bg-slate-100/50 dark:bg-zinc-900/20 border-y border-slate-200/80 dark:border-zinc-800/40 relative">
           <div className="max-w-5xl mx-auto">
