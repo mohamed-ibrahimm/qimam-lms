@@ -47,6 +47,19 @@ export default function PlatformFeaturesMatrix({
   // Value Proposition Pillars tailored for Instructors & Authors
   const coreFeatures = [
     {
+      id: 'live-streaming-studio',
+      category: 'INSTRUCTORS',
+      title: 'أستوديو البث المباشر التفاعلي ومشاركة الشاشة (Live Studio Pro)',
+      description: 'اشرح مباشرة لطلابك مثل Google Meet و Zoom؛ مشاركة شاشة فائقة الدقة 1080p، كاميرا ومايك، إطلاق كويزات ومسابقات حية أثناء البث، وتسجيل سحابي تلقائي.',
+      icon: Video,
+      accentColor: 'from-amber-400 via-rose-500 to-purple-600',
+      badge: 'أستوديو البث المباشر VIP',
+      badgeClass: 'bg-rose-100 text-rose-950 border-rose-300 dark:bg-rose-500/15 dark:text-rose-300 dark:border-rose-500/40',
+      bgGlow: 'hover:shadow-rose-500/25',
+      borderGlow: 'hover:border-rose-500/60',
+      tag: 'مشاركة شاشة وكويزات حية',
+    },
+    {
       id: 'zero-commission',
       category: 'INSTRUCTORS',
       title: '0% عمولة وأعلى عائد مالي يصل إلى 90%',
@@ -128,6 +141,12 @@ export default function PlatformFeaturesMatrix({
 
   // Creator & Publisher Focused Comparison Table
   const comparisonRows = [
+    {
+      feature: 'البث المباشر ومشاركة الشاشة والكويزات الحية',
+      description: 'هل يمكنك الشرح المباشر ومشاركة الشاشة وإجراء مسابقات لحظية؟',
+      us: 'أستوديو بث كامل مدمج (Screen Share + مسابقات Kahoot + تسجيل سحابي)',
+      others: 'غير متوفر؛ الاعتماد على روابط خارجية غير محمية وسهلة التسريب',
+    },
     {
       feature: 'نسبة العمولة والأرباح الصافية',
       description: 'كم يتبقى للمحاضر والمؤلف من سعر الكورس أو المذكرة؟',
