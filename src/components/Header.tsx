@@ -518,7 +518,7 @@ export default function Header({
               {/* Join: انضم كـ محاضر */}
               <Link
                 href="/instructors/join?track=expert"
-                className="px-2.5 py-1 rounded-full text-[11px] font-black bg-purple-100/90 hover:bg-purple-200/90 dark:bg-purple-500/10 dark:hover:bg-purple-500/20 border border-purple-300 dark:border-purple-500/30 text-purple-950 dark:text-purple-300 hover:border-purple-400 transition-all flex items-center gap-1 shrink-0 shadow-xs"
+                className="px-2.5 py-1 rounded-full text-[11px] font-black bg-purple-100 hover:bg-purple-200 dark:bg-purple-950/60 dark:hover:bg-purple-900/80 border border-purple-300 dark:border-purple-500/50 text-purple-950 dark:text-purple-200 transition-all flex items-center gap-1 shrink-0 shadow-xs"
                 title="سجل كمدرس أو دكتور جامعي (0% عمولة - 14 يوماً مجاناً)"
               >
                 <Video className="w-3 h-3 text-purple-700 dark:text-purple-400" />
@@ -528,17 +528,17 @@ export default function Header({
               {/* Join: انضم كـ محاضر طالب (Visible on XL screens) */}
               <Link
                 href="/instructors/join?track=student"
-                className="hidden xl:flex px-2.5 py-1 rounded-full text-[11px] font-black bg-amber-100/90 hover:bg-amber-200/90 dark:bg-gradient-to-r dark:from-amber-500/15 dark:via-yellow-500/20 dark:to-amber-500/15 border border-amber-300 dark:border-amber-500/40 hover:border-amber-400 text-amber-950 dark:text-amber-300 transition-all items-center gap-1 shrink-0 shadow-sm shadow-amber-500/10"
+                className="hidden xl:flex px-2.5 py-1 rounded-full text-[11px] font-black bg-amber-100 hover:bg-amber-200 dark:bg-amber-950/60 dark:hover:bg-amber-900/80 border border-amber-300 dark:border-amber-500/50 text-amber-950 dark:text-amber-200 transition-all items-center gap-1 shrink-0 shadow-sm"
                 title="منحة المحاضر الطالب لطلبة الجامعات والمدارس (شهر كامل مجاناً)"
               >
-                <GraduationCap className="w-3 h-3 text-amber-600 dark:text-amber-500" />
+                <GraduationCap className="w-3 h-3 text-amber-700 dark:text-amber-400" />
                 <span>{navStudentBtnText}</span>
               </Link>
 
               {/* Login Button */}
               <Link
                 href="/login"
-                className="px-2.5 py-1 rounded-full text-[11px] font-black text-slate-900 hover:text-black bg-slate-200/90 hover:bg-slate-300 border border-slate-300 dark:border-transparent dark:text-zinc-200 dark:hover:text-white dark:bg-zinc-800/80 dark:hover:bg-zinc-700 transition-all shadow-xs flex items-center gap-1 shrink-0"
+                className="px-2.5 py-1 rounded-full text-[11px] font-black text-slate-900 hover:text-black bg-slate-200/90 hover:bg-slate-300 border border-slate-300 dark:border-zinc-700 dark:text-zinc-100 dark:hover:text-white dark:bg-zinc-800 dark:hover:bg-zinc-700 transition-all shadow-xs flex items-center gap-1 shrink-0"
               >
                 <LogIn className="w-3 h-3 text-slate-800 dark:text-amber-400" />
                 <span>دخول</span>
@@ -547,7 +547,7 @@ export default function Header({
               {/* Register CTA Button */}
               <Link
                 href="/register"
-                className="px-3 py-1 rounded-full text-[11px] font-black bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white transition-all shadow-md shadow-blue-600/25 hover:shadow-lg hover:shadow-blue-600/35 whitespace-nowrap flex items-center gap-1 shrink-0 hover:scale-105"
+                className="px-3.5 py-1 rounded-full text-[11px] font-black bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white transition-all shadow-md shadow-blue-600/25 hover:shadow-lg hover:shadow-blue-600/35 whitespace-nowrap flex items-center gap-1 shrink-0 hover:scale-105"
               >
                 <UserPlus className="w-3 h-3 text-white" />
                 <span>انضمام</span>

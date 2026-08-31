@@ -14,18 +14,23 @@ import {
   Zap,
   TrendingUp,
   MessageCircle,
-  HelpCircle,
   CheckCircle2,
   XCircle,
   ArrowLeft,
   Flame,
   Star,
   GraduationCap,
-  Layers,
   FileText,
   BadgePercent,
-  Compass,
+  Lock,
+  Wallet,
+  DollarSign,
   Crown,
+  Eye,
+  BarChart3,
+  Send,
+  Video,
+  ShieldAlert,
 } from 'lucide-react';
 
 interface PlatformFeaturesMatrixProps {
@@ -37,180 +42,189 @@ export default function PlatformFeaturesMatrix({
   platformName = 'أكاديمية م / محمد إبراهيم',
   whatsappUrl,
 }: PlatformFeaturesMatrixProps) {
-  const [activeTab, setActiveTab] = useState<'ALL' | 'STUDY' | 'RESOURCES' | 'CAREER' | 'INSTRUCTORS'>('ALL');
+  const [activeTab, setActiveTab] = useState<'ALL' | 'INSTRUCTORS' | 'AUTHORS' | 'STUDENT_INSTRUCTORS'>('ALL');
 
-  // Key highlight feature cards
+  // Value Proposition Pillars tailored for Instructors & Authors
   const coreFeatures = [
     {
-      id: 'ai-tutor',
-      category: 'STUDY',
-      title: 'مساعد ذكي فوري AI Tutor 24/7',
-      description: 'مساعد ذكاء اصطناعي مدمج داخل كل مشغل فيديو، يشرح الأكواد المعقدة، ويصحح الأخطاء البرمجية لحظياً دون انتظار.',
-      icon: Bot,
-      accentColor: 'from-amber-500 to-yellow-400',
-      badge: 'حصري وجديد',
-      badgeColor: 'bg-amber-100 text-amber-950 border-amber-300 dark:bg-amber-500/15 dark:text-amber-300 dark:border-amber-500/30',
-      bgGlow: 'hover:shadow-amber-500/20',
-      borderGlow: 'hover:border-amber-500/50',
-    },
-    {
-      id: 'real-projects',
-      category: 'STUDY',
-      title: 'مشاريع إنتاج برمجية لسوق العمل',
-      description: 'لا نكتفي بالنظري؛ ستقوم ببناء أنظمة وتطبيقات ويب وسحابية كاملة من الصفر ورفعها على بيئة الإنتاج السحابية لتعزيز ملف أعمالك.',
-      icon: Laptop,
-      accentColor: 'from-blue-500 to-indigo-500',
-      badge: 'تأهيل عملي',
-      badgeColor: 'bg-blue-100 text-blue-950 border-blue-300 dark:bg-blue-500/15 dark:text-blue-300 dark:border-blue-500/30',
-      bgGlow: 'hover:shadow-blue-500/20',
-      borderGlow: 'hover:border-blue-500/50',
-    },
-    {
-      id: 'notes-marketplace',
-      category: 'RESOURCES',
-      title: 'سوق المذكرات وبنوك الأسئلة الرقمية',
-      description: 'مكتبة هندسية متكاملة تحتوي على ملخصات جامعية، كتب إلكترونية، ونماذج امتحانات محلولة مع ميزة المعاينة المجانية قبل الشراء.',
-      icon: BookOpen,
-      accentColor: 'from-emerald-500 to-teal-400',
-      badge: 'معاينة مجانية',
-      badgeColor: 'bg-emerald-100 text-emerald-950 border-emerald-300 dark:bg-emerald-500/15 dark:text-emerald-300 dark:border-emerald-500/30',
-      bgGlow: 'hover:shadow-emerald-500/20',
-      borderGlow: 'hover:border-emerald-500/50',
-    },
-    {
-      id: 'verified-certificates',
-      category: 'CAREER',
-      title: 'شهادات تخرج معتمدة برمز QR رقمي',
-      description: 'شهادات إتمام مهنية رسمية مشفرة برمز QR للتحقق اللحظي عبر الإنترنت لتقديمها للشركات العالمية وإضافتها على LinkedIn.',
-      icon: Award,
-      accentColor: 'from-purple-500 to-pink-500',
-      badge: 'تحقق فوري',
-      badgeColor: 'bg-purple-100 text-purple-950 border-purple-300 dark:bg-purple-500/15 dark:text-purple-300 dark:border-purple-500/30',
-      bgGlow: 'hover:shadow-purple-500/20',
-      borderGlow: 'hover:border-purple-500/50',
-    },
-    {
-      id: 'smart-video-player',
-      category: 'STUDY',
-      title: 'مشغل فيديو تفاعلي ذكي فائق السرعة',
-      description: 'سيرفرات فيديو فائقة السرعة تدعم جودات متعددة، التحكم في سرعة العرض، تسجيل الملاحظات الزمنية، وبطاقات التلخيص السريع.',
-      icon: PlaySquare,
-      accentColor: 'from-sky-500 to-cyan-400',
-      badge: 'أداء فائق',
-      badgeColor: 'bg-sky-100 text-sky-950 border-sky-300 dark:bg-sky-500/15 dark:text-sky-300 dark:border-sky-500/30',
-      bgGlow: 'hover:shadow-sky-500/20',
-      borderGlow: 'hover:border-sky-500/50',
-    },
-    {
-      id: 'instructor-empowerment',
+      id: 'zero-commission',
       category: 'INSTRUCTORS',
-      title: 'منظومة دعم المحاضرين والطلاب المتميزين',
-      description: 'فرصة للمحاضرين والطلاب المتميزين لنشر دوراتهم ومذكراتهم وتحقيق دخل حقيقي مع منحة 14 يوماً مجاناً و 0% عمولة في البداية.',
-      icon: Users,
-      accentColor: 'from-rose-500 to-orange-400',
-      badge: '0% عمولة',
-      badgeColor: 'bg-rose-100 text-rose-950 border-rose-300 dark:bg-rose-500/15 dark:text-rose-300 dark:border-rose-500/30',
-      bgGlow: 'hover:shadow-rose-500/20',
-      borderGlow: 'hover:border-rose-500/50',
+      title: '0% عمولة وأعلى عائد مالي يصل إلى 90%',
+      description: 'ابدأ مجاناً لمدة 14 يوماً بدون أي عمولة مقتطعة! احتفظ بكامل أرباح مبيعات كورساتك ومذكراتك دون أي رسوم خفية أو تكاليف استضافة.',
+      icon: BadgePercent,
+      accentColor: 'from-amber-400 via-yellow-400 to-amber-500',
+      badge: '0% عمولة - 14 يوماً مجاناً',
+      badgeDark: 'bg-amber-500/20 text-amber-300 border-amber-500/40',
+      badgeLight: 'bg-amber-100 text-amber-950 border-amber-300',
+      bgGlow: 'hover:shadow-amber-500/25',
+      borderGlow: 'hover:border-amber-500/60',
+      tag: 'عائد ربحي استثنائي',
+    },
+    {
+      id: 'drm-protection',
+      category: 'AUTHORS',
+      title: 'حماية المذكرات والفيديوهات ضد التسريب والسرقة',
+      description: 'نظام تشفير رقمي متقدم (DRM) وعلامة مائية ذكية تطبع اسم ورقم هاتف الطالب المتحرك على الشاشة لمنع تصوير الشاشة أو سرقة ملفات الـ PDF.',
+      icon: ShieldCheck,
+      accentColor: 'from-emerald-400 via-teal-400 to-cyan-500',
+      badge: 'تشفير وحماية DRM كاملة',
+      badgeDark: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40',
+      badgeLight: 'bg-emerald-100 text-emerald-950 border-emerald-300',
+      bgGlow: 'hover:shadow-emerald-500/25',
+      borderGlow: 'hover:border-emerald-500/60',
+      tag: 'أمان رقمي 100%',
+    },
+    {
+      id: 'instant-payouts',
+      category: 'INSTRUCTORS',
+      title: 'سحب أرباح فوري عبر إنستاباي وفودافون كاش',
+      description: 'لا مزيد من الانتظار لشهور أو التعقيدات البنكية الدولية؛ ارباحك تطلب سحبها في أي وقت وتصلك فوراً عبر InstaPay أو المحافظ الإلكترونية.',
+      icon: Wallet,
+      accentColor: 'from-blue-400 via-indigo-400 to-cyan-400',
+      badge: 'تحويل فوري ولحظي',
+      badgeDark: 'bg-blue-500/20 text-blue-300 border-blue-500/40',
+      badgeLight: 'bg-blue-100 text-blue-950 border-blue-300',
+      bgGlow: 'hover:shadow-blue-500/25',
+      borderGlow: 'hover:border-blue-500/60',
+      tag: 'سيولة نقدية مباشرة',
+    },
+    {
+      id: 'ai-assistant-support',
+      category: 'INSTRUCTORS',
+      title: 'مساعد ذكي AI يصحح ويجيب عن استفسارات الطلاب',
+      description: 'تخلص من إرهاق الرد على مئات الأسئلة المتكررة يومياً؛ مساعد الذكاء الاصطناعي مدمج داخل كورسك ليشرح الأكواد ويحل مشاكل الطلاب 24/7.',
+      icon: Bot,
+      accentColor: 'from-purple-400 via-fuchsia-400 to-violet-500',
+      badge: 'مساعد ذكي للمحاضر',
+      badgeDark: 'bg-purple-500/20 text-purple-300 border-purple-500/40',
+      badgeLight: 'bg-purple-100 text-purple-950 border-purple-300',
+      bgGlow: 'hover:shadow-purple-500/25',
+      borderGlow: 'hover:border-purple-500/60',
+      tag: 'توفير وقت المحاضر',
+    },
+    {
+      id: 'notes-marketplace-sales',
+      category: 'AUTHORS',
+      title: 'سوق مذكرات رقمي مع ميزة المعاينة المجانية',
+      description: 'ارفع ملخصاتك، كتبك، وبنوك الأسئلة؛ يتيح النظام للطلاب قراءة أول صفحات مجاناً لتشجيعهم على الشراء الفوري وتحقيق دخل سلبي مستمر.',
+      icon: BookOpen,
+      accentColor: 'from-rose-400 via-orange-400 to-amber-400',
+      badge: 'دخل سلبي (Passive Income)',
+      badgeDark: 'bg-rose-500/20 text-rose-300 border-rose-500/40',
+      badgeLight: 'bg-rose-100 text-rose-950 border-rose-300',
+      bgGlow: 'hover:shadow-rose-500/25',
+      borderGlow: 'hover:border-rose-500/60',
+      tag: 'مبيعات تلقائية مستمرة',
+    },
+    {
+      id: 'student-instructor-grant',
+      category: 'STUDENT_INSTRUCTORS',
+      title: 'منحة المحاضر الطالب لدعم المتفوقين في الجامعات',
+      description: 'هل أنت طالب متفوق أو معيد شاب؟ نوفر لك منصة متكاملة لنشر شروحاتك ومذكراتك لزملائك مع دعم تقني واستضافة مجانية لبناء اسمك المهني.',
+      icon: GraduationCap,
+      accentColor: 'from-amber-400 via-orange-400 to-yellow-500',
+      badge: 'منحة مجانية للطلاب',
+      badgeDark: 'bg-amber-500/20 text-amber-300 border-amber-500/40',
+      badgeLight: 'bg-amber-100 text-amber-950 border-amber-300',
+      bgGlow: 'hover:shadow-amber-500/25',
+      borderGlow: 'hover:border-amber-500/60',
+      tag: 'فرصة للمتفوقين',
     },
   ];
 
-  // Comprehensive Comparison Table Data
+  // Creator & Publisher Focused Comparison Table
   const comparisonRows = [
     {
-      feature: 'تطبيق عملي ومشاريع برمجية واقعية',
-      description: 'بناء مشاريع إنتاج كاملة ترفع على السحابة (GitHub & Cloud Hosting)',
-      us: '100% مشاريع واقعية جاهزة لسوق العمل',
-      others: 'شروحات نظرية وتمارين بسيطة فقط',
-      usHighlight: true,
+      feature: 'نسبة العمولة والأرباح الصافية',
+      description: 'كم يتبقى للمحاضر والمؤلف من سعر الكورس أو المذكرة؟',
+      us: '0% عمولة أول 14 يوم + أرباح تصل إلى 85% - 90%',
+      others: 'اقتطاع ضخم 50% إلى 70% من أرباحك + رسوم سناتر',
     },
     {
-      feature: 'مساعد ذكي فوري AI Assistant داخل المشغل',
-      description: 'مساعد ذكاء اصطناعي تفاعلي يشرح ويفحص الأكواد 24 ساعة يومياً',
-      us: 'متاح فوري ومجاني داخل كل درس',
-      others: 'غير متوفر أو انتظار أيام للرد',
-      usHighlight: true,
+      feature: 'حماية المذكرات والكتب الرقمية من السرقة',
+      description: 'حماية ملفات الـ PDF والملخصات من المشاركة والتحميل المجاني',
+      us: 'تشفير DRM كامل + معاينة ذكية بدون إمكانية سرقة الملف',
+      others: 'ملفات PDF عادية تُسرب في مجموعات التيليجرام فوراً',
     },
     {
-      feature: 'شهادات معتمدة مع رابط ورمز QR للتحقق الدولي',
-      description: 'شهادات إتمام مهنية يمكن لأي شركة في العالم فحص صحتها بضغطة زر',
-      us: 'نظام توثيق رقمي فوري QR Verification',
-      others: 'ملفات PDF تقليدية سهلة التزييف',
-      usHighlight: true,
+      feature: 'حماية الفيديوهات من تصوير الشاشة والتسريب',
+      description: 'منع سرقة المحتوى التدريبي وإعادة بيعه',
+      us: 'علامة مائية ديناميكية برقم هاتف واسم الطالب المتحرك',
+      others: 'فيديوهات سهلة التسجيل والتحميل ببرامج التنزيل',
     },
     {
-      feature: 'سوق متكامل للمذكرات وبنوك الأسئلة المحلولة',
-      description: 'ملخصات هندسية مركزة للمراجعة السريعة وحلول امتحانات سابقة',
-      us: 'متاح مع ميزة المعاينة المجانية',
-      others: 'محتوى فيديو فقط دون مذكرات منظمة',
-      usHighlight: true,
+      feature: 'سرعة وطرق سحب واستلام الأرباح',
+      description: 'كيف ومتى تستلم أموال مبيعاتك؟',
+      us: 'سحب فوري عند الطلب عبر InstaPay وفودافون كاش والمحافظ',
+      others: 'شروط تعجيزية وتأخير 30-60 يوماً وحسابات بنكية دولية',
     },
     {
-      feature: 'تحديثات مستمرة لأحدث تقنيات 2026',
-      description: 'تحديث المناهج البرمجية ومواكبة Next.js, AI, Python, TypeScript',
-      us: 'محدثة باستمرار دون أي رسوم إضافية',
-      others: 'دورات قديمة مسجلة منذ سنوات',
-      usHighlight: true,
+      feature: 'المساعد الذكي للرد على أسئلة الطلاب (AI Tutor)',
+      description: 'تخفيف عبء المتابعة وتصحيح أكواد واستفسارات الطلاب',
+      us: 'مساعد ذكاء اصطناعي مدمج يعمل 24/7 داخل كل درس',
+      others: 'غير متوفر نهائياً؛ إرهاق المحاضر بالرد اليدوي على آلاف الرسائل',
     },
     {
-      feature: 'دعم فني مباشر وتواصل هندسي مع المحاضر',
-      description: 'تواصل سريع عبر الواتساب والمجتمعات الهندسية المغلقة للمساعدة في أي عائق',
-      us: 'دعم سريع ومباشر على مدار الساعة',
-      others: 'تواصل بطيء عبر البريد فقط',
-      usHighlight: true,
+      feature: 'لوحة تحكم تفصيلية وإحصائيات المبيعات',
+      description: 'متابعة لحظية لأعداد المشتركين ونسب الإكمال والمبيعات',
+      us: 'لوحة تحكم متطورة تشمل تقارير مالية وتنبيهات مبيعات فورية',
+      others: 'تقارير بدائية وغامضة دون تفاصيل المشتركين الحقيقية',
     },
     {
-      feature: 'تسجيل الملاحظات وبطاقات الاستذكار السريع (Flashcards)',
-      description: 'أدوات ذكية داخل كل درس لترسيخ المعلومات والمراجعة قبل المقابلات',
-      us: 'مدمجة تلقائياً مع ملخص كل درس',
-      others: 'غير متوفرة',
-      usHighlight: true,
+      feature: 'إصدار شهادات التخرج المعتمدة برمز QR دولي',
+      description: 'توثيق رسمي يرفع من مصداقية كورساتك ويجذب الطلاب',
+      us: 'إصدار تلقائي للشهادات المشفرة برمز QR باسم المحاضر',
+      others: 'شهادات يدوية أو غير قابلة للتحقق الرقمي',
     },
   ];
 
-  const filteredFeatures = activeTab === 'ALL' 
-    ? coreFeatures 
-    : coreFeatures.filter(f => f.category === activeTab);
+  const filteredFeatures = activeTab === 'ALL'
+    ? coreFeatures
+    : coreFeatures.filter((f) => f.category === activeTab);
 
   return (
     <section id="features-matrix" className="px-4 sm:px-6 lg:px-8 py-20 lg:py-28 relative overflow-hidden">
       
-      {/* Background Radiant Glow Accents */}
+      {/* Dynamic Ambient Radiant Flares */}
       <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-[radial-gradient(ellipse,_rgba(245,158,11,0.12),_rgba(124,58,237,0.08)_50%,_transparent_75%)] dark:bg-[radial-gradient(ellipse,_rgba(245,158,11,0.08),_rgba(124,58,237,0.05)_50%,_transparent_75%)] blur-[120px]" />
-        <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-[radial-gradient(circle,_rgba(20,184,166,0.1),_transparent_70%)] blur-[100px]" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[1000px] h-[550px] bg-[radial-gradient(ellipse,_rgba(245,158,11,0.15),_rgba(124,58,237,0.1)_50%,_transparent_75%)] dark:bg-[radial-gradient(ellipse,_rgba(245,158,11,0.12),_rgba(124,58,237,0.08)_50%,_transparent_75%)] blur-[140px]" />
+        <div className="absolute bottom-10 right-10 w-[600px] h-[600px] bg-[radial-gradient(circle,_rgba(16,185,129,0.12),_transparent_70%)] blur-[120px]" />
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10 space-y-16">
         
         {/* =====================================================================
-            1. SECTION HEADER
+            1. SECTION HEADER (High Impact Creator Proposition)
            ===================================================================== */}
         <div className="text-center space-y-4 max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-indigo-50 dark:bg-amber-500/15 border border-indigo-200/90 dark:border-amber-500/30 text-indigo-900 dark:text-amber-300 text-xs sm:text-sm font-black shadow-sm backdrop-blur-md">
-            <Sparkles className="w-4 h-4 text-indigo-600 dark:text-amber-400 animate-pulse" />
-            <span>المنظومة التعليمية الهندسية الأكثر تكاملاً 2026</span>
+          
+          <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-gradient-to-r from-amber-500/20 via-purple-500/20 to-emerald-500/20 border border-amber-500/40 text-amber-800 dark:text-amber-300 text-xs sm:text-sm font-black shadow-lg shadow-amber-500/10 backdrop-blur-md">
+            <Sparkles className="w-4 h-4 text-amber-500 dark:text-amber-400 animate-pulse" />
+            <span>منظومة تمكين المحاضرين وصناع المحتوى ومؤلفي المذكرات 2026</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 dark:text-white tracking-tight leading-tight">
-            لماذا تختار <span className="bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-700 dark:from-amber-400 dark:via-yellow-300 dark:to-amber-500 bg-clip-text text-transparent">{platformName}</span>؟
+            لماذا تنشر دوراتك ومذكراتك عبر{' '}
+            <span className="bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-700 dark:from-amber-400 dark:via-yellow-300 dark:to-amber-500 bg-clip-text text-transparent">
+              {platformName}
+            </span>
+            ؟
           </h2>
 
-          <p className="text-sm sm:text-base lg:text-lg text-slate-700 dark:text-zinc-300 leading-relaxed max-w-2xl mx-auto font-semibold">
-            صممنا المنصة لتمنحك تجربة تعليمية فائقة تجمع بين التدريب العملي، الذكاء الاصطناعي، والمذكرات الاحترافية لنقلك من البداية حتى الاحتراف وسوق العمل.
+          <p className="text-sm sm:text-base lg:text-lg text-slate-700 dark:text-zinc-300 leading-relaxed max-w-3xl mx-auto font-bold">
+            صممنا المنصة لتمنح المدرسين والدكاترة والمؤلفين والطلاب المتفوقين بيئة احترافية تضمن أعلى عائد مالي، حماية رقمية مانعة للتسريب، وتحويلات مالية فورية عبر إنستاباي وفودافون كاش.
           </p>
         </div>
 
         {/* =====================================================================
-            2. INTERACTIVE CATEGORY TABS
+            2. INTERACTIVE TARGET TABS
            ===================================================================== */}
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+        <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3.5">
           {[
-            { id: 'ALL', label: 'كافة المميزات', icon: Sparkles },
-            { id: 'STUDY', label: 'التعلم والتطبيق العملي', icon: Laptop },
-            { id: 'RESOURCES', label: 'المذكرات والمكتبة الرقمية', icon: BookOpen },
-            { id: 'CAREER', label: 'الشهادات وسوق العمل', icon: Award },
-            { id: 'INSTRUCTORS', label: 'المحاضرون والناشرون', icon: Users },
+            { id: 'ALL', label: 'كافة مميزات المنظومة', icon: Sparkles },
+            { id: 'INSTRUCTORS', label: 'لمدرسي ودكاترة الكورسات', icon: Video },
+            { id: 'AUTHORS', label: 'لناشري المذكرات والكتب', icon: FileText },
+            { id: 'STUDENT_INSTRUCTORS', label: 'للطلاب المتفوقين (المحاضر الطالب)', icon: GraduationCap },
           ].map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -220,8 +234,8 @@ export default function PlatformFeaturesMatrix({
                 onClick={() => setActiveTab(tab.id as any)}
                 className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-black transition-all cursor-pointer ${
                   isActive
-                    ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-zinc-950 shadow-lg shadow-amber-500/25 scale-105 border border-amber-400'
-                    : 'bg-white dark:bg-zinc-900/60 text-slate-800 dark:text-zinc-300 hover:text-slate-950 dark:hover:text-white border border-slate-300 dark:border-zinc-800/80 hover:border-amber-500/60 shadow-sm'
+                    ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-zinc-950 shadow-xl shadow-amber-500/30 scale-105 border border-amber-400'
+                    : 'bg-white/90 dark:bg-zinc-900/80 text-slate-800 dark:text-zinc-300 hover:text-slate-950 dark:hover:text-white border border-slate-300 dark:border-zinc-800 hover:border-amber-500/60 shadow-sm'
                 }`}
               >
                 <Icon className={`w-4 h-4 ${isActive ? 'text-zinc-950' : 'text-amber-500 dark:text-amber-400'}`} />
@@ -232,51 +246,52 @@ export default function PlatformFeaturesMatrix({
         </div>
 
         {/* =====================================================================
-            3. LUXURY FEATURE CARDS GRID
+            3. LUXURY CREATOR FEATURE CARDS GRID
            ===================================================================== */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
           {filteredFeatures.map((feat) => {
             const Icon = feat.icon;
             return (
               <div
                 key={feat.id}
-                className={`group relative rounded-3xl p-7 bg-white dark:bg-zinc-900/40 border border-slate-200 dark:border-zinc-800/60 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-2xl ${feat.bgGlow} ${feat.borderGlow} flex flex-col justify-between overflow-hidden`}
+                className={`group relative rounded-3xl p-7 sm:p-8 bg-white dark:bg-zinc-900/60 border border-slate-200/90 dark:border-zinc-800/80 backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 shadow-xl shadow-slate-200/60 dark:shadow-black/50 hover:shadow-2xl ${feat.bgGlow} ${feat.borderGlow} flex flex-col justify-between overflow-hidden`}
               >
-                {/* Top Subtle Ambient Flare */}
-                <div className={`absolute top-0 right-0 left-0 h-1.5 bg-gradient-to-r ${feat.accentColor} opacity-80 group-hover:opacity-100 transition-opacity`} />
+                {/* Top Accent Gradient Flare */}
+                <div className={`absolute top-0 right-0 left-0 h-1.5 bg-gradient-to-r ${feat.accentColor} opacity-90 group-hover:opacity-100 transition-opacity`} />
                 
                 <div className="space-y-4">
-                  {/* Top Bar: Icon + Badge */}
+                  
+                  {/* Top Bar: Icon Container + Badge */}
                   <div className="flex items-center justify-between gap-3">
-                    <div className={`w-13 h-13 rounded-2xl bg-gradient-to-br ${feat.accentColor} p-0.5 shadow-md group-hover:scale-110 transition-transform`}>
+                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${feat.accentColor} p-0.5 shadow-lg group-hover:scale-110 transition-transform`}>
                       <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center">
-                        <Icon className="w-6 h-6 text-white" />
+                        <Icon className="w-7 h-7 text-white" />
                       </div>
                     </div>
                     
-                    <span className={`px-3 py-1 rounded-full text-[11px] font-black border ${feat.badgeColor}`}>
+                    <span className={`px-3 py-1 rounded-full text-[11px] font-black border dark:${feat.badgeDark} ${feat.badgeLight} shadow-xs`}>
                       {feat.badge}
                     </span>
                   </div>
 
-                  {/* Title & Description */}
-                  <div className="space-y-2">
-                    <h3 className="text-lg font-black text-slate-950 dark:text-zinc-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                  {/* Title & Detailed Description */}
+                  <div className="space-y-2.5 pt-1">
+                    <h3 className="text-lg sm:text-xl font-black text-slate-950 dark:text-zinc-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors leading-snug">
                       {feat.title}
                     </h3>
-                    <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 leading-relaxed font-medium">
+                    <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 leading-relaxed font-semibold">
                       {feat.description}
                     </p>
                   </div>
                 </div>
 
-                {/* Bottom decorative highlight */}
-                <div className="pt-5 mt-4 border-t border-slate-100 dark:border-zinc-800/60 flex items-center justify-between text-xs font-black text-emerald-600 dark:text-emerald-400">
+                {/* Bottom Highlight Tag */}
+                <div className="pt-5 mt-5 border-t border-slate-100 dark:border-zinc-800/70 flex items-center justify-between text-xs font-black text-emerald-600 dark:text-emerald-400">
                   <span className="flex items-center gap-1.5">
                     <CheckCircle2 className="w-4 h-4 text-emerald-500 fill-emerald-500/20" />
-                    مشمول ومفعّل بالكامل
+                    <span>{feat.tag}</span>
                   </span>
-                  <Sparkles className="w-3.5 h-3.5 text-amber-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <Sparkles className="w-4 h-4 text-amber-500 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
               </div>
             );
@@ -284,69 +299,73 @@ export default function PlatformFeaturesMatrix({
         </div>
 
         {/* =====================================================================
-            4. COMPARISON MATRIX TABLE (جدول المقارنة الحصري)
+            4. CREATOR & PUBLISHER COMPARISON TABLE (جدول المقارنة الحصري)
            ===================================================================== */}
         <div className="space-y-6 pt-6">
           
           <div className="text-center space-y-2 max-w-2xl mx-auto">
             <h3 className="text-2xl sm:text-3xl font-black text-slate-950 dark:text-white">
-              جدول المقارنة الحصري: <span className="bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-transparent">نحن مقابل الآخرين</span>
+              مقارنة المحاضرين والمؤلفين:{' '}
+              <span className="bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-700 dark:from-amber-400 dark:to-yellow-400 bg-clip-text text-transparent">
+                الأكاديمية مقابل السناتر والمنصات الأخرى
+              </span>
             </h3>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 font-medium">
-              اكتشف لماذا يثق بنا آلاف المهندسين والطلاب كوجهتهم الأولى لاحتراف البرمجة والذكاء الاصطناعي
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 font-bold">
+              شاهد الفارق الحقيقي في الأرباح، حماية المحتوى، وسهولة إدارة الطلاب ومبيعات المذكرات
             </p>
           </div>
 
-          <div className="rounded-3xl border border-slate-200/90 dark:border-zinc-800 bg-white dark:bg-zinc-950/70 backdrop-blur-2xl shadow-xl shadow-slate-200/50 dark:shadow-2xl overflow-hidden">
+          <div className="rounded-3xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-950/80 backdrop-blur-2xl shadow-2xl overflow-hidden">
             
-            {/* Desktop Table View */}
             <div className="overflow-x-auto">
               <table className="w-full text-right border-collapse">
                 
                 <thead>
-                  <tr className="border-b border-slate-200 dark:border-zinc-800/80 bg-slate-100/80 dark:bg-zinc-900/60">
+                  <tr className="border-b border-slate-200 dark:border-zinc-800 bg-slate-100/90 dark:bg-zinc-900/80">
                     <th className="py-5 px-6 text-sm font-black text-slate-950 dark:text-zinc-200 w-2/5">
-                      الميزة الهندسية / المعيار
+                      المعيار والميزة المالية / التقنية
                     </th>
-                    <th className="py-5 px-6 text-sm font-black text-amber-950 dark:text-amber-400 w-2/5 bg-amber-500/15 border-x border-amber-300 dark:border-amber-500/20">
+                    <th className="py-5 px-6 text-sm font-black text-amber-950 dark:text-amber-400 w-2/5 bg-amber-500/15 border-x border-amber-300 dark:border-amber-500/30">
                       <div className="flex items-center gap-2">
                         <Crown className="w-4 h-4 text-amber-500 dark:text-amber-400 fill-amber-400" />
                         <span>{platformName}</span>
-                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500 text-zinc-950 font-black">الخيار الأفضل</span>
+                        <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-amber-500 text-zinc-950 font-black shadow-sm">
+                          الخيار الأربح والأأمن
+                        </span>
                       </div>
                     </th>
                     <th className="py-5 px-6 text-sm font-black text-slate-600 dark:text-zinc-400 w-1/5">
-                      المنصات والدورات الأخرى
+                      السناتر والمنصات التقليدية
                     </th>
                   </tr>
                 </thead>
 
-                <tbody className="divide-y divide-slate-200/80 dark:divide-zinc-800/50 text-xs sm:text-sm">
+                <tbody className="divide-y divide-slate-200 dark:divide-zinc-800/60 text-xs sm:text-sm">
                   {comparisonRows.map((row, idx) => (
                     <tr 
                       key={idx} 
-                      className="hover:bg-slate-50 dark:hover:bg-zinc-900/30 transition-colors"
+                      className="hover:bg-slate-50 dark:hover:bg-zinc-900/40 transition-colors"
                     >
-                      {/* Feature Title & Description */}
+                      {/* Criteria */}
                       <td className="py-4.5 px-6">
                         <div className="font-black text-slate-950 dark:text-zinc-100 text-sm">
                           {row.feature}
                         </div>
-                        <div className="text-xs text-slate-600 dark:text-zinc-400 mt-0.5 font-medium">
+                        <div className="text-xs text-slate-600 dark:text-zinc-400 mt-0.5 font-bold">
                           {row.description}
                         </div>
                       </td>
 
-                      {/* Our Platform Cell (Highlighted with Gold Glow) */}
-                      <td className="py-4.5 px-6 bg-amber-500/10 dark:bg-amber-500/[0.04] border-x border-amber-200 dark:border-amber-500/20 font-bold text-slate-950 dark:text-amber-300">
+                      {/* Our Platform Cell */}
+                      <td className="py-4.5 px-6 bg-amber-500/10 dark:bg-amber-500/[0.06] border-x border-amber-200 dark:border-amber-500/30 font-black text-slate-950 dark:text-amber-300">
                         <div className="flex items-center gap-2.5">
-                          <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-500 shrink-0 fill-emerald-500/20" />
+                          <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0 fill-emerald-500/20" />
                           <span>{row.us}</span>
                         </div>
                       </td>
 
                       {/* Other Platforms Cell */}
-                      <td className="py-4.5 px-6 text-slate-600 dark:text-zinc-400">
+                      <td className="py-4.5 px-6 text-slate-600 dark:text-zinc-400 font-semibold">
                         <div className="flex items-center gap-2">
                           <XCircle className="w-4 h-4 text-rose-500 dark:text-rose-400 shrink-0" />
                           <span>{row.others}</span>
@@ -364,46 +383,50 @@ export default function PlatformFeaturesMatrix({
         </div>
 
         {/* =====================================================================
-            5. HIGH-CONVERSION CTA BANNER
-           ===================================================================== */}
-        <div className="relative rounded-3xl p-8 sm:p-12 overflow-hidden border border-amber-500/30 bg-gradient-to-r from-slate-950 via-zinc-900 to-slate-950 text-white shadow-2xl text-center sm:text-right flex flex-col lg:flex-row items-center justify-between gap-8">
+            5. DUAL CTA: JOIN AS INSTRUCTOR OR PUBLISH NOTES
+           ========================================================================= */}
+        <div className="relative rounded-3xl p-8 sm:p-12 overflow-hidden border border-amber-500/40 bg-gradient-to-br from-slate-950 via-zinc-950 to-indigo-950 text-white shadow-2xl text-center sm:text-right flex flex-col lg:flex-row items-center justify-between gap-8">
           
-          {/* Radiant Corner Bloom */}
-          <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/15 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-80 h-80 bg-purple-500/15 rounded-full blur-3xl pointer-events-none" />
+          {/* Ambient Glow Corner */}
+          <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl pointer-events-none" />
 
-          <div className="space-y-3 max-w-2xl relative z-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-300 text-xs font-black">
+          <div className="space-y-3.5 max-w-2xl relative z-10">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-black">
               <Zap className="w-3.5 h-3.5 text-amber-400 animate-bounce" />
-              <span>ابدأ رحلتك الهندسية الآن واستفد من الخصم الاستثنائي</span>
+              <span>انضم الآن واستفد من 14 يوماً مجاناً و 0% عمولة على المبيعات</span>
             </div>
             
-            <h3 className="text-2xl sm:text-3xl font-black text-white leading-tight">
-              جاهز لبناء مستقبلك البرمجي مع أقوى نخبة من المهندسين؟
+            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white leading-tight">
+              هل أنت مدرس، دكتور، أو طالب متفوق ترغب بنشر مذكراتك وكورساتك؟
             </h3>
             
-            <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed font-medium">
-              انضم إلى آلاف الطلاب واستفد من مسارات عملية، مذكرات متكاملة، ودعم فني وهندسي مباشر يضمن لك الوصول لسوق العمل بثقة.
+            <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed font-semibold">
+              انضم إلى نخبة المحاضرين والمؤلفين وابدأ بنشر دوراتك وملخصاتك اليوم مع حماية كاملة ضد التسريب، وسحب أرباح لحظي عبر إنستاباي وفودافون كاش.
             </p>
           </div>
 
-          <div className="flex flex-wrap sm:flex-nowrap items-center justify-center gap-3 shrink-0 relative z-10 w-full sm:w-auto">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 shrink-0 relative z-10 w-full sm:w-auto">
+            
+            {/* CTA 1: Expert Instructor */}
             <Link
-              href="/courses"
-              className="w-full sm:w-auto px-7 py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-zinc-950 font-black text-sm shadow-xl shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all text-center flex items-center justify-center gap-2"
+              href="/instructors/join?track=expert"
+              className="w-full sm:w-auto px-7 py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-zinc-950 font-black text-xs sm:text-sm shadow-xl shadow-amber-500/25 hover:scale-105 active:scale-95 transition-all text-center flex items-center justify-center gap-2 cursor-pointer"
             >
-              <GraduationCap className="w-4 h-4 text-zinc-950" />
-              <span>تصفح الكورسات والدبلومات</span>
+              <Video className="w-4 h-4 text-zinc-950" />
+              <span>انضم كـ مدرس أو دكتور (0% عمولة)</span>
               <ArrowLeft className="w-4 h-4 text-zinc-950" />
             </Link>
 
+            {/* CTA 2: Student Instructor & Notes Seller */}
             <Link
-              href="/books"
-              className="w-full sm:w-auto px-7 py-3.5 rounded-2xl bg-zinc-800 hover:bg-zinc-700 text-white font-black text-sm border border-zinc-700 hover:border-amber-400 transition-all text-center flex items-center justify-center gap-2"
+              href="/instructors/join?track=student"
+              className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-zinc-800 hover:bg-zinc-700 text-white font-black text-xs sm:text-sm border border-zinc-700 hover:border-amber-400 transition-all text-center flex items-center justify-center gap-2 cursor-pointer"
             >
-              <BookOpen className="w-4 h-4 text-amber-400" />
-              <span>سوق المذكرات والكتب</span>
+              <GraduationCap className="w-4 h-4 text-amber-400" />
+              <span>انضم كـ محاضر طالب / ناشر مذكرات</span>
             </Link>
+
           </div>
 
         </div>
