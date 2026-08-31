@@ -54,8 +54,7 @@ export default function PlatformFeaturesMatrix({
       icon: BadgePercent,
       accentColor: 'from-amber-400 via-yellow-400 to-amber-500',
       badge: '0% عمولة - 14 يوماً مجاناً',
-      badgeDark: 'bg-amber-500/20 text-amber-300 border-amber-500/40',
-      badgeLight: 'bg-amber-100 text-amber-950 border-amber-300',
+      badgeClass: 'bg-amber-100 text-amber-950 border-amber-300 dark:bg-amber-950/80 dark:text-amber-300 dark:border-amber-500/50',
       bgGlow: 'hover:shadow-amber-500/25',
       borderGlow: 'hover:border-amber-500/60',
       tag: 'عائد ربحي استثنائي',
@@ -68,8 +67,7 @@ export default function PlatformFeaturesMatrix({
       icon: ShieldCheck,
       accentColor: 'from-emerald-400 via-teal-400 to-cyan-500',
       badge: 'تشفير وحماية DRM كاملة',
-      badgeDark: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40',
-      badgeLight: 'bg-emerald-100 text-emerald-950 border-emerald-300',
+      badgeClass: 'bg-emerald-100 text-emerald-950 border-emerald-300 dark:bg-emerald-950/80 dark:text-emerald-300 dark:border-emerald-500/50',
       bgGlow: 'hover:shadow-emerald-500/25',
       borderGlow: 'hover:border-emerald-500/60',
       tag: 'أمان رقمي 100%',
@@ -82,8 +80,7 @@ export default function PlatformFeaturesMatrix({
       icon: Wallet,
       accentColor: 'from-blue-400 via-indigo-400 to-cyan-400',
       badge: 'تحويل فوري ولحظي',
-      badgeDark: 'bg-blue-500/20 text-blue-300 border-blue-500/40',
-      badgeLight: 'bg-blue-100 text-blue-950 border-blue-300',
+      badgeClass: 'bg-blue-100 text-blue-950 border-blue-300 dark:bg-blue-950/80 dark:text-blue-300 dark:border-blue-500/50',
       bgGlow: 'hover:shadow-blue-500/25',
       borderGlow: 'hover:border-blue-500/60',
       tag: 'سيولة نقدية مباشرة',
@@ -96,8 +93,7 @@ export default function PlatformFeaturesMatrix({
       icon: Bot,
       accentColor: 'from-purple-400 via-fuchsia-400 to-violet-500',
       badge: 'مساعد ذكي للمحاضر',
-      badgeDark: 'bg-purple-500/20 text-purple-300 border-purple-500/40',
-      badgeLight: 'bg-purple-100 text-purple-950 border-purple-300',
+      badgeClass: 'bg-purple-100 text-purple-950 border-purple-300 dark:bg-purple-950/80 dark:text-purple-300 dark:border-purple-500/50',
       bgGlow: 'hover:shadow-purple-500/25',
       borderGlow: 'hover:border-purple-500/60',
       tag: 'توفير وقت المحاضر',
@@ -110,8 +106,7 @@ export default function PlatformFeaturesMatrix({
       icon: BookOpen,
       accentColor: 'from-rose-400 via-orange-400 to-amber-400',
       badge: 'دخل سلبي (Passive Income)',
-      badgeDark: 'bg-rose-500/20 text-rose-300 border-rose-500/40',
-      badgeLight: 'bg-rose-100 text-rose-950 border-rose-300',
+      badgeClass: 'bg-rose-100 text-rose-950 border-rose-300 dark:bg-rose-950/80 dark:text-rose-300 dark:border-rose-500/50',
       bgGlow: 'hover:shadow-rose-500/25',
       borderGlow: 'hover:border-rose-500/60',
       tag: 'مبيعات تلقائية مستمرة',
@@ -124,8 +119,7 @@ export default function PlatformFeaturesMatrix({
       icon: GraduationCap,
       accentColor: 'from-amber-400 via-orange-400 to-yellow-500',
       badge: 'منحة مجانية للطلاب',
-      badgeDark: 'bg-amber-500/20 text-amber-300 border-amber-500/40',
-      badgeLight: 'bg-amber-100 text-amber-950 border-amber-300',
+      badgeClass: 'bg-amber-100 text-amber-950 border-amber-300 dark:bg-amber-950/80 dark:text-amber-300 dark:border-amber-500/50',
       bgGlow: 'hover:shadow-amber-500/25',
       borderGlow: 'hover:border-amber-500/60',
       tag: 'فرصة للمتفوقين',
@@ -269,7 +263,7 @@ export default function PlatformFeaturesMatrix({
                       </div>
                     </div>
                     
-                    <span className={`px-3 py-1 rounded-full text-[11px] font-black border dark:${feat.badgeDark} ${feat.badgeLight} shadow-xs`}>
+                    <span className={`px-3 py-1 rounded-full text-[11px] font-black border ${feat.badgeClass} shadow-xs`}>
                       {feat.badge}
                     </span>
                   </div>

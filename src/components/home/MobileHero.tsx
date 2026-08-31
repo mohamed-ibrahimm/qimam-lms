@@ -107,11 +107,11 @@ export default function MobileHero({
         <div className="w-full max-w-[360px] xs:max-w-md mx-auto flex flex-col gap-2 pb-3 xs:pb-3.5 px-1 shrink-0 mt-auto">
           
           {/* Button 1: Diploma */}
+          {/* Button 1: Diploma */}
           <a href="#trending-diploma" className="shimmer-border-wrapper group w-full">
-            <div className="shimmer-beam-gold dark:block hidden" />
-            <div className="shimmer-beam-blue dark:hidden block" />
-            <div className="shimmer-button-content w-full px-4 py-2.5 xs:py-3 text-xs xs:text-sm font-black text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 dark:bg-none dark:text-amber-300 group-hover:opacity-95 flex items-center justify-center gap-2 rounded-2xl shadow-lg">
-              <Flame className="w-4 h-4 text-amber-300 dark:text-amber-400 animate-bounce shrink-0" />
+            <div className="shimmer-beam-gold" />
+            <div className="shimmer-button-content w-full px-4 py-2.5 xs:py-3 text-xs xs:text-sm font-black text-amber-950 dark:text-amber-300 bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 dark:from-amber-950/70 dark:via-zinc-900 dark:to-amber-950/70 group-hover:opacity-95 flex items-center justify-center gap-2 rounded-2xl shadow-lg border border-amber-400 dark:border-amber-500/50">
+              <Flame className="w-4 h-4 text-amber-700 dark:text-amber-400 animate-bounce shrink-0" />
               <span className="whitespace-nowrap">{settings.FEATURED_DIPLOMA_BADGE || 'الدبلومة الأكثر طلباً في سوق العمل'}</span>
             </div>
           </a>
@@ -120,7 +120,7 @@ export default function MobileHero({
           <Link
             href="/books"
             prefetch={true}
-            className="group flex items-center justify-center gap-2 w-full py-2.5 xs:py-3 px-3.5 text-xs xs:text-sm font-black bg-emerald-50 hover:bg-emerald-100 dark:bg-gradient-to-r dark:from-emerald-500/15 dark:via-teal-500/20 dark:to-emerald-500/15 text-emerald-950 dark:text-emerald-300 transition-all rounded-2xl border-2 border-emerald-400 dark:border-emerald-500/80 shadow-md shadow-emerald-500/10 backdrop-blur-md active:scale-[0.98]"
+            className="group flex items-center justify-center gap-2 w-full py-2.5 xs:py-3 px-3.5 text-xs xs:text-sm font-black bg-emerald-100/90 text-emerald-950 border-2 border-emerald-400 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border-emerald-500/60 transition-all rounded-2xl shadow-md shadow-emerald-500/10 backdrop-blur-md active:scale-[0.98]"
           >
             <FileText className="w-4 h-4 text-emerald-700 dark:text-emerald-400 group-hover:scale-110 transition-transform shrink-0" />
             <span className="whitespace-nowrap">{settings.HERO_BTN_BOOKS || 'سوق المذكرات والكتب (خصم 50% ومعاينة)'}</span>
@@ -130,7 +130,7 @@ export default function MobileHero({
           <Link
             href="/instructors/join?track=expert"
             prefetch={true}
-            className="group flex items-center justify-center gap-2 w-full py-2.5 xs:py-3 px-3.5 text-xs xs:text-sm font-black bg-purple-50 hover:bg-purple-100 dark:bg-gradient-to-r dark:from-purple-600/15 dark:via-indigo-600/20 dark:to-purple-600/15 text-purple-950 dark:text-purple-300 transition-all rounded-2xl border-2 border-purple-400 dark:border-purple-500/80 shadow-md shadow-purple-500/10 backdrop-blur-md active:scale-[0.98]"
+            className="group flex items-center justify-center gap-2 w-full py-2.5 xs:py-3 px-3.5 text-xs xs:text-sm font-black bg-purple-100/90 text-purple-950 border-2 border-purple-400 dark:bg-purple-950/70 dark:text-purple-300 dark:border-purple-500/60 transition-all rounded-2xl shadow-md shadow-purple-500/10 backdrop-blur-md active:scale-[0.98]"
           >
             <Video className="w-4 h-4 text-purple-700 dark:text-purple-400 group-hover:scale-110 transition-transform shrink-0" />
             <span className="whitespace-nowrap">
@@ -144,9 +144,9 @@ export default function MobileHero({
           <Link
             href="/instructors/join?track=student"
             prefetch={true}
-            className="group flex items-center justify-center gap-2 w-full py-2.5 xs:py-3 px-3.5 text-xs xs:text-sm font-black bg-amber-50 hover:bg-amber-100 dark:bg-gradient-to-r dark:from-amber-500/15 dark:via-yellow-500/20 dark:to-amber-500/15 text-amber-950 dark:text-amber-300 transition-all rounded-2xl border-2 border-amber-400 dark:border-amber-500/80 shadow-md shadow-amber-500/10 backdrop-blur-md active:scale-[0.98]"
+            className="group flex items-center justify-center gap-2 w-full py-2.5 xs:py-3 px-3.5 text-xs xs:text-sm font-black bg-amber-100/90 text-amber-950 border-2 border-amber-400 dark:bg-amber-950/70 dark:text-amber-300 dark:border-amber-500/60 transition-all rounded-2xl shadow-md shadow-amber-500/10 backdrop-blur-md active:scale-[0.98]"
           >
-            <GraduationCap className="w-4.5 h-4.5 text-amber-600 dark:text-amber-500 group-hover:scale-110 transition-transform shrink-0" />
+            <GraduationCap className="w-4.5 h-4.5 text-amber-700 dark:text-amber-400 group-hover:scale-110 transition-transform shrink-0" />
             <span className="whitespace-nowrap">
               {settings.HERO_BTN_STUDENT
                 ? settings.HERO_BTN_STUDENT.replace(/30\s*يوماً|30\s*يوم/g, `${settings.STUDENT_TRIAL_DAYS || '14'} يوماً`)

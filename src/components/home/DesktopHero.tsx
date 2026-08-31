@@ -82,12 +82,11 @@ export default function DesktopHero({
         {/* 4 Premium Action Pillars on a Single Unified Horizontal Row */}
         <div className="flex flex-wrap lg:flex-nowrap items-center justify-center gap-3 lg:gap-4 w-full mx-auto px-1 max-w-[1480px] pt-2">
           
-          {/* 1. Diploma Button (Shimmer Molten Gold / Sapphire Blue) */}
+          {/* 1. Diploma Button (Shimmer Molten Gold) */}
           <a href="#trending-diploma" className="shimmer-border-wrapper group shrink-0">
-            <div className="shimmer-beam-gold dark:block hidden" />
-            <div className="shimmer-beam-blue dark:hidden block" />
-            <div className="shimmer-button-content px-5 lg:px-6 py-3 lg:py-3.5 text-xs lg:text-[13.5px] font-black text-white dark:text-amber-300 group-hover:opacity-95 flex items-center justify-center gap-2 rounded-full shadow-lg">
-              <Flame className="w-4 h-4 text-amber-300 dark:text-amber-400 animate-bounce shrink-0" />
+            <div className="shimmer-beam-gold" />
+            <div className="shimmer-button-content px-5 lg:px-6 py-3 lg:py-3.5 text-xs lg:text-[13.5px] font-black text-amber-950 dark:text-amber-300 bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 dark:from-amber-950/70 dark:via-zinc-900 dark:to-amber-950/70 group-hover:opacity-95 flex items-center justify-center gap-2 rounded-full shadow-lg border border-amber-400 dark:border-amber-500/50">
+              <Flame className="w-4 h-4 text-amber-700 dark:text-amber-400 animate-bounce shrink-0" />
               <span className="whitespace-nowrap">{settings.FEATURED_DIPLOMA_BADGE || 'الدبلومة الأكثر طلباً (خصم 51%)'}</span>
             </div>
           </a>
@@ -96,7 +95,7 @@ export default function DesktopHero({
           <Link
             href="/books"
             prefetch={true}
-            className="group flex items-center justify-center gap-2 px-5 lg:px-6 py-3 lg:py-3.5 text-xs lg:text-[13.5px] font-black bg-emerald-50 hover:bg-emerald-100 dark:bg-gradient-to-r dark:from-emerald-500/15 dark:via-teal-500/20 dark:to-emerald-500/15 text-emerald-950 dark:text-emerald-300 transition-all rounded-full border-2 border-emerald-400 dark:border-emerald-500/80 hover:border-emerald-500 shadow-md shadow-emerald-500/10 hover:shadow-emerald-500/25 hover:scale-105 backdrop-blur-md shrink-0"
+            className="group flex items-center justify-center gap-2 px-5 lg:px-6 py-3 lg:py-3.5 text-xs lg:text-[13.5px] font-black bg-emerald-100/90 text-emerald-950 border-2 border-emerald-400 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border-emerald-500/60 hover:bg-emerald-200 dark:hover:bg-emerald-900/90 transition-all rounded-full shadow-md shadow-emerald-500/10 hover:shadow-emerald-500/25 hover:scale-105 backdrop-blur-md shrink-0"
           >
             <FileText className="w-4 h-4 text-emerald-700 dark:text-emerald-400 group-hover:scale-110 transition-transform shrink-0" />
             <span className="whitespace-nowrap">{settings.HERO_BTN_BOOKS || 'سوق المذكرات والكتب (خصم 50% ومعاينة)'}</span>
@@ -106,7 +105,7 @@ export default function DesktopHero({
           <Link
             href="/instructors/join?track=expert"
             prefetch={true}
-            className="group flex items-center justify-center gap-2 px-5 lg:px-6 py-3 lg:py-3.5 text-xs lg:text-[13.5px] font-black bg-purple-50 hover:bg-purple-100 dark:bg-gradient-to-r dark:from-purple-600/15 dark:via-indigo-600/20 dark:to-purple-600/15 text-purple-950 dark:text-purple-300 transition-all rounded-full border-2 border-purple-400 dark:border-purple-500/80 hover:border-purple-500 shadow-md shadow-purple-500/10 hover:shadow-purple-500/25 hover:scale-105 backdrop-blur-md shrink-0"
+            className="group flex items-center justify-center gap-2 px-5 lg:px-6 py-3 lg:py-3.5 text-xs lg:text-[13.5px] font-black bg-purple-100/90 text-purple-950 border-2 border-purple-400 dark:bg-purple-950/70 dark:text-purple-300 dark:border-purple-500/60 hover:bg-purple-200 dark:hover:bg-purple-900/90 transition-all rounded-full shadow-md shadow-purple-500/10 hover:shadow-purple-500/25 hover:scale-105 backdrop-blur-md shrink-0"
           >
             <Video className="w-4 h-4 text-purple-700 dark:text-purple-400 group-hover:scale-110 transition-transform shrink-0" />
             <span className="whitespace-nowrap">
@@ -120,9 +119,9 @@ export default function DesktopHero({
           <Link
             href="/instructors/join?track=student"
             prefetch={true}
-            className="group flex items-center justify-center gap-2 px-5 lg:px-6 py-3 lg:py-3.5 text-xs lg:text-[13.5px] font-black bg-amber-50 hover:bg-amber-100 dark:bg-gradient-to-r dark:from-amber-500/15 dark:via-yellow-500/20 dark:to-amber-500/15 text-amber-950 dark:text-amber-300 transition-all rounded-full border-2 border-amber-400 dark:border-amber-500/80 hover:border-amber-500 shadow-md shadow-amber-500/10 hover:shadow-amber-500/25 hover:scale-105 backdrop-blur-md shrink-0"
+            className="group flex items-center justify-center gap-2 px-5 lg:px-6 py-3 lg:py-3.5 text-xs lg:text-[13.5px] font-black bg-amber-100/90 text-amber-950 border-2 border-amber-400 dark:bg-amber-950/70 dark:text-amber-300 dark:border-amber-500/60 hover:bg-amber-200 dark:hover:bg-amber-900/90 transition-all rounded-full shadow-md shadow-amber-500/10 hover:shadow-amber-500/25 hover:scale-105 backdrop-blur-md shrink-0"
           >
-            <GraduationCap className="w-4.5 h-4.5 text-amber-600 dark:text-amber-500 group-hover:scale-110 transition-transform shrink-0" />
+            <GraduationCap className="w-4.5 h-4.5 text-amber-700 dark:text-amber-400 group-hover:scale-110 transition-transform shrink-0" />
             <span className="whitespace-nowrap">
               {settings.HERO_BTN_STUDENT
                 ? settings.HERO_BTN_STUDENT.replace(/30\s*يوماً|30\s*يوم/g, `${settings.STUDENT_TRIAL_DAYS || '14'} يوماً`)
