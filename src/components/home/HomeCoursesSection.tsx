@@ -402,8 +402,8 @@ export default function HomeCoursesSection({
                         </span>
                       </div>
 
-                      {/* Centered Title with high contrast */}
-                      <h3 className="font-black text-lg sm:text-xl text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-amber-400 transition-colors line-clamp-1 leading-snug text-center">
+                      {/* Centered Title with high contrast (No single-line cutoff dots) */}
+                      <h3 className="font-black text-base sm:text-lg lg:text-xl text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-amber-400 transition-colors leading-snug text-center line-clamp-2 min-h-[3rem] flex items-center justify-center">
                         {course.title}
                       </h3>
                       
