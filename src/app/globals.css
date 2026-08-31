@@ -1,193 +1,1246 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Cairo:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --font-ibm-plex: 'IBM Plex Sans Arabic', 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-cairo: 'IBM Plex Sans Arabic', 'Cairo', sans-serif;
-  
-  /* DARK THEME (DEFAULT) */
-  --bg-app: #141315;
-  --bg-surface: #1B191C;
-  --bg-surface-secondary: #222024;
-  --bg-surface-elevated: #29262B;
-  --bg-surface-glass: rgba(35, 31, 37, 0.72);
-  
-  --text-main: #F2EFEF;
-  --text-sub: #B5AFB4;
-  --text-muted: #89838A;
-  
-  --border-subtle: #38343A;
-  --border-glass: rgba(56, 52, 58, 0.8);
-  
-  --accent-color: #A77AB0;
-  --accent-strong-color: #8E6098;
-  --accent-soft-color: rgba(118, 80, 127, 0.16);
-  --accent-dark-color: #A77AB0;
+  --font-cairo: 'Cairo', 'IBM Plex Sans Arabic', 'Tajawal', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-ibm-plex: 'Cairo', 'IBM Plex Sans Arabic', 'Tajawal', sans-serif;
+  --font-tajawal: 'Cairo', 'Tajawal', sans-serif;
+  --font-alexandria: 'Cairo', sans-serif;
+  --bg-app: #0f0f15;
+  --bg-surface: #15151e;
+  --bg-surface-raised: #1c1c28;
+  --bg-surface-card: #20202e;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --text-main: #f4f4f5;
+  --text-sub: #cbd5e1;
+  --text-muted: #94a3b8;
 }
 
 html.light-theme,
 [data-theme="light"],
 body.light-theme {
-  /* LIGHT THEME */
-  --bg-app: #F6F4F1;
-  --bg-surface: #FFFFFF;
-  --bg-surface-secondary: #EFEEEB;
-  --bg-surface-elevated: #FFFFFF;
-  --bg-surface-glass: rgba(255, 255, 255, 0.75);
-  
-  --text-main: #20201F;
-  --text-sub: #6F6C69;
-  --text-muted: #92908C;
-  
-  --border-subtle: #DDD9D4;
-  --border-glass: rgba(221, 217, 212, 0.85);
-  
-  --accent-color: #76507F;
-  --accent-strong-color: #604069;
-  --accent-soft-color: #EEE6F0;
-  --accent-dark-color: #604069;
+  --bg-app: #edf2f7;
+  --bg-surface: #ffffff;
+  --bg-surface-raised: #f8fafc;
+  --bg-surface-card: #ffffff;
+  --border-subtle: #cbd5e1;
+  --text-main: #0f172a;
+  --text-sub: #334155;
+  --text-muted: #64748b;
 }
 
 * {
   box-sizing: border-box;
-  font-family: 'IBM Plex Sans Arabic', 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-family: 'Cairo', 'IBM Plex Sans Arabic', 'Tajawal', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
 }
 
 html,
 body {
-  font-family: 'IBM Plex Sans Arabic', 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
-  background-color: var(--bg-app);
-  color: var(--text-main);
+  font-family: 'Cairo', 'IBM Plex Sans Arabic', 'Tajawal', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  background-color: #0f0f15;
+  background-image: 
+    radial-gradient(ellipse at 50% -10%, rgba(245, 158, 11, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 50%, rgba(217, 119, 6, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 80%, rgba(168, 85, 247, 0.03) 0%, transparent 50%);
+  background-attachment: fixed;
+  color: #f4f4f5;
   direction: rtl;
   text-align: right;
   overflow-x: hidden !important;
   max-width: 100vw;
   width: 100%;
   position: relative;
-  transition: background-color 0.15s ease, color 0.15s ease;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* Subtle, calm atmospheric background */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background: radial-gradient(circle 800px at 50% -100px, rgba(167, 122, 176, 0.04), transparent 70%);
+.page-canvas {
+  background-color: transparent;
+  color: #f4f4f5;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-html.light-theme body::before,
-[data-theme="light"] body::before {
-  background: radial-gradient(circle 800px at 50% -100px, rgba(118, 80, 127, 0.03), transparent 70%);
+/* =========================================================================
+   Light Mode System (Luminous Aurora Canvas & Calming Contrast)
+   ========================================================================= */
+@keyframes dynamicAuroraMesh {
+  0% {
+    background-position: 0% 0%, 100% 0%, 0% 50%, 100% 100%, 0% 100%;
+  }
+  50% {
+    background-position: 10% 5%, 90% 15%, 8% 45%, 95% 85%, 5% 95%;
+  }
+  100% {
+    background-position: 0% 0%, 100% 0%, 0% 50%, 100% 100%, 0% 100%;
+  }
 }
 
-/* Global Glass & Surface Utilities */
-.glass-nav {
-  background: var(--bg-surface-glass);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-subtle);
+html.light-theme,
+html.light-theme body,
+body.light-theme,
+[data-theme="light"],
+[data-theme="light"] body {
+  background-color: #f4f6fb !important;
+  background-image: 
+    radial-gradient(ellipse 85% 55% at 50% -15%, rgba(99, 102, 241, 0.22) 0%, transparent 65%),
+    radial-gradient(ellipse 65% 55% at 95% 15%, rgba(245, 158, 11, 0.18) 0%, transparent 55%),
+    radial-gradient(ellipse 65% 55% at 5% 35%, rgba(14, 165, 233, 0.20) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 55% at 90% 65%, rgba(168, 85, 247, 0.16) 0%, transparent 55%),
+    radial-gradient(ellipse 80% 65% at 10% 85%, rgba(16, 185, 129, 0.15) 0%, transparent 60%) !important;
+  background-attachment: fixed !important;
+  background-size: 130% 130% !important;
+  animation: dynamicAuroraMesh 16s ease-in-out infinite !important;
+  color: #0f172a !important;
 }
 
-.glass-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  transition: border-color 0.16s ease, background-color 0.16s ease;
+html.light-theme .page-canvas,
+html.light-theme main,
+html.light-theme .bg-background,
+[data-theme="light"] .page-canvas,
+[data-theme="light"] main,
+[data-theme="light"] .bg-background {
+  background-color: transparent !important;
+  color: #0f172a !important;
 }
 
-.glass-card:hover {
-  border-color: var(--accent-color);
+/* Ambient Atmospheric Glows in Light Mode - Smooth, blended soft auroras */
+html.light-theme .ambient-glow,
+[data-theme="light"] .ambient-glow {
+  display: block !important;
+  opacity: 0.65 !important;
+  filter: blur(120px) !important;
+  mix-blend-mode: normal !important;
 }
 
-.surface-raised {
-  background: var(--bg-surface-secondary);
-  border: 1px solid var(--border-subtle);
+/* Background surfaces in Light Mode - Frosted Luminous Glass */
+html.light-theme [class*="bg-zinc-950"],
+html.light-theme [class*="bg-[#09080e]"],
+html.light-theme [class*="bg-[#0c0918]"],
+[data-theme="light"] [class*="bg-zinc-950"] {
+  background-color: rgba(246, 248, 252, 0.8) !important;
+  color: #0f172a !important;
 }
 
-.surface-elevated {
-  background: var(--bg-surface-elevated);
-  border: 1px solid var(--border-subtle);
+html.light-theme [class*="bg-zinc-900"],
+html.light-theme [class*="bg-zinc-850"],
+html.light-theme [class*="bg-zinc-800"],
+html.light-theme .bg-surface,
+html.light-theme .bg-surface-raised,
+html.light-theme .glass-luxury-card,
+html.light-theme .glass-gold-card,
+[data-theme="light"] [class*="bg-zinc-900"],
+[data-theme="light"] [class*="bg-zinc-850"],
+[data-theme="light"] [class*="bg-zinc-800"],
+[data-theme="light"] .bg-surface,
+[data-theme="light"] .bg-surface-raised,
+[data-theme="light"] .glass-luxury-card,
+[data-theme="light"] .glass-gold-card {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  color: #0f172a !important;
+  border-color: rgba(226, 232, 240, 0.9) !important;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(255, 255, 255, 0.7) inset !important;
 }
 
-/* Custom Scrollbar */
+html.light-theme .glass-luxury-card:hover,
+html.light-theme .glass-gold-card:hover,
+[data-theme="light"] .glass-luxury-card:hover,
+[data-theme="light"] .glass-gold-card:hover {
+  background: #ffffff !important;
+  border-color: rgba(99, 102, 241, 0.4) !important;
+  box-shadow: 0 16px 35px -5px rgba(99, 102, 241, 0.12), 0 0 0 1px rgba(99, 102, 241, 0.1) !important;
+  transform: translateY(-3px) !important;
+}
+
+html.light-theme [class*="border-zinc-800"],
+html.light-theme [class*="border-zinc-700"],
+html.light-theme .border-border,
+[data-theme="light"] [class*="border-zinc-800"],
+[data-theme="light"] [class*="border-zinc-700"] {
+  border-color: #e2e8f0 !important;
+}
+
+/* Typography & Elements in Light Mode */
+html.light-theme .text-slate-default,
+[data-theme="light"] .text-slate-default {
+  color: #0f172a !important;
+}
+
+/* Amber text in Light Mode (only for specific gold accents) */
+html.light-theme .text-gold-accent,
+[data-theme="light"] .text-gold-accent {
+  color: #b45309 !important;
+}
+
+/* Explicit priority for Blue and White in Light Mode */
+html.light-theme [class*="text-blue-600"],
+[data-theme="light"] [class*="text-blue-600"] {
+  color: #2563eb !important;
+}
+
+html.light-theme [class*="text-blue-700"],
+[data-theme="light"] [class*="text-blue-700"] {
+  color: #1d4ed8 !important;
+}
+
+/* Amber borders in Light Mode become soft slate/indigo */
+html.light-theme [class*="border-amber-500"],
+[data-theme="light"] [class*="border-amber-500"] {
+  border-color: rgba(203, 213, 225, 0.8) !important;
+}
+
+/* Dark Purple badges & containers in Light Mode */
+html.light-theme [class*="bg-purple-950"],
+[data-theme="light"] [class*="bg-purple-950"] {
+  background-color: #f3e8ff !important;
+  border-color: #d8b4fe !important;
+  color: #6b21a8 !important;
+}
+
+html.light-theme [class*="text-purple-300"],
+html.light-theme [class*="text-purple-400"],
+[data-theme="light"] [class*="text-purple-300"],
+[data-theme="light"] [class*="text-purple-400"] {
+  color: #6b21a8 !important;
+}
+
+/* Dark Emerald badges & containers in Light Mode */
+html.light-theme [class*="bg-emerald-950"],
+[data-theme="light"] [class*="bg-emerald-950"] {
+  background-color: #ecfdf5 !important;
+  border-color: #a7f3d0 !important;
+  color: #065f46 !important;
+}
+
+html.light-theme [class*="text-emerald-300"],
+html.light-theme [class*="text-emerald-400"],
+[data-theme="light"] [class*="text-emerald-300"],
+[data-theme="light"] [class*="text-emerald-400"] {
+  color: #047857 !important;
+}
+
+/* Primary Golden Buttons styling in Light Mode */
+html.light-theme .btn-primary-gold,
+[data-theme="light"] .btn-primary-gold {
+  background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #d97706 100%) !important;
+  color: #09090b !important;
+  border-color: #f59e0b !important;
+  box-shadow: 0 6px 20px -2px rgba(245, 158, 11, 0.35) !important;
+}
+
+/* Form Inputs & Selects across all pages in Light Mode */
+html.light-theme input:not([type="checkbox"]):not([type="radio"]),
+html.light-theme textarea,
+html.light-theme select,
+[data-theme="light"] input:not([type="checkbox"]):not([type="radio"]),
+[data-theme="light"] textarea,
+[data-theme="light"] select {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+}
+
+html.light-theme input:focus,
+html.light-theme textarea:focus,
+html.light-theme select:focus,
+[data-theme="light"] input:focus,
+[data-theme="light"] textarea:focus,
+[data-theme="light"] select:focus {
+  border-color: #2563eb !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
+}
+
+/* Glass cards across all interior pages in Light Mode */
+html.light-theme .glass-card,
+[data-theme="light"] .glass-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 100%) !important;
+  border: 1px solid rgba(226, 232, 240, 0.95) !important;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(255, 255, 255, 0.8) inset !important;
+  color: #0f172a !important;
+}
+
+html.light-theme .glass-card:hover,
+[data-theme="light"] .glass-card:hover {
+  border-color: rgba(99, 102, 241, 0.4) !important;
+  box-shadow: 0 16px 35px -5px rgba(99, 102, 241, 0.12) !important;
+  transform: translateY(-3px) !important;
+}
+
+/* Gradient Text in Light Mode - Rich Royal Indigo to Sapphire */
+html.light-theme .text-gold-gradient,
+html.light-theme .text-gold-luxury,
+html.light-theme .text-gold-static,
+html.light-theme .text-amethyst-gradient,
+[data-theme="light"] .text-gold-gradient,
+[data-theme="light"] .text-gold-luxury,
+[data-theme="light"] .text-gold-static,
+[data-theme="light"] .text-amethyst-gradient {
+  background: linear-gradient(135deg, #0f172a 0%, #1e40af 50%, #b45309 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  animation: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+}
+
+/* Featured Trending Diploma Card in Light Mode - Luxurious Pearl Glass */
+html.light-theme #trending-diploma .relative.rounded-3xl,
+[data-theme="light"] #trending-diploma .relative.rounded-3xl {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(245, 247, 255, 0.9) 50%, rgba(254, 249, 240, 0.85) 100%) !important;
+  backdrop-filter: blur(24px) !important;
+  border-color: rgba(216, 180, 254, 0.5) !important;
+  box-shadow: 0 20px 50px -10px rgba(99, 102, 241, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.8) inset !important;
+}
+
+html.light-theme #trending-diploma h2,
+[data-theme="light"] #trending-diploma h2 {
+  color: #0f172a !important;
+}
+
+html.light-theme #trending-diploma .text-amber-300,
+[data-theme="light"] #trending-diploma .text-amber-300 {
+  color: #b45309 !important;
+}
+
+/* Stats Section in Light Mode */
+html.light-theme section:has(.font-display:contains("أرقام تتحدث")),
+[data-theme="light"] section:has(.font-display:contains("أرقام تتحدث")) {
+  background: linear-gradient(180deg, rgba(241, 245, 249, 0.4) 0%, rgba(248, 250, 252, 0.8) 100%) !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* Top Floating Navbar in Light Mode */
+html.light-theme header nav,
+[data-theme="light"] header nav {
+  background: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border-color: rgba(226, 232, 240, 0.9) !important;
+  box-shadow: 0 10px 35px -5px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.8) inset !important;
+}
+
+html.light-theme header nav [class*="text-white"],
+[data-theme="light"] header nav [class*="text-white"] {
+  color: #0f172a !important;
+}
+
+html.light-theme header nav .bg-zinc-950\/60,
+[data-theme="light"] header nav .bg-zinc-950\/60 {
+  background-color: rgba(241, 245, 249, 0.8) !important;
+  border-color: rgba(226, 232, 240, 0.8) !important;
+}
+
+html.light-theme header nav [class*="bg-zinc-800"],
+[data-theme="light"] header nav [class*="bg-zinc-800"] {
+  background-color: rgba(241, 245, 249, 0.9) !important;
+  color: #0f172a !important;
+}
+
+/* Guest buttons on navbar in Light Mode */
+html.light-theme header nav a[href="/login"],
+[data-theme="light"] header nav a[href="/login"] {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05) !important;
+}
+
+html.light-theme header nav a[href="/register"],
+[data-theme="light"] header nav a[href="/register"] {
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(59, 130, 246, 0.4) !important;
+  box-shadow: 0 4px 15px -2px rgba(37, 99, 235, 0.3) !important;
+}
+html.light-theme header nav a[href="/register"] span,
+html.light-theme header nav a[href="/register"] svg,
+[data-theme="light"] header nav a[href="/register"] span,
+[data-theme="light"] header nav a[href="/register"] svg {
+  color: #ffffff !important;
+}
+
+/* DYNAMIC MOVING BACKGROUND ORBS & PARTICLES (عناصر وخلفيات متحركة بانسيابية وراء الكلام) */
+@keyframes floatOrbA {
+  0% { transform: translate(0px, 0px) scale(1); }
+  50% { transform: translate(40px, -30px) scale(1.1); }
+  100% { transform: translate(-25px, 25px) scale(0.95); }
+}
+
+@keyframes floatOrbB {
+  0% { transform: translate(0px, 0px) scale(1); }
+  50% { transform: translate(-45px, 30px) scale(1.12); }
+  100% { transform: translate(30px, -35px) scale(0.92); }
+}
+
+@keyframes floatOrbC {
+  0% { transform: translate(0px, 0px) scale(0.95); }
+  50% { transform: translate(30px, 40px) scale(1.08); }
+  100% { transform: translate(-35px, -25px) scale(1); }
+}
+
+.dynamic-float-a {
+  animation: floatOrbA 9s ease-in-out infinite alternate;
+}
+.dynamic-float-b {
+  animation: floatOrbB 12s ease-in-out infinite alternate;
+}
+.dynamic-float-c {
+  animation: floatOrbC 15s ease-in-out infinite alternate;
+}
+
+/* DYNAMIC ROTATING BEAM BUTTON (الزر الدوار الفخم المحاط بشعاع متوهج يدور بسلاسة) */
+.shimmer-border-wrapper {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 2px !important;
+  border-radius: 9999px !important;
+  overflow: hidden !important;
+  background: transparent !important;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease !important;
+}
+
+/* Dark Mode Rotating Beam - Warm Golden Meteor */
+.shimmer-beam-gold {
+  display: block !important;
+  position: absolute !important;
+  inset: -200% !important;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 200deg,
+    rgba(245, 158, 11, 0.15) 240deg,
+    #f59e0b 280deg,
+    #fbbf24 320deg,
+    rgba(251, 191, 36, 0.4) 345deg,
+    transparent 360deg
+  ) !important;
+  animation: spinBorder 3.5s linear infinite !important;
+  pointer-events: none !important;
+}
+
+/* Light Mode Rotating Beam - Royal Blue & Amber Gold Meteor with smooth fading */
+html.light-theme .shimmer-beam-gold,
+[data-theme="light"] .shimmer-beam-gold {
+  display: block !important;
+  position: absolute !important;
+  inset: -200% !important;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 200deg,
+    rgba(99, 102, 241, 0.2) 240deg,
+    #3b82f6 280deg,
+    #f59e0b 320deg,
+    rgba(245, 158, 11, 0.4) 345deg,
+    transparent 360deg
+  ) !important;
+  animation: spinBorder 3.5s linear infinite !important;
+  pointer-events: none !important;
+}
+
+/* Primary Rotating Action Button ("الدبلومة الأكثر طلباً") in Light Mode - Royal Sapphire */
+html.light-theme a[href="#trending-diploma"]:not(.inline-block) .shimmer-button-content,
+html.light-theme .shimmer-border-wrapper:not(.inline-block) .shimmer-button-content,
+[data-theme="light"] a[href="#trending-diploma"]:not(.inline-block) .shimmer-button-content,
+[data-theme="light"] .shimmer-border-wrapper:not(.inline-block) .shimmer-button-content {
+  position: relative !important;
+  z-index: 10 !important;
+  display: flex !important;
+  align-items: center !important;
+  overflow: hidden !important;
+  border-radius: 9999px !important;
+  background: linear-gradient(135deg, #1e40af 0%, #2563eb 50%, #1d4ed8 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 20px -2px rgba(37, 99, 235, 0.35), 0 0 15px rgba(59, 130, 246, 0.2) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+html.light-theme .shimmer-border-wrapper:hover,
+[data-theme="light"] .shimmer-border-wrapper:hover {
+  transform: translateY(-2px) scale(1.02) !important;
+}
+
+html.light-theme a[href="#trending-diploma"]:not(.inline-block) .shimmer-button-content span,
+html.light-theme .shimmer-border-wrapper:not(.inline-block) .shimmer-button-content span,
+[data-theme="light"] a[href="#trending-diploma"]:not(.inline-block) .shimmer-button-content span,
+[data-theme="light"] .shimmer-border-wrapper:not(.inline-block) .shimmer-button-content span {
+  color: #ffffff !important;
+  font-weight: 800 !important;
+}
+
+html.light-theme a[href="#trending-diploma"]:not(.inline-block) .shimmer-button-content svg,
+html.light-theme .shimmer-border-wrapper:not(.inline-block) .shimmer-button-content svg,
+[data-theme="light"] a[href="#trending-diploma"]:not(.inline-block) .shimmer-button-content svg,
+[data-theme="light"] .shimmer-border-wrapper:not(.inline-block) .shimmer-button-content svg {
+  color: #fde047 !important;
+}
+
+/* Promotional Top Banner Pill in Light Mode */
+html.light-theme .inline-block > .shimmer-border-wrapper .shimmer-button-content,
+html.light-theme a[href="#trending-diploma"].inline-block .shimmer-button-content,
+[data-theme="light"] .inline-block > .shimmer-border-wrapper .shimmer-button-content,
+[data-theme="light"] a[href="#trending-diploma"].inline-block .shimmer-button-content {
+  position: relative !important;
+  z-index: 10 !important;
+  overflow: hidden !important;
+  background: #ffffff !important;
+  border: 1px solid rgba(203, 213, 225, 0.9) !important;
+  color: #0f172a !important;
+  box-shadow: 0 2px 10px -2px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(255, 255, 255, 0.9) inset !important;
+  transition: all 0.25s ease !important;
+}
+
+html.light-theme .inline-block > .shimmer-border-wrapper .shimmer-button-content span,
+[data-theme="light"] .inline-block > .shimmer-border-wrapper .shimmer-button-content span {
+  color: #1e293b !important;
+}
+
+/* Secondary Button in Light Mode (Not luxury pill) */
+html.light-theme a[href="/courses"].rounded-full:not(.diploma-luxury-pill),
+[data-theme="light"] a[href="/courses"].rounded-full:not(.diploma-luxury-pill) {
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(16px) !important;
+  border: 1.5px solid #cbd5e1 !important;
+  color: #0f172a !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 15px -2px rgba(15, 23, 42, 0.06) !important;
+}
+
+html.light-theme a[href="/courses"].rounded-full:not(.diploma-luxury-pill):hover,
+[data-theme="light"] a[href="/courses"].rounded-full:not(.diploma-luxury-pill):hover {
+  border-color: #3b82f6 !important;
+  color: #2563eb !important;
+  background: #ffffff !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px -4px rgba(37, 99, 235, 0.15) !important;
+}
+
+/* Mobile Drawer in Light Mode */
+html.light-theme .mobile-drawer-sheet,
+[data-theme="light"] .mobile-drawer-sheet {
+  background: rgba(246, 248, 252, 0.97) !important;
+  backdrop-filter: blur(30px) !important;
+  -webkit-backdrop-filter: blur(30px) !important;
+  color: #0f172a !important;
+}
+
+html.light-theme .mobile-drawer-sheet [class*="bg-zinc-900"],
+html.light-theme .mobile-drawer-sheet [class*="bg-zinc-950"],
+[data-theme="light"] .mobile-drawer-sheet [class*="bg-zinc-900"],
+[data-theme="light"] .mobile-drawer-sheet [class*="bg-zinc-950"] {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-color: rgba(226, 232, 240, 0.9) !important;
+  box-shadow: 0 8px 25px -3px rgba(15, 23, 42, 0.05) !important;
+}
+
+/* Custom Scrollbars */
 ::-webkit-scrollbar {
   width: 7px;
   height: 7px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-app);
+  background: #060608;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border-subtle);
+  background: #1e1e28;
   border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
+  background: #7c3aed;
 }
 
-/* Focus Visible Accessibility */
-:focus-visible {
-  outline: 2px solid var(--accent-color);
-  outline-offset: 2px;
+/* Background Atmosphere (Royal Purple & Imperial Gold - Smooth Velvet Canvas) */
+.bg-obsidian {
+  background-color: #08070e;
+  background-image: 
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(124, 58, 237, 0.16), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 100% 40%, rgba(245, 158, 11, 0.08), transparent 60%),
+    radial-gradient(ellipse 50% 30% at 0% 70%, rgba(147, 51, 234, 0.09), transparent 50%);
 }
 
-/* Base Buttons */
-.btn-accent {
-  background-color: var(--accent-color);
-  color: #FFFFFF;
-  border: 1px solid transparent;
-  transition: background-color 0.15s ease, opacity 0.15s ease;
+/* No harsh grid lines - Smooth Organic Canvas */
+.cosmic-grid {
+  display: none !important;
 }
 
-.btn-accent:hover {
-  background-color: var(--accent-strong-color);
+/* Quiet Luxury Glassmorphism */
+.glass-luxury {
+  background: rgba(18, 15, 30, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-.btn-secondary {
-  background-color: var(--bg-surface-secondary);
-  color: var(--text-main);
-  border: 1px solid var(--border-subtle);
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+.glass-luxury-card {
+  background: rgba(17, 14, 28, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.btn-secondary:hover {
-  background-color: var(--bg-surface);
-  border-color: var(--accent-color);
+.glass-luxury-card:hover {
+  background: rgba(24, 19, 40, 0.85);
+  border-color: rgba(168, 85, 247, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 25px -5px rgba(168, 85, 247, 0.2);
 }
 
-/* Form Inputs */
-input:not([type="checkbox"]):not([type="radio"]),
-textarea,
-select {
-  background-color: var(--bg-surface) !important;
-  border: 1px solid var(--border-subtle) !important;
-  color: var(--text-main) !important;
-  border-radius: 10px;
-  transition: border-color 0.15s ease;
+.glass-gold-card {
+  background: rgba(20, 17, 28, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-input:not([type="checkbox"]):not([type="radio"]):focus,
-textarea:focus,
-select:focus {
-  border-color: var(--accent-color) !important;
-  outline: none;
+.glass-gold-card:hover {
+  background: rgba(28, 22, 36, 0.85);
+  border-color: rgba(245, 158, 11, 0.6);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 30px -5px rgba(245, 158, 11, 0.3);
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
+/* Elegant Royal Typography Gradients */
+.text-amethyst-gradient {
+  background: linear-gradient(135deg, #ffffff 20%, #e9d5ff 60%, #c084fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #d97706 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-silver-gradient {
+  background: linear-gradient(135deg, #ffffff 40%, #e2e8f0 75%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Liquid Gold Shimmer & Prestigious Gold Text */
+@keyframes goldShimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.text-gold-luxury {
+  background: linear-gradient(90deg, #f59e0b 0%, #fef08a 25%, #d97706 50%, #fef08a 75%, #f59e0b 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: goldShimmer 6s linear infinite;
+}
+
+.text-gold-static {
+  background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #b45309 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Floating Gentle Dynamic Animations */
+@keyframes floatGentle {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes floatGentleReverse {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(8px); }
+}
+
+@keyframes goldPulseGlow {
+  0%, 100% { box-shadow: 0 0 15px -3px rgba(245, 158, 11, 0.25), 0 0 6px -2px rgba(251, 191, 36, 0.3); }
+  50% { box-shadow: 0 0 32px 2px rgba(245, 158, 11, 0.45), 0 0 12px 2px rgba(251, 191, 36, 0.55); }
+}
+
+.animate-float-gentle {
+  animation: floatGentle 5s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+  animation: floatGentleReverse 6s ease-in-out infinite;
+}
+
+.animate-gold-glow {
+  animation: goldPulseGlow 3s ease-in-out infinite;
+}
+
+/* Infinite Marquee Ticker (Dynamic Moving Banner) */
+@keyframes marqueeScroll {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(50%); }
+}
+
+.animate-marquee-scroll {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 28s linear infinite;
+}
+
+.animate-marquee-scroll:hover {
+  animation-play-state: paused;
+}
+
+/* Ambient Glow Animations */
+@keyframes ambientDrift {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.2; }
+  50% { transform: translate(30px, -20px) scale(1.08); opacity: 0.35; }
+  100% { transform: translate(-20px, 15px) scale(0.95); opacity: 0.22; }
+}
+
+.animate-ambient-drift {
+  animation: ambientDrift 18s ease-in-out infinite alternate;
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float-slow {
+  animation: floatSlow 7s ease-in-out infinite;
+}
+
+@keyframes pulseSubtle {
+  0%, 100% { opacity: 0.95; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.02); }
+}
+
+.animate-pulse-subtle {
+  animation: pulseSubtle 4s ease-in-out infinite;
+}
+
+/* Dynamic floating video watermark animation */
+@keyframes floatWatermark {
+  0% { top: 10%; left: 10%; opacity: 0.25; }
+  25% { top: 20%; left: 70%; opacity: 0.45; }
+  50% { top: 75%; left: 60%; opacity: 0.25; }
+  75% { top: 60%; left: 15%; opacity: 0.5; }
+  100% { top: 10%; left: 10%; opacity: 0.25; }
+}
+
+.video-watermark {
+  animation: floatWatermark 24s infinite linear;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* =========================================================================
+   ANMKA-STYLE DYNAMIC ROTATING BORDER BEAM (المؤثر الديناميكي الفخم للزر)
+   ========================================================================= */
+@keyframes spinBorder {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes goldFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.shimmer-border-flow {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #d97706, #fbbf24, #fef08a, #f59e0b, #fbbf24, #d97706);
+  background-size: 300% 100%;
+  animation: goldFlow 3.5s ease infinite;
+  box-shadow: 0 0 25px -4px rgba(245, 158, 11, 0.4);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+@keyframes goldShimmerSweep {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.gold-dynamic-shimmer-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  padding: 2.5px;
+  background: linear-gradient(90deg, #f59e0b, #fef08a, #ffffff, #f59e0b, #d97706, #fef08a, #f59e0b);
+  background-size: 300% 300%;
+  animation: goldShimmerSweep 3s ease infinite;
+  box-shadow: 0 0 25px -2px rgba(245, 158, 11, 0.55);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.gold-dynamic-shimmer-btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 35px 2px rgba(245, 158, 11, 0.7);
+}
+
+.gold-dynamic-shimmer-btn:active {
+  transform: scale(0.97);
+}
+
+@keyframes ambientGoldPulse {
+  0%, 100% {
+    transform: scale(1) translate(0, 0);
+    opacity: 0.25;
+  }
+  50% {
+    transform: scale(1.15) translate(8px, -8px);
+    opacity: 0.45;
+  }
+}
+
+.dynamic-gold-aura-1 {
+  animation: ambientGoldPulse 6s ease-in-out infinite;
+}
+
+.dynamic-gold-aura-2 {
+  animation: ambientGoldPulse 8s ease-in-out infinite reverse;
+}
+
+.shimmer-border-flow:active {
+  transform: scale(0.97);
+}
+
+.shimmer-border-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border-radius: 9999px;
+  overflow: hidden;
+  isolation: isolate;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.shimmer-border-wrapper:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 35px -5px rgba(245, 158, 11, 0.45);
+}
+
+.shimmer-border-wrapper:active {
+  transform: scale(0.97);
+}
+
+.shimmer-beam-gold {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(245, 158, 11, 0.4) 20%,
+    #fef08a 45%,
+    #ffffff 50%,
+    #f59e0b 55%,
+    rgba(245, 158, 11, 0.4) 80%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: goldLaserSweep 2.5s linear infinite;
+  pointer-events: none;
+}
+
+.shimmer-beam-purple {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(168, 85, 247, 0.4) 20%,
+    #e9d5ff 45%,
+    #ffffff 50%,
+    #a855f7 55%,
+    rgba(168, 85, 247, 0.4) 80%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: goldLaserSweep 2.5s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes goldLaserSweep {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes goldTextShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.animate-gold-text-shimmer {
+  background: linear-gradient(
+    90deg,
+    #f59e0b 0%,
+    #fef08a 35%,
+    #ffffff 50%,
+    #fef08a 65%,
+    #f59e0b 100%
+  );
+  background-size: 200% 100%;
+  animation: goldTextShimmer 4s ease-in-out infinite;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.shimmer-beam-blue {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(37, 99, 235, 0.4) 20%,
+    #93c5fd 45%,
+    #ffffff 50%,
+    #2563eb 55%,
+    rgba(37, 99, 235, 0.4) 80%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: goldLaserSweep 2.5s linear infinite;
+  pointer-events: none;
+}
+
+.shimmer-button-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  border-radius: 9999px;
+  background: #ffffff;
+  border: 1px solid rgba(203, 213, 225, 0.8);
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
+  color: #0f172a;
+  transition: all 0.25s ease;
+}
+
+html.dark .shimmer-button-content,
+[data-theme="dark"] .shimmer-button-content {
+  background: linear-gradient(180deg, #18181b 0%, #09090b 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+  color: #ffffff;
+}
+
+.shimmer-border-wrapper:hover .shimmer-button-content {
+  border-color: rgba(37, 99, 235, 0.5);
+}
+
+html.dark .shimmer-border-wrapper:hover .shimmer-button-content,
+[data-theme="dark"] .shimmer-border-wrapper:hover .shimmer-button-content {
+  border-color: rgba(245, 158, 11, 0.5);
+  background: linear-gradient(180deg, #27272a 0%, #121215 100%);
+}
+
+@keyframes pageEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .animate-page-enter {
-  animation: fadeIn 0.2s ease-out;
+  animation: pageEnter 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* =========================================================================
+   Dynamic Multi-Color Systems (Requested by User)
+   ========================================================================= */
+
+/* 1. Dynamic Moving Multi-Color Aura for Navbar */
+@keyframes navAuraFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.dynamic-navbar-aura {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.dynamic-navbar-aura::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.4), rgba(168, 85, 247, 0.3), rgba(251, 191, 36, 0.4), rgba(147, 51, 234, 0.3), rgba(245, 158, 11, 0.4));
+  background-size: 200% 200%;
+  animation: navAuraFlow 8s ease infinite;
+  opacity: 0.35;
+  filter: blur(8px);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* 2. Dynamic Rotating Glowing Logo Emblem */
+@keyframes rotateEmblemAura {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.dynamic-logo-emblem {
+  position: relative;
+  overflow: hidden;
+}
+
+.dynamic-logo-emblem::before {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  background: conic-gradient(from 0deg, #f59e0b, #fbbf24, #d97706, #fef08a, #b45309, #f59e0b);
+  animation: rotateEmblemAura 4s linear infinite;
+  z-index: 0;
+}
+
+.dynamic-logo-emblem > div {
+  position: relative;
+  z-index: 1;
+}
+
+/* 3. Presidential Star Nav Link Pill (رئاسي) */
+/* 3. Unique Luxury Pill for Comprehensive Diplomas */
+@keyframes diplomaPillFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.diploma-luxury-pill {
+  position: relative;
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.12) 0%, rgba(219, 39, 119, 0.1) 50%, rgba(99, 102, 241, 0.12) 100%) !important;
+  background-size: 200% 200% !important;
+  animation: diplomaPillFlow 6s ease infinite !important;
+  color: #7c3aed !important;
+  border: 1.5px solid rgba(168, 85, 247, 0.45) !important;
+  box-shadow: 0 3px 15px -2px rgba(168, 85, 247, 0.25), 0 0 10px rgba(236, 72, 153, 0.15) !important;
+}
+
+html.dark .diploma-luxury-pill,
+[data-theme="dark"] .diploma-luxury-pill {
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.3) 0%, rgba(219, 39, 119, 0.25) 50%, rgba(99, 102, 241, 0.3) 100%) !important;
+  border-color: rgba(168, 85, 247, 0.6) !important;
+  color: #f3e8ff !important;
+  box-shadow: 0 4px 18px -2px rgba(168, 85, 247, 0.45) !important;
+}
+
+.diploma-luxury-pill:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 0 6px 22px -2px rgba(168, 85, 247, 0.45), 0 0 15px rgba(236, 72, 153, 0.25) !important;
+}
+
+/* 4. Dynamic Auth Emblem with Multi-Color Aura */
+.dynamic-auth-emblem {
+  position: relative;
+  border-radius: 1.25rem;
+  padding: 2.5px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px -5px rgba(99, 102, 241, 0.35);
+}
+
+.dynamic-auth-emblem::before {
+  content: '';
+  position: absolute;
+  inset: -60%;
+  background: conic-gradient(from 0deg, #2563eb, #8b5cf6, #ec4899, #f59e0b, #10b981, #06b6d4, #2563eb);
+  animation: rotateEmblemAura 3s linear infinite;
+  z-index: 0;
+}
+
+.dynamic-auth-emblem > div {
+  position: relative;
+  z-index: 1;
+}
+
+/* 5. Dynamic Multi-Color CTA Button with Laser Sheen */
+@keyframes multiCtaSheen {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.dynamic-multi-cta {
+  position: relative;
+  background: linear-gradient(135deg, #1d4ed8 0%, #6366f1 28%, #8b5cf6 55%, #d946ef 82%, #f59e0b 100%) !important;
+  background-size: 250% 250% !important;
+  animation: multiCtaSheen 5s ease infinite !important;
+  color: #ffffff !important;
+  box-shadow: 0 10px 30px -5px rgba(79, 70, 229, 0.4), 0 0 25px rgba(217, 70, 239, 0.3) !important;
+  overflow: hidden;
+}
+
+.dynamic-multi-cta:hover {
+  transform: scale(1.02);
+  box-shadow: 0 14px 35px -5px rgba(79, 70, 229, 0.55), 0 0 30px rgba(217, 70, 239, 0.45) !important;
+}
+
+/* 6. Multi-color Random Floating Dynamic Ambient Drifts */
+@keyframes auroraDrift1 {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(60px, -45px) scale(1.15); }
+  66% { transform: translate(-45px, 55px) scale(0.9); }
+}
+
+@keyframes auroraDrift2 {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(-55px, 65px) scale(1.1); }
+  66% { transform: translate(45px, -35px) scale(0.95); }
+}
+
+@keyframes auroraDrift3 {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(45px, 45px) scale(1.2); }
+  66% { transform: translate(-65px, -45px) scale(0.85); }
+}
+
+@keyframes auroraDrift4 {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(-45px, -55px) scale(1.1); }
+  66% { transform: translate(55px, 35px) scale(0.9); }
+}
+
+.dynamic-drift-1 { animation: auroraDrift1 14s ease-in-out infinite; }
+.dynamic-drift-2 { animation: auroraDrift2 18s ease-in-out infinite; }
+.dynamic-drift-3 { animation: auroraDrift3 16s ease-in-out infinite; }
+.dynamic-drift-4 { animation: auroraDrift4 20s ease-in-out infinite; }
+
+/* 7. Dynamic Multi-Color Trending Diploma Hero CTA (تكسر الألوان لتخطف العين فوراً) */
+@keyframes trendingAuroraFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pulseAuraGlow {
+  0%, 100% {
+    box-shadow: 0 10px 30px -4px rgba(245, 158, 11, 0.5), 0 0 25px rgba(236, 72, 153, 0.4), 0 0 35px rgba(99, 102, 241, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 14px 42px -2px rgba(245, 158, 11, 0.7), 0 0 35px rgba(236, 72, 153, 0.55), 0 0 50px rgba(99, 102, 241, 0.45);
+    transform: scale(1.025);
+  }
+}
+
+.dynamic-trending-cta {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.75rem !important;
+  padding: 0.875rem 1.85rem !important;
+  border-radius: 9999px !important;
+  background: linear-gradient(135deg, #f59e0b 0%, #ea580c 25%, #db2777 50%, #7c3aed 75%, #2563eb 100%) !important;
+  background-size: 260% 260% !important;
+  animation: trendingAuroraFlow 4.5s ease infinite, pulseAuraGlow 3s ease-in-out infinite !important;
+  color: #ffffff !important;
+  font-weight: 900 !important;
+  text-decoration: none !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.6) !important;
+  overflow: hidden !important;
+  transition: all 0.25s ease !important;
+  cursor: pointer !important;
+}
+
+.dynamic-trending-cta:hover {
+  transform: translateY(-2px) scale(1.04) !important;
+  box-shadow: 0 18px 48px -2px rgba(245, 158, 11, 0.8), 0 0 45px rgba(236, 72, 153, 0.65) !important;
+}
+
+.dynamic-trending-cta span,
+.dynamic-trending-cta svg {
+  position: relative !important;
+  z-index: 2 !important;
+  color: #ffffff !important;
+}
+
+/* 8. Hero Headline Gradient in Perfect Modern Arabic Typography */
+.hero-focal-gradient {
+  background: linear-gradient(135deg, #1d4ed8 0%, #4f46e5 25%, #9333ea 55%, #c026d3 75%, #d97706 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  padding-bottom: 4px;
+}
+
+html.dark .hero-focal-gradient,
+[data-theme="dark"] .hero-focal-gradient {
+  background: linear-gradient(135deg, #60a5fa 0%, #818cf8 25%, #c084fc 55%, #f472b6 75%, #fbbf24 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* =========================================================================
+   DRM CONTENT INTEGRITY ENGINE
+   ========================================================================= */
+
+.drm-secure-canvas {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+
+/* Complete destruction on Print / PDF export / Save */
+@media print {
+  body * {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+}

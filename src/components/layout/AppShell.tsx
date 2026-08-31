@@ -38,15 +38,16 @@ export default function AppShell({
 
   const isStudio = pathname.startsWith('/admin') || pathname.startsWith('/instructor');
 
+  // Shell with Header at the top across all pages (Public, Admin, Instructor, Student)
   return (
-    <div className="min-h-screen flex flex-col antialiased selection:bg-[#A77AB0]/30 selection:text-white relative w-full max-w-[100vw] overflow-x-hidden bg-background text-text-primary">
+    <div className="min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-black relative w-full max-w-[100vw] overflow-x-hidden">
       <TopProgressBar />
       <Header
         initialPlatformName={initialPlatformName}
         initialPlatformTagline={initialPlatformTagline}
         initialUser={initialUser}
       />
-      <main className={`flex-1 w-full ${pathname === '/' ? 'pt-0 pb-0' : isStudio ? 'pt-20 sm:pt-24 pb-12' : 'pt-20 sm:pt-24 pb-12'}`}>
+      <main className={`flex-1 w-full ${pathname === '/' ? 'pt-0 pb-0' : isStudio ? 'pt-28 sm:pt-32 md:pt-36 pb-12' : 'pt-20 sm:pt-24 md:pt-28 pb-12'}`}>
         <div key={pathname} className="animate-page-enter">
           {children}
         </div>
