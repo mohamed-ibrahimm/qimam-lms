@@ -24,10 +24,10 @@ export default function AppShell({
 }: AppShellProps) {
   const pathname = usePathname();
 
-  // Focused learning classroom: NO marketing header, NO footer, full height
-  const isClassroom = pathname.startsWith('/learn');
+  // Focused learning classroom & Live Studio: NO marketing header, NO footer, full screen
+  const isFocusedRoom = pathname.startsWith('/learn') || pathname.startsWith('/live');
 
-  if (isClassroom) {
+  if (isFocusedRoom) {
     return (
       <div className="w-full min-h-screen flex flex-col antialiased">
         <TopProgressBar />

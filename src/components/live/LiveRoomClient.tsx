@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
@@ -22,6 +22,8 @@ import {
   ShieldCheck,
   Award,
   Copy,
+  Check,
+  Share2,
 } from 'lucide-react';
 
 interface LiveRoomClientProps {
@@ -45,6 +47,7 @@ export default function LiveRoomClient({ sessionId, initialSession }: LiveRoomCl
   const isInstructor = initialSession.isInstructor;
   const user = initialSession.currentUser;
 
+  const [copiedLink, setCopiedLink] = useState(false);
   const [isCameraOn, setIsCameraOn] = useState(false);
   const [isMicOn, setIsMicOn] = useState(false);
   const [isScreenSharing, setIsScreenSharing] = useState(false);
@@ -196,6 +199,22 @@ export default function LiveRoomClient({ sessionId, initialSession }: LiveRoomCl
           </div>
         </div>
         <div className="flex items-center gap-2.5">
+          {/* Copy Invite Link Button */}
+          <button
+            type="button"
+            onClick={() => {
+              if (typeof window !== 'undefined') {
+                navigator.clipboard.writeText(window.location.href);
+                setCopiedLink(true);
+                setTimeout(() => setCopiedLink(false), 2500);
+              }
+            }}
+            className="px-3.5 py-1.5 rounded-xl text-xs font-black bg-gradient-to-r from-amber-500 to-yellow-400 text-zinc-950 flex items-center gap-1.5 shadow-md shadow-amber-500/25 hover:scale-105 transition-all cursor-pointer shrink-0"
+          >
+            {copiedLink ? <Check className="w-3.5 h-3.5 text-zinc-950" /> : <Copy className="w-3.5 h-3.5 text-zinc-950" />}
+            <span>{copiedLink ? 'تم نسخ الرابط للطلاب! 📋' : '🔗 نسخ رابط دعوة الطلاب'}</span>
+          </button>
+
           {isRecording && <div className="px-2.5 py-1 rounded-full bg-rose-500/20 text-rose-300 text-xs font-mono font-bold animate-pulse">REC {Math.floor(recordingSeconds/60)}:{recordingSeconds%60}</div>}
           {isInstructor && <button onClick={() => setIsRecording(!isRecording)} className="px-3 py-1.5 rounded-xl text-xs font-bold bg-white/5 hover:bg-white/10 border border-white/10 flex items-center gap-1.5 cursor-pointer"><Radio className="w-3.5 h-3.5" /><span>{isRecording ? 'إيقاف التسجيل' : 'تسجيل سحابي'}</span></button>}
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs font-bold text-zinc-300"><Users className="w-3.5 h-3.5 text-amber-400" /><span>34 طالب</span></div>

@@ -459,7 +459,7 @@ export default function InstructorClient({
   }, 0);
 
   return (
-    <div className="min-h-screen relative pt-24 sm:pt-28 pb-16 px-4 sm:px-6 md:px-8 max-w-[1600px] mx-auto">
+    <div className="min-h-screen relative flex flex-col">
       {/* Dynamic Ambient Mesh in Background */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
         <div className="dynamic-drift-1 absolute top-[5%] right-[15%] w-[550px] h-[550px] bg-amber-500/10 rounded-full blur-[130px]" />
@@ -468,8 +468,9 @@ export default function InstructorClient({
         <div className="dynamic-drift-4 absolute bottom-[25%] left-[25%] w-[480px] h-[480px] bg-emerald-500/10 rounded-full blur-[125px]" />
       </div>
 
-      <div className="flex flex-col lg:flex-row items-start gap-6 w-full">
-        {/* Instructor Persistent Luxury Sidebar */}
+      {/* Main Studio View Area matching Admin Layout (Full Width & Pristine Centered Spacing) */}
+      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pb-16 relative z-10 w-full min-w-0 space-y-6">
+        {/* Modern Slim Status Bar & Floating Command Palette Launcher matching Admin */}
         <InstructorSidebarClient
           instructorName={user.officialFullName || `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'محاضر قمم'}
           instructorEmail={user.email}
@@ -489,9 +490,6 @@ export default function InstructorClient({
           }}
           publicProfileSlug={user.username || user.id}
         />
-
-        {/* Main Studio View Area */}
-        <main className="flex-1 w-full min-w-0 space-y-6 relative z-10">
           {/* Studio Top Control Card */}
           <div className="p-5 sm:p-6 rounded-3xl bg-white/90 dark:bg-[#0e0a1f]/90 border border-slate-200/90 dark:border-purple-900/40 shadow-xl backdrop-blur-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div className="space-y-1.5">
@@ -2060,7 +2058,6 @@ export default function InstructorClient({
           </div>
         )}
       </main>
-      </div>
 
       {/* RENEWAL / UPGRADE MODAL */}
       {showRenewModal && mounted && createPortal(
