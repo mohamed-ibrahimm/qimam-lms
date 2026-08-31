@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import Link from 'next/link';
@@ -11,7 +11,6 @@ import {
   FileText,
   MessageCircle,
 } from 'lucide-react';
-import LumaKeyMotion from './LumaKeyMotion';
 
 interface DesktopHeroProps {
   settings: Record<string, string>;
@@ -75,9 +74,22 @@ export default function DesktopHero({
             </p>
           </div>
 
-          {/* Left: Pure Chromatic Motion Animation Emerging Directly from Background (0 Halo, 0 Square) */}
+          {/* Left: Pure Chromatic Motion Animation (Lifted & Clean) */}
           <div className="lg:col-span-4 flex items-center justify-center relative pointer-events-none select-none">
-            <LumaKeyMotion />
+            {/* Ambient Radial Glow behind animation */}
+            <div className="absolute w-64 h-64 lg:w-80 lg:h-80 bg-amber-500/15 rounded-full blur-[90px] pointer-events-none -z-10" />
+            
+            <div className="relative w-full max-w-[280px] lg:max-w-[320px] xl:max-w-[360px] aspect-square flex items-center justify-center">
+              <video
+                src="https://cdn.recent.design/items/nog55iz/0/v0.mp4"
+                poster="https://cdn.recent.design/items/nog55iz/0/poster/1200.webp"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-contain pointer-events-none filter contrast-125 brightness-110 drop-shadow-[0_0_35px_rgba(245,158,11,0.2)] rounded-3xl"
+              />
+            </div>
           </div>
 
         </div>
