@@ -28,8 +28,8 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Instructor Routes protection
-  if (pathname.startsWith('/instructor')) {
+  // Instructor Routes protection (Allow /instructor/plans publicly)
+  if (pathname.startsWith('/instructor') && pathname !== '/instructor/plans') {
     if (!token || (userRole !== 'INSTRUCTOR' && userRole !== 'ADMIN')) {
       const url = new URL('/login', request.url);
       url.searchParams.set('callbackUrl', pathname);
