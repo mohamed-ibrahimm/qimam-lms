@@ -174,37 +174,37 @@ export default function Header({
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 p-2 sm:p-3.5 md:p-4 transition-all pointer-events-none">
-      <nav className="pointer-events-auto dynamic-navbar-aura max-w-[1536px] w-full sm:w-[98%] mx-auto flex items-center justify-between min-h-[3.75rem] sm:min-h-[4.75rem] px-4 sm:px-6 md:px-8 rounded-full bg-white/95 dark:bg-[#0c0918]/95 border border-slate-200/90 dark:border-amber-500/30 backdrop-blur-2xl shadow-xl shadow-slate-900/5 dark:shadow-[0_15px_50px_-10px_rgba(245,158,11,0.25)] relative gap-3 sm:gap-6">
+    <header className="fixed top-0 left-0 right-0 z-50 p-2 sm:p-3 transition-all pointer-events-none">
+      <nav className="pointer-events-auto max-w-[1280px] w-full mx-auto flex items-center justify-between min-h-[3.75rem] px-4 sm:px-6 rounded-full glass-nav shadow-xs relative gap-3 sm:gap-6">
         
         {/* =========================================================================
-            1. RIGHT: LOGO & PLATFORM TITLE WITH ROTATING GOLD HALO
+            1. RIGHT: LOGO & PLATFORM TITLE
            ========================================================================= */}
         <Link href="/" className="flex items-center gap-3 sm:gap-3.5 shrink-0 group py-1 min-w-0">
-          <div className="dynamic-logo-emblem w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl p-[2px] shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform shrink-0">
-            <div className="w-full h-full bg-white dark:bg-[#0c0918] rounded-[10px] sm:rounded-[14px] flex items-center justify-center border border-amber-400/40 dark:border-amber-500/40 shadow-xs">
-              <GraduationCap className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500 dark:text-amber-400" />
+          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl p-[1px] bg-border shrink-0">
+            <div className="w-full h-full bg-surface rounded-[10px] flex items-center justify-center border border-border">
+              <GraduationCap className="w-5 h-5 text-accent" />
             </div>
           </div>
           <div className="flex flex-col text-right justify-center min-w-0">
-            <span className="text-[9px] sm:text-[10.5px] font-black text-amber-500 dark:text-amber-400 flex items-center gap-1 leading-none mb-0.5 whitespace-nowrap">
+            <span className="text-[10px] font-semibold text-accent leading-none mb-0.5 whitespace-nowrap">
               منصة تعليمية معتمدة
             </span>
-            <span className="text-sm sm:text-base md:text-lg font-black text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-amber-300 transition-colors tracking-normal whitespace-nowrap leading-relaxed drop-shadow-xs">
+            <span className="text-sm sm:text-base font-bold text-text-primary group-hover:text-accent transition-colors tracking-tight whitespace-nowrap leading-tight">
               {platformName}
             </span>
-            <span className="text-[8.5px] sm:text-[10px] text-slate-500 dark:text-amber-200/80 font-medium whitespace-nowrap leading-relaxed mt-0.5 block">
+            <span className="text-[10px] text-text-muted font-normal whitespace-nowrap leading-tight mt-0.5 block">
               {platformTagline}
             </span>
           </div>
         </Link>
 
         {/* =========================================================================
-            2. CENTER: CLEAN BALANCED CENTERED NAVIGATION (ZERO OVERLAP)
+            2. CENTER: CLEAN BALANCED CENTERED NAVIGATION
            ========================================================================= */}
-        <div className="hidden lg:flex items-center gap-1.5 xl:gap-2 bg-slate-100/90 dark:bg-black/60 p-1.5 rounded-full border border-slate-200/90 dark:border-white/10 shadow-inner shrink-0 mx-auto">
+        <div className="hidden lg:flex items-center gap-1 bg-surface-secondary/80 p-1.5 rounded-full border border-border shrink-0 mx-auto backdrop-blur-md">
           
-          {/* 1. THE FEATURED PROMINENT CENTERPIECE: جميع الكورسات مع خط مميز وتدرج ذهبي فخم */}
+          {/* 1. جميع الكورسات */}
           <div
             className="relative group"
             onMouseEnter={() => setCoursesMenuOpen(true)}
@@ -214,90 +214,90 @@ export default function Header({
               href="/courses"
               prefetch={true}
               onClick={() => setCoursesMenuOpen(false)}
-              className={`px-4.5 py-2 text-xs sm:text-[13px] font-black rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 cursor-pointer shadow-md ${
+              className={`px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 cursor-pointer ${
                 pathname.startsWith('/courses')
-                  ? 'diploma-luxury-pill scale-105 ring-2 ring-amber-400/60 shadow-amber-500/25'
-                  : 'diploma-luxury-pill hover:scale-105'
+                  ? 'bg-accent-soft text-accent font-bold border border-border'
+                  : 'text-text-secondary hover:text-text-primary hover:bg-surface'
               }`}
             >
-              <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0 animate-pulse" />
-              <span className="whitespace-nowrap font-black tracking-wide">جميع الكورسات</span>
-              <ChevronDown className={`w-3.5 h-3.5 text-amber-400 transition-transform duration-200 shrink-0 ${coursesMenuOpen ? 'rotate-180' : ''}`} />
+              <BookOpen className="w-3.5 h-3.5" />
+              <span className="whitespace-nowrap">جميع الكورسات</span>
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-150 shrink-0 ${coursesMenuOpen ? 'rotate-180' : ''}`} />
             </Link>
 
-            {/* Seamless Dropdown Bridge (no gap so mouse never loses focus) */}
+            {/* Seamless Dropdown */}
             <div
-              className={`absolute top-full left-1/2 -translate-x-1/2 pt-2 w-72 z-50 text-right transition-all duration-200 ${
+              className={`absolute top-full left-1/2 -translate-x-1/2 pt-2 w-72 z-50 text-right transition-all duration-150 ${
                 coursesMenuOpen ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none -translate-y-1'
               }`}
             >
-              <div className="rounded-3xl bg-white dark:bg-[#0c0918] border-2 border-slate-200 dark:border-amber-500/40 shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.8)] p-2.5 space-y-1.5 ring-1 ring-slate-900/5 dark:ring-white/10">
+              <div className="rounded-2xl bg-surface border border-border shadow-xl p-2 space-y-1">
                 <Link
                   href="/courses"
                   onClick={() => setCoursesMenuOpen(false)}
-                  className="flex items-center justify-between p-2.5 rounded-2xl bg-amber-50 dark:bg-amber-500/10 hover:bg-amber-100 dark:hover:bg-amber-500/20 text-slate-900 dark:text-white transition-all group/item border border-amber-200 dark:border-amber-500/30"
+                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-surface-secondary text-text-primary transition-colors group/item"
                 >
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
-                      <BookOpen className="w-4 h-4" />
+                    <div className="w-7 h-7 rounded-lg bg-surface-secondary text-accent flex items-center justify-center shrink-0">
+                      <BookOpen className="w-3.5 h-3.5" />
                     </div>
                     <div>
-                      <span className="text-xs font-black block text-slate-900 dark:text-white">دليل جميع الكورسات</span>
-                      <span className="text-[10px] text-slate-500 dark:text-zinc-400">كافة التخصصات والمسارات</span>
+                      <span className="text-xs font-bold block text-text-primary">دليل جميع الكورسات</span>
+                      <span className="text-[10px] text-text-muted">كافة التخصصات والمسارات</span>
                     </div>
                   </div>
-                  <ArrowLeft className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 group-hover/item:-translate-x-1 transition-transform" />
+                  <ArrowLeft className="w-3.5 h-3.5 text-text-muted group-hover/item:-translate-x-0.5 transition-transform" />
                 </Link>
 
                 <Link
                   href="/books"
                   onClick={() => setCoursesMenuOpen(false)}
-                  className="flex items-center justify-between p-2.5 rounded-2xl bg-emerald-50 dark:bg-emerald-500/10 hover:bg-emerald-100 dark:hover:bg-emerald-500/20 text-slate-900 dark:text-white transition-all group/item border border-emerald-200 dark:border-emerald-500/30"
+                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-surface-secondary text-text-primary transition-colors group/item"
                 >
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
-                      <FileText className="w-4 h-4" />
+                    <div className="w-7 h-7 rounded-lg bg-surface-secondary text-accent flex items-center justify-center shrink-0">
+                      <FileText className="w-3.5 h-3.5" />
                     </div>
                     <div>
-                      <span className="text-xs font-black block text-emerald-900 dark:text-emerald-300">سوق المذكرات والكتب الرقمية</span>
-                      <span className="text-[10px] text-slate-500 dark:text-zinc-400">ملخصات ومراجع محمية بالـ DRM</span>
+                      <span className="text-xs font-bold block text-text-primary">سوق المذكرات والكتب الرقمية</span>
+                      <span className="text-[10px] text-text-muted">ملخصات ومراجع محمية</span>
                     </div>
                   </div>
-                  <span className="text-[9px] px-1.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 font-bold">DRM</span>
+                  <ArrowLeft className="w-3.5 h-3.5 text-text-muted group-hover/item:-translate-x-0.5 transition-transform" />
                 </Link>
 
                 <Link
                   href="/courses?type=students"
                   onClick={() => setCoursesMenuOpen(false)}
-                  className="flex items-center justify-between p-2.5 rounded-2xl bg-slate-50/90 dark:bg-zinc-900/70 hover:bg-amber-50 dark:hover:bg-amber-500/15 text-slate-900 dark:text-white transition-all group/item border border-slate-100 dark:border-zinc-800 hover:border-amber-300 dark:hover:border-amber-500/40"
+                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-surface-secondary text-text-primary transition-colors group/item"
                 >
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
-                      <GraduationCap className="w-4 h-4" />
+                    <div className="w-7 h-7 rounded-lg bg-surface-secondary text-accent flex items-center justify-center shrink-0">
+                      <GraduationCap className="w-3.5 h-3.5" />
                     </div>
                     <div>
-                      <span className="text-xs font-black block text-amber-800 dark:text-amber-300">كورسات الطلاب</span>
-                      <span className="text-[10px] text-slate-500 dark:text-zinc-400">شروحات ومناهج الطلبة</span>
+                      <span className="text-xs font-bold block text-text-primary">كورسات الطلاب</span>
+                      <span className="text-[10px] text-text-muted">شروحات ومناهج الطلبة</span>
                     </div>
                   </div>
-                  <span className="text-[9px] px-1.5 py-0.5 rounded-md bg-amber-500/20 text-amber-700 dark:text-amber-300 font-bold">طالب</span>
+                  <ArrowLeft className="w-3.5 h-3.5 text-text-muted group-hover/item:-translate-x-0.5 transition-transform" />
                 </Link>
 
                 <Link
                   href="/courses?type=instructors"
                   onClick={() => setCoursesMenuOpen(false)}
-                  className="flex items-center justify-between p-2.5 rounded-2xl bg-slate-50/90 dark:bg-zinc-900/70 hover:bg-indigo-50 dark:hover:bg-indigo-500/15 text-slate-900 dark:text-white transition-all group/item border border-slate-100 dark:border-zinc-800 hover:border-indigo-300 dark:hover:border-indigo-500/40"
+                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-surface-secondary text-text-primary transition-colors group/item"
                 >
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-xl bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
-                      <Video className="w-4 h-4" />
+                    <div className="w-7 h-7 rounded-lg bg-surface-secondary text-accent flex items-center justify-center shrink-0">
+                      <Video className="w-3.5 h-3.5" />
                     </div>
                     <div>
-                      <span className="text-xs font-black block text-indigo-800 dark:text-indigo-300">كورسات المحاضرين</span>
-                      <span className="text-[10px] text-slate-500 dark:text-zinc-400">مدرسين ودكاترة معتمدين</span>
+                      <span className="text-xs font-bold block text-text-primary">كورسات المحاضرين</span>
+                      <span className="text-[10px] text-text-muted">مدرسين ودكاترة معتمدين</span>
                     </div>
                   </div>
-                  <span className="text-[9px] px-1.5 py-0.5 rounded-md bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 font-bold">دكتور</span>
+                  <ArrowLeft className="w-3.5 h-3.5 text-text-muted group-hover/item:-translate-x-0.5 transition-transform" />
                 </Link>
               </div>
             </div>
@@ -307,13 +307,13 @@ export default function Header({
           <Link
             href="/books"
             prefetch={true}
-            className={`px-3.5 py-2 text-xs sm:text-[12.5px] font-black rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
+            className={`px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
               pathname.startsWith('/books')
-                ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 dark:from-amber-500 dark:via-yellow-400 dark:to-amber-500 text-white dark:text-zinc-950 font-black shadow-md scale-[1.02]'
-                : 'text-slate-700 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-amber-400 hover:bg-slate-200/60 dark:hover:bg-zinc-800/70'
+                ? 'bg-accent-soft text-accent font-bold border border-border'
+                : 'text-text-secondary hover:text-text-primary hover:bg-surface'
             }`}
           >
-            <FileText className="w-3.5 h-3.5 shrink-0 text-blue-600 dark:text-amber-400" />
+            <FileText className="w-3.5 h-3.5 shrink-0" />
             <span className="whitespace-nowrap">المكتبة والمذكرات</span>
           </Link>
 
@@ -321,31 +321,27 @@ export default function Header({
           <Link
             href="/diplomas"
             prefetch={true}
-            className={`px-3.5 py-2 text-xs sm:text-[12.5px] font-bold rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
+            className={`px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
               pathname.startsWith('/diplomas')
-                ? 'bg-purple-600 text-white shadow-md shadow-purple-600/20 font-black'
-                : 'text-slate-600 dark:text-zinc-300 hover:text-purple-600 dark:hover:text-white hover:bg-white/70 dark:hover:bg-zinc-800/60'
+                ? 'bg-accent-soft text-accent font-bold border border-border'
+                : 'text-text-secondary hover:text-text-primary hover:bg-surface'
             }`}
           >
-            <Award className="w-3.5 h-3.5 text-purple-400" />
+            <Award className="w-3.5 h-3.5" />
             <span className="whitespace-nowrap">الدبلومات الشاملة</span>
           </Link>
 
-          {/* 4. Link: البث المباشر 🔴 */}
+          {/* 4. Link: البث المباشر */}
           <Link
             href="/live"
             prefetch={true}
-            className={`px-3.5 py-2 text-xs sm:text-[12.5px] font-bold rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
+            className={`px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
               pathname.startsWith('/live')
-                ? 'bg-gradient-to-r from-rose-600 to-red-600 text-white shadow-md shadow-rose-600/30 font-black scale-105'
-                : 'text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-500/15 font-black hover:scale-105'
+                ? 'bg-accent-soft text-accent font-bold border border-border'
+                : 'text-text-secondary hover:text-text-primary hover:bg-surface'
             }`}
           >
-            <span className="flex h-2 w-2 relative shrink-0">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
-            </span>
-            <Radio className="w-3.5 h-3.5 text-rose-500 shrink-0" />
+            <Radio className="w-3.5 h-3.5 text-rose-400" />
             <span className="whitespace-nowrap">البث المباشر</span>
           </Link>
 

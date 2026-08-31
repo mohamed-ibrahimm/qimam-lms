@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import Link from 'next/link';
 import {
   GraduationCap,
@@ -48,158 +48,154 @@ export default function Footer({ initialSettings }: FooterProps) {
   const linkedinUrl = initialSettings?.['LINKEDIN_URL'] || '';
 
   return (
-    <footer className="w-full bg-[#080710] border-t border-white/[0.06] mt-20 pt-16 pb-12 text-slate-400 relative">
-      {/* Top subtle purple/gold accent edge */}
-      <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-amber-400/25 via-purple-500/25 to-transparent pointer-events-none" />
-
+    <footer className="w-full bg-surface border-t border-border mt-16 pt-12 pb-10 text-text-secondary relative">
+      
       {/* 5-Column Master Footer Grid */}
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-8">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
         
         {/* 1. Brand Information */}
-        <div className="space-y-4 sm:col-span-2 lg:col-span-1">
+        <div className="space-y-3 sm:col-span-2 lg:col-span-1">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 via-fuchsia-600 to-amber-400 p-[2px] shadow-lg shadow-purple-950/50">
-              <div className="w-full h-full bg-[#0c0918] rounded-[10px] flex items-center justify-center">
-                <GraduationCap className="w-5 h-5 text-amber-400" />
-              </div>
+            <div className="w-9 h-9 rounded-xl bg-surface-secondary border border-border flex items-center justify-center shrink-0">
+              <GraduationCap className="w-5 h-5 text-accent" />
             </div>
             <div>
-              <h3 className="text-lg font-black text-white">{platformName}</h3>
-              <p className="text-[11px] text-amber-300 font-medium">التميز الأكاديمي والمهني المعتمد</p>
+              <h3 className="text-base font-bold text-text-primary">{platformName}</h3>
+              <p className="text-[11px] text-accent font-medium">التميز الأكاديمي والمهني المعتمد</p>
             </div>
           </div>
-          <p className="text-xs leading-relaxed text-slate-400">
+          <p className="text-xs leading-relaxed text-text-secondary">
             {platformTagline}
           </p>
           <div className="pt-1">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-300 text-[11px] font-bold">
-              <Award className="w-3.5 h-3.5" />
-              شهادات معتمدة بكود تحقق رقمي
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-secondary border border-border text-text-secondary text-[11px] font-medium">
+              <Award className="w-3.5 h-3.5 text-accent" />
+              <span>شهادات معتمدة بكود تحقق رقمي</span>
             </span>
           </div>
         </div>
 
-        {/* 2. Quick Links (روابط سريعة) */}
+        {/* 2. Quick Links */}
         <div>
-          <h4 className="text-sm font-bold text-white mb-4 border-b border-white/[0.08] pb-2 inline-block">
+          <h4 className="text-xs font-bold text-text-primary mb-3 border-b border-border pb-1.5 inline-block">
             روابط سريعة
           </h4>
-          <ul className="space-y-2.5 text-xs">
+          <ul className="space-y-2 text-xs">
             <li>
-              <Link href="/courses" className="hover:text-amber-300 transition-colors flex items-center gap-1.5">
-                <BookOpen className="w-3.5 h-3.5 text-amber-400/70" />
+              <Link href="/courses" className="hover:text-accent transition-colors flex items-center gap-1.5">
+                <BookOpen className="w-3.5 h-3.5 text-text-muted" />
                 <span>الدورات التدريبية</span>
               </Link>
             </li>
             <li>
-              <Link href="/diplomas" className="hover:text-amber-300 transition-colors flex items-center gap-1.5">
-                <Award className="w-3.5 h-3.5 text-amber-400/70" />
+              <Link href="/diplomas" className="hover:text-accent transition-colors flex items-center gap-1.5">
+                <Award className="w-3.5 h-3.5 text-text-muted" />
                 <span>الدبلومات الشاملة</span>
               </Link>
             </li>
             <li>
-              <Link href="/verify" className="hover:text-amber-300 transition-colors flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-amber-400/70" />
+              <Link href="/verify" className="hover:text-accent transition-colors flex items-center gap-1.5">
+                <ShieldCheck className="w-3.5 h-3.5 text-text-muted" />
                 <span>التحقق من صحة الشهادات</span>
               </Link>
             </li>
             <li>
-              <Link href="/support" className="hover:text-amber-300 transition-colors flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-400/70" />
+              <Link href="/support" className="hover:text-accent transition-colors flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-text-muted" />
                 <span>مركز المساعدة والدعم</span>
               </Link>
             </li>
             <li>
-              <Link href="/terms" className="hover:text-amber-300 transition-colors flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-400/70" />
+              <Link href="/terms" className="hover:text-accent transition-colors flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-text-muted" />
                 <span>الشروط وسياسة الاستخدام</span>
               </Link>
             </li>
             <li>
-              <Link href="/privacy" className="hover:text-amber-300 transition-colors flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/70" />
+              <Link href="/privacy" className="hover:text-accent transition-colors flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-text-muted" />
                 <span>سياسة الخصوصية والأمان</span>
               </Link>
             </li>
           </ul>
         </div>
 
-        {/* 3. Specialized Paths (المسارات التخصصية) */}
+        {/* 3. Specialized Paths */}
         <div>
-          <h4 className="text-sm font-bold text-white mb-4 border-b border-white/[0.08] pb-2 inline-block">
+          <h4 className="text-xs font-bold text-text-primary mb-3 border-b border-border pb-1.5 inline-block">
             المسارات التخصصية
           </h4>
-          <ul className="space-y-2.5 text-xs text-slate-400">
+          <ul className="space-y-2 text-xs text-text-secondary">
             <li className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-purple-400/70" />
+              <span className="w-1.5 h-1.5 rounded-full bg-accent" />
               <span>Full-Stack Next.js 15 & Node.js</span>
             </li>
             <li className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-400/70" />
+              <span className="w-1.5 h-1.5 rounded-full bg-accent" />
               <span>الذكاء الاصطناعي وهندسة الأوامر</span>
             </li>
             <li className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400/70" />
+              <span className="w-1.5 h-1.5 rounded-full bg-accent" />
               <span>تصميم الواجهات UI/UX والموبايل</span>
             </li>
             <li className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/70" />
+              <span className="w-1.5 h-1.5 rounded-full bg-accent" />
               <span>DevOps والبنية التحتية السحابية</span>
             </li>
             <li className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-rose-400/70" />
+              <span className="w-1.5 h-1.5 rounded-full bg-accent" />
               <span>الأمن السيبراني واختبار الاختراق</span>
             </li>
           </ul>
         </div>
 
-        {/* 4. Payment Methods Box (مربع طرق الدفع المعتمدة) */}
+        {/* 4. Payment Methods Box */}
         <div>
-          <h4 className="text-sm font-bold text-white mb-4 border-b border-white/[0.08] pb-2 inline-block">
+          <h4 className="text-xs font-bold text-text-primary mb-3 border-b border-border pb-1.5 inline-block">
             طرق الدفع المعتمدة
           </h4>
-          <ul className="space-y-2.5 text-xs">
-            <li className="flex items-center gap-2 text-slate-300 hover:text-purple-300 transition-colors">
-              <Zap className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+          <ul className="space-y-2 text-xs">
+            <li className="flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors">
+              <Zap className="w-3.5 h-3.5 text-accent shrink-0" />
               <span>InstaPay (إنستاباي فوري)</span>
             </li>
-            <li className="flex items-center gap-2 text-slate-300 hover:text-red-300 transition-colors">
-              <Smartphone className="w-3.5 h-3.5 text-red-400 shrink-0" />
+            <li className="flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors">
+              <Smartphone className="w-3.5 h-3.5 text-accent shrink-0" />
               <span>فودافون كاش & أورنج كاش</span>
             </li>
-            <li className="flex items-center gap-2 text-slate-300 hover:text-blue-300 transition-colors">
-              <CreditCard className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+            <li className="flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors">
+              <CreditCard className="w-3.5 h-3.5 text-accent shrink-0" />
               <span>بطاقات Visa & Mastercard</span>
             </li>
-            <li className="flex items-center gap-2 text-slate-300 hover:text-emerald-300 transition-colors">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+            <li className="flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors">
+              <ShieldCheck className="w-3.5 h-3.5 text-accent shrink-0" />
               <span>كارت ميزة الوطني المحلي</span>
             </li>
-            <li className="flex items-center gap-2 text-slate-300 hover:text-amber-300 transition-colors">
-              <Wallet className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+            <li className="flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors">
+              <Wallet className="w-3.5 h-3.5 text-accent shrink-0" />
               <span>فوري Pay والمحافظ الذكية</span>
             </li>
-            <li className="flex items-center gap-2 text-slate-300 hover:text-slate-100 transition-colors">
-              <Building2 className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+            <li className="flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors">
+              <Building2 className="w-3.5 h-3.5 text-accent shrink-0" />
               <span>تحويل بنكي مباشر آمن 100%</span>
             </li>
           </ul>
         </div>
 
-        {/* 5. Direct Channels (قنوات التواصل المباشرة) */}
+        {/* 5. Direct Channels */}
         <div>
-          <h4 className="text-sm font-bold text-white mb-4 border-b border-white/[0.08] pb-2 inline-block">
+          <h4 className="text-xs font-bold text-text-primary mb-3 border-b border-border pb-1.5 inline-block">
             قنوات التواصل المباشرة
           </h4>
-          <div className="space-y-3 text-xs">
+          <div className="space-y-2.5 text-xs">
             {whatsappUrl && (
               <a
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2.5 text-emerald-400 hover:text-emerald-300 transition-colors font-medium bg-emerald-950/40 p-2.5 rounded-xl border border-emerald-800/40 hover:scale-[1.02] active:scale-98 transition-transform"
+                className="flex items-center gap-2 text-text-primary hover:text-accent transition-colors font-medium bg-surface-secondary p-2 rounded-lg border border-border"
               >
-                <MessageCircle className="w-4 h-4 shrink-0" />
+                <MessageCircle className="w-3.5 h-3.5 text-accent shrink-0" />
                 <span>الدعم الفني عبر واتساب (فوري)</span>
               </a>
             )}
@@ -209,9 +205,9 @@ export default function Footer({ initialSettings }: FooterProps) {
                 href={telegramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-sky-400 hover:text-sky-300 transition-colors"
+                className="flex items-center gap-2 text-text-secondary hover:text-accent transition-colors"
               >
-                <Send className="w-4 h-4 shrink-0" />
+                <Send className="w-3.5 h-3.5 text-accent shrink-0" />
                 <span>قناة التليجرام الرسمية</span>
               </a>
             )}
@@ -219,24 +215,24 @@ export default function Footer({ initialSettings }: FooterProps) {
             {contactEmail && (
               <a
                 href={contactEmail}
-                className="flex items-center gap-2 text-slate-300 hover:text-white transition-colors"
+                className="flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors"
               >
-                <Mail className="w-4 h-4 shrink-0 text-amber-400" />
+                <Mail className="w-3.5 h-3.5 text-accent shrink-0" />
                 <span>البريد الإلكتروني للإدارة</span>
               </a>
             )}
 
             {/* Social Icons */}
-            <div className="flex items-center gap-2.5 pt-2">
+            <div className="flex items-center gap-2 pt-1">
               {facebookUrl && (
                 <a
                   href={facebookUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-8 h-8 rounded-lg bg-white/[0.05] hover:bg-blue-600/30 text-slate-300 hover:text-blue-400 flex items-center justify-center transition-colors border border-white/[0.08]"
+                  className="w-7 h-7 rounded-lg bg-surface-secondary hover:bg-surface text-text-secondary hover:text-accent flex items-center justify-center transition-colors border border-border"
                   title="Facebook"
                 >
-                  <Facebook className="w-4 h-4" />
+                  <Facebook className="w-3.5 h-3.5" />
                 </a>
               )}
               {youtubeUrl && (
@@ -244,10 +240,10 @@ export default function Footer({ initialSettings }: FooterProps) {
                   href={youtubeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-8 h-8 rounded-lg bg-white/[0.05] hover:bg-red-600/30 text-slate-300 hover:text-red-400 flex items-center justify-center transition-colors border border-white/[0.08]"
+                  className="w-7 h-7 rounded-lg bg-surface-secondary hover:bg-surface text-text-secondary hover:text-accent flex items-center justify-center transition-colors border border-border"
                   title="YouTube"
                 >
-                  <Youtube className="w-4 h-4" />
+                  <Youtube className="w-3.5 h-3.5" />
                 </a>
               )}
               {linkedinUrl && (
@@ -255,10 +251,10 @@ export default function Footer({ initialSettings }: FooterProps) {
                   href={linkedinUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-8 h-8 rounded-lg bg-white/[0.05] hover:bg-sky-600/30 text-slate-300 hover:text-sky-400 flex items-center justify-center transition-colors border border-white/[0.08]"
+                  className="w-7 h-7 rounded-lg bg-surface-secondary hover:bg-surface text-text-secondary hover:text-accent flex items-center justify-center transition-colors border border-border"
                   title="LinkedIn"
                 >
-                  <Linkedin className="w-4 h-4" />
+                  <Linkedin className="w-3.5 h-3.5" />
                 </a>
               )}
             </div>
@@ -268,11 +264,11 @@ export default function Footer({ initialSettings }: FooterProps) {
       </div>
 
       {/* Copyright Bar */}
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-6 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
-        <p>جميع الحقوق محفوظة © {new Date().getFullYear()} {platformName}. صُممت المنصة بأحدث معايير الأمان وتطوير البرمجيات الحديثة.</p>
-        <p className="flex items-center gap-1 text-slate-400">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 mt-8 pt-4 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-text-muted">
+        <p>جميع الحقوق محفوظة © {new Date().getFullYear()} {platformName}.</p>
+        <p className="flex items-center gap-1 text-text-secondary">
           <span>بإشراف وقيادة</span>
-          <strong className="text-amber-400 font-bold">{platformName}</strong>
+          <strong className="text-text-primary font-bold">{platformName}</strong>
         </p>
       </div>
     </footer>
