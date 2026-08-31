@@ -120,9 +120,9 @@ export default function MobileHero({
           <Link
             href="/books"
             prefetch={true}
-            className="group flex items-center justify-center gap-2 w-full py-2.5 xs:py-3 px-3.5 text-xs xs:text-sm font-black text-emerald-950 dark:text-emerald-300 transition-all rounded-2xl border-2 border-emerald-500/80 hover:border-emerald-400 bg-gradient-to-r from-emerald-500/15 via-teal-500/20 to-emerald-500/15 shadow-md shadow-emerald-500/10 backdrop-blur-md active:scale-[0.98]"
+            className="group flex items-center justify-center gap-2 w-full py-2.5 xs:py-3 px-3.5 text-xs xs:text-sm font-black bg-emerald-50 hover:bg-emerald-100 dark:bg-gradient-to-r dark:from-emerald-500/15 dark:via-teal-500/20 dark:to-emerald-500/15 text-emerald-950 dark:text-emerald-300 transition-all rounded-2xl border-2 border-emerald-400 dark:border-emerald-500/80 shadow-md shadow-emerald-500/10 backdrop-blur-md active:scale-[0.98]"
           >
-            <FileText className="w-4 h-4 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform shrink-0" />
+            <FileText className="w-4 h-4 text-emerald-700 dark:text-emerald-400 group-hover:scale-110 transition-transform shrink-0" />
             <span className="whitespace-nowrap">{settings.HERO_BTN_BOOKS || 'سوق المذكرات والكتب (خصم 50% ومعاينة)'}</span>
           </Link>
 
@@ -130,9 +130,9 @@ export default function MobileHero({
           <Link
             href="/instructors/join?track=expert"
             prefetch={true}
-            className="group flex items-center justify-center gap-2 w-full py-2.5 xs:py-3 px-3.5 text-xs xs:text-sm font-black text-purple-900 dark:text-purple-300 transition-all rounded-2xl border-2 border-purple-500/80 hover:border-purple-400 bg-gradient-to-r from-purple-600/15 via-indigo-600/20 to-purple-600/15 shadow-md shadow-purple-500/10 backdrop-blur-md active:scale-[0.98]"
+            className="group flex items-center justify-center gap-2 w-full py-2.5 xs:py-3 px-3.5 text-xs xs:text-sm font-black bg-purple-50 hover:bg-purple-100 dark:bg-gradient-to-r dark:from-purple-600/15 dark:via-indigo-600/20 dark:to-purple-600/15 text-purple-950 dark:text-purple-300 transition-all rounded-2xl border-2 border-purple-400 dark:border-purple-500/80 shadow-md shadow-purple-500/10 backdrop-blur-md active:scale-[0.98]"
           >
-            <Video className="w-4 h-4 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform shrink-0" />
+            <Video className="w-4 h-4 text-purple-700 dark:text-purple-400 group-hover:scale-110 transition-transform shrink-0" />
             <span className="whitespace-nowrap">
               {settings.HERO_BTN_EXPERT
                 ? settings.HERO_BTN_EXPERT.replace(/14\s*يوماً|14\s*يوم/g, `${settings.INSTRUCTOR_TRIAL_DAYS || '14'} يوماً`)
@@ -144,9 +144,9 @@ export default function MobileHero({
           <Link
             href="/instructors/join?track=student"
             prefetch={true}
-            className="group flex items-center justify-center gap-2 w-full py-2.5 xs:py-3 px-3.5 text-xs xs:text-sm font-black text-amber-950 dark:text-amber-300 transition-all rounded-2xl border-2 border-amber-500/80 hover:border-amber-400 bg-gradient-to-r from-amber-500/15 via-yellow-500/20 to-amber-500/15 shadow-md shadow-amber-500/10 backdrop-blur-md active:scale-[0.98]"
+            className="group flex items-center justify-center gap-2 w-full py-2.5 xs:py-3 px-3.5 text-xs xs:text-sm font-black bg-amber-50 hover:bg-amber-100 dark:bg-gradient-to-r dark:from-amber-500/15 dark:via-yellow-500/20 dark:to-amber-500/15 text-amber-950 dark:text-amber-300 transition-all rounded-2xl border-2 border-amber-400 dark:border-amber-500/80 shadow-md shadow-amber-500/10 backdrop-blur-md active:scale-[0.98]"
           >
-            <GraduationCap className="w-4 h-4 text-amber-500 group-hover:scale-110 transition-transform shrink-0" />
+            <GraduationCap className="w-4.5 h-4.5 text-amber-600 dark:text-amber-500 group-hover:scale-110 transition-transform shrink-0" />
             <span className="whitespace-nowrap">
               {settings.HERO_BTN_STUDENT
                 ? settings.HERO_BTN_STUDENT.replace(/30\s*يوماً|30\s*يوم/g, `${settings.STUDENT_TRIAL_DAYS || '14'} يوماً`)

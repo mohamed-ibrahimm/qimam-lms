@@ -49,7 +49,7 @@ export default function PlatformFeaturesMatrix({
       icon: Bot,
       accentColor: 'from-amber-500 to-yellow-400',
       badge: 'حصري وجديد',
-      badgeColor: 'bg-amber-500/15 text-amber-300 border-amber-500/30',
+      badgeColor: 'bg-amber-100 text-amber-950 border-amber-300 dark:bg-amber-500/15 dark:text-amber-300 dark:border-amber-500/30',
       bgGlow: 'hover:shadow-amber-500/20',
       borderGlow: 'hover:border-amber-500/50',
     },
@@ -61,7 +61,7 @@ export default function PlatformFeaturesMatrix({
       icon: Laptop,
       accentColor: 'from-blue-500 to-indigo-500',
       badge: 'تأهيل عملي',
-      badgeColor: 'bg-blue-500/15 text-blue-300 border-blue-500/30',
+      badgeColor: 'bg-blue-100 text-blue-950 border-blue-300 dark:bg-blue-500/15 dark:text-blue-300 dark:border-blue-500/30',
       bgGlow: 'hover:shadow-blue-500/20',
       borderGlow: 'hover:border-blue-500/50',
     },
@@ -73,7 +73,7 @@ export default function PlatformFeaturesMatrix({
       icon: BookOpen,
       accentColor: 'from-emerald-500 to-teal-400',
       badge: 'معاينة مجانية',
-      badgeColor: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30',
+      badgeColor: 'bg-emerald-100 text-emerald-950 border-emerald-300 dark:bg-emerald-500/15 dark:text-emerald-300 dark:border-emerald-500/30',
       bgGlow: 'hover:shadow-emerald-500/20',
       borderGlow: 'hover:border-emerald-500/50',
     },
@@ -85,7 +85,7 @@ export default function PlatformFeaturesMatrix({
       icon: Award,
       accentColor: 'from-purple-500 to-pink-500',
       badge: 'تحقق فوري',
-      badgeColor: 'bg-purple-500/15 text-purple-300 border-purple-500/30',
+      badgeColor: 'bg-purple-100 text-purple-950 border-purple-300 dark:bg-purple-500/15 dark:text-purple-300 dark:border-purple-500/30',
       bgGlow: 'hover:shadow-purple-500/20',
       borderGlow: 'hover:border-purple-500/50',
     },
@@ -97,7 +97,7 @@ export default function PlatformFeaturesMatrix({
       icon: PlaySquare,
       accentColor: 'from-sky-500 to-cyan-400',
       badge: 'أداء فائق',
-      badgeColor: 'bg-sky-500/15 text-sky-300 border-sky-500/30',
+      badgeColor: 'bg-sky-100 text-sky-950 border-sky-300 dark:bg-sky-500/15 dark:text-sky-300 dark:border-sky-500/30',
       bgGlow: 'hover:shadow-sky-500/20',
       borderGlow: 'hover:border-sky-500/50',
     },
@@ -109,7 +109,7 @@ export default function PlatformFeaturesMatrix({
       icon: Users,
       accentColor: 'from-rose-500 to-orange-400',
       badge: '0% عمولة',
-      badgeColor: 'bg-rose-500/15 text-rose-300 border-rose-500/30',
+      badgeColor: 'bg-rose-100 text-rose-950 border-rose-300 dark:bg-rose-500/15 dark:text-rose-300 dark:border-rose-500/30',
       bgGlow: 'hover:shadow-rose-500/20',
       borderGlow: 'hover:border-rose-500/50',
     },
@@ -177,7 +177,7 @@ export default function PlatformFeaturesMatrix({
       
       {/* Background Radiant Glow Accents */}
       <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-[radial-gradient(ellipse,_rgba(245,158,11,0.12),_rgba(124,58,237,0.08)_50%,_transparent_75%)] blur-[120px]" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-[radial-gradient(ellipse,_rgba(245,158,11,0.12),_rgba(124,58,237,0.08)_50%,_transparent_75%)] dark:bg-[radial-gradient(ellipse,_rgba(245,158,11,0.08),_rgba(124,58,237,0.05)_50%,_transparent_75%)] blur-[120px]" />
         <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-[radial-gradient(circle,_rgba(20,184,166,0.1),_transparent_70%)] blur-[100px]" />
       </div>
 
@@ -187,16 +187,16 @@ export default function PlatformFeaturesMatrix({
             1. SECTION HEADER
            ===================================================================== */}
         <div className="text-center space-y-4 max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-gradient-to-r from-amber-500/15 via-purple-500/15 to-blue-500/15 border border-amber-500/30 text-amber-300 text-xs sm:text-sm font-black shadow-lg shadow-amber-500/5 backdrop-blur-md">
-            <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
+          <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-indigo-50 dark:bg-amber-500/15 border border-indigo-200/90 dark:border-amber-500/30 text-indigo-900 dark:text-amber-300 text-xs sm:text-sm font-black shadow-sm backdrop-blur-md">
+            <Sparkles className="w-4 h-4 text-indigo-600 dark:text-amber-400 animate-pulse" />
             <span>المنظومة التعليمية الهندسية الأكثر تكاملاً 2026</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 dark:text-white tracking-tight leading-tight">
-            لماذا تختار <span className="bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 bg-clip-text text-transparent">{platformName}</span>؟
+            لماذا تختار <span className="bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-700 dark:from-amber-400 dark:via-yellow-300 dark:to-amber-500 bg-clip-text text-transparent">{platformName}</span>؟
           </h2>
 
-          <p className="text-sm sm:text-base lg:text-lg text-slate-600 dark:text-zinc-300 leading-relaxed max-w-2xl mx-auto font-medium">
+          <p className="text-sm sm:text-base lg:text-lg text-slate-700 dark:text-zinc-300 leading-relaxed max-w-2xl mx-auto font-semibold">
             صممنا المنصة لتمنحك تجربة تعليمية فائقة تجمع بين التدريب العملي، الذكاء الاصطناعي، والمذكرات الاحترافية لنقلك من البداية حتى الاحتراف وسوق العمل.
           </p>
         </div>
