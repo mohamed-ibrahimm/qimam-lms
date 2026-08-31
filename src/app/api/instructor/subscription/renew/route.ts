@@ -54,13 +54,16 @@ export async function POST(req: Request) {
       }
     }
 
-    const amount = isStudent ? studentPrice : isAnnual ? annualPrice : monthlyPrice;
+    const isLiveStudio = plan === 'LIVE_STUDIO_PRO';
+    const liveStudioPrice = Number(settingsMap['INSTRUCTOR_PRICE_LIVE_STUDIO']) || 490;
+
+    const amount = isStudent ? studentPrice : isAnnual ? annualPrice : isLiveStudio ? liveStudioPrice : monthlyPrice;
     const durationMonths = isAnnual ? 12 : 1;
 
     const payment = await prisma.instructorSubscriptionPayment.create({
       data: {
         instructorId: user.id,
-        plan: isStudent ? 'STUDENT_PRO' : isAnnual ? 'ANNUAL' : 'MONTHLY',
+        plan: isStudent ? 'STUDENT_PRO' : isAnnual ? 'ANNUAL' : isLiveStudio ? 'LIVE_STUDIO_PRO' : 'MONTHLY',
         amount,
         paymentMethod: paymentMethod === 'VODAFONE_CASH' ? 'VODAFONE_CASH' : 'INSTAPAY',
         transactionId: transactionId ? transactionId.trim() : null,

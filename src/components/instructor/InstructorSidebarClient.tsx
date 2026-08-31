@@ -23,9 +23,10 @@ import {
   FileText,
   DollarSign,
   ShoppingBag,
+  Video,
 } from 'lucide-react';
 
-export type InstructorTabType = 'overview' | 'courses' | 'pricing' | 'payments' | 'orders' | 'coupons' | 'subscription' | 'books';
+export type InstructorTabType = 'overview' | 'courses' | 'pricing' | 'payments' | 'orders' | 'coupons' | 'subscription' | 'books' | 'live';
 
 interface Props {
   instructorName: string;
@@ -166,6 +167,18 @@ export default function InstructorSidebarClient({
           id: 'payments',
           name: 'بيانات استلام أرباحي المباشرة',
           icon: CreditCard,
+        },
+      ],
+    },
+    {
+      groupName: 'أستوديو البث المباشر التفاعلي (VIP Live Studio)',
+      items: [
+        {
+          id: 'live',
+          name: 'غرف البث المباشر والشاشات',
+          icon: Video,
+          badge: 'جديد VIP',
+          badgeType: 'rose',
         },
       ],
     },

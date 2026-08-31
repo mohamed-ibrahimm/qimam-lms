@@ -41,6 +41,11 @@ import {
   ArrowUpRight,
   BarChart3,
   SlidersHorizontal,
+  Video,
+  Monitor,
+  Hand,
+  Radio,
+  Play,
 } from 'lucide-react';
 
 interface InstructorClientProps {
@@ -159,7 +164,7 @@ export default function InstructorClient({
 
   // Subscription Renewal Modal State
   const [showRenewModal, setShowRenewModal] = useState(false);
-  const [renewPlan, setRenewPlan] = useState<'MONTHLY' | 'ANNUAL' | 'STUDENT_PRO'>('MONTHLY');
+  const [renewPlan, setRenewPlan] = useState<'MONTHLY' | 'ANNUAL' | 'STUDENT_PRO' | 'LIVE_STUDIO_PRO'>('LIVE_STUDIO_PRO');
   const [renewMethod, setRenewMethod] = useState<'INSTAPAY' | 'VODAFONE_CASH'>('INSTAPAY');
   const [renewTxId, setRenewTxId] = useState('');
   const [renewScreenshot, setRenewScreenshot] = useState('');
@@ -1886,6 +1891,132 @@ export default function InstructorClient({
           </div>
         </div>
       )}
+        {/* =====================================================================
+            TAB 9: LIVE STUDIO & GOOGLE MEET SUITE (أستوديو البث المباشر)
+           ===================================================================== */}
+        {activeTab === 'live' && (
+          <div className="space-y-6 animate-in fade-in">
+            {/* Top Hero Banner */}
+            <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[#180f33] via-[#1f123d] to-[#120a26] border-2 border-purple-500/40 shadow-2xl relative overflow-hidden space-y-5">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative z-10">
+                <div className="space-y-2 max-w-xl">
+                  <div className="flex items-center gap-2">
+                    <span className="px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40 text-xs font-black flex items-center gap-1.5 animate-pulse">
+                      <span className="w-2 h-2 rounded-full bg-rose-500" />
+                      <span>قاعات البث المباشر التفاعلية (Google Meet & Zoom Suite)</span>
+                    </span>
+                    <span className="px-2.5 py-0.5 rounded-full bg-amber-500 text-zinc-950 text-[10px] font-black">
+                      VIP PRO
+                    </span>
+                  </div>
+                  <h2 className="text-xl sm:text-2xl font-black text-white">
+                    أستوديو الشرح التفاعلي ومشاركة الشاشة والكويزات الحية
+                  </h2>
+                  <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed font-medium">
+                    اشرح لطلابك مباشرة مع مشاركة الشاشة بدقة 1080p، إطلاق كويزات تفاعلية فورية ومسابقات Kahoot، فتح المايك للطلاب، والتسجيل السحابي التلقائي.
+                  </p>
+                </div>
+
+                <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+                  <Link
+                    href="/live/instant-room"
+                    className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-zinc-950 font-black text-xs sm:text-sm shadow-xl shadow-amber-500/25 hover:scale-105 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    <Video className="w-4 h-4 text-zinc-950" />
+                    <span>بدء بث مباشر فوري الآن (Launch Studio)</span>
+                  </Link>
+                </div>
+              </div>
+
+              {/* 4 Feature Highlights Grid */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-2 relative z-10 border-t border-purple-500/20">
+                <div className="p-3.5 rounded-2xl bg-black/40 border border-purple-500/30 space-y-1">
+                  <div className="text-amber-400 text-xs font-black flex items-center gap-1">
+                    <Monitor className="w-3.5 h-3.5" />
+                    <span>Screen Share HD</span>
+                  </div>
+                  <div className="text-[11px] text-zinc-300">مشاركة شاشة 1080p 60fps لكافة التطبيقات</div>
+                </div>
+
+                <div className="p-3.5 rounded-2xl bg-black/40 border border-purple-500/30 space-y-1">
+                  <div className="text-amber-400 text-xs font-black flex items-center gap-1">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>كويزات حية Kahoot</span>
+                  </div>
+                  <div className="text-[11px] text-zinc-300">أسئلة لحظية مع عداد زمني ولوحة شرف</div>
+                </div>
+
+                <div className="p-3.5 rounded-2xl bg-black/40 border border-purple-500/30 space-y-1">
+                  <div className="text-amber-400 text-xs font-black flex items-center gap-1">
+                    <Hand className="w-3.5 h-3.5" />
+                    <span>طلب المايك للطلاب</span>
+                  </div>
+                  <div className="text-[11px] text-zinc-300">نقاش صوتي مباشر ورفع اليد للأسئلة</div>
+                </div>
+
+                <div className="p-3.5 rounded-2xl bg-black/40 border border-purple-500/30 space-y-1">
+                  <div className="text-amber-400 text-xs font-black flex items-center gap-1">
+                    <ShieldCheck className="w-3.5 h-3.5" />
+                    <span>حماية مائية DRM</span>
+                  </div>
+                  <div className="text-[11px] text-zinc-300">علامة مائية برقم الطالب تمنع التسريب</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Scheduled Live Sessions List */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-base font-black text-slate-900 dark:text-white flex items-center gap-2">
+                  <Radio className="w-4 h-4 text-amber-500" />
+                  <span>جلسات البث المباشر وورش العمل المجدولة</span>
+                </h3>
+              </div>
+
+              <div className="p-6 rounded-3xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 space-y-4">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-2xl bg-slate-50 dark:bg-zinc-800/60 border border-slate-200 dark:border-zinc-700">
+                  <div className="space-y-1 text-center sm:text-right">
+                    <div className="flex items-center justify-center sm:justify-start gap-2">
+                      <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-[10px] font-black">
+                        جاهز للبث
+                      </span>
+                      <h4 className="font-black text-sm text-slate-900 dark:text-white">
+                        جلسة البث المباشر والمراجعة التفاعلية الشاملة
+                      </h4>
+                    </div>
+                    <p className="text-xs text-slate-500 dark:text-zinc-400">
+                      غرفة بث دائمة مجهزة بمشاركة الشاشة، كويزات تفاعلية، وشات مدمج مع الطلاب.
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (typeof window !== 'undefined') {
+                          navigator.clipboard.writeText(`${window.location.origin}/live/instant-room`);
+                          setMessage({ type: 'success', text: 'تم نسخ رابط دعوة الطلاب لغرفة البث المباشر!' });
+                        }
+                      }}
+                      className="px-3.5 py-2 rounded-xl bg-slate-200 dark:bg-zinc-700 hover:bg-slate-300 dark:hover:bg-zinc-600 text-slate-800 dark:text-zinc-200 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
+                    >
+                      <Copy className="w-3.5 h-3.5" />
+                      <span>نسخ رابط الطلاب</span>
+                    </button>
+
+                    <Link
+                      href="/live/instant-room"
+                      className="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-black shadow-md shadow-purple-600/30 flex items-center gap-1.5 transition-all hover:scale-105"
+                    >
+                      <Play className="w-3.5 h-3.5" />
+                      <span>دخول الأستوديو</span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </main>
 
       {/* RENEWAL / UPGRADE MODAL */}
@@ -1906,7 +2037,24 @@ export default function InstructorClient({
             </div>
 
             {/* Plan Selector */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              <button
+                type="button"
+                onClick={() => setRenewPlan('LIVE_STUDIO_PRO')}
+                className={`p-3.5 rounded-2xl border text-right transition-all space-y-1 relative ${
+                  renewPlan === 'LIVE_STUDIO_PRO'
+                    ? 'bg-rose-950/60 border-rose-500 shadow-md ring-1 ring-rose-500'
+                    : 'bg-surface-raised border-border text-zinc-400'
+                }`}
+              >
+                <span className="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-400 text-[9px] font-black">
+                  الأكثر مبيعاً VIP
+                </span>
+                <span className="text-xs font-black text-rose-300 block">باقة البث المباشر والأستوديو</span>
+                <span className="text-lg font-black text-white block">490 ج.م <span className="text-[10px] text-zinc-400">/شهر</span></span>
+                <span className="text-[10px] text-zinc-300 block">بث 1080p + كويزات Kahoot</span>
+              </button>
+
               <button
                 type="button"
                 onClick={() => setRenewPlan('MONTHLY')}
@@ -1916,9 +2064,9 @@ export default function InstructorClient({
                     : 'bg-surface-raised border-border text-zinc-400'
                 }`}
               >
-                <span className="text-xs font-bold text-white block">الباقة العادية (شهري)</span>
+                <span className="text-xs font-bold text-white block">الباقة الأساسية (شهري)</span>
                 <span className="text-lg font-black text-primary-300 block">{platformPricing.monthlyPrice} ج.م</span>
-                <span className="text-[10px] text-zinc-400 block">لكافة المحاضرين والأساتذة</span>
+                <span className="text-[10px] text-zinc-400 block">كورسات مسجلة ومذكرات</span>
               </button>
 
               <button
@@ -1933,7 +2081,7 @@ export default function InstructorClient({
                 <span className="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 text-[9px] font-bold">
                   وفر شهرين!
                 </span>
-                <span className="text-xs font-bold text-white block">الباقة العادية (سنوي)</span>
+                <span className="text-xs font-bold text-white block">الباقة الشاملة (سنوي)</span>
                 <span className="text-lg font-black text-emerald-400 block">{platformPricing.annualPrice.toLocaleString('en-US')} ج.م</span>
                 <span className="text-[10px] text-zinc-400 block">العام الأكثر توفيراً للجميع</span>
               </button>
