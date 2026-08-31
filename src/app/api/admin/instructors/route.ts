@@ -126,7 +126,7 @@ export async function PUT(req: Request) {
       await prisma.notification.create({
         data: {
           userId: payment.instructorId,
-          title: '🎉 تم تفعيل وتجديد اشتراكك في الأكاديمية بنجاح!',
+          title: ' تم تفعيل وتجديد اشتراكك في الأكاديمية بنجاح!',
           message: `تم اعتماد إيصال سداد الاشتراك (${payment.plan === 'ANNUAL' ? 'السنوي' : 'الشهري'}) وحسابك نشط الآن حتى ${newEnd.toLocaleDateString('ar-EG')}.`,
           link: '/instructor',
           type: 'PAYMENT',

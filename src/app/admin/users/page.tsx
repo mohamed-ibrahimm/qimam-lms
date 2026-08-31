@@ -50,7 +50,7 @@ export default function AdminUsersPage() {
         setUsers((prev) =>
           prev.map((u) => (u.id === userId ? { ...u, role: newRole } : u))
         );
-        setMessage('تم تعديل دور وصلاحيات المستخدم بنجاح! ✅');
+        setMessage('تم تعديل دور وصلاحيات المستخدم بنجاح! ');
         setTimeout(() => setMessage(''), 3000);
       }
     } catch (e) {

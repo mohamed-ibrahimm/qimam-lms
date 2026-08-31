@@ -115,7 +115,7 @@ export async function POST(req: Request) {
     return NextResponse.json({
       success: true,
       review,
-      message: 'شكراً لك! تم تسجيل رأيك وتقييمك بنجاح 🌟',
+      message: 'شكراً لك! تم تسجيل رأيك وتقييمك بنجاح ',
     });
   } catch (error: any) {
     console.error('Submit review error:', error);

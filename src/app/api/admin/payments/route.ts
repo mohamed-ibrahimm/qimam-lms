@@ -171,7 +171,7 @@ export async function PUT(req: Request) {
         await prisma.notification.create({
           data: {
             userId: payment.userId,
-            title: 'تم تأكيد دفعتك وتفعيل المحتوى بنجاح 🎉',
+            title: 'تم تأكيد دفعتك وتفعيل المحتوى بنجاح ',
             message: `تم اعتماد عملية الدفع رقم (${payment.transactionId || payment.order?.orderNumber || payment.id}) وتفعيل طلبك فورياً.`,
             link: payment.order?.bookId ? '/dashboard/library' : '/dashboard',
             type: 'PAYMENT',

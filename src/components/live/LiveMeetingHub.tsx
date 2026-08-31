@@ -222,7 +222,7 @@ export default function LiveMeetingHub({ currentUser, platformName }: LiveMeetin
               className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 hover:to-yellow-300 text-zinc-950 font-black text-sm shadow-xl shadow-amber-500/20 flex items-center justify-center gap-2 transition-all hover:scale-[1.02] cursor-pointer mt-2"
             >
               <Radio className="w-4 h-4" />
-              <span>دخول القاعة الآن 🚀</span>
+              <span>دخول القاعة الآن </span>
             </button>
           </form>
         )}
@@ -260,7 +260,7 @@ export default function LiveMeetingHub({ currentUser, platformName }: LiveMeetin
               ) : (
                 <>
                   <Video className="w-4 h-4" />
-                  <span>بدء البث المباشر الفوري 🎙️</span>
+                  <span>بدء البث المباشر الفوري </span>
                 </>
               )}
             </button>

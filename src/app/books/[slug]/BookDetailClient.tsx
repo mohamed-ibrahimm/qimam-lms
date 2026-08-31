@@ -258,7 +258,7 @@ export default function BookDetailClient({
                     )}
                   </div>
                   <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-blue-500 text-white flex items-center justify-center text-[9px] font-black border-2 border-zinc-950">
-                    ✓
+                    
                   </div>
                 </div>
 
@@ -596,7 +596,7 @@ export default function BookDetailClient({
                     {book.authorName || book.instructor?.officialFullName || 'المحاضر المعتمد'}
                   </h3>
                   <span className="px-2.5 py-0.5 rounded-full bg-blue-500/15 text-blue-700 dark:text-blue-300 text-xs font-black border border-blue-500/30">
-                    ✓ موثق رسمي
+                     موثق رسمي
                   </span>
                 </div>
 

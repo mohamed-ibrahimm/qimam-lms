@@ -169,10 +169,10 @@ export default function QuizModal({ quiz, isOpen, onClose, onPassed }: QuizModal
             }`}
           >
             <div className="w-12 h-12 rounded-full mx-auto flex items-center justify-center bg-black/40 text-2xl">
-              {result.isPassed ? '🎉' : '⚠️'}
+              {result.isPassed ? '' : ''}
             </div>
             <h3 className="text-lg font-black text-white">
-              {result.isPassed ? 'تم اجتياز التقييم بنجاح 🎉' : 'للأسف لم تحقق درجة النجاح المطلوبة'}
+              {result.isPassed ? 'تم اجتياز التقييم بنجاح ' : 'للأسف لم تحقق درجة النجاح المطلوبة'}
             </h3>
             {result.isPassed && result.motivationalMessage && (
               <div className="inline-block px-4 py-2 rounded-2xl bg-amber-500/20 border border-amber-400/40 text-amber-300 text-sm font-black shadow-lg">
@@ -270,7 +270,7 @@ export default function QuizModal({ quiz, isOpen, onClose, onPassed }: QuizModal
         {result?.certificate && (
           <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-500/20 via-yellow-500/15 to-amber-500/20 border border-amber-500/40 text-center space-y-2.5 shadow-xl">
             <Sparkles className="w-7 h-7 text-amber-400 mx-auto" />
-            <h4 className="text-base font-black text-white">🎉 تهانينا! لقد اجتزت الامتحان النهائي وحصلت على الشهادة المعتمدة!</h4>
+            <h4 className="text-base font-black text-white"> تهانينا! لقد اجتزت الامتحان النهائي وحصلت على الشهادة المعتمدة!</h4>
             <p className="text-xs text-zinc-300">
               تم إصدار شهادتك الرسمية المعتمدة برقم: <span className="font-mono text-amber-300 font-black">{result.certificate.certificateNumber}</span>
             </p>
@@ -280,7 +280,7 @@ export default function QuizModal({ quiz, isOpen, onClose, onPassed }: QuizModal
               rel="noreferrer"
               className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 font-black text-xs shadow-lg shadow-amber-950/40 transition-all hover:scale-105"
             >
-              <span>معاينة وتحميل الشهادة المعتمدة PDF 🎓</span>
+              <span>معاينة وتحميل الشهادة المعتمدة PDF </span>
             </a>
           </div>
         )}

@@ -175,7 +175,7 @@ export async function POST(req: Request) {
       await prisma.notification.create({
         data: {
           userId: user.id,
-          title: '🎉 تم تفعيل اشتراكك بنجاح!',
+          title: ' تم تفعيل اشتراكك بنجاح!',
           message: `تم فتح ${title} لك فوراً في حسابك. يمكنك الوصول إليها الآن.`,
           link: bookId ? '/dashboard/library' : '/dashboard',
           type: bookId ? 'SYSTEM' : 'COURSE',
@@ -222,7 +222,7 @@ export async function POST(req: Request) {
     await prisma.notification.create({
       data: {
         userId: user.id,
-        title: 'تم استلام طلب التحويل المالي ⏳',
+        title: 'تم استلام طلب التحويل المالي ',
         message: `طلب رقم ${order.orderNumber} قيد مراجعة وتدكيد الإدارة. سيتم فتح المحتوى تلقائياً فور التحقق.`,
         link: `/checkout/confirmation/${order.id}`,
         type: 'PAYMENT',

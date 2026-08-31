@@ -139,7 +139,7 @@ export default async function StudentDashboardPage() {
             <span>لوحة المتابعة الأكاديمية</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-            مرحباً بك، {user.firstName} {user.lastName} 🎓
+            مرحباً بك، {user.firstName} {user.lastName} 
           </h1>
           <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 font-medium">
             الاسم المعتمد للشهادات: <strong className="text-slate-900 dark:text-white font-bold">{user.officialFullName}</strong>
@@ -253,7 +253,7 @@ export default async function StudentDashboardPage() {
               href="/dashboard/my-courses"
               className="text-xs font-bold text-amber-400 hover:text-amber-300 px-3 py-1 rounded-full bg-amber-950/60 border border-amber-800/60 transition-colors"
             >
-              عرض الصفحة المستقلة ➔
+              عرض الصفحة المستقلة 
             </Link>
           </div>
           <Link href="/courses" className="text-xs font-bold text-primary-400 hover:underline">

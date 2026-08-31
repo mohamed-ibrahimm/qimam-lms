@@ -20,7 +20,7 @@ export default function Icon() {
           border: '1.5px solid #38bdf8',
         }}
       >
-        👨‍💻
+        ق
       </div>
     ),
     { ...size }

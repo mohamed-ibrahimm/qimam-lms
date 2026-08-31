@@ -77,7 +77,7 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
     const triggerScreenshotShield = () => {
       setIsCapturingShield(true);
       try {
-        navigator.clipboard.writeText('🔒 محتوى المذكرة محمي بنظام DRM الرقمي ضد النسخ والالتقاط.');
+        navigator.clipboard.writeText(' محتوى المذكرة محمي بنظام DRM الرقمي ضد النسخ والالتقاط.');
       } catch (err) {}
       setTimeout(() => setIsCapturingShield(false), 1400);
     };
@@ -510,7 +510,7 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
                   className="w-[140%] text-center transform -rotate-[22deg] my-6 space-y-0.5"
                 >
                   <div className="text-[11px] sm:text-xs font-semibold tracking-widest text-slate-900/[0.05] dark:text-amber-300/[0.06] select-none font-mono">
-                    🔒 أكاديمية قِمَم التعليمية • {watermarkText}
+                     أكاديمية قِمَم التعليمية • {watermarkText}
                   </div>
                   <div className="text-[9px] sm:text-[10px] font-normal text-slate-700/[0.03] dark:text-zinc-400/[0.04] select-none font-mono">
                     DRM-PROTECTED • BOOK: {book.slug.toUpperCase()} • PAGE {currentPage}
@@ -521,7 +521,7 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
 
             {/* Subtle Security Footprint Badge */}
             <div className="absolute bottom-3 left-4 pointer-events-none z-20 px-2.5 py-0.5 rounded-full bg-black/30 dark:bg-white/5 backdrop-blur-md text-[9px] font-mono text-slate-500 dark:text-zinc-400 opacity-60 border border-black/5 dark:border-white/5 font-bold shadow-xs">
-              🛡️ DRM-SECURE • {currentUser?.username || 'STUDENT'} • ID: {book.id.substring(0, 8).toUpperCase()}
+               DRM-SECURE • {currentUser?.username || 'STUDENT'} • ID: {book.id.substring(0, 8).toUpperCase()}
             </div>
 
             {/* Anti-Screen Capture Shield (Flashes when PrintScreen / Snipping Tool / Loss of Focus detected) */}
@@ -534,7 +534,7 @@ export default function SecurePDFViewer({ book, currentUser, isPurchased = false
                   <Shield className="w-7 h-7" />
                 </div>
                 <h4 className="text-base font-black text-white">
-                  🔒 محتوى رقمي مشفر ومحمي بحقوق النشر
+                   محتوى رقمي مشفر ومحمي بحقوق النشر
                 </h4>
                 <p className="text-xs text-amber-300 font-bold max-w-sm leading-relaxed">
                   يمنع نظام الـ DRM تصوير الشاشة أو تداول المذكرة خارج المنصة. انقر داخل الشاشة لاستئناف القراءة.

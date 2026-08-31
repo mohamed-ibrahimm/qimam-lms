@@ -234,7 +234,7 @@ export default function ProfilePage() {
             <span>{message.text}</span>
           </div>
           <button onClick={() => setMessage(null)} className="text-zinc-400 hover:text-white">
-            ✕
+            
           </button>
         </div>
       )}
@@ -275,7 +275,7 @@ export default function ProfilePage() {
 
             {/* Role Floating Badge */}
             <div className="absolute -bottom-1.5 right-1/2 translate-x-1/2 px-2.5 py-0.5 rounded-full bg-surface-raised border border-border text-[10px] font-bold text-white shadow-md flex items-center gap-1 shrink-0 whitespace-nowrap">
-              {user.role === 'ADMIN' ? '👑 مدير' : user.role === 'INSTRUCTOR' ? '👨‍🏫 معلم' : '👨‍🎓 طالب'}
+              {user.role === 'ADMIN' ? ' مدير' : user.role === 'INSTRUCTOR' ? ' معلم' : ' طالب'}
             </div>
           </div>
 

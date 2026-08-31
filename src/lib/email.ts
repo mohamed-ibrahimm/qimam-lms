@@ -26,12 +26,12 @@ export async function sendEmail({ to, recipientName, subject, templateType, html
     });
 
     if (process.env.NODE_ENV === 'development' || isMock) {
-      console.log(`📧 [EMAIL SENT - ${templateType}] To: ${to} | Subject: ${subject}`);
+      console.log(` [EMAIL SENT - ${templateType}] To: ${to} | Subject: ${subject}`);
     }
 
     return { success: true, logId: emailLog.id };
   } catch (error: any) {
-    console.error('❌ Failed to send email:', error);
+    console.error(' Failed to send email:', error);
     try {
       await prisma.emailLog.create({
         data: {
@@ -95,7 +95,7 @@ export function buildParentQuizEmail({
           <tr>
             <td style="padding: 8px; color: #a1a1aa; border-bottom: 1px solid #272732;">الحالة:</td>
             <td style="padding: 8px; font-weight: bold; border-bottom: 1px solid #272732; color: ${isPassed ? '#22c55e' : '#ef4444'};">
-              ${isPassed ? '✅ ناجح ومجتاز للاختبار' : '⚠️ يحتاج للمراجعة وإعادة المحاولة'}
+              ${isPassed ? ' ناجح ومجتاز للاختبار' : ' يحتاج للمراجعة وإعادة المحاولة'}
             </td>
           </tr>
           <tr>

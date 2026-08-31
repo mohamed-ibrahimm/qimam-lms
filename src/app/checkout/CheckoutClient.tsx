@@ -77,7 +77,7 @@ export default function CheckoutClient({
         setAppliedCoupon(data.coupon);
         setDiscountAmount(data.discountAmount);
         setFinalAmount(data.finalAmount);
-        setCouponSuccess(`تم تطبيق خصم بقيمة ${data.discountAmount} ج.م بنجاح! 🎉`);
+        setCouponSuccess(`تم تطبيق خصم بقيمة ${data.discountAmount} ج.م بنجاح! `);
       }
     } catch (e) {
       setCouponError('حدث خطأ أثناء فحص الكوبون');
@@ -199,7 +199,7 @@ export default function CheckoutClient({
           {isFree ? (
             <div className="p-8 rounded-3xl bg-emerald-950/40 border border-emerald-700 text-center space-y-4 shadow-xl">
               <div className="w-14 h-14 rounded-full bg-emerald-900/60 border border-emerald-600 flex items-center justify-center mx-auto text-2xl">
-                🎁
+                
               </div>
               <h2 className="text-xl font-black text-white">الكوبون يغطي 100% من الرسوم!</h2>
               <p className="text-xs text-emerald-200 max-w-md mx-auto">

@@ -80,7 +80,7 @@ export async function POST(req: Request) {
         await prisma.notification.create({
           data: {
             userId: admin.id,
-            title: 'طلب تجديد اشتراك محاضر جديد 💳',
+            title: 'طلب تجديد اشتراك محاضر جديد ',
             message: `قام المحاضر ${user.officialFullName || user.firstName} بتقديم طلب تجديد اشتراك ${isAnnual ? 'سنوي' : 'شهري'} بمبلغ ${amount} ج.م.`,
             type: 'PAYMENT',
             link: '/admin/instructors',

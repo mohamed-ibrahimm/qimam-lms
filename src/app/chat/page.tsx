@@ -144,7 +144,7 @@ export default function ChatPage() {
           <div className="flex-1 p-6 overflow-y-auto space-y-4">
             {messages.length === 0 ? (
               <div className="text-center py-16 text-zinc-500 text-xs">
-                لا توجد رسائل سابقة. ابدأ المحادثة الآن! 👋
+                لا توجد رسائل سابقة. ابدأ المحادثة الآن! 
               </div>
             ) : (
               messages.map((m) => {

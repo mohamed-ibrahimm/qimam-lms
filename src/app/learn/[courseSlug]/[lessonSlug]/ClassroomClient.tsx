@@ -62,7 +62,7 @@ export default function ClassroomClient({
   const [aiMessages, setAiMessages] = useState<{ sender: 'user' | 'ai'; text: string }[]>([
     {
       sender: 'ai',
-      text: `مرحباً بك يا ${user?.firstName || 'طالبنا العزيز'}! أنا مساعدك الذكي في درس "${activeLesson.title}". اسألني أي سؤال حول محتوى الدرس، الكود البرمجي، أو التلخيص وسأجيبك فوراً! 🚀`
+      text: `مرحباً بك يا ${user?.firstName || 'طالبنا العزيز'}! أنا مساعدك الذكي في درس "${activeLesson.title}". اسألني أي سؤال حول محتوى الدرس، الكود البرمجي، أو التلخيص وسأجيبك فوراً! `
     }
   ]);
   const [aiInput, setAiInput] = useState('');
@@ -217,7 +217,7 @@ export default function ClassroomClient({
                   <Unlock className="w-5 h-5 text-emerald-400" />
                 </div>
                 <div>
-                  <h4 className="text-xs sm:text-sm font-black text-white">أنت تشاهد هذا الدرس كمعاينة مجانية (Free Preview) 🎁</h4>
+                  <h4 className="text-xs sm:text-sm font-black text-white">أنت تشاهد هذا الدرس كمعاينة مجانية (Free Preview) </h4>
                   <p className="text-[11px] text-zinc-400">سجل الآن واشترك في الكورس لفتح كافة المحاضرات والمشاريع والشهادة المعتمدة.</p>
                 </div>
               </div>
@@ -318,8 +318,8 @@ export default function ClassroomClient({
                   <div>
                     <h3 className="text-xs sm:text-sm font-black text-white">
                       {completedLessonIds.includes(activeLesson.id)
-                        ? 'تم اجتياز اختبار هذا الدرس بنجاح! تم فتح الدرس التالي ✅'
-                        : 'اختبار الدرس إجباري لفتح المحاضرة التالية 🔒'}
+                        ? 'تم اجتياز اختبار هذا الدرس بنجاح! تم فتح الدرس التالي '
+                        : 'اختبار الدرس إجباري لفتح المحاضرة التالية '}
                     </h3>
                     <p className="text-[11px] text-zinc-300 mt-0.5">
                       {completedLessonIds.includes(activeLesson.id)
@@ -341,7 +341,7 @@ export default function ClassroomClient({
                       : 'bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-400 text-white shadow-purple-950/50'
                   }`}
                 >
-                  {completedLessonIds.includes(activeLesson.id) ? 'إعادة حل الاختبار' : 'بدء اختبار الدرس الآن 📝'}
+                  {completedLessonIds.includes(activeLesson.id) ? 'إعادة حل الاختبار' : 'بدء اختبار الدرس الآن '}
                 </button>
               </div>
             </div>
@@ -353,7 +353,7 @@ export default function ClassroomClient({
               <div className="flex items-center gap-3">
                 <Sparkles className="w-6 h-6 text-amber-400 shrink-0" />
                 <div>
-                  <h4 className="text-sm font-black text-white">🎉 مبارك! تم إصدار شهادتك المعتمدة للكورس!</h4>
+                  <h4 className="text-sm font-black text-white"> مبارك! تم إصدار شهادتك المعتمدة للكورس!</h4>
                   <p className="text-xs text-zinc-300">
                     رقم الشهادة: <span className="font-mono text-amber-300 font-bold">{issuedCertificate.certificateNumber}</span>
                   </p>
@@ -365,7 +365,7 @@ export default function ClassroomClient({
                 rel="noreferrer"
                 className="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 font-black text-xs shadow-md shrink-0"
               >
-                معاينة وتحميل الشهادة PDF 🎓
+                معاينة وتحميل الشهادة PDF 
               </a>
             </div>
           )}
@@ -521,7 +521,7 @@ export default function ClassroomClient({
                       >
                         <div className="space-y-2">
                           <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-black/40 text-primary-300 border border-primary-900 inline-block">
-                            {isFlipped ? 'الإجابة 💡' : 'السؤال ❓'}
+                            {isFlipped ? 'الإجابة ' : 'السؤال '}
                           </span>
                           <p className="text-xs font-semibold leading-relaxed">
                             {isFlipped ? card.answer : card.question}
@@ -611,7 +611,7 @@ export default function ClassroomClient({
                 ))}
                 {aiLoading && (
                   <div className="p-3 rounded-2xl bg-surface-raised border border-border text-xs text-zinc-400 animate-pulse ml-auto">
-                    المساعد الذكي يكتب الإجابة... 🤖
+                    المساعد الذكي يكتب الإجابة... 
                   </div>
                 )}
               </div>
@@ -708,7 +708,7 @@ export default function ClassroomClient({
                               <Lock className="w-3.5 h-3.5 text-zinc-600 shrink-0" />
                               <span className="truncate">{lesson.title}</span>
                             </div>
-                            <span className="text-[10px] text-amber-500/80 font-bold">مقفل 🔒</span>
+                            <span className="text-[10px] text-amber-500/80 font-bold">مقفل </span>
                           </div>
                         );
                       }
@@ -765,7 +765,7 @@ export default function ClassroomClient({
                     className="w-full py-3 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 text-white text-xs font-black flex items-center justify-center gap-2 shadow-lg shadow-purple-950/50 transition-all hover:scale-105 cursor-pointer"
                   >
                     <Award className="w-4 h-4 text-yellow-300" />
-                    <span>بدء الامتحان النهائي وإصدار الشهادة 🎓</span>
+                    <span>بدء الامتحان النهائي وإصدار الشهادة </span>
                   </button>
                 )}
               </div>

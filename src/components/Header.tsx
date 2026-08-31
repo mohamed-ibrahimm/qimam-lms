@@ -331,7 +331,7 @@ export default function Header({
             <span className="whitespace-nowrap">الدبلومات الشاملة</span>
           </Link>
 
-          {/* 4. Link: البث المباشر 🔴 */}
+          {/* 4. Link: البث المباشر  */}
           <Link
             href="/live"
             prefetch={true}
@@ -399,7 +399,7 @@ export default function Header({
                         {currentUser.role === 'ADMIN'
                           ? 'المشرف العام'
                           : currentUser.role === 'INSTRUCTOR'
-                          ? '‍محاضر معتمد'
+                          ? 'محاضر معتمد'
                           : 'طالب بالأكاديمية'}
                       </span>
                     </div>
@@ -646,7 +646,7 @@ export default function Header({
                       ? 'bg-purple-500/15 border-purple-500/30 text-purple-600 dark:text-purple-300'
                       : 'bg-blue-500/15 border-blue-500/30 text-blue-600 dark:text-blue-300'
                   }`}>
-                    {currentUser.role === 'ADMIN' ? 'مشرف عام' : currentUser.role === 'INSTRUCTOR' ? '‍محاضر' : 'طالب'}
+                    {currentUser.role === 'ADMIN' ? 'مشرف عام' : currentUser.role === 'INSTRUCTOR' ? 'محاضر' : 'طالب'}
                   </span>
                 </div>
 

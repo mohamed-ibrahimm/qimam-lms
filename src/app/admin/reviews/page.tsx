@@ -64,7 +64,7 @@ export default function AdminReviewsPage() {
       if (!res.ok) {
         setError(data.error || 'فشل إضافة التقييم');
       } else {
-        setMessage('تمت إضافة التقييم للكورس بنجاح! ⭐️');
+        setMessage('تمت إضافة التقييم للكورس بنجاح! ');
         setFormData({ ...formData, comment: '', reviewerName: '' });
         loadData();
         setTimeout(() => setMessage(''), 3500);
@@ -149,11 +149,11 @@ export default function AdminReviewsPage() {
                 onChange={(e) => setFormData({ ...formData, rating: Number(e.target.value) })}
                 className="w-full px-3.5 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-amber-400"
               >
-                <option value={5}>⭐️⭐️⭐️⭐️⭐️ (5 نجوم - ممتاز)</option>
-                <option value={4}>⭐️⭐️⭐️⭐️ (4 نجوم - جيد جداً)</option>
-                <option value={3}>⭐️⭐️⭐️ (3 نجوم - جيد)</option>
-                <option value={2}>⭐️⭐️ (نجمتان)</option>
-                <option value={1}>⭐️ (نجمة واحدة)</option>
+                <option value={5}> (5 نجوم - ممتاز)</option>
+                <option value={4}> (4 نجوم - جيد جداً)</option>
+                <option value={3}> (3 نجوم - جيد)</option>
+                <option value={2}> (نجمتان)</option>
+                <option value={1}> (نجمة واحدة)</option>
               </select>
             </div>
           </div>

@@ -119,11 +119,11 @@ export default function ForcedReviewModal({
               })}
             </div>
             <span className="text-xs font-bold text-amber-300">
-              {rating === 5 && 'ممتاز جداً - محتوى احترافي ⭐️⭐️⭐️⭐️⭐️'}
-              {rating === 4 && 'جيد جداً - شرح متميز ⭐️⭐️⭐️⭐️'}
-              {rating === 3 && 'جيد ⭐️⭐️⭐️'}
-              {rating === 2 && 'مقبول ⭐️⭐️'}
-              {rating === 1 && 'يحتاج تحسين ⭐️'}
+              {rating === 5 && 'ممتاز جداً - محتوى احترافي '}
+              {rating === 4 && 'جيد جداً - شرح متميز '}
+              {rating === 3 && 'جيد '}
+              {rating === 2 && 'مقبول '}
+              {rating === 1 && 'يحتاج تحسين '}
             </span>
           </div>
 
@@ -153,7 +153,7 @@ export default function ForcedReviewModal({
             ) : (
               <>
                 <CheckCircle2 className="w-4 h-4" />
-                <span>إرسال التقييم ومتابعة باقي المنهج ➔</span>
+                <span>إرسال التقييم ومتابعة باقي المنهج </span>
               </>
             )}
           </button>

@@ -124,7 +124,7 @@ export async function POST(req: Request) {
         await prisma.notification.create({
           data: {
             userId: user.id,
-            title: 'مبروك! تم إصدار شهادتك الرسمية 🎓',
+            title: 'مبروك! تم إصدار شهادتك الرسمية ',
             message: `تهانينا لإتمام كورس ${course.title} بنجاح. يمكنك استعراض وتحميل شهادتك الآن برمز QR.`,
             link: `/verify/${certNumber}`,
             type: 'CERTIFICATE',

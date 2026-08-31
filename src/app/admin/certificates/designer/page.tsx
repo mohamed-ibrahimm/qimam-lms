@@ -79,7 +79,7 @@ export default function CertificateDesignerPage() {
           className="px-6 py-3 rounded-xl bg-gradient-to-r from-primary-600 to-purple-600 hover:from-primary-500 hover:to-purple-500 text-white font-bold text-xs shadow-lg flex items-center gap-2 disabled:opacity-50"
         >
           <Save className="w-4 h-4" />
-          <span>{saving ? 'جاري الحفظ...' : savedSuccess ? 'تم الحفظ بنجاح! ✅' : 'حفظ ونشر القالب'}</span>
+          <span>{saving ? 'جاري الحفظ...' : savedSuccess ? 'تم الحفظ بنجاح! ' : 'حفظ ونشر القالب'}</span>
         </button>
       </div>
 

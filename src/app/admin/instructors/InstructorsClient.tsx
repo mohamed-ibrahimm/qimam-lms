@@ -244,7 +244,7 @@ export default function InstructorsClient({
                       onClick={() => setViewingScreenshot(sub.screenshotUrl)}
                       className="text-primary-600 dark:text-primary-400 hover:underline font-bold block pt-1"
                     >
-                      عرض صورة إيصال التحويل 🖼️
+                      عرض صورة إيصال التحويل 
                     </button>
                   )}
                 </div>

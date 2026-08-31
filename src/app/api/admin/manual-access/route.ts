@@ -100,7 +100,7 @@ export async function POST(req: Request) {
     await prisma.notification.create({
       data: {
         userId: targetUser.id,
-        title: '🎁 تم منحك حق الوصول إلى المقرر التدريبي',
+        title: ' تم منحك حق الوصول إلى المقرر التدريبي',
         message: `تم منحك وصول ${expiresAt ? `مؤقت حتى ${expiresAt.toLocaleDateString('ar-EG')}` : 'دائم'} من قبل إدارة المنصة.`,
         link: '/dashboard',
         type: 'COURSE',

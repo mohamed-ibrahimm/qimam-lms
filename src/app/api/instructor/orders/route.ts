@@ -127,7 +127,7 @@ export async function PUT(req: Request) {
       await prisma.notification.create({
         data: {
           userId: payment.userId,
-          title: '✅ تم تأكيد اشتراكك في الكورس بنجاح!',
+          title: ' تم تأكيد اشتراكك في الكورس بنجاح!',
           message: `تم اعتماد إيصال التحويل لكورس (${payment.order.course?.title || ''}) بواسطة المحاضر ويمكنك الآن بدء المشاهدة فوراً.`,
           link: `/courses/${payment.order.course?.slug || ''}`,
           type: 'PAYMENT',
@@ -157,7 +157,7 @@ export async function PUT(req: Request) {
       await prisma.notification.create({
         data: {
           userId: payment.userId,
-          title: '❌ تعذر تأكيد عملية الدفع',
+          title: ' تعذر تأكيد عملية الدفع',
           message: `لم يتم اعتماد إيصال الدفع لكورس (${payment.order.course?.title || ''}). السبب: ${note || 'بيانات التحويل غير مطابقة'}. يرجى التواصل مع المحاضر.`,
           link: '/dashboard',
           type: 'PAYMENT',

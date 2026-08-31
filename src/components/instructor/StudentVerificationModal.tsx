@@ -289,7 +289,7 @@ export default function StudentVerificationModal({
               ) : (
                 <>
                   <Send className="w-4 h-4" />
-                  <span>تأكيد البيانات وتفعيل شهر مجاناً 🚀</span>
+                  <span>تأكيد البيانات وتفعيل شهر مجاناً </span>
                 </>
               )}
             </button>

@@ -50,7 +50,7 @@ const RATING_LABELS: Record<number, string> = {
   2: 'مقبول - محتوى متوسط',
   3: 'جيد - مفيد وواضح',
   4: 'جيد جداً - أنصح به بشدة',
-  5: 'ممتاز واستثنائي 🌟 - يستحق 5 نجوم',
+  5: 'ممتاز واستثنائي  - يستحق 5 نجوم',
 };
 
 export default function ItemReviewsSection({
@@ -105,7 +105,7 @@ export default function ItemReviewsSection({
         throw new Error(data.error || 'فشل إرسال التقييم');
       }
 
-      setSuccessMessage(data.message || 'تم نشر تعليقك وتقييمك بنجاح! 🌟');
+      setSuccessMessage(data.message || 'تم نشر تعليقك وتقييمك بنجاح! ');
       setComment('');
 
       // Optimistic review update

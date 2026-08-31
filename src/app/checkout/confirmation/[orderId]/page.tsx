@@ -46,7 +46,7 @@ export default async function OrderConfirmationPage({ params }: Props) {
     <div className="max-w-2xl mx-auto px-4 py-16 text-center space-y-8">
       {/* Status Icon */}
       <div className="w-20 h-20 rounded-full mx-auto flex items-center justify-center text-3xl shadow-2xl border bg-surface-raised">
-        {isApproved ? '🎉' : isPending ? '⏳' : '⚠️'}
+        {isApproved ? '' : isPending ? '' : ''}
       </div>
 
       <div className="space-y-2">

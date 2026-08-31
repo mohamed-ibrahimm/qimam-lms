@@ -515,7 +515,7 @@ export default function InstructorClient({
                 <span>أكاديمية المحاضر: {user.officialFullName}</span>
                 {user.isStudentInstructor && user.studentVerificationStatus === 'APPROVED' && (
                   <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 text-[11px] font-bold">
-                    طالب معتمد 🎓
+                    طالب معتمد 
                   </span>
                 )}
               </h1>

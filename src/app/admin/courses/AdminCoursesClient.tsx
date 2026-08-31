@@ -253,7 +253,7 @@ export default function AdminCoursesClient({ initialCourses }: AdminCoursesClien
                           title="إدارة الفيديوهات والمنهج التعليمي"
                         >
                           <Video className="w-3.5 h-3.5" />
-                          <span>المنهج والفيديوهات 🎬</span>
+                          <span>المنهج والفيديوهات </span>
                         </Link>
 
                         <Link
@@ -293,7 +293,7 @@ export default function AdminCoursesClient({ initialCourses }: AdminCoursesClien
                   <AlertTriangle className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-base font-black text-slate-900 dark:text-white">تأكيد حذف الكورس (صلاحية الإدارة) ⚠️</h3>
+                  <h3 className="text-base font-black text-slate-900 dark:text-white">تأكيد حذف الكورس (صلاحية الإدارة) </h3>
                   <span className="text-[11px] text-rose-600 dark:text-rose-400 font-semibold">إجراء لا يمكن التراجع عنه</span>
                 </div>
               </div>

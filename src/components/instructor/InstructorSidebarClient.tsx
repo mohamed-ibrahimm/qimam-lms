@@ -302,7 +302,7 @@ export default function InstructorSidebarClient({
                   </div>
                   <div>
                     <h3 className="text-sm sm:text-base font-black text-white">
-                      أقسام استوديو المحاضر السحابي 👑
+                      أقسام استوديو المحاضر السحابي 
                     </h3>
                     <p className="text-[11px] text-zinc-400">
                       انتقل لأي قسم بالاستوديو أو أطلق البث المباشر بضغطة زر

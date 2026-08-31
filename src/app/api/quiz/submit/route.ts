@@ -187,11 +187,11 @@ export async function POST(req: Request) {
     }
 
     const motivationalMessages = [
-      'ممتاز! كمل بنفس القوة 🔥',
-      'أحسنت! خطوة كمان وتوصل للهدف 💪',
-      'إنجاز رائع! استمر يا بطل 🚀',
-      'فخورين بيك! يلا على الدرس اللي بعده ⭐',
-      'عاش! قربت تخلص الكورس 🎯',
+      'ممتاز! كمل بنفس القوة ',
+      'أحسنت! خطوة كمان وتوصل للهدف ',
+      'إنجاز رائع! استمر يا بطل ',
+      'فخورين بيك! يلا على الدرس اللي بعده ',
+      'عاش! قربت تخلص الكورس ',
     ];
     const motivationalMessage = isPassed
       ? motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)]

@@ -914,7 +914,7 @@ export default function CurriculumClient({
                           }`}
                         >
                           <HelpCircle className="w-3.5 h-3.5 text-purple-400" />
-                          <span>{lesson.quiz ? 'امتحان الدرس 📝' : '+ امتحان الدرس'}</span>
+                          <span>{lesson.quiz ? 'امتحان الدرس ' : '+ امتحان الدرس'}</span>
                         </button>
 
                         <button
@@ -1152,7 +1152,7 @@ export default function CurriculumClient({
                     <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-bold ${
                       lessonForm.isFreePreview ? 'bg-emerald-500 text-black' : 'bg-zinc-700 text-zinc-400'
                     }`}>
-                      {lessonForm.isFreePreview ? '✓' : '✕'}
+                      {lessonForm.isFreePreview ? '' : ''}
                     </span>
                   </label>
                 </div>
@@ -1460,7 +1460,7 @@ export default function CurriculumClient({
                                 }`}
                                 title="تحديد كإجابة صحيحة"
                               >
-                                {isCorrect ? '✓' : oIdx + 1}
+                                {isCorrect ? '' : oIdx + 1}
                               </button>
 
                               <input
@@ -1593,7 +1593,7 @@ export default function CurriculumClient({
                 <AlertTriangle className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-base font-black text-white">تأكيد الحذف ⚠️</h3>
+                <h3 className="text-base font-black text-white">تأكيد الحذف </h3>
                 <span className="text-[11px] text-rose-400 font-semibold">
                   {deletingItem.type === 'SECTION'
                     ? 'حذف الوحدة وجميع دروسها'

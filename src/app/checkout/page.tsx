@@ -114,7 +114,7 @@ export default async function CheckoutPage({ searchParams }: Props) {
         <div className="min-h-[70vh] flex flex-col items-center justify-center p-6 text-center">
           <div className="max-w-md w-full p-8 rounded-3xl bg-surface border border-border shadow-2xl space-y-4">
             <div className="w-16 h-16 rounded-2xl bg-amber-500/15 text-amber-400 flex items-center justify-center mx-auto text-2xl font-bold">
-              ⏳
+              
             </div>
             <h2 className="text-xl font-black text-white">التسجيل في هذا الكورس متوقف مؤقتاً</h2>
             <p className="text-xs text-zinc-400 leading-relaxed">

@@ -35,7 +35,7 @@ export default function MagicContentEditorPage() {
       });
 
       if (res.ok) {
-        setMessage('تم حفظ كافة نصوص وبنرات الموقع بنجاح! تم التحديث فورياً دون لمس الكود 🪄✨');
+        setMessage('تم حفظ كافة نصوص وبنرات الموقع بنجاح! تم التحديث فورياً دون لمس الكود ');
         if (typeof window !== 'undefined') {
           window.dispatchEvent(new CustomEvent('platform-settings-updated', { detail: content }));
         }
@@ -101,7 +101,7 @@ export default function MagicContentEditorPage() {
               <label className="block text-xs font-semibold text-zinc-300 mb-1">نص البنر الترويجي</label>
               <input
                 type="text"
-                value={content.BANNER_TEXT || 'خصم استثنائي 50% لفترة محدودة على جميع المسارات والدبلومات الهندسية 🚀'}
+                value={content.BANNER_TEXT || 'خصم استثنائي 50% لفترة محدودة على جميع المسارات والدبلومات الهندسية '}
                 onChange={(e) => handleChange('BANNER_TEXT', e.target.value)}
                 className="w-full px-3.5 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs"
               />
@@ -183,7 +183,7 @@ export default function MagicContentEditorPage() {
               <label className="block text-xs font-semibold text-zinc-300 mb-1">عنوان شارة التميز</label>
               <input
                 type="text"
-                value={content.FEATURED_DIPLOMA_BADGE || 'الدبلومة الأكثر طلباً في سوق العمل 🔥'}
+                value={content.FEATURED_DIPLOMA_BADGE || 'الدبلومة الأكثر طلباً في سوق العمل '}
                 onChange={(e) => handleChange('FEATURED_DIPLOMA_BADGE', e.target.value)}
                 className="w-full px-3.5 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs"
               />

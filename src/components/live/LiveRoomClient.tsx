@@ -215,7 +215,7 @@ export default function LiveRoomClient({ sessionId, initialSession }: LiveRoomCl
     setActiveQuiz({
       id: Date.now().toString(),
       question: 'ما هو الترتيب الصحيح لدورة حياة المكون في React (Component Lifecycle)؟',
-      options: ['Mounting ➜ Updating ➜ Unmounting', 'Updating ➜ Mounting ➜ Rendering', 'Rendering ➜ Catching ➜ Destroying', 'Initialization ➜ Loading ➜ Caching'],
+      options: ['Mounting  Updating  Unmounting', 'Updating  Mounting  Rendering', 'Rendering  Catching  Destroying', 'Initialization  Loading  Caching'],
       correctIndex: 0,
       timeLeft: 25,
       isActive: true,
@@ -470,8 +470,8 @@ export default function LiveRoomClient({ sessionId, initialSession }: LiveRoomCl
                   {quizAnswered && (
                     <div className="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-xs font-bold text-amber-300">
                       {selectedAnswer === activeQuiz.correctIndex
-                        ? '🎉 إجابة صحيحة وسريعة! تم احتساب النقاط.'
-                        : '❌ إجابة خاطئة، ركز في السؤال القادم!'}
+                        ? ' إجابة صحيحة وسريعة! تم احتساب النقاط.'
+                        : ' إجابة خاطئة، ركز في السؤال القادم!'}
                     </div>
                   )}
                 </div>
@@ -503,7 +503,7 @@ export default function LiveRoomClient({ sessionId, initialSession }: LiveRoomCl
                       >
                         <div className="flex items-center gap-3">
                           <div className="w-7 h-7 rounded-full bg-amber-500 text-zinc-950 font-black flex items-center justify-center text-xs">
-                            {item.rank === 1 ? '👑' : item.rank}
+                            {item.rank === 1 ? '' : item.rank}
                           </div>
                           <span className="font-bold text-xs sm:text-sm">{item.name}</span>
                         </div>
@@ -594,7 +594,7 @@ export default function LiveRoomClient({ sessionId, initialSession }: LiveRoomCl
                     >
                       <div className="flex items-center justify-between text-[10px] text-zinc-400 font-bold">
                         <span className={msg.isInstructor ? 'text-amber-400 font-black' : 'text-zinc-300'}>
-                          {msg.user} {msg.isInstructor && '(المحاضر 👑)'}
+                          {msg.user} {msg.isInstructor && '(المحاضر )'}
                         </span>
                         <span className="font-mono">{msg.time}</span>
                       </div>
@@ -675,7 +675,7 @@ export default function LiveRoomClient({ sessionId, initialSession }: LiveRoomCl
                     }`}
                   >
                     <Hand className="w-4 h-4" />
-                    <span>{hasRaisedHand ? 'إنزال اليد' : 'رفع اليد لطلب المايك ✋'}</span>
+                    <span>{hasRaisedHand ? 'إنزال اليد' : 'رفع اليد لطلب المايك '}</span>
                   </button>
                 )}
 
@@ -703,7 +703,7 @@ export default function LiveRoomClient({ sessionId, initialSession }: LiveRoomCl
                               : 'bg-white/10 hover:bg-white/20 text-zinc-200'
                           }`}
                         >
-                          {item.hasMicPermission ? 'المايك مفتوح' : 'فتح المايك 🎙️'}
+                          {item.hasMicPermission ? 'المايك مفتوح' : 'فتح المايك '}
                         </button>
                       )}
                     </div>

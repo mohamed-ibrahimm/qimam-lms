@@ -259,10 +259,10 @@ export default function AdminStudentVerificationsPage() {
                         }`}
                       >
                         {s.studentVerificationStatus === 'APPROVED'
-                          ? 'طالب معتمد ✅'
+                          ? 'طالب معتمد '
                           : s.studentVerificationStatus === 'REJECTED'
-                          ? 'مرفوض ❌'
-                          : 'بانتظار المراجعة ⏳'}
+                          ? 'مرفوض '
+                          : 'بانتظار المراجعة '}
                       </span>
                     </td>
 
