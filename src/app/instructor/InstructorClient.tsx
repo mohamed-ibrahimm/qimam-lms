@@ -8,6 +8,7 @@ import FileUploadInput from '@/components/FileUploadInput';
 import { formatPrice, formatDuration } from '@/lib/utils';
 import InstructorSidebarClient, { InstructorTabType } from '@/components/instructor/InstructorSidebarClient';
 import StudentVerificationModal from '@/components/instructor/StudentVerificationModal';
+import InstructorSubscriptionModal from '@/components/instructor/InstructorSubscriptionModal';
 import {
   GraduationCap,
   BookOpen,
@@ -2059,229 +2060,26 @@ export default function InstructorClient({
         )}
       </main>
 
-      {/* RENEWAL / UPGRADE MODAL */}
+      {/* LUXURY INSTRUCTOR SAAS SUBSCRIPTION & RENEWAL MODAL */}
       {showRenewModal && mounted && createPortal(
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
-          <div className="max-w-lg w-full rounded-3xl bg-surface border border-border p-6 sm:p-8 space-y-6 shadow-2xl animate-in fade-in zoom-in-95 my-6">
-            <div className="flex items-center justify-between border-b border-border pb-4">
-              <div className="space-y-0.5">
-                <h3 className="text-lg font-black text-white flex items-center gap-2">
-                  <CreditCard className="w-5 h-5 text-amber-400" />
-                  تجديد أو ترقية اشتراك الأكاديمية
-                </h3>
-                <p className="text-xs text-zinc-400">اختر باقة الاشتراك وقم بالتحويل لإدارة المنصة لتفعيل حسابك</p>
-              </div>
-              <button onClick={() => setShowRenewModal(false)} className="text-zinc-400 hover:text-white p-1">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            {/* Plan Selector */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-              <button
-                type="button"
-                onClick={() => setRenewPlan('LIVE_STUDIO_PRO')}
-                className={`p-3.5 rounded-2xl border text-right transition-all space-y-1 relative ${
-                  renewPlan === 'LIVE_STUDIO_PRO'
-                    ? 'bg-rose-950/60 border-rose-500 shadow-md ring-1 ring-rose-500'
-                    : 'bg-surface-raised border-border text-zinc-400'
-                }`}
-              >
-                <span className="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-400 text-[9px] font-black">
-                  الأكثر مبيعاً VIP
-                </span>
-                <span className="text-xs font-black text-rose-300 block">باقة البث المباشر والأستوديو</span>
-                <span className="text-lg font-black text-white block">490 ج.م <span className="text-[10px] text-zinc-400">/شهر</span></span>
-                <span className="text-[10px] text-zinc-300 block">بث 1080p + كويزات Kahoot</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setRenewPlan('MONTHLY')}
-                className={`p-3.5 rounded-2xl border text-right transition-all space-y-1 ${
-                  renewPlan === 'MONTHLY'
-                    ? 'bg-primary-950/60 border-primary-500 shadow-md ring-1 ring-primary-500'
-                    : 'bg-surface-raised border-border text-zinc-400'
-                }`}
-              >
-                <span className="text-xs font-bold text-white block">الباقة الأساسية (شهري)</span>
-                <span className="text-lg font-black text-primary-300 block">{platformPricing.monthlyPrice} ج.م</span>
-                <span className="text-[10px] text-zinc-400 block">كورسات مسجلة ومذكرات</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setRenewPlan('ANNUAL')}
-                className={`p-3.5 rounded-2xl border text-right transition-all space-y-1 relative ${
-                  renewPlan === 'ANNUAL'
-                    ? 'bg-primary-950/60 border-primary-500 shadow-md ring-1 ring-primary-500'
-                    : 'bg-surface-raised border-border text-zinc-400'
-                }`}
-              >
-                <span className="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 text-[9px] font-bold">
-                  وفر شهرين!
-                </span>
-                <span className="text-xs font-bold text-white block">الباقة الشاملة (سنوي)</span>
-                <span className="text-lg font-black text-emerald-400 block">{platformPricing.annualPrice.toLocaleString('en-US')} ج.م</span>
-                <span className="text-[10px] text-zinc-400 block">العام الأكثر توفيراً للجميع</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  if (userAge !== null && userAge > platformPricing.studentMaxAge) {
-                    setMessage({
-                      type: 'error',
-                      text: `عمرك المسجل (${userAge} سنة) يتجاوز الحد الأقصى لباقة الطلاب (${platformPricing.studentMaxAge} سنة). يجب الاشتراك في إحدى باقات المحاضر العادية.`
-                    });
-                    setRenewPlan('MONTHLY');
-                    return;
-                  }
-                  setRenewPlan('STUDENT_PRO');
-                }}
-                className={`p-3.5 rounded-2xl border text-right transition-all space-y-1 relative ${
-                  renewPlan === 'STUDENT_PRO'
-                    ? 'bg-purple-950/70 border-purple-500 shadow-md ring-1 ring-purple-500'
-                    : 'bg-surface-raised border-border text-zinc-400'
-                }`}
-              >
-                <span className="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[9px] font-black inline-block mb-1">
-                  سن {platformPricing.studentMaxAge} فأقل فقط
-                </span>
-                <span className="text-xs font-bold text-white block">باقة المحاضر الطالب</span>
-                <span className="text-lg font-black text-purple-300 block">{platformPricing.studentPrice} ج.م</span>
-                <span className="text-[10px] text-zinc-400 block">منحة مدعومة للجامعيين</span>
-              </button>
-            </div>
-
-            {/* Student Plan Guidelines Box */}
-            {renewPlan === 'STUDENT_PRO' && (
-              <div className="p-3 rounded-xl bg-purple-950/40 border border-purple-800/60 text-xs text-purple-200 space-y-1.5 animate-in fade-in">
-                <div className="flex items-center gap-2">
-                  <GraduationCap className="w-4 h-4 text-amber-400 shrink-0" />
-                  <span className="font-bold text-white">ضوابط باقة الطالب ({platformPricing.studentPrice} ج.م):</span>
-                </div>
-                <p className="text-[11px] text-zinc-300 leading-relaxed">
-                  هذه الباقة مخصصة لمن هم بسن <strong>{platformPricing.studentMaxAge} سنة أو أقل</strong> وتتطلب إثبات قيد بكارنيه الكلية/المدرسة أو جدول المحاضرات للعام الحالي دون الحاجة لبطاقة شخصية. 
-                  إذا كان عمرك أكبر من {platformPricing.studentMaxAge} سنة، يرجى اختيار الباقة العادية (الشهري {platformPricing.monthlyPrice} ج.م أو السنوي {platformPricing.annualPrice.toLocaleString('en-US')} ج.م).
-                </p>
-                {(!user.isStudentInstructor || user.studentVerificationStatus !== 'APPROVED') && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setShowRenewModal(false);
-                      setShowStudentVerifModal(true);
-                    }}
-                    className="mt-1 px-3 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-zinc-950 font-black text-[11px] flex items-center gap-1 cursor-pointer"
-                  >
-                    <span>إثبات الدراسة وتفعيل الباقة الآن</span>
-                  </button>
-                )}
-              </div>
-            )}
-
-            {/* Admin Payment Accounts Box */}
-            <div className="p-4 rounded-2xl bg-surface-raised border border-border space-y-3">
-              <div className="flex items-center justify-between text-xs">
-                <span className="font-bold text-white">حساب إنستاباي الإدارة:</span>
-                <div className="flex items-center gap-1.5 font-mono text-amber-300 font-bold">
-                  <span>{platformSettings['INSTAPAY_ACCOUNT'] || 'qimam.edu@instapay'}</span>
-                  <button
-                    type="button"
-                    onClick={() => copyToClipboard(platformSettings['INSTAPAY_ACCOUNT'] || 'qimam.edu@instapay', 'instapay')}
-                    className="p-1 text-zinc-400 hover:text-white"
-                  >
-                    {copiedKey === 'instapay' ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
-                  </button>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between text-xs">
-                <span className="font-bold text-white">محفظة فودافون كاش الإدارة:</span>
-                <div className="flex items-center gap-1.5 font-mono text-rose-300 font-bold">
-                  <span>{platformSettings['VODAFONE_CASH_NUMBER'] || '01555791568'}</span>
-                  <button
-                    type="button"
-                    onClick={() => copyToClipboard(platformSettings['VODAFONE_CASH_NUMBER'] || '01555791568', 'vodafone')}
-                    className="p-1 text-zinc-400 hover:text-white"
-                  >
-                    {copiedKey === 'vodafone' ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Form */}
-            <form onSubmit={handleSubmitRenewal} className="space-y-4">
-              <div className="space-y-1.5">
-                <label className="text-xs text-zinc-300">طريقة التحويل التي استخدمتها:</label>
-                <div className="flex gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setRenewMethod('INSTAPAY')}
-                    className={`flex-1 py-2 rounded-xl text-xs font-bold border transition-all ${
-                      renewMethod === 'INSTAPAY'
-                        ? 'bg-purple-900/50 border-purple-500 text-white'
-                        : 'bg-surface-raised border-border text-zinc-400'
-                    }`}
-                  >
-                    إنستاباي
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setRenewMethod('VODAFONE_CASH')}
-                    className={`flex-1 py-2 rounded-xl text-xs font-bold border transition-all ${
-                      renewMethod === 'VODAFONE_CASH'
-                        ? 'bg-rose-900/50 border-rose-500 text-white'
-                        : 'bg-surface-raised border-border text-zinc-400'
-                    }`}
-                  >
-                    فودافون كاش
-                  </button>
-                </div>
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-xs text-zinc-300">رقم المعاملة / العملية (اختياري):</label>
-                <input
-                  type="text"
-                  value={renewTxId}
-                  onChange={(e) => setRenewTxId(e.target.value)}
-                  placeholder="رقم العملية من التطبيق"
-                  className="w-full px-4 py-2.5 rounded-xl bg-surface-raised border border-border text-white text-xs focus:outline-none focus:border-primary-500 font-mono"
-                />
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-xs text-zinc-300">صورة أو لقطة شاشة لإيصال التحويل:</label>
-                <FileUploadInput
-                  label="صورة أو لقطة شاشة لإيصال التحويل"
-                  accept="image/*"
-                  currentValue={renewScreenshot}
-                  onUploadComplete={(url: string) => setRenewScreenshot(url)}
-                  folder="payments"
-                />
-              </div>
-
-              <div className="pt-2 flex gap-3">
-                <button
-                  type="button"
-                  onClick={() => setShowRenewModal(false)}
-                  className="flex-1 py-2.5 rounded-xl bg-surface-raised hover:bg-surface-card border border-border text-zinc-300 text-xs font-bold transition-colors"
-                >
-                  إلغاء
-                </button>
-                <button
-                  type="submit"
-                  disabled={isSubmittingRenew}
-                  className="flex-1 py-2.5 rounded-xl bg-primary-600 hover:bg-primary-500 text-white text-xs font-black shadow-md disabled:opacity-50 transition-all hover:scale-105"
-                >
-                  {isSubmittingRenew ? 'جاري الإرسال...' : 'تأكيد وإرسال الإيصال للإدارة'}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>,
+        <InstructorSubscriptionModal
+          isOpen={showRenewModal}
+          onClose={() => setShowRenewModal(false)}
+          user={user}
+          platformPricing={platformPricing}
+          platformSettings={platformSettings}
+          onSuccess={(msg) => {
+            setMessage({ type: 'success', text: msg });
+            router.refresh();
+          }}
+          onError={(err) => {
+            setMessage({ type: 'error', text: err });
+          }}
+          onOpenStudentVerification={() => {
+            setShowRenewModal(false);
+            setShowStudentVerifModal(true);
+          }}
+        />,
         document.body
       )}
 
