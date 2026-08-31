@@ -200,29 +200,11 @@ export default function Header({
         </Link>
 
         {/* =========================================================================
-            2. CENTER: CLEAN FLEXIBLE CENTERED NAVIGATION (ZERO OVERLAP)
+            2. CENTER: CLEAN BALANCED CENTERED NAVIGATION (ZERO OVERLAP)
            ========================================================================= */}
-        <div className="hidden lg:flex items-center gap-2 xl:gap-2.5 bg-slate-100/90 dark:bg-black/60 p-1.5 xl:p-2 rounded-full border border-slate-200/90 dark:border-white/10 shadow-inner shrink-0 mx-auto">
+        <div className="hidden lg:flex items-center gap-1.5 xl:gap-2 bg-slate-100/90 dark:bg-black/60 p-1.5 rounded-full border border-slate-200/90 dark:border-white/10 shadow-inner shrink-0 mx-auto">
           
-          {/* Link: البثوث المباشرة الآن (Live) */}
-          <Link
-            href="/live"
-            prefetch={true}
-            className={`px-4 xl:px-4.5 py-2 text-xs sm:text-[13px] font-bold rounded-full transition-all inline-flex items-center gap-2 shrink-0 ${
-              pathname.startsWith('/live')
-                ? 'bg-gradient-to-r from-rose-600 to-red-600 text-white shadow-md shadow-rose-600/30 font-black scale-105'
-                : 'text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-500/15 font-black hover:scale-105'
-            }`}
-          >
-            <span className="flex h-2.5 w-2.5 relative shrink-0">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-rose-500"></span>
-            </span>
-            <Radio className="w-3.5 h-3.5 text-rose-500 shrink-0" />
-            <span className="whitespace-nowrap">البثوث المباشرة الآن</span>
-          </Link>
-
-          {/* THE FEATURED PROMINENT CENTERPIECE: جميع الكورسات مع خط مميز وتدرج ذهبي فخم */}
+          {/* 1. THE FEATURED PROMINENT CENTERPIECE: جميع الكورسات مع خط مميز وتدرج ذهبي فخم */}
           <div
             className="relative group"
             onMouseEnter={() => setCoursesMenuOpen(true)}
@@ -232,13 +214,13 @@ export default function Header({
               href="/courses"
               prefetch={true}
               onClick={() => setCoursesMenuOpen(false)}
-              className={`px-5 py-2.5 text-xs sm:text-[13.5px] font-black rounded-full transition-all inline-flex items-center gap-2 shrink-0 cursor-pointer shadow-lg ${
+              className={`px-4.5 py-2 text-xs sm:text-[13px] font-black rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 cursor-pointer shadow-md ${
                 pathname.startsWith('/courses')
                   ? 'diploma-luxury-pill scale-105 ring-2 ring-amber-400/60 shadow-amber-500/25'
                   : 'diploma-luxury-pill hover:scale-105'
               }`}
             >
-              <Sparkles className="w-4 h-4 text-amber-400 shrink-0 animate-pulse" />
+              <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0 animate-pulse" />
               <span className="whitespace-nowrap font-black tracking-wide">جميع الكورسات</span>
               <ChevronDown className={`w-3.5 h-3.5 text-amber-400 transition-transform duration-200 shrink-0 ${coursesMenuOpen ? 'rotate-180' : ''}`} />
             </Link>
@@ -321,33 +303,52 @@ export default function Header({
             </div>
           </div>
 
-          {/* Link: المكتبة والمذكرات */}
+          {/* 2. Link: المكتبة والمذكرات */}
           <Link
             href="/books"
             prefetch={true}
-            className={`px-5 py-2.5 text-xs sm:text-[13.5px] font-black rounded-full transition-all inline-flex items-center gap-2.5 shrink-0 ${
+            className={`px-3.5 py-2 text-xs sm:text-[12.5px] font-black rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
               pathname.startsWith('/books')
-                ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 dark:from-amber-500 dark:via-yellow-400 dark:to-amber-500 text-white dark:text-zinc-950 font-black shadow-lg shadow-blue-600/25 dark:shadow-amber-500/25 scale-[1.03] border border-blue-400 dark:border-amber-300'
-                : 'text-slate-700 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-amber-400 hover:bg-slate-100/90 dark:hover:bg-zinc-800/70 border border-transparent'
+                ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 dark:from-amber-500 dark:via-yellow-400 dark:to-amber-500 text-white dark:text-zinc-950 font-black shadow-md scale-[1.02]'
+                : 'text-slate-700 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-amber-400 hover:bg-slate-200/60 dark:hover:bg-zinc-800/70'
             }`}
           >
-            <FileText className={`w-4 h-4 sm:w-[18px] sm:h-[18px] shrink-0 transition-transform ${pathname.startsWith('/books') ? 'text-white dark:text-zinc-950 scale-110' : 'text-blue-600 dark:text-amber-400'}`} />
+            <FileText className="w-3.5 h-3.5 shrink-0 text-blue-600 dark:text-amber-400" />
             <span className="whitespace-nowrap">المكتبة والمذكرات</span>
           </Link>
 
-          {/* Link: الدبلومات الشاملة */}
+          {/* 3. Link: الدبلومات الشاملة */}
           <Link
             href="/diplomas"
             prefetch={true}
-            className={`px-4.5 py-2 text-xs sm:text-[13px] font-bold rounded-full transition-all inline-flex items-center gap-2 shrink-0 ${
+            className={`px-3.5 py-2 text-xs sm:text-[12.5px] font-bold rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
               pathname.startsWith('/diplomas')
                 ? 'bg-purple-600 text-white shadow-md shadow-purple-600/20 font-black'
                 : 'text-slate-600 dark:text-zinc-300 hover:text-purple-600 dark:hover:text-white hover:bg-white/70 dark:hover:bg-zinc-800/60'
             }`}
           >
             <Award className="w-3.5 h-3.5 text-purple-400" />
-            <span>الدبلومات الشاملة</span>
+            <span className="whitespace-nowrap">الدبلومات الشاملة</span>
           </Link>
+
+          {/* 4. Link: البث المباشر 🔴 */}
+          <Link
+            href="/live"
+            prefetch={true}
+            className={`px-3.5 py-2 text-xs sm:text-[12.5px] font-bold rounded-full transition-all inline-flex items-center gap-1.5 shrink-0 ${
+              pathname.startsWith('/live')
+                ? 'bg-gradient-to-r from-rose-600 to-red-600 text-white shadow-md shadow-rose-600/30 font-black scale-105'
+                : 'text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-500/15 font-black hover:scale-105'
+            }`}
+          >
+            <span className="flex h-2 w-2 relative shrink-0">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
+            </span>
+            <Radio className="w-3.5 h-3.5 text-rose-500 shrink-0" />
+            <span className="whitespace-nowrap">البث المباشر</span>
+          </Link>
+
         </div>
 
         {/* =========================================================================
