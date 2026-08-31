@@ -613,9 +613,8 @@ export default function InstructorClient({
               </div>
             </div>
 
-            <button
-              type="button"
-              onClick={() => setShowRenewModal(true)}
+            <Link
+              href="/instructor/plans"
               className={`px-5 py-2.5 rounded-xl font-black text-xs shrink-0 shadow-lg flex items-center gap-2 transition-all hover:scale-105 cursor-pointer ${
                 isExpired
                   ? 'bg-gradient-to-r from-rose-600 to-red-600 text-white shadow-rose-950/50'
@@ -626,7 +625,7 @@ export default function InstructorClient({
             >
               <CreditCard className="w-4 h-4" />
               <span>{isExpired ? 'تجديد الاشتراك الآن' : 'ترقية أو تجديد الباقة'}</span>
-            </button>
+            </Link>
           </div>
         )}
 
@@ -767,13 +766,12 @@ export default function InstructorClient({
                 </p>
                 <div className="text-[11px] text-slate-500 dark:text-zinc-400 flex items-center justify-between">
                   <span>{isTrial ? 'فترة تجريبية مجانية' : 'باقة SaaS Pro'}</span>
-                  <button
-                    type="button"
-                    onClick={() => setShowRenewModal(true)}
+                  <Link
+                    href="/instructor/plans"
                     className="text-amber-600 dark:text-amber-400 font-bold hover:underline cursor-pointer"
                   >
                     {isExpired ? 'تجديد الآن' : 'ترقية/تجديد'}
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
