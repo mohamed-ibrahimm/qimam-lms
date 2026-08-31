@@ -209,7 +209,6 @@ export default function InstructorSidebarClient({
     },
   ], [coursesCount, pendingOrdersCount, couponsCount, onNewCourseClick, publicProfileSlug, subscriptionPlan]);
 
-  // Filtered by live search query
   const filteredGroups = useMemo(() => {
     if (!searchQuery.trim()) return navGroups;
     const q = searchQuery.toLowerCase().trim();
@@ -225,12 +224,13 @@ export default function InstructorSidebarClient({
   }, [navGroups, searchQuery]);
 
   const renderContent = (isDrawer = false) => (
-    <div className="flex flex-col h-full">
-      {/* Header & Identity */}
-      <div className="p-4 border-b border-slate-200/80 dark:border-purple-900/40 space-y-3 shrink-0">
+    <div className="flex flex-col h-full bg-white/95 dark:bg-[#0e0a1f]/95 text-slate-900 dark:text-zinc-100">
+      
+      {/* 1. Header & Instructor Profile Card */}
+      <div className="p-5 border-b border-slate-200/80 dark:border-purple-900/40 space-y-4 shrink-0 bg-gradient-to-b from-slate-50/80 to-transparent dark:from-purple-950/20 dark:to-transparent">
         <div className="flex items-center justify-between">
-          <span className="text-[10px] font-black px-2.5 py-1 rounded-full bg-amber-500/15 text-amber-800 dark:text-amber-300 border border-amber-500/30">
-            استوديو المحاضر المستقل
+          <span className="text-[10px] font-black px-3 py-1 rounded-full bg-gradient-to-r from-amber-500/20 to-yellow-500/20 text-amber-900 dark:text-amber-300 border border-amber-500/40 shadow-xs">
+            استوديو المحاضر المستقل 👑
           </span>
           {isDrawer && (
             <button
@@ -243,47 +243,65 @@ export default function InstructorSidebarClient({
           )}
         </div>
 
-        <div>
-          <h2 className="text-sm font-black text-slate-900 dark:text-white truncate">
-            {instructorName}
-          </h2>
-          <p className="text-[11px] text-slate-500 dark:text-zinc-400 font-medium truncate">
-            {instructorEmail}
-          </p>
+        {/* Instructor Avatar & Name */}
+        <div className="flex items-center gap-3">
+          <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-amber-400 via-purple-600 to-indigo-600 p-[2px] shadow-md shadow-purple-900/20 shrink-0">
+            <div className="w-full h-full rounded-2xl bg-slate-900 dark:bg-zinc-950 flex items-center justify-center text-sm font-black text-amber-400">
+              {instructorName[0] || 'م'}
+            </div>
+          </div>
+          <div className="min-w-0">
+            <h2 className="text-sm font-black text-slate-950 dark:text-white truncate">
+              {instructorName}
+            </h2>
+            <p className="text-[11px] text-slate-500 dark:text-zinc-400 font-medium truncate font-mono">
+              {instructorEmail}
+            </p>
+          </div>
         </div>
 
-        {/* Quick Search in Studio */}
-        <div className="relative">
+        {/* Quick Launch Live Studio Action in Sidebar */}
+        <Link
+          href="/live/instant-room"
+          onClick={() => isDrawer && setMobileOpen(false)}
+          className="w-full py-2 px-3 rounded-xl bg-gradient-to-r from-rose-600 via-rose-500 to-amber-500 text-white font-black text-xs shadow-md shadow-rose-600/25 flex items-center justify-center gap-2 hover:scale-[1.02] transition-all cursor-pointer"
+        >
+          <Radio className="w-3.5 h-3.5 animate-pulse" />
+          <span>بدء بث مباشر فوري (Live HD)</span>
+        </Link>
+
+        {/* Quick Search Input */}
+        <div className="relative pt-1">
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="ابحث في أي قسم بالاستوديو..."
-            className="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl bg-slate-100 dark:bg-zinc-900/90 border border-slate-200 dark:border-purple-900/40 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-zinc-500 focus:outline-none focus:border-amber-500 transition-colors"
+            placeholder="بحث سريع في أقسام الاستوديو..."
+            className="w-full pl-8 pr-3.5 py-2 text-xs rounded-xl bg-slate-100 dark:bg-zinc-900/90 border border-slate-200 dark:border-purple-900/50 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-zinc-500 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all shadow-inner"
           />
           {searchQuery ? (
             <button
               type="button"
               onClick={() => setSearchQuery('')}
-              className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-white"
+              className="absolute left-2.5 top-1/2 translate-y-[2px] text-slate-400 hover:text-slate-600 dark:hover:text-white"
             >
               <X className="w-3 h-3" />
             </button>
           ) : (
-            <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 dark:text-zinc-500 pointer-events-none" />
+            <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 translate-y-[2px] text-slate-400 dark:text-zinc-500 pointer-events-none" />
           )}
         </div>
       </div>
 
-      {/* Navigation Groups (Scrollable) */}
-      <div className="flex-1 overflow-y-auto p-3.5 space-y-6">
+      {/* 2. Navigation Groups */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-6 scrollbar-thin">
         {filteredGroups.map((group) => (
-          <div key={group.groupName} className="space-y-2">
-            <div className="px-3 py-1 text-[11px] font-black uppercase text-slate-500 dark:text-zinc-400">
+          <div key={group.groupName} className="space-y-1.5">
+            <div className="px-3 py-1 text-[10.5px] font-black uppercase tracking-wider text-slate-500 dark:text-purple-300/80">
               {group.groupName}
             </div>
 
-            <div className="space-y-1.5">
+            <div className="space-y-1">
               {group.items.map((item, idx) => {
                 const isActive = item.id && activeTab === item.id;
                 const Icon = item.icon;
@@ -300,13 +318,7 @@ export default function InstructorSidebarClient({
                   }
                 };
 
-                const badgeBg = item.badgeType === 'rose'
-                  ? 'bg-rose-500/15 text-rose-700 dark:text-rose-300 border-rose-500/30'
-                  : item.badgeType === 'emerald'
-                  ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/30'
-                  : item.badgeType === 'amber'
-                  ? 'bg-amber-500/15 text-amber-800 dark:text-amber-300 border-amber-500/30'
-                  : 'bg-purple-500/15 text-purple-700 dark:text-purple-300 border-purple-500/30';
+                const isLiveItem = item.id === 'live';
 
                 if (item.href) {
                   return (
@@ -314,13 +326,15 @@ export default function InstructorSidebarClient({
                       key={item.href || idx}
                       href={item.href}
                       onClick={() => isDrawer && setMobileOpen(false)}
-                      className="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs sm:text-[13px] font-bold transition-all text-slate-700 dark:text-zinc-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 cursor-pointer"
+                      className="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs sm:text-[13px] font-bold transition-all text-slate-700 dark:text-zinc-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 border border-transparent hover:border-slate-200 dark:hover:border-white/5 group cursor-pointer"
                     >
                       <div className="flex items-center gap-3 min-w-0">
-                        <Icon className="w-4 h-4 shrink-0 text-amber-600 dark:text-amber-400" />
+                        <div className="w-7 h-7 rounded-xl bg-amber-500/15 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                          <Icon className="w-4 h-4" />
+                        </div>
                         <span className="truncate">{item.name}</span>
                       </div>
-                      <ExternalLink className="w-3.5 h-3.5 text-slate-400 dark:text-zinc-500 shrink-0 mr-1.5" />
+                      <ExternalLink className="w-3.5 h-3.5 text-slate-400 dark:text-zinc-500 shrink-0 opacity-60 group-hover:opacity-100 transition-opacity" />
                     </Link>
                   );
                 }
@@ -332,18 +346,32 @@ export default function InstructorSidebarClient({
                     onClick={handleClick}
                     className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs sm:text-[13px] font-bold transition-all text-right cursor-pointer ${
                       isActive
-                        ? 'bg-amber-500 text-zinc-950 shadow-md shadow-amber-500/20 font-black'
+                        ? 'bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 text-zinc-950 shadow-md shadow-amber-500/25 font-black scale-[1.02]'
+                        : isLiveItem
+                        ? 'bg-rose-500/10 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 border border-rose-500/30 hover:bg-rose-500/20'
                         : 'text-slate-700 dark:text-zinc-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5'
                     }`}
                   >
                     <div className="flex items-center gap-3 min-w-0">
-                      <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-zinc-950' : 'text-amber-600 dark:text-amber-400'}`} />
+                      <div className={`w-7 h-7 rounded-xl flex items-center justify-center shrink-0 ${
+                        isActive
+                          ? 'bg-zinc-950 text-amber-400'
+                          : isLiveItem
+                          ? 'bg-rose-500/20 text-rose-500 animate-pulse'
+                          : 'bg-slate-200/80 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300'
+                      }`}>
+                        <Icon className="w-4 h-4" />
+                      </div>
                       <span className="truncate">{item.name}</span>
                     </div>
 
                     {item.badge && (
                       <span className={`text-[10px] font-black px-2 py-0.5 rounded-md border shrink-0 mr-1.5 ${
-                        isActive ? 'bg-zinc-950 text-amber-400 border-zinc-800' : badgeBg
+                        isActive
+                          ? 'bg-zinc-950 text-amber-400 border-zinc-900'
+                          : isLiveItem
+                          ? 'bg-rose-500 text-white border-rose-400 shadow-sm animate-pulse'
+                          : 'bg-amber-500/15 text-amber-800 dark:text-amber-300 border-amber-500/30'
                       }`}>
                         {item.badge}
                       </span>
